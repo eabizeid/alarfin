@@ -1,0 +1,62 @@
+{# src/Kells/LicenseeBundle/Resources/views/Licensee/register.html.twig #}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<div class="container">
+<h3>Registración</h3>
+
+{{ form_start(form, {'attr' : { 'class': 'form-horizontal', 'role': 'form' }}) }}
+    {{ form_errors(form) }}
+	<div class="form-group">
+    	{{ form_label(form.licensee.cuit, 'Cuit: ', { 'label_attr': {'class': 'control-label col-xs-2' }} ) }}
+    	 <div class="col-xs-10">
+    		{{ form_widget(form.licensee.cuit, { 'attr': {'class': 'form-control' }}) }}
+    	</div>
+    </div>
+    <div class="form-group">
+    	{{ form_label(form.licensee.socialReason, 'Razón Social: ', { 'label_attr': {'class': 'control-label col-xs-2' }}) }}
+    	<div class="col-xs-10">
+    		{{ form_widget(form.licensee.socialReason, { 'attr': {'class': 'form-control' }}) }}
+    	</div>
+    </div>
+    <div class="form-group">
+    	{{ form_label(form.licensee.fantasyName, 'Nombre de fantasía: ', { 'label_attr': {'class': 'control-label col-xs-2' }}) }}
+    	<div class="col-xs-10">
+    		{{ form_widget(form.licensee.fantasyName, { 'attr': {'class': 'form-control' }}) }}
+    	</div>
+    </div>
+      <div class="form-group">
+    	{{ form_label(form.licensee.mail, 'Mail: ', { 'label_attr': {'class': 'control-label col-xs-2' }}) }}
+    	<div class="col-xs-10">
+    		{{ form_widget(form.licensee.mail, { 'attr': {'class': 'form-control' }}) }}
+    	</div>
+    </div>
+    {% for passwordField in form.licensee.plainPassword %}
+    <div class="form-group">
+        {{ form_label(passwordField, null, { 'label_attr': {'class': 'control-label col-xs-2'} }) }}
+        <div class="col-xs-10">
+        	{{ form_widget(passwordField, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+    </div>
+	{% endfor %}
+    <div class="form-group">
+    	<div class="checkbox">
+	    	<div class="col-sm-offset-2 col-sm-10">
+    			{{ form_widget(form.terms) }}
+    			{{ form_label(form.terms, 'Acepto Términos y condiciones') }}
+    		</div>
+    	</div>
+    
+    </div>
+    <div class="form-group">
+    	<div class="col-sm-offset-2 col-sm-10">
+    		{{ form_row(form.Register) }}
+    	</div>
+   	</div>
+{{ form_end(form) }}
+</div>

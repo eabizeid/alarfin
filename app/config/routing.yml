@@ -1,0 +1,4 @@
+kells_front:
+    resource: "@KellsFrontBundle/Resources/config/routing.yml"
+    prefix:   /
+

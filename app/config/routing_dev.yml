@@ -16,3 +16,11 @@ _main:
 # AcmeDemoBundle routes (to be removed)
 _acme_demo:
     resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+    
+licensee:
+    resource: "@KellsLicenseeBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+kells_front:
+    resource: "@KellsFrontBundle/Resources/config/routing.yml"
+    prefix:   /

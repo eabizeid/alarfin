@@ -34,3 +34,10 @@ assetic:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+swiftmailer:
+    transport:  smtp
+    encryption: ssl
+    auth_mode:  login
+    host:       smtp.gmail.com
+    username:   eduardo.abizeid@gmail.com
+    password:   48861977

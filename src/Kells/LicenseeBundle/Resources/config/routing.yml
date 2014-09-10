@@ -1,0 +1,12 @@
+# src/Kells/LicenseeBundle/Resources/config/routing.yml
+licensee_register:
+    path:     /licensee/register
+    defaults: { _controller: KellsLicenseeBundle:Licensee:register }
+
+licensee_create:
+    path:     /licensee/register/create
+    defaults: { _controller: KellsLicenseeBundle:Licensee:create }
+
+licensee_register_confirm:
+    path:     /licensee/register/confirm/{token}
+    defaults: { _controller: KellsLicenseeBundle:Licensee:confirm }

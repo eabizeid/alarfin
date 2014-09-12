@@ -15,7 +15,7 @@ monolog:
     handlers:
         applog:
             type: stream
-            path: /home/edu/logs/alarfin.log
+            path: /var/logs/alarfin.log
             level: info
         main:
             type:   stream

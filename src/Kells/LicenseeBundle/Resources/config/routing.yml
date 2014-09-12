@@ -1,4 +1,13 @@
 # src/Kells/LicenseeBundle/Resources/config/routing.yml
+
+licensee_signIn:
+    path:     /licensee/signIn
+    defaults: { _controller: KellsLicenseeBundle:Licensee:signIn }
+
+licensee_login:
+    path:     /licensee/login
+    defaults: { _controller: KellsLicenseeBundle:Licensee:login }
+    
 licensee_register:
     path:     /licensee/register
     defaults: { _controller: KellsLicenseeBundle:Licensee:register }

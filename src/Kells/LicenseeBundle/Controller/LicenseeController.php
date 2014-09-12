@@ -8,8 +8,44 @@ use Symfony\Component\HttpFoundation\Request;
 use Kells\LicenseeBundle\Form\Type\RegistrationType;
 use Kells\LicenseeBundle\Form\Model\Registration;
 
+use Kells\LicenseeBundle\Form\Type\LoginType;
+use Kells\LicenseeBundle\Form\Model\Login;
+
 class LicenseeController extends Controller {
 
+	public function signInAction() {
+		$login = new Login();
+		$form = $this->createForm(new LoginType(), $login, array('action' => $this->generateUrl('licensee_login'),));
+
+		return $this->render(
+            'KellsLicenseeBundle:Licensee:login.html.twig', array('form' => $form->createView()));
+	}
+	
+	public function loginAction(Request $request) {
+		$em = $this->getDoctrine()->getManager();
+
+		$form = $this->createForm(new LoginType(), new Login());
+
+		$form->handleRequest($request);
+ 		$logger = $this->get('logger');
+		if ($form->isValid()) {
+			$login = $form->getData();
+			$repository = $em->getRepository('KellsLicenseeBundle:Licensee');
+			$licensee = $repository->findOneBy(
+				array('cuit' => $login->getCuit(), 'plainPassword' => $login->getPassword(), 'status'=>true)
+			);
+			
+			if ($licensee) {
+				return $this->render(
+            		'KellsFrontBundle:Default:index.html.twig');
+			}
+		}
+		
+		return $this->render(
+            'KellsLicenseeBundle:Licensee:login.html.twig', array('form' => $form->createView()));
+		
+	}
+	
 	public function registerAction() {
 		$registration = new Registration();
 		$form = $this->createForm(new RegistrationType(), $registration, array('action' => $this->generateUrl('licensee_create'),));

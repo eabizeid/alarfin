@@ -35,7 +35,7 @@ class Licensee {
      */
 	protected $fantasyName;
 	/**
-     * @ORM\Column(type="string", length=10, unique=true)
+     * @ORM\Column(type="string", length=11, unique=true)
      * @Assert\NotBlank()
      */
 	protected $cuit;

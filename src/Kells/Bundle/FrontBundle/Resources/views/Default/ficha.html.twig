@@ -1,0 +1,177 @@
+{% extends 'KellsFrontBundle:Default:base.html.twig' %}
+{% block body %}
+
+<div class="contenido-gris linea-gris-abajo botpad">
+        	<div class="container">
+            	<div class="row">   
+                	<div class="col-xs-12 toppad botpad linea-gris-abajo">
+                    	<h4 class="nomar">B&uacute;squeda realizada: <strong><em>&quot;chevrolet sonic&quot;</em></strong> &nbsp;|&nbsp; <a href="resultados.php">Volver a los resultados de la b&uacute;squeda</a></h4>
+                    </div>
+                </div>
+	        	<div class="row">   
+                	<div class="col-xs-12">
+                    	<div class="row">   
+		                	<div class="col-md-6 col-md-push-6 toppad">
+                				 <h4 class="nomar text-negro">{{car.year.description}}  | {{car.km}} Km</h4>
+                                 <h2 class="text-negro"><strong>{{ car.title }}</strong></h2>
+                                 <h2><span class="label label-default">$ {{car.price}}</span></h2>
+                                 <div class="well well-gris topmar">
+                                 	<form>
+                                 		<h4 class="nomar">Escriba su consulta</h4>
+                                        <textarea rows="6" class="form-control topmar20" tabindex="1" autofocus></textarea>
+                                        <input name="btn_consultar" type="submit" value="Consultar ahora" tabindex="2" class="btn btn-alarfin btn-lg topmar20" required>
+                                    </form>
+                                 </div>
+                            </div>
+		                	<div class="col-md-6 col-md-pull-6 toppad ficha-foto">
+                				<div class="well well-blanco">
+                                    <div id="carousel-example-generic" class="carousCarel slide" data-ride="carousel">
+                                      <ol class="carousel-indicators">
+                                       <li data-target="#carousel-example-generic" data-slide-to="i" ></li>
+                                      {% for image in car.images %}
+                                      	i = 1;
+                                        <li data-target="#carousel-example-generic" data-slide-to="i" ></li>
+                                        i++;
+                                      {% endfor %}
+                                      </ol> 
+                                      <div class="carousel-inner">
+                                      	<div class="item active">
+                                          <img src="{{asset('bundles/kellsfront/user_images/') }}/{{ car.mandatoryImage }}" >
+                                        </div>
+                                      
+                                      {% for image in car.images %}
+                                        <div class="item active">
+                                          <img src="{{image}}" >
+                                        </div>
+                                        {% endfor %}
+                                      </div>
+                                      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                      </a>
+                                      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                      </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 toppad">
+                            	<div class="well well-blanco">
+                                	<div class="row">
+                                    	<div class="col-xs-12">
+                                        	<h4 class="nomar text-negro botpad20 linea-gris-abajo text-center"><strong>Caracter&iacute;sticas principales</strong></h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4 col-md-3 col-lg-2 topmar20">
+                                       	  	<h5 class="nomar">Marca:</h5>
+											<h4 class="nomar text-negro"><strong>{{car.trademark.description}}</strong></h4>
+                                      	</div>
+                                        <div class="col-sm-4 col-md-3 col-lg-2 topmar20">
+                                       	  	<h5 class="nomar">Modelo:</h5>
+											<h4 class="nomar text-negro"><strong>{{car.model.description}}</strong></h4>
+                                      	</div>
+                                        <div class="col-sm-4 col-md-3 col-lg-2 topmar20">
+                                       	  	<h5 class="nomar">Versi&oacute;n:</h5>
+											<h4 class="nomar text-negro"><strong>{% if car.version %} {{car.version.description}} {% endif %}</strong></h4>
+                                      	</div>
+                                        <div class="clearfix visible-sm-block"></div>
+                                        <div class="col-sm-4 col-md-3 col-lg-2 topmar20">
+                                       	  	<h5 class="nomar">A&ntilde;o:</h5>
+											<h4 class="nomar text-negro"><strong>{% if car.year %} {{car.year.description}} {% endif %}</strong></h4>
+                                      	</div>
+                                         <div class="clearfix visible-md-block"></div>
+                                    	<div class="col-sm-4 col-md-3 col-lg-2 topmar20">
+                                       	  	<h5 class="nomar">Color:</h5>
+											<h4 class="nomar text-negro"><strong>{{car.color}} </strong></h4>
+                                      	</div>
+                                        <div class="col-sm-4 col-md-3 col-lg-2 topmar20">
+                                       	  	<h5 class="nomar">&Uacute;nico due&ntilde;o:</h5>
+											<h4 class="nomar text-negro"><strong>Si</strong></h4>
+                                      	</div>
+                                         <div class="clearfix visible-sm-block visible-lg-block"></div>
+                                        <div class="col-sm-4 col-md-3 col-lg-2 topmar20">
+                                       	  	<h5 class="nomar">Puertas:</h5>
+											<h4 class="nomar text-negro"><strong>5</strong></h4>
+                                      	</div>
+
+                                        <div class="col-sm-4 col-md-3 col-lg-2 topmar20">
+                                       	  	<h5 class="nomar">Combustible:</h5>
+											<h4 class="nomar text-negro"><strong>{% if car.fuel %} {{car.fuel.description}} {% endif %}</strong></h4>
+                                      	</div>
+                                        <div class="clearfix visible-md-block"></div>
+                                        <div class="col-sm-4 col-md-3 col-lg-2 topmar20">
+                                       	  	<h5 class="nomar">Direcci&oacute;n:</h5>
+											<h4 class="nomar text-negro"><strong>{% if car.direction %} {{car.direction.description}} {% endif %}</strong></h4>
+                                      	</div>
+                                         <div class="clearfix visible-sm-block"></div>
+                                        <div class="col-sm-4 col-md-3 col-lg-2 topmar20">
+                                       	  	<h5 class="nomar">Kil&oacute;metros:</h5>
+											<h4 class="nomar text-negro"><strong>{% if car.km %}{{ car.km }}{% endif %}</strong></h4>
+                                      	</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 toppad text-center">
+                        <h4 class="nomar text-negro"><strong>Otras caracter&iacute;sticas</strong></h4>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="ficha-caracteristicas">
+                        <div class="col-sm-6 col-md-3 toppad">
+                            <div class="linea-gris-abajo linea-gris-arriba pad15"><h4 class="nomar text-negro">Exterior</h4></div>
+                            <ul>
+                            {% if features %}
+                            	{% for f in features %}
+                            	 {% if feature.featureType.description == "Exterior" %}
+                                	<li>{{ feature.decription}}</li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                      <div class="col-sm-6 col-md-3 toppad">
+                        <div class="linea-gris-abajo linea-gris-arriba pad15"><h4 class="nomar text-negro">Sonido</h4></div>
+                          <ul>
+                           {% for feature in features %}
+                            	 {% if feature.featureType.description == "Sonido" %}
+                                	<li>{{ feature.decription}}</li>
+                                {% endif %}
+                           {% endfor %}
+                          </ul>
+                      </div>
+                      	<div class="clearfix visible-sm-block"></div>
+                        <div class="col-sm-6 col-md-3 toppad">
+                            <div class="linea-gris-abajo linea-gris-arriba pad15"><h4 class="nomar text-negro">Confort</h4></div>
+                            <ul>
+                                {% for feature in features %}
+                            	 {% if feature.featureType.description == "Confort" %}
+                                	<li>{{ feature.decription}}</li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                      <div class="col-sm-6 col-md-3 toppad">
+                        <div class="linea-gris-abajo linea-gris-arriba pad15"><h4 class="nomar text-negro">Seguridad</h4></div>
+                          <ul>
+                            {% for feature in features %}
+                            	 {% if feature.featureType.description == "Seguridad" %}
+                                	<li>{{ feature.decription}}</li>
+                                {% endif %}
+                                {% endfor %}
+                          </ul>
+                        </div>
+                    </div>
+	                {% endif %}      
+					{{ include('KellsFrontBundle:Default:buscador.html.twig') }}
+       			</div>
+        	</div>
+        </div>
+
+
+
+
+
+
+ 
+ {% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'KellsFrontBundle:Default:base.html.twig' %}
+{% block body %}
+
+ <div class="contenido-gris">       
+            <div class="container">
+                <div class="row topmar botpad">
+                    <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+    					<div class="well well-alarfin">
+			{{ form_start(form, {'attr' : {  'role': 'form' }}) }}
+		 	<div class="row">
+                <div class="col-xs-12">         
+                    <h4 class="tit-usuario nomar">Por favor complete todos los campos del formulario para registrarse.</h4>
+                </div>
+            </div>  
+        
+            <div class="row linea-alarfin-clara-arriba topmar20">
+                <div class="col-sm-6 topmar20">
+                    <div class="form-group">
+			                    	{{ form_label(form.user.firstName, 'Nombre' ) }}
+			    					{{ form_widget(form.user.firstName, { 'attr': {'class': 'form-control' }}) }}
+                    </div>
+                </div>
+                 <div class="col-sm-6 topmar20">
+                    <div class="form-group">
+			                    	{{ form_label(form.user.lastName, 'Apellido' ) }}
+			    					{{ form_widget(form.user.lastName, { 'attr': {'class': 'form-control' }}) }}
+                    </div>
+                </div>       
+                <div class="col-sm-6">
+                    <div class="form-group">
+                    {{ form_label(form.user.mail, 'Email' ) }}
+			    					{{ form_widget(form.user.mail, { 'attr': {'class': 'form-control' }}) }}
+                    </div>
+                </div>   
+                 <div class="col-sm-6">
+                    <div class="form-group">
+                       {{ form_label(form.user.telephone, 'Teléfono' ) }}
+			    					{{ form_widget(form.user.telephone, { 'attr': {'class': 'form-control' }}) }}
+                    </div>
+                </div>
+              {% for passwordField in form.user.password %}
+			     			<div class="col-sm-6">
+			                    <div class="form-group">
+			        				{{ form_label(passwordField, null) }}
+			        				{{ form_widget(passwordField, { 'attr': {'class': 'form-control'} }) }}
+			        			</div>
+			    			</div>
+							{% endfor %}     
+			</div> 
+		 	<div class="row linea-alarfin-clara-arriba topmar10">
+                <div class="col-xs-12 topmar20">         
+                    <textarea rows="5" readonly class="form-control" tabindex="7">1. La aceptación por parte de los Usuarios
+Alarfin S.A., se reserva el derecho a exigir que cada usuario, acepte y cumpla los términos aquí expresados como condición previa y necesaria para el acceso, y utilización de los servicios y/o contenidos brindados por el Sitio.
+Cuando un usuario accediere al Sitio y utilizare cualquiera de los servicios y/o contenidos existentes, hará presumir el conocimiento del presente texto y que ha manifestado su plena aceptación con respecto a todas y cada una de las disposiciones que lo integran.
+El usuario que no acepte, se halle en desacuerdo, o incurriere en incumplimiento de las disposiciones fijadas por la Alarfin S.A. en estas Condiciones Generales, no contará con autorización para el uso de los servicios y contenidos que existen o puedan existir en el Sitio, debiendo retirarse del Sitio en forma inmediata, y abstenerse de ingresar nuevamente al mismo.
+2. Capacidad legal de los usuarios
+Solo podrán acceder y utilizar los servicios y/o contenidos de Alarfin S.A., quienes a tenor de la legislación vigente en su lugar de residencia puedan válidamente emitir su consentimiento para la celebración de contratos. Quienes a tenor de la legislación vigente no posean tal capacidad para acceder u obligarse válidamente a los términos y condiciones aquí establecidos, deberán obtener inexcusablemente autorización previa de sus representantes legales, quienes serán considerados responsables de todos los actos realizados por los incapaces a su cargo.
+Cuando se trate de falta de capacidad por minoría de edad, la responsabilidad en la determinación de los servicios y contenidos a los que acceden los menores de edad corresponde a los mayores a cuyo cargo se encuentren, sin embargo en ningún caso estará permitido el acceso al sitio por parte de menores de 14 años de edad.
+3. Registración de los Usuarios
+Para valerse de los servicios prestados en Alarfin S.A., basta la sola aceptación de estas Condiciones Generales. Sin embargo para la utilización de algunos servicios o el acceso a ciertos contenidos, podrá establecerse como requisito, el previo registro del usuario. Dicho registro tendrá por finalidad establecer la identidad e información de contacto del usuario.</textarea>
+					{{ form_widget(form.terms) }}
+					{{ form_label(form.terms, 'Acepto Términos y condiciones') }}
+              </div>
+            </div>  
+              
+              <div class="row linea-alarfin-clara-arriba topmar10">
+                  <div class="col-xs-12 topmar20">
+                  	{{ form_widget(form.register, { 'label': 'Registrarme' }) }}&nbsp; <input type="button" class="btn btn-form-cancelar btn-lg" value="Cancelar" tabindex="11">
+                   </div>
+              </div>  
+       		{{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+ {% endblock %}

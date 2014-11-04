@@ -1,3 +1,56 @@
 kells_front_homepage:
     path:     /
     defaults: { _controller: KellsFrontBundle:Default:index }
+
+details:
+    path:     /details/{carId}
+    defaults: { _controller: KellsFrontBundle:Default:details }
+    
+searchCar:
+    path:     /searchCar
+    defaults: { _controller: KellsFrontBundle:Default:searchCar }
+    
+userRegistration:
+    path:     /userRegistration
+    defaults: { _controller: KellsFrontBundle:Default:userRegistration }
+    
+licenseeRegistration:
+    path:     /licenseeRegistration
+    defaults: { _controller: KellsFrontBundle:Default:licenseeRegistration }
+    
+licensee_create:
+    path:     /licenseeRegistration/confirm
+    defaults: { _controller: KellsFrontBundle:Default:licenseeConfirm }
+    
+licensee_confirm:
+    path:     /licensee/register/confirm/{token}
+    defaults: { _controller: KellsFrontBundle:Default:licenseeRegisterConfirm }
+
+licensee_message_confirm:
+    path:     /licensee/register/message/
+    defaults: { _controller: KellsFrontBundle:Default:registerMessageConfirm }
+    
+user_create:
+    path:     /userRegistration/confirm
+    defaults: { _controller: KellsFrontBundle:Default:userConfirm }
+    
+user_confirm:
+    path:     /user/register/confirm/{token}
+    defaults: { _controller: KellsFrontBundle:Default:userRegisterConfirm }
+
+user_message_confirm:
+    path:     /user/register/message/
+    defaults: { _controller: KellsFrontBundle:Default:registerMessageConfirm }
+    
+user_login_view:
+    path:     /user/login/
+    defaults: { _controller: KellsFrontBundle:Default:userLogin }
+    
+login_check:
+    pattern: /user/login_check
+logout:
+    pattern: /user/logout
+    
+user_myPublications:
+    path:     /user/myPublications/
+    defaults: { _controller: KellsFrontBundle:Default:userMyPublications }

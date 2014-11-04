@@ -1,0 +1,7 @@
+parameters:
+#    kells_back.example.class: Kells\Bundle\BackBundle\Example
+
+services:
+#    kells_back.example:
+#        class: %kells_back.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -155,7 +155,7 @@ class DefaultController extends Controller
 			$em->persist($licensee);
 			$em->flush();
 
-			$url = 'http://'.$_SERVER['SERVER_NAME'].'/app_dev.php/licensee/register/confirm/'.$licensee->getToken();
+			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/licensee/register/confirm/'.$licensee->getToken();
 			$message = \Swift_Message::newInstance()
         	->setSubject('Confirmar su registracion')
         	->setFrom('eduardo.abizeid@gmail.com')
@@ -228,6 +228,16 @@ class DefaultController extends Controller
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
 		return $this->render(
         'KellsFrontBundle:Default:misPublicaciones.html.twig', array("form"=>$form->createView(), "myCars" => $user->getCars));
+		
+	}
+	
+	public function toPublishAction() {
+		$user = $this->get('security.context')->getToken()->getUser();
+		
+		$searchForm = new Search();
+		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
+		return $this->render(
+        'KellsFrontBundle:Default:publicar.html.twig', array("form"=>$form->createView()));
 		
 	}
 }

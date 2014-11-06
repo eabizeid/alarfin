@@ -54,3 +54,7 @@ logout:
 user_myPublications:
     path:     /user/myPublications/
     defaults: { _controller: KellsFrontBundle:Default:userMyPublications }
+    
+user_toPublish:
+    path:     /user/toPublish/
+    defaults: { _controller: KellsFrontBundle:Default:toPublish }

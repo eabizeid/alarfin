@@ -63,7 +63,7 @@ class User implements UserInterface{
     /**
      * @ORM\Column(name="salt", type="string", length=255)
      */
-    protected $salt = "xxxxx";
+    protected $salt = "";
 
     /**
      * Get id

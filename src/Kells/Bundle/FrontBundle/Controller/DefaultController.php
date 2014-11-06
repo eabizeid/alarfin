@@ -227,7 +227,7 @@ class DefaultController extends Controller
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
 		return $this->render(
-        'KellsFrontBundle:Default:misPublicaciones.html.twig', array("form"=>$form->createView(), "myCars" => $user->getCars));
+        'KellsFrontBundle:Default:misPublicaciones.html.twig', array("form"=>$form->createView(), "myCars" => $user->getCars()));
 		
 	}
 	

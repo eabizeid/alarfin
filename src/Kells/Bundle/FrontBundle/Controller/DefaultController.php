@@ -4,6 +4,7 @@ namespace Kells\Bundle\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 
 use Kells\Bundle\FrontBundle\Form\Type\SearchType;
@@ -232,12 +233,42 @@ class DefaultController extends Controller
 	}
 	
 	public function toPublishAction() {
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Trademark');
+		$trademarks = $repository->findAll();
+		
+		
 		$user = $this->get('security.context')->getToken()->getUser();
 		
 		$searchForm = new Search();
-		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
+		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'), ));
 		return $this->render(
-        'KellsFrontBundle:Default:publicar.html.twig', array("form"=>$form->createView()));
+        'KellsFrontBundle:Default:publicar.html.twig', array("form"=>$form->createView(), 'trademarks'=> $trademarks));
+		
+	}
+	
+   
+	public function getModelsAction(Request $request) {
+		  $logger = $this->get('logger');
+		$id = $request->get('id');
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Trademark');
+		$trademark = $repository->find($id);
+		$logger->info('trademark: '.$trademark->getId().' ');$logger->info('models: ');
+		$logger->info('models: ');
+		$output = array();
+		foreach  ($trademark->getModels() as $model) {
+			$logger->info('model: '.$model->getId());
+			 $output[] = array(
+              'id' => $model->getId(),
+              'description' => $model->getDescription(),
+          );
+		}
+		
+		$response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent(json_encode($output));
+        return $response;
 		
 	}
 }

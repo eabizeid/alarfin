@@ -58,3 +58,10 @@ user_myPublications:
 user_toPublish:
     path:     /user/toPublish/
     defaults: { _controller: KellsFrontBundle:Default:toPublish }
+    
+    
+route_to_retrieve_model:
+    pattern: /getModels/
+    defaults: {_controller: KellsFrontBundle:Default:getModels}
+    options:
+        expose: true

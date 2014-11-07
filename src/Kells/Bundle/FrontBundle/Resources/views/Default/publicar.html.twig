@@ -19,10 +19,10 @@
                                         <div class="form-group">
                                             <label for="marca">Marca</label>
                                             <select name="marca" id="marca" class="form-control input-lg" required>
-                                            	<option> Seleccioná; una marca </option>
+                                            	<option> Seleccioná una marca </option>
                                             	{% for trademark in trademarks %}
                                                 <option value="{{ trademark.id }}">{{ trademark.description }}</option>
-                                                {{% endfor %}}
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
@@ -322,4 +322,6 @@
                 </div>           
             </div>
         </div>
+ 		</script>
  {% endblock %}
+

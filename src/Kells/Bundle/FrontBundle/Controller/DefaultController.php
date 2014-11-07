@@ -90,7 +90,7 @@ class DefaultController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-			$url = 'http://'.$_SERVER['SERVER_NAME'].'/app_dev.php/user/register/confirm/'.$user->getToken();
+			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/user/register/confirm/'.$user->getToken();
 			$message = \Swift_Message::newInstance()
         	->setSubject('Confirmar su registracion')
         	->setFrom('eduardo.abizeid@gmail.com')

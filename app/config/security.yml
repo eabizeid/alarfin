@@ -25,8 +25,8 @@ security:
                 remember_me: true
                 username_parameter: _mail
                 password_parameter: _password
-                default_target_path:            /user/myPublications
-                target_path_parameter:          _target_path
+                always_use_default_target_path: false
+                target_path_parameter: _target_path
             logout:
                 path: /user/logout
                 target: /
@@ -41,3 +41,5 @@ security:
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/user/myPublications, roles: ROLE_USER}
+        - { path: ^/user/toPublish, roles: ROLE_USER}
+        - { path: ^/publish, roles: ROLE_USER}

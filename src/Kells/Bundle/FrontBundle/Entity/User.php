@@ -64,6 +64,11 @@ class User implements UserInterface{
      * @ORM\Column(name="salt", type="string", length=255)
      */
     protected $salt = "";
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Car", mappedBy="user")
+     **/
+    protected $cars;
 
     /**
      * Get id
@@ -236,6 +241,7 @@ class User implements UserInterface{
     public function __construct()
     {
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->cars = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -293,14 +299,7 @@ class User implements UserInterface{
     {
     }
     
-    /**
-     * @ORM\ManyToMany(targetEntity="Car")
-     * @ORM\JoinTable(name="user_car",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="car_id", referencedColumnName="id")}
-     * )
-     */
-    protected $cars;
+   
 
     /**
      * Add cars

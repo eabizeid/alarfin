@@ -8,7 +8,8 @@
                     </div>
                 </div>
                 <div class="row">                
-					<form role="form">
+					<form action="{{ path('publish') }}" role="form" enctype="multipart/form-data" method="post">
+					 	<input type="hidden" name="_target_path" value="{{ path('publish') }}" />
 	                    <div class="col-md-12"> 
                         	<h2>Marca y modelo</h2>
                         </div>
@@ -31,20 +32,12 @@
                                             <label for="modelo">Modelo</label>
                                             <select name="modelo" id="modelo" class="form-control input-lg" required>
                                             	<option> Seleccion&aacute; un modelo </option>
-                                                <option> 1500 </option>
-                                                <option> 2000 </option>
-                                                <option> Gol </option>
-                                                <option> Golf </option>
-                                                <option>Otro</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
 	                   		</div> 
                         </div>
-                        
-                        
-                        
 	                    <div class="col-md-12"> 
                         	<h2>T&iacute;tulo, precio y descripci&oacute;n</h2>
                         </div>
@@ -54,21 +47,21 @@
                                     <div class="col-sm-8">                                
                                         <div class="form-group">
                                             <label for="titulo">T&iacute;tulo de la publicación</label>
-                                            <input type="text" class="form-control input-lg" id="titulo" required placeholder="Ej.: Volkswagen Golf Motor 2.0 2006 Azul 5 puertas" maxlength="60">
+                                            <input type="text" class="form-control input-lg" id="titulo" name="titulo"required placeholder="Ej.: Volkswagen Golf Motor 2.0 2006 Azul 5 puertas" maxlength="60">
                                             <span class="help-block">Hasta 60 caracteres</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">                                
                                         <div class="form-group">
                                             <label for="precio">Precio</label>
-                                            <input type="text" class="form-control input-lg" id="precio" required>
+                                            <input type="text" class="form-control input-lg" id="precio" name="precio" required>
                                             <span class="help-block">En Pesos Argentinos</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">                                
                                         <div class="form-group">
                                             <label for="titulo">Descripción</label>
-                                            <textarea rows="5" class="form-control input-lg" id="descripcion" placeholder="Ej.: Tiene las cubiertas con pocos kil&oacute;metros y se hizo un cambio de correas recientemente."></textarea>
+                                            <textarea rows="5" class="form-control input-lg" id="descripcion" name="descripcion"placeholder="Ej.: Tiene las cubiertas con pocos kil&oacute;metros y se hizo un cambio de correas recientemente."></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -153,23 +146,17 @@
                                         <div class="form-group">
                                             <label for="provincia">Provincia</label>
                                             <select name="provincia" id="provincia" class="form-control" required>
-                                            	<option> Seleccion&aacute; una provincia </option>
-                                                <option> Buenos Aires </option>
-                                                <option> Capital Federal </option>
-                                                <option> Catamarca </option>
-                                                <option> Corrientes </option>
+                                            	<option> Seleccioná una provincia </option>
+                                                {% for pcia in provinces %}
+                                                <option value="{{ pcia.id }}">{{ pcia.description }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="modelo">Ciudad</label>
-                                            <select name="modelo" id="modelo" class="form-control" required>
-                                            	<option> Seleccion&aacute; una ciudad </option>
-                                                <option> 25 de mayo </option>
-                                                <option> 9 de julio </option>
-                                                <option> Azul </option>
-                                                <option> Balcarce </option>
+                                            <label for="ciudad">Ciudad</label>
+                                            <select id="ciudad" name="ciudad" class="form-control" required>
                                             </select>
                                         </div>
                                     </div>
@@ -184,51 +171,80 @@
                                 <div class="row">
                                     <div class="col-sm-4">                                
                                         <div class="form-group">
-<label for="MLA1744-COMBUS">Combustible</label>
-<select name="MLA1744-COMBUS" id="MLA1744-COMBUS" required class="form-control"><option value="">Elegir</option><option value="MLA1744-COMBUS-DIESEL">Diesel</option><option value="MLA1744-COMBUS-NAFTA">Nafta</option><option value="MLA1744-COMBUS-NAFTAGNC">Nafta/Gnc</option></select>
+											<label for="COMBUS">Combustible</label>
+											<select name="COMBUS" id="COMBUS" required class="form-control">
+												<option value="">Elegir</option>
+												 {% for fuel in fuels %}
+                                                <option value="{{ fuel.id }}">{{ fuel.description }}</option>
+                                                {% endfor %}
+											</select>
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
-<label for="MLA1744-DOOR">Cant. de puertas</label>
-<select name="MLA1744-DOOR" id="MLA1744-DOOR" required class="form-control"><option value="">Elegir</option><option value="MLA1744-DOOR-2">2</option><option value="MLA1744-DOOR-3">3</option><option value="MLA1744-DOOR-4">4</option><option value="MLA1744-DOOR-5">5</option></select>
+											<label for="DOOR">Cant. de puertas</label>
+											<select name="DOOR" id="DOOR"  class="form-control">
+												<option value="">Elegir</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</select>
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
-<label for="MLA1744-KMTS">Kilómetros</label>
-<input type="number" name="MLA1744-KMTS" id="MLA1744-KMTS" value="" maxlength="250" required class="form-control">
+											<label for="KMTS">Kilómetros</label>
+											<input type="number" name="KMTS" id="KMTS" value="" maxlength="250" required class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-sm-4">                                
                                         <div class="form-group">
-<label for="MLA1744-YEAR">Año</label>
-<select name="MLA1744-YEAR" id="MLA1744-YEAR" required class="form-control"><option value="">Elegir</option><option value="MLA1744-YEAR-2014">2014</option><option value="MLA1744-YEAR-2013">2013</option><option value="MLA1744-YEAR-2012">2012</option><option value="MLA1744-YEAR-2011">2011</option><option value="MLA1744-YEAR-2010">2010</option><option value="MLA1744-YEAR-2009">2009</option><option value="MLA1744-YEAR-2008">2008</option><option value="MLA1744-YEAR-2007">2007</option><option value="MLA1744-YEAR-2006">2006</option><option value="MLA1744-YEAR-2005">2005</option><option value="MLA1744-YEAR-2004">2004</option><option value="MLA1744-YEAR-2003">2003</option><option value="MLA1744-YEAR-2002">2002</option><option value="MLA1744-YEAR-2001">2001</option><option value="MLA1744-YEAR-2000">2000</option><option value="MLA1744-YEAR-1999">1999</option><option value="MLA1744-YEAR-1998">1998</option><option value="MLA1744-YEAR-1997">1997</option><option value="MLA1744-YEAR-1996">1996</option><option value="MLA1744-YEAR-1995">1995</option><option value="MLA1744-YEAR-1994">1994</option><option value="MLA1744-YEAR-1993">1993</option><option value="MLA1744-YEAR-1992">1992</option><option value="MLA1744-YEAR-1991">1991</option><option value="MLA1744-YEAR-1990">1990</option><option value="MLA1744-YEAR-1989">1989</option><option value="MLA1744-YEAR-1988">1988</option><option value="MLA1744-YEAR-1987">1987</option><option value="MLA1744-YEAR-1986">1986</option><option value="MLA1744-YEAR-1985">1985</option><option value="MLA1744-YEAR-1984">1984</option><option value="MLA1744-YEAR-1983">1983</option><option value="MLA1744-YEAR-1982">1982</option><option value="MLA1744-YEAR-1981">1981</option><option value="MLA1744-YEAR-1980">1980</option></select>
+											<label for="YEAR">Año</label>
+											<select name="YEAR" id="YEAR" required class="form-control">
+												<option value="">Elegir</option>
+												{% for year in years %}
+                                                <option value="{{ year.id }}">{{ year.description }}</option>
+                                                {% endfor %}
+											</select>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">                                
                                         <div class="form-group">
-    <label for="MLA1744-COLOREXT">Color</label>
-    <select name="MLA1744-COLOREXT" id="MLA1744-COLOREXT" class="form-control"><option value="">Elegir</option><option value="MLA1744-COLOREXT-AMARILLO">Amarillo</option><option value="MLA1744-COLOREXT-AZUL">Azul</option><option value="MLA1744-COLOREXT-BEIGE">Beige</option><option value="MLA1744-COLOREXT-BLANCO">Blanco</option><option value="MLA1744-COLOREXT-BORDO">Bordó</option><option value="MLA1744-COLOREXT-CELESTE">Celeste</option><option value="MLA1744-COLOREXT-CHAMPAGNE">Champagne</option><option value="MLA1744-COLOREXT-GRIS">Gris</option><option value="MLA1744-COLOREXT-MARRON">Marrón</option><option value="MLA1744-COLOREXT-NEGRO">Negro</option><option value="MLA1744-COLOREXT-ORO">Oro</option><option value="MLA1744-COLOREXT-PLATA">Plata</option><option value="MLA1744-COLOREXT-ROJO">Rojo</option><option value="MLA1744-COLOREXT-ROSADO">Rosado</option><option value="MLA1744-COLOREXT-VERDE">Verde</option><option value="MLA1744-COLOREXT-OTRO">Otro</option></select>
+										    <label for="COLOREXT">Color</label>
+										    <input type="text" name="COLOREXT" id="COLOREXT" value="" maxlength="250" required class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-sm-4">                                
                                         <div class="form-group">
-    <label for="MLA1744-DIREC">Dirección</label>
-    <select name="MLA1744-DIREC" id="MLA1744-DIREC" class="form-control">
-    <option value="">Elegir</option><option value="MLA1744-DIREC-ASISTIDA">Asistida</option><option value="MLA1744-DIREC-HIDRAULICA">Hidráulica</option><option value="MLA1744-DIREC-MECANICA">Mecánica</option></select>
+										    <label for="DIREC">Dirección</label>
+										    <select name="DIREC" id="DIREC" class="form-control">
+										    	<option value="">Elegir</option>
+										    	{% for direction in directions %}
+                                                <option value="{{ direction.id }}">{{ direction.description }}</option>
+                                                {% endfor %}
+										    </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">                                
                                         <div class="form-group">
-    <label for="MLA1744-OWNER">Único dueño</label>
-    <select name="MLA1744-OWNER" id="MLA1744-OWNER" class="form-control"><option value="">Elegir</option><option value="MLA1744-OWNER-SI">Sí</option><option value="MLA1744-OWNER-NO">No</option></select>
+    										<label for="OWNER">Único dueño</label>
+    										<select name="OWNER" id="OWNER" class="form-control">
+    											<option value="">Elegir</option>
+    											<option value="OWNER-SI">Sí</option>
+    											<option value="OWNER-NO">No</option>
+    										</select>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">                                
                                         <div class="form-group">
-    <label for="MLA1744-TRANS">Transmisión</label>
-    <select name="MLA1744-TRANS" id="MLA1744-TRANS" class="form-control"><option value="">Elegir</option><option value="MLA1744-TRANS-AUTOMATICA">Automática</option><option value="MLA1744-TRANS-MANUAL">Manual</option></select>
+									    	<label for="TRANS">Transmisión</label>
+									    	<select name="TRANS" id="TRANS" class="form-control">
+									    		<option value="">Elegir</option>
+									    		{% for trans in transmissions %}
+                                                <option value="{{ trans.id }}">{{ trans.description }}</option>
+                                                {% endfor %}
+									    	</select>
                                         </div>
                                     </div>
                                 </div>
@@ -243,73 +259,73 @@
                                      <div class="col-sm-4"> 
                                         <div class="checkbox">
 											<h5><strong>Confort</strong></h5>
-                                            <label for="MLA1744-AIRACON"><input type="checkbox" name="MLA1744-AIRACON" id="MLA1744-AIRACON" >Aire acondicionado</label><br>
-                                            <label for="MLA1744-ALARMLUC"><input type="checkbox" name="MLA1744-ALARMLUC" id="MLA1744-ALARMLUC" >Alarma de luces encendidas</label><br>
-                                            <label for="MLA1744-APERBAUL"><input type="checkbox" name="MLA1744-APERBAUL" id="MLA1744-APERBAUL" >Apertura remota de baúl</label><br>
-                                            <label for="MLA1744-ASIENELEC"><input type="checkbox" name="MLA1744-ASIENELEC" id="MLA1744-ASIENELEC" >Asientos eléctricos</label><br>
-                                            <label for="MLA1744-ASREBAT"><input type="checkbox" name="MLA1744-ASREBAT" id="MLA1744-ASREBAT" >Asiento trasero rebatible</label><br>
-                                            <label for="MLA1744-ASREGULA"><input type="checkbox" name="MLA1744-ASREGULA" id="MLA1744-ASREGULA" >Asiento conductor regulable en altura</label><br>
-                                            <label for="MLA1744-BLQCNTDOOR"><input type="checkbox" name="MLA1744-BLQCNTDOOR" id="MLA1744-BLQCNTDOOR" >Cierre centralizado de puertas</label><br>
-                                            <label for="MLA1744-CLIMAUT"><input type="checkbox" name="MLA1744-CLIMAUT" id="MLA1744-CLIMAUT" >Climatizador automático</label><br>
-                                            <label for="MLA1744-COMPABO"><input type="checkbox" name="MLA1744-COMPABO" id="MLA1744-COMPABO" >Computadora de abordo</label><br>
-                                            <label for="MLA1744-CTRLVEL"><input type="checkbox" name="MLA1744-CTRLVEL" id="MLA1744-CTRLVEL" >Control de velocidad de crucero</label><br>
-                                            <label for="MLA1744-ESPELEC"><input type="checkbox" name="MLA1744-ESPELEC" id="MLA1744-ESPELEC" >Espejos eléctricos</label><br>
-                                            <label for="MLA1744-ESTACIONAM"><input type="checkbox" name="MLA1744-ESTACIONAM" id="MLA1744-ESTACIONAM" >Sensor de estacionamiento</label><br>
-                                            <label for="MLA1744-FAROREG"><input type="checkbox" name="MLA1744-FAROREG" id="MLA1744-FAROREG" >Faros regulables desde el interior</label><br>
-                                            <label for="MLA1744-GPS"><input type="checkbox" name="MLA1744-GPS" id="MLA1744-GPS" >GPS</label><br>
-                                            <label for="MLA1744-SENSLL"><input type="checkbox" name="MLA1744-SENSLL" id="MLA1744-SENSLL" >Sensor de lluvia</label><br>
-                                            <label for="MLA1744-SENSLUZ"><input type="checkbox" name="MLA1744-SENSLUZ" id="MLA1744-SENSLUZ" >Sensor de luz</label><br>
-                                            <label for="MLA1744-TAPCUERO"><input type="checkbox" name="MLA1744-TAPCUERO" id="MLA1744-TAPCUERO" >Tapizado de cuero</label><br>
-                                            <label for="MLA1744-TECHOCORR"><input type="checkbox" name="MLA1744-TECHOCORR" id="MLA1744-TECHOCORR" >Techo corredizo</label><br>
-                                            <label for="MLA1744-VIDELEC"><input type="checkbox" name="MLA1744-VIDELEC" id="MLA1744-VIDELEC" >Cristales eléctricos</label>
+                                            <label for="AIRACON"><input type="checkbox" name="AIRACON" id="AIRACON" >Aire acondicionado</label><br>
+                                            <label for="ALARMLUC"><input type="checkbox" name="ALARMLUC" id="ALARMLUC" >Alarma de luces encendidas</label><br>
+                                            <label for="APERBAUL"><input type="checkbox" name="APERBAUL" id="APERBAUL" >Apertura remota de baúl</label><br>
+                                            <label for="ASIENELEC"><input type="checkbox" name="ASIENELEC" id="ASIENELEC" >Asientos eléctricos</label><br>
+                                            <label for="ASREBAT"><input type="checkbox" name="ASREBAT" id="ASREBAT" >Asiento trasero rebatible</label><br>
+                                            <label for="ASREGULA"><input type="checkbox" name="ASREGULA" id="ASREGULA" >Asiento conductor regulable en altura</label><br>
+                                            <label for="BLQCNTDOOR"><input type="checkbox" name="BLQCNTDOOR" id="BLQCNTDOOR" >Cierre centralizado de puertas</label><br>
+                                            <label for="CLIMAUT"><input type="checkbox" name="CLIMAUT" id="CLIMAUT" >Climatizador automático</label><br>
+                                            <label for="COMPABO"><input type="checkbox" name="COMPABO" id="COMPABO" >Computadora de abordo</label><br>
+                                            <label for="CTRLVEL"><input type="checkbox" name="CTRLVEL" id="CTRLVEL" >Control de velocidad de crucero</label><br>
+                                            <label for="ESPELEC"><input type="checkbox" name="ESPELEC" id="ESPELEC" >Espejos eléctricos</label><br>
+                                            <label for="ESTACIONAM"><input type="checkbox" name="ESTACIONAM" id="ESTACIONAM" >Sensor de estacionamiento</label><br>
+                                            <label for="FAROREG"><input type="checkbox" name="FAROREG" id="FAROREG" >Faros regulables desde el interior</label><br>
+                                            <label for="GPS"><input type="checkbox" name="GPS" id="GPS" >GPS</label><br>
+                                            <label for="SENSLL"><input type="checkbox" name="SENSLL" id="SENSLL" >Sensor de lluvia</label><br>
+                                            <label for="SENSLUZ"><input type="checkbox" name="SENSLUZ" id="SENSLUZ" >Sensor de luz</label><br>
+                                            <label for="TAPCUERO"><input type="checkbox" name="TAPCUERO" id="TAPCUERO" >Tapizado de cuero</label><br>
+                                            <label for="TECHOCORR"><input type="checkbox" name="TECHOCORR" id="TECHOCORR" >Techo corredizo</label><br>
+                                            <label for="VIDELEC"><input type="checkbox" name="VIDELEC" id="VIDELEC" >Cristales eléctricos</label>
                                         </div>
                                     </div>
                                    <div class="col-sm-4"> 
                                         <div class="checkbox">
 <div class="visible-xs">&nbsp;</div>
 											<h5><strong>Seguridad</strong></h5>
-                                            <label for="MLA1744-3LUZSTOP"><input type="checkbox" name="MLA1744-3LUZSTOP" id="MLA1744-3LUZSTOP" >Tercer stop</label><br>
-                                            <label for="MLA1744-ABS"><input type="checkbox" name="MLA1744-ABS" id="MLA1744-ABS" >Frenos ABS</label><br>
-                                            <label for="MLA1744-AIR1"><input type="checkbox" name="MLA1744-AIR1" id="MLA1744-AIR1" >Airbag conductor</label><br>
-                                            <label for="MLA1744-AIR2"><input type="checkbox" name="MLA1744-AIR2" id="MLA1744-AIR2" >Airbag pasajero</label><br>
-                                            <label for="MLA1744-AIR3"><input type="checkbox" name="MLA1744-AIR3" id="MLA1744-AIR3" >Airbag laterales</label><br>
-                                            <label for="MLA1744-AIRBAGCORT"><input type="checkbox" name="MLA1744-AIRBAGCORT" id="MLA1744-AIRBAGCORT" >Airbag de cortina</label><br>
-                                            <label for="MLA1744-ALAR"><input type="checkbox" name="MLA1744-ALAR" id="MLA1744-ALAR" >Alarma</label><br>
-                                            <label for="MLA1744-APCABEZA"><input type="checkbox" name="MLA1744-APCABEZA" id="MLA1744-APCABEZA" >Apoya cabeza en asientos traseros</label><br>
-                                            <label for="MLA1744-BLIND"><input type="checkbox" name="MLA1744-BLIND" id="MLA1744-BLIND" >Blindado</label><br>
-                                            <label for="MLA1744-CNTTRACC"><input type="checkbox" name="MLA1744-CNTTRACC" id="MLA1744-CNTTRACC" >Control de tracción</label><br>
-                                            <label for="MLA1744-CONTR"><input type="checkbox" name="MLA1744-CONTR" id="MLA1744-CONTR" >Control de estabilidad</label><br>
-                                            <label for="MLA1744-DOBTRACC"><input type="checkbox" name="MLA1744-DOBTRACC" id="MLA1744-DOBTRACC" >Doble tracción</label><br>
-                                            <label for="MLA1744-FARANTI"><input type="checkbox" name="MLA1744-FARANTI" id="MLA1744-FARANTI" >Faros antinieblas delanteros</label><br>
-                                            <label for="MLA1744-FAROXEN"><input type="checkbox" name="MLA1744-FAROXEN" id="MLA1744-FAROXEN" >Faros de xenón</label><br>
-                                            <label for="MLA1744-INMOVMOT"><input type="checkbox" name="MLA1744-INMOVMOT" id="MLA1744-INMOVMOT" >Inmovilizador de motor</label><br>
-                                            <label for="MLA1744-ISOFIX"><input type="checkbox" name="MLA1744-ISOFIX" id="MLA1744-ISOFIX" >Isofix</label><br>
-                                            <label for="MLA1744-NEBLTRAS"><input type="checkbox" name="MLA1744-NEBLTRAS" id="MLA1744-NEBLTRAS" >Faros antinieblas traseros</label><br>
-                                            <label for="MLA1744-REPFUERZA"><input type="checkbox" name="MLA1744-REPFUERZA" id="MLA1744-REPFUERZA" >Repartidor electrónico de fuerza de frenado</label>
+                                            <label for="3LUZSTOP"><input type="checkbox" name="3LUZSTOP" id="3LUZSTOP" >Tercer stop</label><br>
+                                            <label for="ABS"><input type="checkbox" name="ABS" id="ABS" >Frenos ABS</label><br>
+                                            <label for="AIR1"><input type="checkbox" name="AIR1" id="AIR1" >Airbag conductor</label><br>
+                                            <label for="AIR2"><input type="checkbox" name="AIR2" id="AIR2" >Airbag pasajero</label><br>
+                                            <label for="AIR3"><input type="checkbox" name="AIR3" id="AIR3" >Airbag laterales</label><br>
+                                            <label for="AIRBAGCORT"><input type="checkbox" name="AIRBAGCORT" id="AIRBAGCORT" >Airbag de cortina</label><br>
+                                            <label for="ALAR"><input type="checkbox" name="ALAR" id="ALAR" >Alarma</label><br>
+                                            <label for="APCABEZA"><input type="checkbox" name="APCABEZA" id="APCABEZA" >Apoya cabeza en asientos traseros</label><br>
+                                            <label for="BLIND"><input type="checkbox" name="BLIND" id="BLIND" >Blindado</label><br>
+                                            <label for="CNTTRACC"><input type="checkbox" name="CNTTRACC" id="CNTTRACC" >Control de tracción</label><br>
+                                            <label for="CONTR"><input type="checkbox" name="CONTR" id="CONTR" >Control de estabilidad</label><br>
+                                            <label for="DOBTRACC"><input type="checkbox" name="DOBTRACC" id="DOBTRACC" >Doble tracción</label><br>
+                                            <label for="FARANTI"><input type="checkbox" name="FARANTI" id="FARANTI" >Faros antinieblas delanteros</label><br>
+                                            <label for="FAROXEN"><input type="checkbox" name="FAROXEN" id="FAROXEN" >Faros de xenón</label><br>
+                                            <label for="INMOVMOT"><input type="checkbox" name="INMOVMOT" id="INMOVMOT" >Inmovilizador de motor</label><br>
+                                            <label for="ISOFIX"><input type="checkbox" name="ISOFIX" id="ISOFIX" >Isofix</label><br>
+                                            <label for="NEBLTRAS"><input type="checkbox" name="NEBLTRAS" id="NEBLTRAS" >Faros antinieblas traseros</label><br>
+                                            <label for="REPFUERZA"><input type="checkbox" name="REPFUERZA" id="REPFUERZA" >Repartidor electrónico de fuerza de frenado</label>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">                                
                                         <div class="checkbox">
 <div class="visible-xs">&nbsp;</div>
                                             <h5><strong>Sonido</strong></h5>
-                                            <label for="MLA1744-CAJACD"><input type="checkbox" name="MLA1744-CAJACD" id="MLA1744-CAJACD">Caja de CD</label><br>
-                                            <label for="MLA1744-AM/FM"><input type="checkbox" name="MLA1744-AM/FM" id="MLA1744-AM/FM" >AM/FM</label><br>
-                                            <label for="MLA1744-BLUETOOTH"><input type="checkbox" name="MLA1744-BLUETOOTH" id="MLA1744-BLUETOOTH" >Bluetooth</label><br>
-                                            <label for="MLA1744-CARGADORCD"><input type="checkbox" name="MLA1744-CARGADORCD" id="MLA1744-CARGADORCD" >Cargador de CD</label><br>
-                                            <label for="MLA1744-CASET"><input type="checkbox" name="MLA1744-CASET" id="MLA1744-CASET" >Pasacassette</label><br>
-                                            <label for="MLA1744-COMANDOSAT"><input type="checkbox" name="MLA1744-COMANDOSAT" id="MLA1744-COMANDOSAT" >Comando satelital de stereo</label><br>
-                                            <label for="MLA1744-DVD"><input type="checkbox" name="MLA1744-DVD" id="MLA1744-DVD" >DVD</label><br>
-                                            <label for="MLA1744-ENTAUXILIA"><input type="checkbox" name="MLA1744-ENTAUXILIA" id="MLA1744-ENTAUXILIA" >Entrada auxiliar</label><br>
-                                            <label for="MLA1744-MP3"><input type="checkbox" name="MLA1744-MP3" id="MLA1744-MP3" >MP3</label><br>
-                                            <label for="MLA1744-REPRODCD"><input type="checkbox" name="MLA1744-REPRODCD" id="MLA1744-REPRODCD" >CD</label><br>
-                                            <label for="MLA1744-TARJETASD"><input type="checkbox" name="MLA1744-TARJETASD" id="MLA1744-TARJETASD" >Tarjeta SD</label><br>
-                                            <label for="MLA1744-USB"><input type="checkbox" name="MLA1744-USB" id="MLA1744-USB" >Entrada USB</label><div>&nbsp;</div>
+                                            <label for="CAJACD"><input type="checkbox" name="CAJACD" id="CAJACD">Caja de CD</label><br>
+                                            <label for="AM/FM"><input type="checkbox" name="AM/FM" id="AM/FM" >AM/FM</label><br>
+                                            <label for="BLUETOOTH"><input type="checkbox" name="BLUETOOTH" id="BLUETOOTH" >Bluetooth</label><br>
+                                            <label for="CARGADORCD"><input type="checkbox" name="CARGADORCD" id="CARGADORCD" >Cargador de CD</label><br>
+                                            <label for="CASET"><input type="checkbox" name="CASET" id="CASET" >Pasacassette</label><br>
+                                            <label for="COMANDOSAT"><input type="checkbox" name="COMANDOSAT" id="COMANDOSAT" >Comando satelital de stereo</label><br>
+                                            <label for="DVD"><input type="checkbox" name="DVD" id="DVD" >DVD</label><br>
+                                            <label for="ENTAUXILIA"><input type="checkbox" name="ENTAUXILIA" id="ENTAUXILIA" >Entrada auxiliar</label><br>
+                                            <label for="MP3"><input type="checkbox" name="MP3" id="MP3" >MP3</label><br>
+                                            <label for="REPRODCD"><input type="checkbox" name="REPRODCD" id="REPRODCD" >CD</label><br>
+                                            <label for="TARJETASD"><input type="checkbox" name="TARJETASD" id="TARJETASD" >Tarjeta SD</label><br>
+                                            <label for="USB"><input type="checkbox" name="USB" id="USB" >Entrada USB</label><div>&nbsp;</div>
                                             
                                             <h5><strong>Exterior</strong></h5>
-                                            <label for="MLA1744-LIMPIA/LAV"><input type="checkbox" name="MLA1744-LIMPIA/LAV" id="MLA1744-LIMPIA/LAV" >Limpia/lava luneta</label><br>
-                                            <label for="MLA1744-LLANALEAC"><input type="checkbox" name="MLA1744-LLANALEAC" id="MLA1744-LLANALEAC" >Llantas de aleación</label><br>
-                                            <label for="MLA1744-PARAGOLPES"><input type="checkbox" name="MLA1744-PARAGOLPES" id="MLA1744-PARAGOLPES" >Paragolpes pintados</label><br>
-                                            <label for="MLA1744-VIDPOLARIZ"><input type="checkbox" name="MLA1744-VIDPOLARIZ" id="MLA1744-VIDPOLARIZ" >Vidrios polarizados</label>
+                                            <label for="LIMPIA/LAV"><input type="checkbox" name="LIMPIA/LAV" id="LIMPIA/LAV" >Limpia/lava luneta</label><br>
+                                            <label for="LLANALEAC"><input type="checkbox" name="LLANALEAC" id="LLANALEAC" >Llantas de aleación</label><br>
+                                            <label for="PARAGOLPES"><input type="checkbox" name="PARAGOLPES" id="PARAGOLPES" >Paragolpes pintados</label><br>
+                                            <label for="VIDPOLARIZ"><input type="checkbox" name="VIDPOLARIZ" id="VIDPOLARIZ" >Vidrios polarizados</label>
                                         </div>
                                     </div>
                                 </div>

@@ -22,15 +22,20 @@ class Car {
      * @Assert\NotBlank()
      */
 	protected $title;
-	
+
 	/**
-     * @ORM\OneToOne(targetEntity="Trademark")
+     * @ORM\Column(type="string", length=250)
+     * @Assert\NotBlank()
+     */
+	protected $description;
+	/**
+     * @ORM\ManyToOne(targetEntity="Trademark", inversedBy="trademarks")
      * @ORM\JoinColumn(name="trademark_id", referencedColumnName="id")
      **/
 	protected $trademark;
 	
 	/**
-     * @ORM\OneToOne(targetEntity="Model")
+     * @ORM\ManyToOne(targetEntity="Model",  inversedBy="models")
      * @ORM\JoinColumn(name="model_id", referencedColumnName="id")
      **/
 	protected $model;
@@ -53,33 +58,57 @@ class Car {
      */
 	protected $km;
 	
-	/**
-     * @ORM\OneToOne(targetEntity="Fuel")
+	
+    /**
+     * @ORM\ManyToOne(targetEntity="Fuel", inversedBy="fuels")
      * @ORM\JoinColumn(name="fuel_id", referencedColumnName="id")
      **/
 	protected $fuel;
 	
 	/**
-     * @ORM\OneToOne(targetEntity="Year")
+     * @ORM\ManyToOne(targetEntity="Year")
      * @ORM\JoinColumn(name="year_id", referencedColumnName="id")
      **/
 	protected $year;
 	
 	/**
-     * @ORM\OneToOne(targetEntity="Direction")
+     * @ORM\ManyToOne(targetEntity="Direction")
      * @ORM\JoinColumn(name="direction_id", referencedColumnName="id")
      **/
 	protected $direction;
 	
 	/**
-     * @ORM\OneToMany(targetEntity="Feature", mappedBy="car")
+     * @ORM\ManyToOne(targetEntity="Transmission", inversedBy="transmissions")
+     * @ORM\JoinColumn(name="transmission_id", referencedColumnName="id")
+     **/
+	protected $transmission;
+	
+	/**
+     * @ORM\ManyToOne(targetEntity="Province")
+     * @ORM\JoinColumn(name="province_id", referencedColumnName="id")
+     **/
+	protected $province;
+		
+	/**
+     * @ORM\ManyToOne(targetEntity="City")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     **/
+	protected $city;	
+	
+
+	/**
+     * @ORM\ManyToMany(targetEntity="Feature")
+     * @ORM\JoinTable(name="car_feature",
+     *     joinColumns={@ORM\JoinColumn(name="car_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="feature_id", referencedColumnName="id")}
+     * )
      */
 	protected $features;
 	
 	/**
-     * @ORM\Column(type="string", length=150)
-     * @Assert\NotBlank()
-     */
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="mandatoryImage_id", referencedColumnName="id")
+     **/
 	protected $mandatoryImage;
 	
 	/**
@@ -99,6 +128,20 @@ class Car {
      */
 	protected $status = "PUBLISHED";
 	
+	
+	
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="cars")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     **/
+	protected $user;
+	
+	/**
+	 * 
+	 * @ORM\Column(type="date")
+	 */
+	protected $publishedDate;
+	
 	public function setId( $id ) {
 		$this->id = $id;
 	}
@@ -107,7 +150,7 @@ class Car {
 		return $this->id; 
 	}
 	
-	public function setFuel( $fuel ) {
+	public function setFuel(\Kells\Bundle\FrontBundle\Entity\Fuel $fuel ) {
 		$this->fuel = $fuel;
 	}
 	
@@ -119,16 +162,16 @@ class Car {
 		return $this->trademark;
 	}
 	
-	public function setTrademark( $trademark) {
-		$this->trademark;
+	public function setTrademark(\Kells\Bundle\FrontBundle\Entity\Trademark $trademark) {
+		$this->trademark = $trademark;
 	}
 	
 	public function getModel() {
 		return $this->model;
 	}
 	
-	public function setModel( $model) {
-		$this->model;
+	public function setModel(\Kells\Bundle\FrontBundle\Entity\Model $model) {
+		$this->model = $model;
 	}
 	
 	public function getVersion() {
@@ -154,6 +197,7 @@ class Car {
 	public function getPrice() {
 		return $this->price;
 	}
+	
 	
     /**
      * Constructor
@@ -366,5 +410,143 @@ class Car {
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set transmission
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Transmission $transmission
+     * @return Car
+     */
+    public function setTransmission(\Kells\Bundle\FrontBundle\Entity\Transmission $transmission = null)
+    {
+        $this->transmission = $transmission;
+
+        return $this;
+    }
+
+    /**
+     * Get transmission
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\Transmission 
+     */
+    public function getTransmission()
+    {
+        return $this->transmission;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\User $user
+     * @return Car
+     */
+    public function setUser(\Kells\Bundle\FrontBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set province
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Province $province
+     * @return Car
+     */
+    public function setProvince(\Kells\Bundle\FrontBundle\Entity\Province $province = null)
+    {
+        $this->province = $province;
+
+        return $this;
+    }
+
+    /**
+     * Get province
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\Province 
+     */
+    public function getProvince()
+    {
+        return $this->province;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\City $city
+     * @return Car
+     */
+    public function setCity(\Kells\Bundle\FrontBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\City 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set description
+     *
+     * @param integer $description
+     * @return Car
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return integer 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set publishedDate
+     *
+     * @param \DateTime $publishedDate
+     * @return Car
+     */
+    public function setPublishedDate($publishedDate)
+    {
+        $this->publishedDate = $publishedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get publishedDate
+     *
+     * @return \DateTime 
+     */
+    public function getPublishedDate()
+    {
+        return $this->publishedDate;
     }
 }

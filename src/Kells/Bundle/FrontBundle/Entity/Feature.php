@@ -13,8 +13,7 @@ class Feature
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="string")
      */
     private $id;
 
@@ -26,16 +25,11 @@ class Feature
 
     
 	/**
-     * @ORM\OneToOne(targetEntity="FeatureType")
+     * @ORM\ManyToOne(targetEntity="FeatureType")
      * @ORM\JoinColumn(name="featureType_id", referencedColumnName="id")
      **/
     private $featureType;
 
-     /**
-     * @ORM\ManyToOne(targetEntity="Car", inversedBy="cars")
-     * @ORM\JoinColumn(name="car_id", referencedColumnName="id")
-     */
-	protected $car;
 
     /**
      * Get id
@@ -93,26 +87,17 @@ class Feature
         return $this->featureType;
     }
 
+
     /**
-     * Set car
+     * Set id
      *
-     * @param \Kells\Bundle\FrontBundle\Entity\Car $car
+     * @param \Sring $id
      * @return Feature
      */
-    public function setCar(\Kells\Bundle\FrontBundle\Entity\Car $car = null)
+    public function setId(\Sring $id)
     {
-        $this->car = $car;
+        $this->id = $id;
 
         return $this;
-    }
-
-    /**
-     * Get car
-     *
-     * @return \Kells\Bundle\FrontBundle\Entity\Car 
-     */
-    public function getCar()
-    {
-        return $this->car;
     }
 }

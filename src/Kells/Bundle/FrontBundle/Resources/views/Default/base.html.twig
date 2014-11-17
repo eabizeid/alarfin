@@ -61,6 +61,23 @@
                 		function(data){
                 			 var sub = $('#modelo');
                 			sub.empty();
+                			$.each(data , function(id, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",description.id)
+                    				.text(description.description)); 
+                		    })
+                		
+ 						} )
+					})
+					
+				$('#provincia').change( function(e) {
+ 					// get the value of the selection
+        			var id = $(this).val(),
+		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#ciudad');
+                			sub.empty();
                 			$.each(data , function(key, description) { 
                     			sub.append($("<option></option>")
                     				.attr("value",key)
@@ -69,7 +86,9 @@
                 		
  						} )
 					})
-					})
+				})
+					
+					
 		</script>
  	
         {% block javascripts %}{% endblock %}

@@ -25,23 +25,23 @@
                             </div>
 		                	<div class="col-md-6 col-md-pull-6 toppad ficha-foto">
                 				<div class="well well-blanco">
-                                    <div id="carousel-example-generic" class="carousCarel slide" data-ride="carousel">
+                                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                       <ol class="carousel-indicators">
-                                       <li data-target="#carousel-example-generic" data-slide-to="i" ></li>
+                                       <li data-target="#carousel-example-generic" data-slide-to="0" ></li>
+                                      {% set  i = 1 %}
                                       {% for image in car.images %}
-                                      	i = 1;
-                                        <li data-target="#carousel-example-generic" data-slide-to="i" ></li>
-                                        i++;
+                                        <li data-target="#carousel-example-generic" data-slide-to="{{i}}" ></li>
+                                        {% set i = i + 1 %}
                                       {% endfor %}
                                       </ol> 
                                       <div class="carousel-inner">
                                       	<div class="item active">
-                                          <img src="{{asset('bundles/kellsfront/user_images/') }}/{{ car.mandatoryImage }}" >
+                                          <img src="{{ asset(car.mandatoryImage.webPath) }}" >
                                         </div>
                                       
                                       {% for image in car.images %}
-                                        <div class="item active">
-                                          <img src="{{image}}" >
+                                        <div class="item">
+                                          <img src="{{asset(image.webPath)}}" >
                                         </div>
                                         {% endfor %}
                                       </div>
@@ -124,8 +124,8 @@
                             <ul>
                             {% if features %}
                             	{% for f in features %}
-                            	 {% if feature.featureType.description == "Exterior" %}
-                                	<li>{{ feature.decription}}</li>
+                            	 {% if f.featureType.description == "EXTERIOR" %}
+                                	<li>{{ f.description}}</li>
                                 {% endif %}
                                 {% endfor %}
                             </ul>
@@ -134,8 +134,8 @@
                         <div class="linea-gris-abajo linea-gris-arriba pad15"><h4 class="nomar text-negro">Sonido</h4></div>
                           <ul>
                            {% for feature in features %}
-                            	 {% if feature.featureType.description == "Sonido" %}
-                                	<li>{{ feature.decription}}</li>
+                            	 {% if feature.featureType.description == "SONIDO" %}
+                                	<li>{{ feature.description}}</li>
                                 {% endif %}
                            {% endfor %}
                           </ul>
@@ -145,8 +145,8 @@
                             <div class="linea-gris-abajo linea-gris-arriba pad15"><h4 class="nomar text-negro">Confort</h4></div>
                             <ul>
                                 {% for feature in features %}
-                            	 {% if feature.featureType.description == "Confort" %}
-                                	<li>{{ feature.decription}}</li>
+                            	 {% if feature.featureType.description == "CONFORT" %}
+                                	<li>{{ feature.description}}</li>
                                 {% endif %}
                                 {% endfor %}
                             </ul>
@@ -155,8 +155,8 @@
                         <div class="linea-gris-abajo linea-gris-arriba pad15"><h4 class="nomar text-negro">Seguridad</h4></div>
                           <ul>
                             {% for feature in features %}
-                            	 {% if feature.featureType.description == "Seguridad" %}
-                                	<li>{{ feature.decription}}</li>
+                            	 {% if feature.featureType.description == "SEGURIDAD" %}
+                                	<li>{{ feature.description}}</li>
                                 {% endif %}
                                 {% endfor %}
                           </ul>

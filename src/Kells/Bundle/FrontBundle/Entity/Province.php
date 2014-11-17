@@ -6,9 +6,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="trademarks") 
+ * @ORM\Table(name="provinces") 
  */
-class Trademark {
+class Province {
 	
 	/**
      * @ORM\Id
@@ -24,16 +24,15 @@ class Trademark {
 	protected $description;
 	
 	/**
-     * @ORM\OneToMany(targetEntity="Model", mappedBy="trademark")
+     * @ORM\OneToMany(targetEntity="City", mappedBy="province")
      */
-	protected $models;
+	protected $cities;
 	
 	
  	public function __construct() {
-        $this->models = new ArrayCollection();
+        $this->versions = new ArrayCollection();
     }
-    
-    
+	
 	public function setId( $id ) {
 		$this->id = $id;
 	}
@@ -46,38 +45,41 @@ class Trademark {
 		$this->description = $description;
 	}
 	
-	public function getDescription() {
+	public function getDescription () {
 		return $this->description;
 	}
 	
-	public function setModels($models) {
-		$this->models = $models;
+
+	
+	public function getCities() {
+		return $this->cities;
 	}
 	
-	public function getModels() {
-		return $this->models;
+	public function setCities( $cities) {
+		$this->cities  = $cities;
 	}
 
+
     /**
-     * Add models
+     * Add cities
      *
-     * @param \Kells\Bundle\FrontBundle\Entity\Model $models
-     * @return Trademark
+     * @param \Kells\Bundle\FrontBundle\Entity\City $cities
+     * @return Province
      */
-    public function addModel(\Kells\Bundle\FrontBundle\Entity\Model $models)
+    public function addCity(\Kells\Bundle\FrontBundle\Entity\City $cities)
     {
-        $this->models[] = $models;
+        $this->cities[] = $cities;
 
         return $this;
     }
 
     /**
-     * Remove models
+     * Remove cities
      *
-     * @param \Kells\Bundle\FrontBundle\Entity\Model $models
+     * @param \Kells\Bundle\FrontBundle\Entity\City $cities
      */
-    public function removeModel(\Kells\Bundle\FrontBundle\Entity\Model $models)
+    public function removeCity(\Kells\Bundle\FrontBundle\Entity\City $cities)
     {
-        $this->models->removeElement($models);
+        $this->cities->removeElement($cities);
     }
 }

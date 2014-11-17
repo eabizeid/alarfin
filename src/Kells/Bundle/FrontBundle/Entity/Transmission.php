@@ -6,9 +6,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="versions") 
+ * @ORM\Table(name="transmissions") 
  */
-class Version {
+class Transmission {
 	
 	/**
      * @ORM\Id
@@ -22,12 +22,6 @@ class Version {
      * @Assert\NotBlank()
      */
 	protected $description;
-	
-	/**
-     * @ORM\ManyToOne(targetEntity="Model", inversedBy="models")
-     * @ORM\JoinColumn(name="model_id", referencedColumnName="id")
-     */
-	protected $model;
 	
 	public function setId( $id ) {
 		$this->id = $id;
@@ -43,13 +37,5 @@ class Version {
 	
 	public function getDescription () {
 		return $this->description;
-	}
-	
-	public function getModel() {
-		$this->model;
-	}
-	
-	public function setModel( $model ) {
-		$this->model = $model;
 	}
 }

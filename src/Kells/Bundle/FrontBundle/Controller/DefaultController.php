@@ -405,12 +405,6 @@ class DefaultController extends Controller
 			$car->addFeature($feature);	
 		}
 		
-    	$asientoTRebat = $request->get('ASREBAT');
-		if($asientoTRebat) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('ASREBAT');
-			$car->addFeature($feature);	
-		}
 		
     	$asientoTRebat = $request->get('ASREBAT');
 		if($asientoTRebat) {
@@ -756,9 +750,7 @@ class DefaultController extends Controller
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
 		
-		return $this->render(
-        'KellsFrontBundle:Default:publicar.html.twig', array("form"=>$form->createView(), 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
-        	'directions'=>$directions, 'transmissions'=>$transmissions));
+		return $this->redirect($this->generateUrl('user_myPublications'));
     }
     
    

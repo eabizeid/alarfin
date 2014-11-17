@@ -32,10 +32,11 @@ class CarImage {
     public $path;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Car", inversedBy="cars")
+     * @ORM\ManyToOne(targetEntity="Car", inversedBy="images")
      * @ORM\JoinColumn(name="car_id", referencedColumnName="id")
      */
 	protected $car;
+	
     public function getAbsolutePath()
     {
         return null === $this->path

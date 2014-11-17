@@ -342,6 +342,7 @@ class Car {
     public function addImage(\Kells\Bundle\FrontBundle\Entity\CarImage $images)
     {
         $this->images[] = $images;
+        $images->setCar($this);
 
         return $this;
     }

@@ -29,7 +29,7 @@ class DefaultController extends Controller
 
     	$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Car');
 
-		$cars =  $repository->findAll();
+		$cars =  $repository->findBy(array('status'=>"PUBLISHED"), array('publishedDate' => 'DESC'), 12);
         return $this->render('KellsFrontBundle:Default:index.html.twig', array( 'cars' => $cars, 'form' => $form->createView() ));
     }
     

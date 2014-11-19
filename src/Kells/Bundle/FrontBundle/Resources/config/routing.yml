@@ -75,3 +75,7 @@ route_to_retrieve_city:
 publish:
     path:     /publish/
     defaults: { _controller: KellsFrontBundle:Default:publish  }
+    
+to_finalize:
+    path:     /finalize/
+    defaults: { _controller: KellsFrontBundle:Default:toFinalize  }

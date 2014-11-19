@@ -822,4 +822,15 @@ class DefaultController extends Controller
 		}
 		return;
 	}
+	
+	public function toFinalizeAction(Request $request) {
+		$logger = $this->get('logger');
+		$id = $request->get('id');
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Car');
+		$car = $repository->find($id);
+		$car->setStatus("FINALIZED");
+		$em->flush();
+		return $this->redirect($this->generateUrl('user_myPublications'));
+	}
 }

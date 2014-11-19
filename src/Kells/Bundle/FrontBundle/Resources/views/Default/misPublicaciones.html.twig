@@ -31,6 +31,7 @@
                                 </thead>
                                 <tbody>
                                 	{% for car in myCars%}
+                                	{% if car.status == "PUBLISHED" %}
                                     <tr>
                                         <td><img src="{{asset(car.mandatoryImage.webPath)}}"  class="img-responsive"></td>
                                         <td>{{car.publishedDate|date('d/m/Y')}}</td>
@@ -38,8 +39,10 @@
                                         <td>{{ car.trademark.description}}</td>
                                         <td>{{ car.model.description}}</td>
                                         <td>${{ car.price}}</td>
-                                        <td nowrap><button class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Modificar publicaci&oacute;n"><i class="fa fa-pencil fa-fw"></i></button>&nbsp;<button class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Finalizar publicaci&oacute;n"><i class="fa fa-thumbs-o-down fa-fw"></i></button></td>
+                                        <td nowrap><button class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Modificar publicaci&oacute;n"><i class="fa fa-pencil fa-fw"></i></button>&nbsp;
+                                        <a role="button" href="{{ path('to_finalize', {'id': car.id})}}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Finalizar publicaci&oacute;n"><i class="fa fa-thumbs-o-down fa-fw"></i></a></td>
                                     </tr>
+                                    {% endif %}
                                       {% endfor %}
                                 </tbody>
                             </table>                                        
@@ -58,24 +61,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                	{% for car in myCars%}
+                                	{% if car.status == "FINALIZED" %}
                                     <tr>
-                                        <td><img src="img/foto-auto.jpg" width="800" height="600" alt="Renault Kangoo excelente estado" class="img-responsive"></td>
-                                        <td>10/01/2015</td>
-                                        <td class="publicaciones-titulo"><a href="publicar.php">Renault Kangoo excelente estado</a></td>
-                                        <td>Renault</td>
-                                        <td>Kangoo</td>
-                                        <td>$120000</td>
+                                        <td><img src="{{asset(car.mandatoryImage.webPath)}}" width="800" height="600" class="img-responsive"></td>
+                                        <td>{{car.publishedDate|date('d/m/Y')}}</td>
+                                        <td class="publicaciones-titulo"><a href="publicar.php">{{ car.title }}</a></td>
+                                        <td>{{ car.trademark.description}}</td>
+                                        <td>{{ car.model.description}}</td>
+                                        <td>${{ car.price}}</td>
                                         <td nowrap><button class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Republicar"><i class="fa fa-undo fa-fw"></i></button></td>
                                     </tr>
-                                    <tr>
-                                        <td><img src="img/foto-auto-2.jpg" width="800" height="600" alt="Descapotable Fiat 500" class="img-responsive"></td>
-                                        <td>20/02/2015</td>
-                                        <td class="publicaciones-titulo"><a href="publicar.php">Descapotable Fiat 500</a></td>
-                                        <td>Fiat</td>
-                                        <td>500</td>
-                                        <td>$300000</td>
-                                        <td nowrap><button class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Republicar"><i class="fa fa-undo fa-fw"></i></button></td>
-                                    </tr>
+                                   {%endif%}
+                                   {%endfor%}
                                 </tbody>
                             </table>                          
                           </div>

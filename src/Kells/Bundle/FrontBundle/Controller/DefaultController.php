@@ -1134,5 +1134,5 @@ class DefaultController extends Controller
 		$credito->setDomicilioSolicitante($domicilioSolicitante);
 		$credito->setProvinciaSolicitante();
 		
-	   
+    }	   
 }

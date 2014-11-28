@@ -43,3 +43,5 @@ security:
         - { path: ^/user/myPublications, roles: ROLE_USER}
         - { path: ^/user/toPublish, roles: ROLE_USER}
         - { path: ^/publish, roles: ROLE_USER}
+        - { path: ^/creditRequest, roles: ROLE_USER}
+        - { path: ^/creditRequest, roles: ROLE_LICENSEE}

@@ -79,3 +79,15 @@ publish:
 to_finalize:
     path:     /finalize/
     defaults: { _controller: KellsFrontBundle:Default:toFinalize  }
+    
+to_edit:
+    path:     /edit/
+    defaults: { _controller: KellsFrontBundle:Default:toEdit  }
+    
+creditRequest:
+    path:     /creditRequest/
+    defaults: { _controller: KellsFrontBundle:Default:showCreditRequest }
+    
+ credit:
+    path:     /credit/
+    defaults: { _controller: KellsFrontBundle:Default:credit }

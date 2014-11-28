@@ -27,5 +27,15 @@ class Util {
 	    }
 	    return $token;
 	}
+	public static function addToList(&$listOfElements, $exist, $element, $em) {
+			
+		if ($exist) {
+			$repository = $em->getRepository('KellsFrontBundle:Feature');
+			$feature = $repository->find($element);
+			$listOfElements[] = $feature;
+		}
+	}
+	
+	
 	
 }

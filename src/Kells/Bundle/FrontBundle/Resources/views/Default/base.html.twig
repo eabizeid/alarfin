@@ -21,6 +21,7 @@
         <![endif]-->
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 		<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+		<script src="{{ asset('bundles/kellsfront/js/jquery-1.11.1.min.js') }} "></script>
     </head>
     <body>
      	{{ include('KellsFrontBundle:Default:menu.html.twig') }}
@@ -29,7 +30,6 @@
         {{ include('KellsFrontBundle:Default:footer.html.twig') }}
         
         </footer>
-		<script src="{{ asset('bundles/kellsfront/js/jquery-1.11.1.min.js') }} "></script>
 		<script src="{{ asset('bundles/kellsfront/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('bundles/kellsfront/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
 		<script src="{{ asset('bundles/kellsfront/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
@@ -53,6 +53,7 @@
 					selector: "[data-toggle=tooltip]",
 					container: "body"
 				})
+ 				
  				$('#marca').change( function(e) {
  					// get the value of the selection
         			var id = $(this).val(),
@@ -87,6 +88,40 @@
  						} )
 					})
 				})
+				
+				$('#solicitante-provincia').change( function(e) {
+ 					// get the value of the selection
+        			var id = $(this).val(),
+		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#solicitante-ciudad');
+                			sub.empty();
+                			$.each(data , function(key, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",key)
+                    				.text(description.description)); 
+                		    })
+                		
+ 						} )
+					})
+					
+					$('#conyuge-provincia').change( function(e) {
+ 					// get the value of the selection
+        			var id = $(this).val(),
+		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#conyuge-ciudad');
+                			sub.empty();
+                			$.each(data , function(key, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",key)
+                    				.text(description.description)); 
+                		    })
+                		
+ 						} )
+					})
 					
 					
 		</script>

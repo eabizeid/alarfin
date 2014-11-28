@@ -30,7 +30,6 @@ class Feature
      **/
     private $featureType;
 
-
     /**
      * Get id
      *
@@ -100,4 +99,5 @@ class Feature
 
         return $this;
     }
+
 }

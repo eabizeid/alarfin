@@ -18,6 +18,9 @@ use Kells\Bundle\FrontBundle\Entity\Car;
 use Kells\Bundle\FrontBundle\Entity\Feature;
 use Kells\Bundle\FrontBundle\Entity\ImageFile;
 use Kells\Bundle\FrontBundle\Entity\CarImage;
+use Kells\Bundle\FrontBundle\Entity\Fotocopias;
+use Kells\Bundle\FrontBundle\Entity\FotocopiasConyuge;
+use Kells\Bundle\FrontBundle\Entity\Credito;
 
 use Kells\Bundle\FrontBundle\Utils\Util;
 
@@ -136,40 +139,41 @@ class DefaultController extends Controller
 		}
 			return $this->redirect($this->generateUrl('userRegistration'));
 	}
-    /* ******************** Licensee Registration ***********************************************  */
-    
-    
-    
-    public function licenseeRegistrationAction() {
-     	$registration = new Registration();
-		$form = $this->createForm(new RegistrationType(), $registration, array('action' => $this->generateUrl('licensee_create'),));
 
-
-     	return $this->render('KellsFrontBundle:Default:licenseeRegistration.html.twig', array('form' => $form->createView()));
-     }
-     
-	public function licenseeConfirmAction(Request $request)
+	
+	/* ******************** Licensee Registration ***********************************************  */
+    
+ 	public function licenseeRegistrationAction() {
+    	$registration = new UserRegistration();
+		$form = $this->createForm(new UserRegistrationType(), $registration, array('action' => $this->generateUrl('user_create'),));
+    	
+     	return $this->render('KellsFrontBundle:Default:userRegistration.html.twig', array('form' => $form->createView()));
+    }
+    
+    
+    
+    public function licenseeConfirmAction(Request $request)
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$form = $this->createForm(new RegistrationType(), new Registration());
+		$form = $this->createForm(new UserRegistrationType(), new UserRegistration());
 
 		$form->handleRequest($request);
 
 		if ($form->isValid()) {
 			$registration = $form->getData();
 
-			$licensee = $registration->getLicensee(); 
-			$licensee->setStatus(false);
-			$licensee->setToken(Util::getToken());
-			$em->persist($licensee);
+			$user = $registration->getUser(); 
+			$user->setStatus(false);
+			$user->setToken(Util::getToken());
+			$em->persist($user);
 			$em->flush();
 
-			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/licensee/register/confirm/'.$licensee->getToken();
+			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/user/register/confirm/'.$user->getToken();
 			$message = \Swift_Message::newInstance()
         	->setSubject('Confirmar su registracion')
         	->setFrom('eduardo.abizeid@gmail.com')
-        	->setTo($licensee->getMail())
+        	->setTo($user->getMail())
         	->setBody('<p>Gracias por registrarse</p>'.
         	'<p>Para terminar con el registro por favor haga click en el siguiente vínculo </p>'.
         	'<p><a href="'.$url.'">Confirmar</a></p>', 'text/html'
@@ -177,11 +181,11 @@ class DefaultController extends Controller
         	);
     		$this->get('mailer')->send($message);
 			
-			return $this->redirect($this->generateUrl('licensee_message_confirm'));
+			return $this->redirect($this->generateUrl('user_message_confirm'));
 		}
 
 		return $this->render(
-        'KellsFrontBundle:Default:licenseeRegistration.html.twig',
+        'KellsFrontBundle:Default:userRegistration.html.twig',
 		array('form' => $form->createView())
 		);
 	}
@@ -189,18 +193,18 @@ class DefaultController extends Controller
 	public function licenseeRegisterConfirmAction($token) {
 		if ($token) {
 			$em = $this->getDoctrine()->getManager();
-			$repository = $em->getRepository('KellsFrontBundle:Licensee');
-			$licensee = $repository->findOneByToken($token);
-			if ($licensee) {
+			$repository = $em->getRepository('KellsFrontBundle:User');
+			$user = $repository->findOneByToken($token);
+			if ($user) {
 				//delete token and change status
-				$licensee->setToken('');
-				$licensee->setStatus(true);
+				$user->setToken('');
+				$user->setStatus(true);
 				$em->flush();
 				
 				return $this->redirect($this->generateUrl('kells_front_homepage'));
 			}
 		}
-			return $this->redirect($this->generateUrl('licenseeRegistration'));
+			return $this->redirect($this->generateUrl('userRegistration'));
 	}
     	
 	public function registerMessageConfirmAction() {
@@ -261,7 +265,7 @@ class DefaultController extends Controller
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'), ));
 		return $this->render(
         'KellsFrontBundle:Default:publicar.html.twig', array("form"=>$form->createView(), 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
-        	'directions'=>$directions, 'transmissions'=>$transmissions));
+        	'directions'=>$directions, 'transmissions'=>$transmissions, 'car' => null));
 		
 	}
 	
@@ -269,9 +273,15 @@ class DefaultController extends Controller
 	   	$logger = $this->get('logger');
    		$user = $this->getUser();
     	
+   		$carId = $request->get('carId');
+   		
+   		$logger->info('Es auto nuevo?: '.$carId);
+   		
+   		
    		$title = $request->get('titulo');
    		$description = $request->get('descripcion');
    		$price = $request->get('precio');
+
    		$modelId = $request->get('modelo');
    		$trademarkId = $request->get('marca');
    		$provinceId = $request->get('provincia');
@@ -298,53 +308,79 @@ class DefaultController extends Controller
    		$logger->info('Car title: '.$title);
    		$logger->info('Trademark Car Id: '.$trademarkId);
    		$logger->info('model Car Id: '.$modelId);
-		$logger->info('mandatoryImage: '.$mandatoryImageFile->getClientOriginalName());
-		$logger->info('mandatoryImage extension: '.$mandatoryImageFile->guessExtension());
-   		
-		$mandatoryImage = new ImageFile();
-		$mandatoryImage->setFile($mandatoryImageFile);
 		
-		$image1 = $this->createImage($imageFile1);
-		$image2 = $this->createImage($imageFile2);
-		$image3 = $this->createImage($imageFile3);
-		$image4 = $this->createImage($imageFile4);
-		$image5 = $this->createImage($imageFile5);
-		$image6 = $this->createImage($imageFile6);
+		if ($mandatoryImageFile) {
+			$logger->info('mandatoryImage: '.$mandatoryImageFile->getClientOriginalName());
+			$logger->info('mandatoryImage extension: '.$mandatoryImageFile->guessExtension());
+   		
+			$mandatoryImage = new ImageFile();
+			$mandatoryImage->setFile($mandatoryImageFile);
+		}
+		
+		
+		if ($imageFile1) {
+			$image1 = $this->createImage($imageFile1);
+		}
+		if ($imageFile2) {
+			$image2 = $this->createImage($imageFile2);
+		}
+		if ($imageFile3) {
+			$image3 = $this->createImage($imageFile3);	
+		}
+		if ($imageFile4) {
+			$image4 = $this->createImage($imageFile4);
+		}
+		if ($imageFile5) {
+			$image5 = $this->createImage($imageFile5);
+		}
+		if ($imageFile6) {
+			$image6 = $this->createImage($imageFile6);
+		}
 	
 		
 		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Car');
+		$car = $repository->find($carId);
 		
-		$car = new Car();
+		if (!$car) {
+			$car = new Car();
+		}
 		$car->setTitle($title);		
    		$car->setDescription($description);
    		$car->setPrice($price);
    		$car->setKm($kms);
    		$car->setUser($user);
    		$car->setColor($color);
-		$car->setMandatoryImage($mandatoryImage);
-		if ($image1){ 
+   		
+   		if ($mandatoryImageFile) {
+			$car->setMandatoryImage($mandatoryImage);
+   		}
+		if ($imageFile1){ 
 			$car->addImage($image1);
 		}
-		if ($image2) {
+		if ($imageFile2) {
 			$car->addImage($image2);
 			$image2->setCar($car);
 		}
-		if ($image3) {
+		if ($imageFile3) {
 			$car->addImage($image3);
 			$image2->setCar($car);
 		}
-		if ($image4) {
+		if ($imageFile4) {
 			$car->addImage($image4);
 			$image2->setCar($car);
 		}
-		if ($image5) {
+		if ($imageFile5) {
 			$car->addImage($image5);
 			$image2->setCar($car);
 		}
-		if ($image6) {
+		if ($imageFile6) {
 			$car->addImage($image6);
 			$image2->setCar($car);
 		}	
+		
+		
+		
 		
 		
 		$repository = $em->getRepository('KellsFrontBundle:Fuel');
@@ -380,381 +416,513 @@ class DefaultController extends Controller
 		$car->setYear($year);
 		
 		
-		
-		//CONFORT
+		$featuresList = array();
+		 
 		$aireAcondicionado = $request->get('AIRACON');
-		if($aireAcondicionado) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('AIRACON');
-			$car->addFeature($feature);	
-		}
-		
+		Util::addToList($featuresList, $aireAcondicionado, 'AIRACON', $em);
+			
     	$alarmaLuces = $request->get('ALARMLUC');
-		if($alarmaLuces) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('ALARMLUC');
-			$car->addFeature($feature);	
-		}
-
+    	Util::addToList($featuresList, $alarmaLuces, 'ALARMLUC', $em);
+    	
     	$aperturaBaul = $request->get('APERBAUL');
-		if($aperturaBaul) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('APERBAUL');
-			$car->addFeature($feature);	
-		}
+    	Util::addToList($featuresList, $aperturaBaul, 'APERBAUL', $em);
+    	
 		$asientosElectricos = $request->get('ASIENELEC');
-		if($asientosElectricos) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('ASIENELEC');
-			$car->addFeature($feature);	
-		}
+		Util::addToList($featuresList, $asientosElectricos, 'APERBAUL', $em);
 		
     	$asientoReg = $request->get('ASREGULA');
-		if($asientoReg) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('ASREGULA');
-			$car->addFeature($feature);	
-		}
-		
-		
+    	Util::addToList($featuresList, $asientoReg, 'ASREGULA', $em);
+    	
     	$asientoTRebat = $request->get('ASREBAT');
-		if($asientoTRebat) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('ASREBAT');
-			$car->addFeature($feature);	
-		}
+    	Util::addToList($featuresList, $asientoTRebat, 'ASREBAT', $em);
     	
 		$cierreCen = $request->get('BLQCNTDOOR');
-		if($cierreCen) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('BLQCNTDOOR');
-			$car->addFeature($feature);	
-		}
-		
-    	$climatizador = $request->get('CLIMAUT');
-		if($climatizador) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('CLIMAUT');
-			$car->addFeature($feature);	
-		}
-		
+		Util::addToList($featuresList, $cierreCen, 'BLQCNTDOOR', $em);
+    	
+		$climatizador = $request->get('CLIMAUT');
+    	Util::addToList($featuresList,$climatizador, 'CLIMAUT', $em);
+    	
     	$computadora = $request->get('COMPABO');
-		if($computadora) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('COMPABO');
-			$car->addFeature($feature);	
-		}
-     	
-		$velo = $request->get('CTRLVEL');
-		if($velo) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('CTRLVEL');
-			$car->addFeature($feature);	
-		}
+    	Util::addToList($featuresList, $computadora, 'COMPABO', $em);
+		
+    	$velo = $request->get('CTRLVEL');
+		Util::addToList($featuresList, $velo, 'CTRLVEL', $em);
 		
 		$espeelec = $request->get('ESPELEC');
-		if($espeelec) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('ESPELEC');
-			$car->addFeature($feature);	
-		}
-    	
+		Util::addToList($featuresList, $espeelec, 'ESPELEC', $em);
+		
 		$sensEsta = $request->get('ESTACIONAM');
-		if($sensEsta) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('ESTACIONAM');
-			$car->addFeature($feature);	
-		}
+		Util::addToList($featuresList, $sensEsta, 'ESTACIONAM', $em);
 		
-    	$faros = $request->get('FAROREG');
-		if($faros) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('FAROREG');
-			$car->addFeature($feature);	
-		}
-    	
 		$gps = $request->get('GPS');
-		if($gps) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('GPS');
-			$car->addFeature($feature);	
-		}	
-
-		$sensorLluvia = $request->get('SENSLL');
-		if($sensorLluvia) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('SENSLL');
-			$car->addFeature($feature);	
-		}
-    	$sensorLuz = $request->get('SENSLUZ');
-		if($sensorLuz) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('SENSLUZ');
-			$car->addFeature($feature);	
-		}
-    	
-		$cuero = $request->get('TAPCUERO');
-		if($cuero) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('TAPCUERO');
-			$car->addFeature($feature);	
-		}
-    	$techo = $request->get('TECHOCORR');
-		if($techo) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('TECHOCORR');
-			$car->addFeature($feature);	
-		}
-    	
-		$cristales = $request->get('VIDELEC');
-		if($cristales) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('VIDELEC');
-			$car->addFeature($feature);	
-		}		
+		Util::addToList($featuresList, $gps, 'GPS', $em);
 		
-		//Seguridad
+		$sensorLluvia = $request->get('SENSLL');
+		Util::addToList($featuresList, $sensorLluvia, 'SENSLL', $em);
+    	
+		$sensorLuz = $request->get('SENSLUZ');
+    	Util::addToList($featuresList, $sensorLuz,'SENSLUZ', $em);
+    	
+    	$faros = $request->get('FAROREG');
+    	Util::addToList($featuresList, $faros,'FAROREG', $em);
+		
+    	$cristales = $request->get('VIDELEC');
+		Util::addToList($featuresList, $cristales, 'VIDELEC', $em);
+		
+		$cuero = $request->get('TAPCUERO');
+		Util::addToList($featuresList, $cuero, 'TAPCUERO', $em);
+    	
+		$techo = $request->get('TECHOCORR');
+    	Util::addToList($featuresList, $techo, 'TECHOCORR', $em);
+    	
 		$stop = $request->get('3LUZSTOP');
-		if($stop) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('3LUZSTOP');
-			$car->addFeature($feature);
-		}	
-                                          
-        $abs = $request->get('ABS');
-		if($abs) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('ABS');
-			$car->addFeature($feature);
-		}	
+		Util::addToList($featuresList, $stop, '3LUZSTOP', $em);
+        
+		$abs = $request->get('ABS');
+        Util::addToList($featuresList, $abs, 'ABS', $em);
+        
         $airbag = $request->get('AIR1');
-		if($airbag) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('AIR1');
-			$car->addFeature($feature);
-		}	
+        Util::addToList($featuresList, $airbag, 'AIR1', $em);
+		
+        $airbagP = $request->get('AIR2');
+		Util::addToList($featuresList, $airbagP, 'AIR2', $em);
         
-		$airbagP = $request->get('AIR2');
-		if($airbagP) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('AIR2');
-			$car->addFeature($feature);
-		}	
-        
-        $airbagLat = $request->get('AIR3');
-		if($airbagLat) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('AIR3');
-			$car->addFeature($feature);
-		}	
+		$airbagLat = $request->get('AIR3');
+        Util::addToList($featuresList, $airbagLat, 'AIR3', $em);
         
         $airbagCort = $request->get('AIRBAGCORT');
-		if($airbagCort) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('AIRBAGCORT');
-			$car->addFeature($feature);
-		}	
+        Util::addToList($featuresList, $airbagCort, 'AIRBAGCORT', $em);
         
         $alarma = $request->get('ALAR');
-		if($alarma) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('ALAR');
-			$car->addFeature($feature);
-		}	
+        Util::addToList($featuresList, $alarma, 'ALAR', $em);
         
         $apoyaCab = $request->get('APCABEZA');
-		if($apoyaCab) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('APCABEZA');
-			$car->addFeature($feature);
-		}	
+        Util::addToList($featuresList, $apoyaCab, 'APCABEZA', $em);
         
         $blind = $request->get('BLIND');
-		if($blind) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('BLIND');
-			$car->addFeature($feature);
-		}	
+        Util::addToList($featuresList, $blind, 'BLIND', $em);
         
         $ctrlTrac = $request->get('CNTTRACC');
-		if($ctrlTrac) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('CNTTRACC');
-			$car->addFeature($feature);
-		}	
+        Util::addToList($featuresList, $ctrlTrac, 'CNTTRACC', $em);
         
         $estab = $request->get('CONTR');
-		if($estab) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('CONTR');
-			$car->addFeature($feature);
-		}	
-        
+        Util::addToList($featuresList, $estab, 'CONTR', $em);
+
         $dblCtrl = $request->get('DOBTRACC');
-		if($dblCtrl) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('DOBTRACC');
-			$car->addFeature($feature);
-		}	
-        
+        Util::addToList($featuresList, $dblCtrl, 'DOBTRACC', $em);
+
         $antineblas = $request->get('FARANTI');
-		if($antineblas) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('FARANTI');
-			$car->addFeature($feature);
-		}	
+        Util::addToList($featuresList, $antineblas, 'FARANTI', $em);
         
         $xenon = $request->get('FAROXEN');
-		if($xenon) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('FAROXEN');
-			$car->addFeature($feature);
-		}	
+        Util::addToList($featuresList, $xenon, 'FAROXEN', $em);
         
         $inmvMotor = $request->get('INMOVMOT');
-		if($inmvMotor) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('INMOVMOT');
-			$car->addFeature($feature);
-		}	
+        Util::addToList($featuresList, $inmvMotor, 'INMOVMOT', $em);
         
         $isofix = $request->get('ISOFIX');
-		if($isofix) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('ISOFIX');
-			$car->addFeature($feature);
-		}	
+        Util::addToList($featuresList, $isofix, 'ISOFIX', $em);
         
         $antiTras = $request->get('NEBLTRAS');
-		if($antiTras) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('NEBLTRAS');
-			$car->addFeature($feature);
-		}	
+        Util::addToList($featuresList, $antiTras, 'NEBLTRAS', $em);
         
         $ffrenado = $request->get('REPFUERZA');
-		if($ffrenado) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('REPFUERZA');
-			$car->addFeature($feature);
-		}	
-        
-		//<h5><strong>Sonido</strong></h5>
-		$cd = $request->get('CAJACD');
-		if($cd) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('CAJACD');
-			$car->addFeature($feature);
-		}        
+        Util::addToList($featuresList, $ffrenado, 'REPFUERZA', $em);
+		
+        $cd = $request->get('CAJACD');
+		Util::addToList($featuresList, $cd, 'CAJACD', $em);
 		
 		$radio = $request->get('AM/FM');
-		if($radio) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('AM/FM');
-			$car->addFeature($feature);
-		}
-    	$bluetooth = $request->get('BLUETOOTH');
-		if($bluetooth) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('BLUETOOTH');
-			$car->addFeature($feature);
-		}
-		
+		Util::addToList($featuresList, $radio, 'AM/FM', $em);
+    	
+		$bluetooth = $request->get('BLUETOOTH');
+    	Util::addToList($featuresList, $bluetooth, 'BLUETOOTH', $em);
+    	
     	$cargadorCd = $request->get('CARGADORCD');
-		if($cargadorCd) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('CARGADORCD');
-			$car->addFeature($feature);
-		}
-		
+    	Util::addToList($featuresList, $cargadorCd, 'CARGADORCD', $em);
+    	
     	$caset = $request->get('CASET');
-		if($caset) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('CASET');
-			$car->addFeature($feature);
-		}
-		
+    	Util::addToList($featuresList, $caset, 'CASET', $em);
+    	
     	$comandoSat = $request->get('COMANDOSAT');
-		if($comandoSat) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('COMANDOSAT');
-			$car->addFeature($feature);
-		}
-		
+    	Util::addToList($featuresList, $comandoSat, 'COMANDOSAT', $em);
+    	
     	$dvd = $request->get('DVD');
-		if($dvd) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('DVD');
-			$car->addFeature($feature);
-		}
-		
+    	Util::addToList($featuresList, $dvd, 'DVD', $em);
+    	
     	$entAux = $request->get('ENTAUXILIA');
-		if($entAux) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('ENTAUXILIA');
-			$car->addFeature($feature);
-		}
-		
+    	Util::addToList($featuresList, $entAux, 'ENTAUXILIA', $em);
+
     	$mp3 = $request->get('MP3');
-		if($mp3) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('MP3');
-			$car->addFeature($feature);
-		}
-		
+    	Util::addToList($featuresList, $mp3, 'MP3', $em);
+
     	$repCd = $request->get('REPRODCD');
-		if($repCd) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('REPRODCD');
-			$car->addFeature($feature);
-		}
-		
+    	Util::addToList($featuresList, $repCd, 'REPRODCD', $em);
+    	
     	$tarjetaSD = $request->get('TARJETASD');
-		if($tarjetaSD) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('TARJETASD');
-			$car->addFeature($feature);
-		}
-		
+    	Util::addToList($featuresList, $tarjetaSD, 'TARJETASD', $em);
+    	
     	$usb = $request->get('USB');
-		if($usb) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('USB');
-			$car->addFeature($feature);
-		}                                   
-
-		//<h5><strong>Exterior</strong></h5>
-    	$limpialav = $request->get('LIMPIA/LAV');
-		if($limpialav) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('LIMPIA/LAV');
-			$car->addFeature($feature);
-		}
-		
+    	Util::addToList($featuresList, $usb, 'USB', $em);
+    	
     	$llantasAli = $request->get('LLANALEAC');
-		if($llantasAli) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('LLANALEAC');
-			$car->addFeature($feature);
-		}
-
-		$paragPintados = $request->get('PARAGOLPES');
-		if($paragPintados) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('PARAGOLPES');
-			$car->addFeature($feature);
-		}
+    	Util::addToList($featuresList, $llantasAli, 'LLANALEAC', $em);
 		
-    	$vidPol = $request->get('VIDPOLARIZ');
-		if($vidPol) {
-			$repository = $em->getRepository('KellsFrontBundle:Feature');
-			$feature = $repository->find('VIDPOLARIZ');
-			$car->addFeature($feature);
-		}
-       
+    	$paragPintados = $request->get('PARAGOLPES');
+		Util::addToList($featuresList, $paragPintados, 'PARAGOLPES', $em);
+    	
+		$vidPol = $request->get('VIDPOLARIZ');
+    	Util::addToList($featuresList, $vidPol, 'VIDPOLARIZ', $em);
+    	
+    	$limpialav = $request->get('LIMPIA/LAV');
+    	Util::addToList($featuresList, $limpialav, 'LIMPIA/LAV', $em);
+		
+    	
+    	if( $carId ) {
+    		foreach ($car->getFeatures() as $f) {
+    			$logger->info("feature: ".$f->getDescription());
+    			if (!in_array($f, $featuresList)) {
+    				$logger->info("no está en la lista");
+    				$car->removeFeature($f);
+    			}
+    		} 
+    	 
+    		$logger->info("Agregar");
+    		foreach ($featuresList as $feature) {
+    			$logger->info("feature: ".$feature->getDescription());
+    			if (!in_array($feature, $car->getFeatures()->toArray())) {
+    				$car->addFeature($feature);
+    			}
+    		}	
+    	} else { 
+    	
+			//CONFORT
+			
+			if($aireAcondicionado) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('AIRACON');
+				$car->addFeature($feature);	
+			}
+			
+			if($alarmaLuces) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('ALARMLUC');
+				$car->addFeature($feature);	
+			}
+	
+			if($aperturaBaul) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('APERBAUL');
+				$car->addFeature($feature);	
+			}
+			if($asientosElectricos) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('ASIENELEC');
+				$car->addFeature($feature);	
+			}
+			
+			if($asientoReg) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('ASREGULA');
+				$car->addFeature($feature);	
+			}
+			
+			
+			if($asientoTRebat) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('ASREBAT');
+				$car->addFeature($feature);	
+			}
+	    	
+			if($cierreCen) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('BLQCNTDOOR');
+				$car->addFeature($feature);	
+			}
+			
+			if($climatizador) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('CLIMAUT');
+				$car->addFeature($feature);	
+			}
+			
+			if($computadora) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('COMPABO');
+				$car->addFeature($feature);	
+			}
+	     	
+			if($velo) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('CTRLVEL');
+				$car->addFeature($feature);	
+			}
+			
+			if($espeelec) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('ESPELEC');
+				$car->addFeature($feature);	
+			}
+	    	
+			if($sensEsta) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('ESTACIONAM');
+				$car->addFeature($feature);	
+			}
+			
+			if($faros) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('FAROREG');
+				$car->addFeature($feature);	
+			}
+	    	
+			if($gps) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('GPS');
+				$car->addFeature($feature);	
+			}	
+	
+			if($sensorLluvia) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('SENSLL');
+				$car->addFeature($feature);	
+			}
+			if($sensorLuz) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('SENSLUZ');
+				$car->addFeature($feature);	
+			}
+	    	
+			if($cuero) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('TAPCUERO');
+				$car->addFeature($feature);	
+			}
+			if($techo) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('TECHOCORR');
+				$car->addFeature($feature);	
+			}
+	    	
+			if($cristales) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('VIDELEC');
+				$car->addFeature($feature);	
+			}		
+			
+			//Seguridad
+	        
+			if($stop) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('3LUZSTOP');
+				$car->addFeature($feature);
+			}	
+	                                          
+			if($abs) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('ABS');
+				$car->addFeature($feature);
+			}	
+			if($airbag) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('AIR1');
+				$car->addFeature($feature);
+			}	
+	        
+			if($airbagP) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('AIR2');
+				$car->addFeature($feature);
+			}	
+	        
+			if($airbagLat) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('AIR3');
+				$car->addFeature($feature);
+			}	
+	        
+			if($airbagCort) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('AIRBAGCORT');
+				$car->addFeature($feature);
+			}	
+	        
+			if($alarma) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('ALAR');
+				$car->addFeature($feature);
+			}	
+	        
+			if($apoyaCab) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('APCABEZA');
+				$car->addFeature($feature);
+			}	
+	        
+	    	
+	
+	        if($blind) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('BLIND');
+				$car->addFeature($feature);
+			}	
+	        
+			if($ctrlTrac) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('CNTTRACC');
+				$car->addFeature($feature);
+			}	
+	        
+			if($estab) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('CONTR');
+				$car->addFeature($feature);
+			}	
+	        
+			if($dblCtrl) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('DOBTRACC');
+				$car->addFeature($feature);
+			}	
+	        
+			if($antineblas) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('FARANTI');
+				$car->addFeature($feature);
+			}	
+	        
+			if($xenon) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('FAROXEN');
+				$car->addFeature($feature);
+			}	
+	        
+			if($inmvMotor) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('INMOVMOT');
+				$car->addFeature($feature);
+			}	
+	        
+			if($isofix) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('ISOFIX');
+				$car->addFeature($feature);
+			}	
+	        
+			if($antiTras) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('NEBLTRAS');
+				$car->addFeature($feature);
+			}	
+	        
+			if($ffrenado) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('REPFUERZA');
+				$car->addFeature($feature);
+			}	
+	        
+			//<h5><strong>Sonido</strong></h5>
+			if($cd) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('CAJACD');
+				$car->addFeature($feature);
+			}        
+			
+			if($radio) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('AM/FM');
+				$car->addFeature($feature);
+			}
+			if($bluetooth) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('BLUETOOTH');
+				$car->addFeature($feature);
+			}
+			
+			if($cargadorCd) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('CARGADORCD');
+				$car->addFeature($feature);
+			}
+			
+	    	
+			if($caset) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('CASET');
+				$car->addFeature($feature);
+			}
+			
+			if($comandoSat) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('COMANDOSAT');
+				$car->addFeature($feature);
+			}
+			
+			if($dvd) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('DVD');
+				$car->addFeature($feature);
+			}
+			
+			if($entAux) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('ENTAUXILIA');
+				$car->addFeature($feature);
+			}
+			
+			if($mp3) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('MP3');
+				$car->addFeature($feature);
+			}
+			
+			if($repCd) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('REPRODCD');
+				$car->addFeature($feature);
+			}
+			
+			if($tarjetaSD) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('TARJETASD');
+				$car->addFeature($feature);
+			}
+			
+			if($usb) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('USB');
+				$car->addFeature($feature);
+			}                                   
+	
+			//<h5><strong>Exterior</strong></h5>
+			if($limpialav) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('LIMPIA/LAV');
+				$car->addFeature($feature);
+			}
+			if($llantasAli) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('LLANALEAC');
+				$car->addFeature($feature);
+			}
+	
+			if($paragPintados) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('PARAGOLPES');
+				$car->addFeature($feature);
+			}
+			
+			if($vidPol) {
+				$repository = $em->getRepository('KellsFrontBundle:Feature');
+				$feature = $repository->find('VIDPOLARIZ');
+				$car->addFeature($feature);
+			}
+    	}
 		$car->setPublishedDate(new \DateTime());
 		
-		$em->persist($car);
+		if (!$carId) {
+			$em->persist($car);
+		}
 		$em->flush();
 		
 		
@@ -823,6 +991,7 @@ class DefaultController extends Controller
 		return;
 	}
 	
+	
 	public function toFinalizeAction(Request $request) {
 		$logger = $this->get('logger');
 		$id = $request->get('id');
@@ -833,4 +1002,130 @@ class DefaultController extends Controller
 		$em->flush();
 		return $this->redirect($this->generateUrl('user_myPublications'));
 	}
+	
+	public function toEditAction(Request $request) {
+		$logger = $this->get('logger');
+		$id = $request->get('id');
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Car');
+		$car = $repository->find($id);
+		$repository = $em->getRepository('KellsFrontBundle:Trademark');
+		$trademarks = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Province');
+		$provinces = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Fuel');
+		$fuels = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Year');
+		$years = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Direction');
+		$directions = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Transmission');
+		$transmissions = $repository->findAll();
+		
+		$user = $this->get('security.context')->getToken()->getUser();
+		$searchForm = new Search();
+		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'), ));
+		return $this->render(
+        'KellsFrontBundle:Default:publicar.html.twig', array("form"=>$form->createView(), 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
+        	'directions'=>$directions, 'transmissions'=>$transmissions, 'car'=>$car));
+		
+	}
+	
+	public function showCreditRequestAction() {
+		
+		$user = $this->get('security.context')->getToken()->getUser();
+		
+		$searchForm = new Search();
+		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
+		
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Trademark');
+		$trademarks = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Province');
+		$provinces = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Fuel');
+		$fuels = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Year');
+		$years = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Direction');
+		$directions = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Transmission');
+		$transmissions = $repository->findAll();
+		
+		return $this->render(
+        'KellsFrontBundle:Default:solicitarCredito.html.twig', array("form"=>$form->createView(), "userRole"=>$user->getRoles(), 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
+        	'directions'=>$directions, 'transmissions'=>$transmissions));
+		
+	}
+	
+		
+    public function creditAction(Request $request) {
+	   	$logger = $this->get('logger');
+   		$user = $this->getUser();
+    	
+   		
+   		$nombreSolicitante = $request->get('solicitante-nombre');
+   		$apellidoSolicitante = $request->get('solicitante-apellido');
+   		$dniSolicitante = $request->get('solicitante-dni');
+   		$nacimientoSolicitante = $request->get('solicitante-nacimiento');
+   		$estadoCivilSolicitante = $request->get('solicitante-estado-civil');
+   		$domicilioSolicitante = $request->get('solicitante-domicilio');
+   		$provinceId = $request->get('solicitante-provincia');
+   		$cityId = $request->get('solicitante-ciudad');
+		$celularSolicitante = $request->get('solicitante-celular');  		
+		$fijoSolicitante = $request->get('solicitante-telefono');
+		$mailSolicitante = $request->get('solicitante-email');
+   		$actividadLaboralSolicitante = $request->get('solicitante-laboral');
+   		$telLaboralSolicitante = $request->get('solicitante-telefono-trabajo');
+   		
+   		//fotocopias
+   		$files = $request->files;
+	    $solicitanteServicio = $files->get('solicitante-fotocopia-servicio');
+	    $solicitanteFotoDni = $files->get('solicitante-fotocopia-dni');
+	    $solicitanteRecibo = $files->get('solicitante-fotocopia-recibo');
+	    $solicitanteIngresos = $files->get('solicitante-fotocopia-ingresos');
+	    $solicitanteOtra1 = $files->get('solicitante-fotocopia-otra-1');
+	    $solicitanteOtra2 = $files->get('solicitante-fotocopia-otra-2');
+	 
+	    
+	    //CONYUGE
+
+	    $nombreConyuge = $request->get('conyuge-nombre');
+   		$apellidoConyuge = $request->get('conyuge-apellido');
+   		$dniConyuge = $request->get('conyuge-dni');
+   		$estadoCivilConyuge = $request->get('conyuge-estado-civil');
+   		$domicilioConyuge = $request->get('conyuge-domicilio');
+   		$provinceId = $request->get('conyuge-provincia');
+   		$cityId = $request->get('conyuge-ciudad');
+		$celularConyuge = $request->get('conyuge-celular');  		
+		$fijoConyuge = $request->get('conyuge-telefono');
+		$mailConyuge = $request->get('conyuge-email');
+   		$actividadLaboralConyuge = $request->get('conyuge-laboral');
+   		$telLaboralConyuge = $request->get('conyuge-telefono-trabajo');
+   		
+   		//fotocopias
+   		$files = $request->files;
+	    $conyugeFotoDni = $files->get('conyuge-fotocopia-dni');
+	    $conyugeOtra1 = $files->get('conyuge-fotocopia-otra-1');
+	    $conyugeOtra2 = $files->get('conyuge-fotocopia-otra-2');
+	    $conyugeOtra3 = $files->get('conyuge-fotocopia-otra-3');
+	 
+	    //Unidad a adquirir
+		$marcaId = $request->get('marca');
+		$modeloId = $request->get('modelo');
+		$yearId = $request->get('ano');
+		$value = $request->get('valor');
+		$type = $request->get('tipo');
+		$domain = $request->get('dominio');
+		$fuelId = $request->get('combustible');
+		
+		//credito
+		$montoCredito = $request->get('monto');
+		$cantidadCuotas = $request->get('cuotas');
+		$comments =$request->get('comentarios');
+		
+		
+
+	    
+    } 
 }

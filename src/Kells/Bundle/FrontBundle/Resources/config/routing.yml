@@ -88,6 +88,6 @@ creditRequest:
     path:     /creditRequest/
     defaults: { _controller: KellsFrontBundle:Default:showCreditRequest }
     
- credit:
+credit:
     path:     /credit/
     defaults: { _controller: KellsFrontBundle:Default:credit }

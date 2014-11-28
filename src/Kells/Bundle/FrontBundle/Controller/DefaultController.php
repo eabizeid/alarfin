@@ -1125,7 +1125,15 @@ class DefaultController extends Controller
 		$comments =$request->get('comentarios');
 		
 		
-
+		$credito = new Credito();
+		$credito->setNombreSolicitante($nombreSolicitante);
+		$credito->setApellidoSolicitante($apellidoSolicitante);
+		$credito->setDniSolicitante($dniSolicitante);
+		$credito->setEstadoCivilSolicitante($estadoCivilSolicitante);
+		$credito->setNacimientoSolicitante($nacimientoSolicitante);
+		$credito->setDomicilioSolicitante($domicilioSolicitante);
+		$credito->setProvinciaSolicitante()
+		
 	    
     } 
 }

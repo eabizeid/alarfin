@@ -64,6 +64,7 @@
         		$('#divSuccess').hide();
         	})
         	var simularCuotas = function() {
+        		$('#cuotasTable').empty();
         		var capital = $('#capital').val();
         		var yearId = $('#yearId').val();
 		        url = Routing.generate('simularCuotas', { 'capital': capital, 'yearId': yearId  });

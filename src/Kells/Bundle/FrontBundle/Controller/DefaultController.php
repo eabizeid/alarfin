@@ -1286,12 +1286,7 @@ class DefaultController extends Controller
 			$cuota20 = $capital * (float)$configuration->getOnceA15Cuotas20();
 			$cuota22 = $capital * (float)$configuration->getOnceA15Cuotas22();
 			$cuota24 = $capital * (float)$configuration->getOnceA15Cuotas24();
-			$cuota26 = $capital * (float)$configuration->getOnceA15Cuotas26();
-			$cuota28 = $capital * (float)$configuration->getOnceA15Cuotas28();
-			$cuota30 = $capital * (float)$configuration->getOnceA15Cuotas30();
-			$cuota32 = $capital * (float)$configuration->getOnceA15Cuotas32();
-			$cuota34 = $capital * (float)$configuration->getOnceA15Cuotas34();
-			$cuota36 = $capital * (float)$configuration->getOnceA15Cuotas36();
+			
 		}
 		$logger->info('Valor Cuota 2 '.$cuota2 );
 		$output = array();
@@ -1307,13 +1302,14 @@ class DefaultController extends Controller
 		$output[] = array('key'=>'Cuota 20', 'value'=>$cuota20);
 		$output[] = array('key'=>'Cuota 22', 'value'=>$cuota22);
 		$output[] = array('key'=>'Cuota 24', 'value'=>$cuota24);
-		$output[] = array('key'=>'Cuota 26', 'value'=>$cuota26);
-		$output[] = array('key'=>'Cuota 28', 'value'=>$cuota28);
-		$output[] = array('key'=>'Cuota 30', 'value'=>$cuota30);
-		$output[] = array('key'=>'Cuota 32', 'value'=>$cuota32);
-		$output[] = array('key'=>'Cuota 34', 'value'=>$cuota34);
-		$output[] = array('key'=>'Cuota 36', 'value'=>$cuota36);
-		
+		if ($y >= $intervalo2 ) {
+			$output[] = array('key'=>'Cuota 26', 'value'=>$cuota26);
+			$output[] = array('key'=>'Cuota 28', 'value'=>$cuota28);
+			$output[] = array('key'=>'Cuota 30', 'value'=>$cuota30);
+			$output[] = array('key'=>'Cuota 32', 'value'=>$cuota32);
+			$output[] = array('key'=>'Cuota 34', 'value'=>$cuota34);
+			$output[] = array('key'=>'Cuota 36', 'value'=>$cuota36);
+		} 
 		$response = new Response();
         $response->headers->set('Content-Type', 'application/json');
         $response->setContent(json_encode($output));

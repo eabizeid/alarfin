@@ -74,3 +74,4 @@ security:
         - { path: ^/creditRequest, roles: ROLE_USER}
         - { path: ^/creditRequest, roles: ROLE_LICENSEE}
         - { path: ^/admin/usuarios, roles: ROLE_ALARFIN}
+        - { path: ^/admin/configuracion, roles: ROLE_ALARFIN}

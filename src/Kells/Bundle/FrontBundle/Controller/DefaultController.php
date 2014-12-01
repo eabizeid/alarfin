@@ -1051,9 +1051,11 @@ class DefaultController extends Controller
 		$directions = $repository->findAll();
 		$repository = $em->getRepository('KellsFrontBundle:Transmission');
 		$transmissions = $repository->findAll();
-		
+		 
+		$logger = $this->get('logger');
+		$logger->info("user_role: ".$user->getRoles()[0]);
 		return $this->render(
-        'KellsFrontBundle:Default:solicitarCredito.html.twig', array("form"=>$form->createView(), "userRole"=>$user->getRoles(), 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
+        'KellsFrontBundle:Default:solicitar-credito-usuario.html.twig', array("form"=>$form->createView(), "userRole"=>$user->getRoles()[0], 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
         	'directions'=>$directions, 'transmissions'=>$transmissions));
 		
 	}
@@ -1110,6 +1112,31 @@ class DefaultController extends Controller
 	    $conyugeOtra2 = $files->get('conyuge-fotocopia-otra-2');
 	    $conyugeOtra3 = $files->get('conyuge-fotocopia-otra-3');
 	 
+	    
+	    if ($user->getRoles()[0] == 'ROLE_USER') {
+	    	//	Garante
+
+		    $nombreGarante = $request->get('garante-nombre');
+	   		$apellidoGarante = $request->get('garante-apellido');
+	   		$dniGarante = $request->get('garante-dni');
+	   		$estadoCivilGarante = $request->get('garante-estado-civil');
+	   		$domicilioGarante = $request->get('garante-domicilio');
+	   		$provinceId = $request->get('garante-provincia');
+	   		$cityId = $request->get('garante-ciudad');
+			$celularGarante = $request->get('garante-celular');  		
+			$fijoGarante = $request->get('garante-telefono');
+			$mailGarante = $request->get('garante-email');
+	   		$actividadLaboralGarante = $request->get('garante-laboral');
+	   		$telLaboralGarante = $request->get('garante-telefono-trabajo');
+	   		
+	   		//fotocopias
+	   		$garanteServicio = $files->get('garante-fotocopia-servicio');
+	   		$garanteFotoDni = $files->get('garante-fotocopia-dni');
+	    	$garanteRecibo = $files->get('garante-fotocopia-recibo');
+	    	$garanteIngresos = $files->get('garante-fotocopia-ingresos');
+	    	$garanteOtra1 = $files->get('garante-fotocopia-otra-1');
+	    	$garanteOtra2 = $files->get('garante-fotocopia-otra-2');
+	    }
 	    //Unidad a adquirir
 		$marcaId = $request->get('marca');
 		$modeloId = $request->get('modelo');
@@ -1134,5 +1161,13 @@ class DefaultController extends Controller
 		$credito->setDomicilioSolicitante($domicilioSolicitante);
 		$credito->setProvinciaSolicitante();
 		
-    }	   
+    }	
+
+     public function showSimuladorAction() {
+		$searchForm = new Search();
+		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
+	
+     	return $this->render(
+        'KellsFrontBundle:Default:simulador.html.twig', array("form"=>$form->createView()));
+     }
 }

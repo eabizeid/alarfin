@@ -2,20 +2,46 @@ security:
     encoders:
         Kells\Bundle\FrontBundle\Entity\User: plaintext
         Kells\Bundle\FrontBundle\Entity\Licensee: plaintext
+        Kells\Bundle\BackBundle\Entity\Alarfin: plaintext
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
+        ROLE_ADMIN:      [ROLE_USER, ROLE_ALARFIN]
 
     providers:
         chain_provider:
             chain:
-                providers: [user_db, licensee_db]
+                providers: [user_db, licensee_db, alarfin_db]
         user_db:
             entity: { class: Kells\Bundle\FrontBundle\Entity\User, property: mail }
         licensee_db:
             entity: { class: Kells\Bundle\FrontBundle\Entity\Licensee, property: mail }
+            
+        alarfin_db:
+            entity: { class: Kells\Bundle\BackBundle\Entity\Alarfin, property: mail }
 
     firewalls:
+        alarfin_secured_area:
+            pattern: /admin/.*
+            provider: alarfin_db
+            form_login:
+                login_path: /admin/login
+                check_path: /admin/login_check
+                remember_me: true
+                username_parameter: _mail
+                password_parameter: _password
+                always_use_default_target_path: false
+                target_path_parameter: _target_path
+            logout:
+                path: /admin/logout
+                target: /admin
+            remember_me:
+                key: MiClaveSegura
+                lifetime: 1800
+                path: /admin/.*
+                domain: ~
+            security: true
+            anonymous: true
+            
         user_secured_area:
             pattern: /.*
             provider: user_db
@@ -37,6 +63,8 @@ security:
                 domain: ~
             security: true
             anonymous: true
+            
+        
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
@@ -45,3 +73,4 @@ security:
         - { path: ^/publish, roles: ROLE_USER}
         - { path: ^/creditRequest, roles: ROLE_USER}
         - { path: ^/creditRequest, roles: ROLE_LICENSEE}
+        - { path: ^/admin/usuarios, roles: ROLE_ALARFIN}

@@ -1,3 +1,21 @@
 kells_back_homepage:
-    path:     /hello/{name}
+    path:     /admin/
     defaults: { _controller: KellsBackBundle:Default:index }
+    
+usuarios:
+    path:     /admin/usuarios
+    defaults: { _controller: KellsBackBundle:Default:usuarios }
+    
+alarfin_login_view:
+    path:     /admin/login/
+    defaults: { _controller: KellsBackBundle:Default:adminLogin }
+    
+admin_check:
+    pattern: /admin/login_check
+    
+logout:
+    pattern: /admin/logout
+    
+publicaciones_usuario:
+    path:     /admin/usuarios/publicaciones/{userId}
+    defaults: { _controller: KellsBackBundle:Default:publicacionesUsuario }

@@ -1,5 +1,5 @@
 <?php
-namespace Kells\Bundle\FrontBundle\Entity;
+namespace Kells\Bundle\BackBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -7,10 +7,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="users") 
+ * @ORM\Table(name="alarfines") 
  */
-class User implements UserInterface {
-	
+class Alarfin implements UserInterface {
 	/**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -30,10 +29,6 @@ class User implements UserInterface {
      * @Assert\NotBlank()
      */
 	protected $mail;
-		/**
-     * @ORM\Column(type="string", length=60)
-     */
-	protected $telephone;
 	
 	/**
      * @ORM\Column(type="string", length=60)
@@ -41,35 +36,16 @@ class User implements UserInterface {
      */
 	protected $password;
 	
-	  /**
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $token;
-	
-    /**
-     * @ORM\Column(type="boolean")
-     */
-	protected $status;
-	
 	/**
-     * @ORM\ManyToMany(targetEntity="Rol")
-     * @ORM\JoinTable(name="usuario_rol",
+     * @ORM\ManyToMany(targetEntity="\Kells\Bundle\FrontBundle\Entity\Rol")
+     * @ORM\JoinTable(name="alarfin_rol",
      *     joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id")}
      * )
      */
     protected $roles;
-	
-    /**
-     * @ORM\Column(name="salt", type="string", length=255)
-     */
-    protected $salt = "";
     
-    /**
-     * @ORM\OneToMany(targetEntity="Car", mappedBy="user")
-     **/
-    protected $cars;
-
+    
     /**
      * Get id
      *
@@ -146,10 +122,13 @@ class User implements UserInterface {
      */
     public function getMail()
     {
+    	
+    	
         return $this->mail;
     }
     
-	/**
+    
+    /**
      * Get username
      *
      * @return string 
@@ -158,41 +137,8 @@ class User implements UserInterface {
     {
         return $this->mail;
     }
-
-    /**
-     * Set telephone
-     *
-     * @param string $telephone
-     * @return User
-     */
-    public function setTelephone($telephone)
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
-
-    /**
-     * Get telephone
-     *
-     * @return string 
-     */
-    public function getTelephone()
-    {
-        return $this->telephone;
-    }
-
-    /**
-     * Get cuit
-     *
-     * @return string 
-     */
-    public function getCuit()
-    {
-        return $this->cuit;
-    }
-
-    /**
+    
+	/**
      * Set password
      *
      * @param string $password
@@ -214,34 +160,14 @@ class User implements UserInterface {
     {
         return $this->password;
     }
-
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    public function setToken($token)
-    {
-        $this->token = $token;
-    }
     
     
-	public function getStatus()
-    {
-        return $this->status;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-    /**
+ /**
      * Constructor
      */
     public function __construct()
     {
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->cars = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -274,12 +200,12 @@ class User implements UserInterface {
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array('ROLE_ALARFIN');
     }
-    
-	public function getSalt()
+
+public function getSalt()
     {
-        return $this->salt;
+        return "";
     }
 
     /**
@@ -290,47 +216,11 @@ class User implements UserInterface {
      */
     public function setSalt($salt)
     {
-        $this->salt = $salt;
 
         return $this;
     }
     
      public function eraseCredentials()
     {
-    }
-    
-   
-
-    /**
-     * Add cars
-     *
-     * @param \Kells\Bundle\FrontBundle\Entity\Car $cars
-     * @return User
-     */
-    public function addCar(\Kells\Bundle\FrontBundle\Entity\Car $cars)
-    {
-        $this->cars[] = $cars;
-
-        return $this;
-    }
-
-    /**
-     * Remove cars
-     *
-     * @param \Kells\Bundle\FrontBundle\Entity\Car $cars
-     */
-    public function removeCar(\Kells\Bundle\FrontBundle\Entity\Car $cars)
-    {
-        $this->cars->removeElement($cars);
-    }
-
-    /**
-     * Get cars
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCars()
-    {
-        return $this->cars;
     }
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="iso-8859-1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Kells - www.kells.com.ar" />
+    <title>Inicio | Alarfin</title>
+    <link rel="stylesheet" href="{{ asset('bundles/kellsback/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/kellsback/css/plugins/metisMenu/metisMenu.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/kellsback/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/kellsback/css/styles.css') }}" />
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+		 	{{ include('KellsBackBundle:Default:header.html.twig') }}
+		 	
+		</nav>
+        {% block body %}{% endblock %}
+        {{ include('KellsBackBundle:Default:footer.html.twig') }}
+</body>
+</html>

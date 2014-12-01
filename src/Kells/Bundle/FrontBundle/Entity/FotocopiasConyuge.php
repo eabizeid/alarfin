@@ -221,4 +221,17 @@ public function setFile(UploadedFile $file = null)
     {
         return $this->credito;
     }
+
+    /**
+     * Set credito
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Credito $credito
+     * @return FotocopiasConyuge
+     */
+    public function setCredito(\Kells\Bundle\FrontBundle\Entity\Credito $credito = null)
+    {
+        $this->credito = $credito;
+
+        return $this;
+    }
 }

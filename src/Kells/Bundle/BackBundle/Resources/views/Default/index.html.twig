@@ -1,1 +1,43 @@
-Hello {{ name }}!
+{% extends 'KellsBackBundle:Default:base.html.twig' %}
+{% block body %}
+	    <div class="container">
+            <div class="row menu-home botpad">
+                <div class="col-xs-12 col-sm-4 toppad">
+                	<div class="well well-gris-claro">
+                    	<a href="{{path('usuarios')}}" class="active"><i class="fa fa-users fa-fw fa-3x"></i><br>Usuarios</a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 toppad">
+                	<div class="well well-gris-claro">
+                		<a href="concesionarias.php"><i class="fa fa-building fa-fw fa-3x"></i><br>Concesionarias</a>
+                    </div>
+            	</div>
+                <div class="col-xs-12 col-sm-4 toppad">
+                	<div class="well well-gris-claro">
+	                	<a href="publicaciones.php"><i class="fa fa-car fa-fw fa-3x"></i><br>Publicaciones</a>
+                    </div>
+				</div>
+                <div class="col-xs-12 col-sm-4 toppad">
+	                <div class="well well-gris-claro">
+                    	<a href="creditos.php"><i class="fa fa-money fa-fw fa-3x"></i><br>Crditos</a>
+                    </div>
+				</div>
+                <div class="col-xs-12 col-sm-4 toppad">
+                	<div class="well well-gris-claro">
+                    	<a href="alarfin.php"><i class="fa fa-user fa-fw fa-3x"></i><br>Usuarios Alarfin</a>
+                    </div>
+				</div>
+                <div class="col-xs-12 col-sm-4 toppad">
+                	<div class="well well-gris-claro">
+	                	<a href="configuracion.php"><i class="fa fa-gear fa-fw fa-3x"></i><br>Configuración</a>
+                    </div>
+				</div>
+                <div class="col-xs-12 toppad visible-xs">
+                	<div class="well well-gris-claro">
+		            	<a href="#"><i class="fa fa-sign-out fa-fw"></i><br>Salir</a>
+                    </div>
+				</div>
+            </div>           
+      </div>
+    </div>
+{% endblock %}

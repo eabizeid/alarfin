@@ -1,0 +1,112 @@
+{% extends 'KellsBackBundle:Default:base2.php.twig' %}
+{% block body %}
+       <div id="page-wrapper">
+          <div class="row">
+              <div class="col-lg-12">
+                    <h1 class="page-header">Publicaciones del usuario</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="alert alert-titulo" role="alert">
+                        <h4 class="nomar text-uppercase">{{ user.firstname}} {{ user.lastname}}</h4>
+                    </div>
+                </div> 
+            </div>
+            
+            <div class="row">
+                    <div class="col-xs-12 titulo botpad">
+                        <ul class="nav nav-tabs" role="tablist">
+                          <li class="active"><a href="#publicados" role="tab" data-toggle="tab">Publicados</a></li>
+                          <li><a href="#finalizados" role="tab" data-toggle="tab">Finalizados</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="publicados">                     	
+                            <table class="table table-striped table-bordered table-hover myTooltip" id="tabla-publicados">
+                                <thead>
+                                    <tr>
+                                        <th width="10%">Publicado</th>
+                                        <th width="35%">T&iacute;tulo</th>
+                                        <th width="20%">Marca</th>
+                                        <th width="20%">Modelo</th>
+                                        <th width="10%">Precio</th>
+                                        <th width="5%" class="no-sort">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                
+                                	{% for car in user.cars%}
+                                	{% if car.status == "PUBLISHED" %}
+                                    <tr>
+                                        <td>{{car.publishedDate|date('d/m/Y')}}</td>
+                                        <td class="publicaciones-titulo">{{ car.title }}</td>
+                                        <td>{{ car.trademark.description}}</td>
+                                        <td>{{ car.model.description}}</td>
+                                        <td>${{ car.price}}</td>
+                                        <td nowrap><button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" onClick="location.href='publicaciones-editar.php'"><i class="fa fa-pencil fa-fw"></i></button>&nbsp;<button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Finalizar"><i class="fa fa-thumbs-o-down fa-fw"></i></button></td>
+                                    </tr>
+                                    {% endif %}
+                                      {% endfor %}
+                                </tbody>
+                            </table>                          
+                          </div>
+                          <div class="tab-pane" id="finalizados">
+                          	<table class="table table-striped table-bordered table-hover myTooltip" id="tabla-finalizados">
+                                <thead>
+                                    <tr>
+                                        <th width="10%">Publicado</th>
+                                        <th width="35%">T&iacute;tulo</th>
+                                        <th width="20%">Marca</th>
+                                        <th width="20%">Modelo</th>
+                                        <th width="10%">Precio</th>
+                                        <th width="5%" class="no-sort">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   {% for car in user.cars%}
+                                	{% if car.status == "FINALIZED" %}
+                                    <tr>
+                                        <td>{{car.publishedDate|date('d/m/Y')}}</td>
+                                        <td class="publicaciones-titulo">{{ car.title }}</td>
+                                        <td>{{ car.trademark.description}}</td>
+                                        <td>{{ car.model.description}}</td>
+                                        <td>${{ car.price}}</td>
+                                        <td nowrap><button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Republicar" onClick="location.href='publicaciones-editar.php'"><i class="fa fa-undo fa-fw"></i></button></td>
+                                    </tr>
+                                    {% endif %}
+                                      {% endfor %}
+                                </tbody>
+                            </table>                          
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 botpad"> 
+                        <input type="submit" value="&laquo; Volver" class="btn btn-primary" onClick="location.href='{{path('usuarios')}}'">
+                    </div>
+                    </div>
+            
+        </div>
+    </div>
+<script>
+	$(document).ready(function() {
+		$('#tabla-publicados').dataTable({
+			"order": [[ 0, "desc" ]],
+			"aoColumnDefs" : [{
+			"bSortable" : false,
+			"aTargets" : [ "no-sort" ]
+			}]
+		});
+		$('#tabla-finalizados').dataTable({
+			"order": [[ 0, "desc" ]],
+			"aoColumnDefs" : [{
+			"bSortable" : false,
+			"aTargets" : [ "no-sort" ]
+			}]
+		});
+		$('.myTooltip').tooltip({
+			selector: "[data-toggle=tooltip]",
+			container: "body"
+		});
+	});
+</script>
+{% endblock %}

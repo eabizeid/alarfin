@@ -91,3 +91,8 @@ creditRequest:
 credit:
     path:     /credit/
     defaults: { _controller: KellsFrontBundle:Default:credit }
+    
+simulador:
+    path:     /simulador/
+    defaults: { _controller: KellsFrontBundle:Default:showSimulador }
+    

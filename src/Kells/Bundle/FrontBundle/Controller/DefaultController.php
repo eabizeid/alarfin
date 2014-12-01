@@ -1166,8 +1166,157 @@ class DefaultController extends Controller
      public function showSimuladorAction() {
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
-	
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Year');
+		$years = $repository->findAll();
      	return $this->render(
-        'KellsFrontBundle:Default:simulador.html.twig', array("form"=>$form->createView()));
+        'KellsFrontBundle:Default:simulador.html.twig', array("form"=>$form->createView(), "years"=>$years));
+     }
+     
+     public function simularCuotasAction(Request $request) {
+     	
+     	$logger = $this->get('logger');
+     		
+     	$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
+		$configuration = $repository->findAll()[0];
+		
+		$yearId = $request->get('yearId');
+		$year = $em->getRepository('KellsFrontBundle:Year')->find($yearId);
+		$capital = (int)$request->get('capital');
+		$y = (int)$year->getDescription();
+		
+		$logger->info('Año '.$y);
+		$logger->info('Capital '.$capital);
+		$intervalo0 = 2014;
+		$intervalo1 = $intervalo0 - 6;
+		$intervalo2 = $intervalo1 - 5;
+		$intervalo3 = $intervalo2 - 5;
+		$cuota2 = 0;
+		$cuota4= 0;
+		$cuota6= 0;
+		$cuota8= 0;
+		$cuota10= 0;
+		$cuota12= 0;
+		$cuota14 = 0;
+		$cuota16 = 0;
+		$cuota18 = 0;
+		$cuota20 = 0;
+		$cuota22 = 0;
+		$cuota24 = 0;
+		$cuota26 = 0;
+		$cuota28 = 0;
+		$cuota30 = 0;
+		$cuota32 = 0;
+		$cuota34 = 0;
+		$cuota36 = 0;
+		
+		if ($y == $intervalo0) {
+			$cuota2 = $capital * (float)$configuration->getCerokmCuotas2();
+			$cuota4 = $capital * (float)$configuration->getCerokmCuotas4();
+			$cuota6 = $capital * (float)$configuration->getCerokmCuotas6();
+			$cuota8 = $capital * (float)$configuration->getCerokmCuotas8();
+			$cuota10 = $capital * (float)$configuration->getCerokmCuotas10();
+			$cuota12 = $capital * (float)$configuration->getCerokmCuotas12();
+			$cuota14 = $capital * (float)$configuration->getCerokmCuotas14();
+			$cuota16 = $capital * (float)$configuration->getCerokmCuotas16();
+			$cuota18 = $capital * (float)$configuration->getCerokmCuotas18();
+			$cuota20 = $capital * (float)$configuration->getCerokmCuotas20();
+			$cuota22 = $capital * (float)$configuration->getCerokmCuotas22();
+			$cuota24 = $capital * (float)$configuration->getCerokmCuotas24();
+			$cuota26 = $capital * (float)$configuration->getCerokmCuotas26();
+			$cuota28 = $capital * (float)$configuration->getCerokmCuotas28();
+			$cuota30 = $capital * (float)$configuration->getCerokmCuotas30();
+			$cuota32 = $capital * (float)$configuration->getCerokmCuotas32();
+			$cuota34 = $capital * (float)$configuration->getCerokmCuotas34();
+			$cuota36 = $capital * (float)$configuration->getCerokmCuotas36();
+			
+			
+		} else if ($y < $intervalo0 && $y >= $intervalo1) {
+			$logger->info('Intervalo: 2013-2008');
+			$cuota2 = $capital * (float)$configuration->getUnoA5Cuotas2();
+			$logger->info('Configuracion Cuota 1 a 5 '.$configuration->getUnoA5Cuotas2() );
+			$logger->info('Valor Cuota 2 '.$cuota2 );
+			$cuota4 = $capital * (float)$configuration->getUnoA5Cuotas4();
+			$cuota6 = $capital * (float)$configuration->getUnoA5Cuotas6();
+			$cuota8 = $capital * (float)$configuration->getUnoA5Cuotas8();
+			$cuota10 = $capital * (float)$configuration->getUnoA5Cuotas10();
+			$cuota12 = $capital * (float)$configuration->getUnoA5Cuotas12();
+			$cuota14 = $capital * (float)$configuration->getUnoA5Cuotas14();
+			$cuota16 = $capital * (float)$configuration->getUnoA5Cuotas16();
+			$cuota18 = $capital * (float)$configuration->getUnoA5Cuotas18();
+			$cuota20 = $capital * (float)$configuration->getUnoA5Cuotas20();
+			$cuota22 = $capital * (float)$configuration->getUnoA5Cuotas22();
+			$cuota24 = $capital * (float)$configuration->getUnoA5Cuotas24();
+			$cuota26 = $capital * (float)$configuration->getUnoA5Cuotas26();
+			$cuota28 = $capital * (float)$configuration->getUnoA5Cuotas28();
+			$cuota30 = $capital * (float)$configuration->getUnoA5Cuotas30();
+			$cuota32 = $capital * (float)$configuration->getUnoA5Cuotas32();
+			$cuota34 = $capital * (float)$configuration->getUnoA5Cuotas34();
+			$cuota36 = $capital * (float)$configuration->getUnoA5Cuotas36();
+		} else if ($y < $intervalo1 && $y >= $intervalo2) {
+			$cuota2 = $capital * (float)$configuration->getSeisA10Cuotas2();
+			$cuota4 = $capital * (float)$configuration->getSeisA10Cuotas4();
+			$cuota6 = $capital * (float)$configuration->getSeisA10Cuotas6();
+			$cuota8 = $capital * (float)$configuration->getSeisA10Cuotas8();
+			$cuota10 = $capital * (float)$configuration->getSeisA10Cuotas10();
+			$cuota12 = $capital * (float)$configuration->getSeisA10Cuotas12();
+			$cuota14 = $capital * (float)$configuration->getSeisA10Cuotas14();
+			$cuota16 = $capital * (float)$configuration->getSeisA10Cuotas16();
+			$cuota18 = $capital * (float)$configuration->getSeisA10Cuotas18();
+			$cuota20 = $capital * (float)$configuration->getSeisA10Cuotas20();
+			$cuota22 = $capital * (float)$configuration->getSeisA10Cuotas22();
+			$cuota24 = $capital * (float)$configuration->getSeisA10Cuotas24();
+			$cuota26 = $capital * (float)$configuration->getSeisA10Cuotas26();
+			$cuota28 = $capital * (float)$configuration->getSeisA10Cuotas28();
+			$cuota30 = $capital * (float)$configuration->getSeisA10Cuotas30();
+			$cuota32 = $capital * (float)$configuration->getSeisA10Cuotas32();
+			$cuota34 = $capital * (float)$configuration->getSeisA10Cuotas34();
+			$cuota36 = $capital * (float)$configuration->getSeisA10Cuotas36();
+		} else if ($y < $intervalo2 ) {
+			$cuota2 = $capital * (float)$configuration->getOnceA15Cuotas2();
+			$cuota4 = $capital * (float)$configuration->getOnceA15Cuotas4();
+			$cuota6 = $capital * (float)$configuration->getOnceA15Cuotas6();
+			$cuota8 = $capital * (float)$configuration->getOnceA15Cuotas8();
+			$cuota10 = $capital * (float)$configuration->getOnceA15Cuotas10();
+			$cuota12 = $capital * (float)$configuration->getOnceA15Cuotas12();
+			$cuota14 = $capital * (float)$configuration->getOnceA15Cuotas14();
+			$cuota16 = $capital * (float)$configuration->getOnceA15Cuotas16();
+			$cuota18 = $capital * (float)$configuration->getOnceA15Cuotas18();
+			$cuota20 = $capital * (float)$configuration->getOnceA15Cuotas20();
+			$cuota22 = $capital * (float)$configuration->getOnceA15Cuotas22();
+			$cuota24 = $capital * (float)$configuration->getOnceA15Cuotas24();
+			$cuota26 = $capital * (float)$configuration->getOnceA15Cuotas26();
+			$cuota28 = $capital * (float)$configuration->getOnceA15Cuotas28();
+			$cuota30 = $capital * (float)$configuration->getOnceA15Cuotas30();
+			$cuota32 = $capital * (float)$configuration->getOnceA15Cuotas32();
+			$cuota34 = $capital * (float)$configuration->getOnceA15Cuotas34();
+			$cuota36 = $capital * (float)$configuration->getOnceA15Cuotas36();
+		}
+		$logger->info('Valor Cuota 2 '.$cuota2 );
+		$output = array();
+		$output[] = array('key'=>'Cuota 2', 'value'=>$cuota2);
+		$output[] = array('key'=>'Cuota 4', 'value'=>$cuota4);
+		$output[] = array('key'=>'Cuota 6', 'value'=>$cuota6);
+		$output[] = array('key'=>'Cuota 8', 'value'=>$cuota8);
+		$output[] = array('key'=>'Cuota 10', 'value'=>$cuota10);
+		$output[] = array('key'=>'Cuota 12', 'value'=>$cuota12);
+		$output[] = array('key'=>'Cuota 14', 'value'=>$cuota14);
+		$output[] = array('key'=>'Cuota 16', 'value'=>$cuota16);
+		$output[] = array('key'=>'Cuota 18', 'value'=>$cuota18);
+		$output[] = array('key'=>'Cuota 20', 'value'=>$cuota20);
+		$output[] = array('key'=>'Cuota 22', 'value'=>$cuota22);
+		$output[] = array('key'=>'Cuota 24', 'value'=>$cuota24);
+		$output[] = array('key'=>'Cuota 26', 'value'=>$cuota26);
+		$output[] = array('key'=>'Cuota 28', 'value'=>$cuota28);
+		$output[] = array('key'=>'Cuota 30', 'value'=>$cuota30);
+		$output[] = array('key'=>'Cuota 32', 'value'=>$cuota32);
+		$output[] = array('key'=>'Cuota 34', 'value'=>$cuota34);
+		$output[] = array('key'=>'Cuota 36', 'value'=>$cuota36);
+		
+		$response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent(json_encode($output));
+        return $response;
      }
 }

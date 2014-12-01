@@ -19,3 +19,12 @@ logout:
 publicaciones_usuario:
     path:     /admin/usuarios/publicaciones/{userId}
     defaults: { _controller: KellsBackBundle:Default:publicacionesUsuario }
+
+    
+configuracion:
+    path:     /admin/configuracion
+    defaults: { _controller: KellsBackBundle:Default:configuration }
+    
+saveChanges:
+    path:     /admin/saveconfiguracion
+    defaults: { _controller: KellsBackBundle:Default:saveChanges } 

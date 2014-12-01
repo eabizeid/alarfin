@@ -1,0 +1,543 @@
+{% extends 'KellsBackBundle:Default:base2.php.twig' %}
+{% block body %} 
+   <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Configuraci&oacute;n</h1>
+                </div>
+            </div>
+            {% if message == 'EXITO'%}
+            <div class="alert alert-success" role="alert">Configuración guardada con &eacute;xito</div>
+            {% endif %}
+            <div class="row">  
+                <div class="col-md-12">
+                	<form role="form" method="post" action="{{ path('saveChanges') }}" />
+                    <div class="well well-gris-claro">
+                        <div class="row">
+                        	<div class="col-sm-12">
+                                <div class="alert alert-titulo" role="alert">
+                                    <h4 class="nomar text-uppercase">Emails para recibir notificaciones de publicaciones y cr&eacute;dito</h4>
+                                </div>
+                            </div> 
+                            <div class="col-sm-4"> 
+                                <div class="form-group">
+                                    <label for="email1">Email 1</label>
+                                    <input name="email1" type="email" autofocus required class="form-control" id="email1" tabindex="1" value="{{configuration.email1}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="email2">Email 2</label>
+                                    <input name="email2" type="email" autofocus required class="form-control" id="email2" tabindex="2" value="{{configuration.email2}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="email3">Email 3</label>
+                                    <input name="email3" type="email" autofocus required class="form-control" id="email3" tabindex="3" value="{{configuration.email3}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+      
+                <div class="col-md-12 topmar form-horizontal">
+                    <div class="well well-gris-claro">
+                        <div class="row">
+                        	<div class="col-sm-12">
+                                <div class="alert alert-titulo" role="alert">
+                                    <h4 class="nomar text-uppercase">Tasa y TEA</h4>
+                                </div>
+                            </div>
+                        	<div class="col-sm-3"> 
+                              <h4 class="nomar text-center"><strong>0 KM</strong></h4>
+                                <div class="form-group toppad10">
+                                  <label for="cerokmtasa" class="col-sm-4 control-label">TASA</label>
+                                  <div class="col-sm-8">
+                                    <input name="cerokmtasa" type="text" autofocus required class="form-control" id="cerokmtasa" tabindex="10" value="{{configuration.cerokmtasa}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokm-tea" class="col-sm-4 control-label">TEA</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmtea" type="text" autofocus required class="form-control" id="cerokmtea" tabindex="11" value="{{configuration.cerokmtea}}">
+                                  </div>
+                                </div>
+                          </div>
+                          <div class="col-xs-12 visible-xs"><hr class="toppad10"></div>
+                            <div class="col-sm-3"> 
+                                <h4 class="nomar text-center"><strong>1 a 5</strong></h4>
+                                <div class="form-group toppad10">
+                                    <label for="unoA5tasa" class="col-sm-4 control-label">TASA</label>
+                                    <div class="col-sm-8">
+                                    <input name="unoA5tasa" type="text" autofocus required class="form-control" id="unoA5tasa" tabindex="12" value="{{configuration.unoA5tasa}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="unoA5tea" class="col-sm-4 control-label">TEA</label>
+                                    <div class="col-sm-8">
+                                    <input name="unoA5tea" type="text" autofocus required class="form-control" id="unoA5tea" tabindex="13" value="{{configuration.unoA5tea}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 visible-xs"><hr class="toppad10"></div>
+                            <div class="col-sm-3"> 
+                                <h4 class="nomar text-center"><strong>6 a 10</strong></h4>
+                                <div class="form-group toppad10">
+                                    <label for="seisA10tasa" class="col-sm-4 control-label">TASA</label>
+                                    <div class="col-sm-8">
+                                    <input name="seisA10tasa" type="text" autofocus required class="form-control" id="seisA10tasa" tabindex="14" value="{{configuration.seisA10tasa}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="seisA10tea" class="col-sm-4 control-label">TEA</label>
+                                    <div class="col-sm-8">
+                                    <input name="seisA10tea" type="text" autofocus required class="form-control" id="seisA10tea" tabindex="15" value="{{configuration.seisA10tea}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 visible-xs"><hr class="toppad10"></div>
+                          <div class="col-sm-3"> 
+                                <h4 class="nomar text-center"><strong>11 a 15</strong></h4>
+                                <div class="form-group toppad10">
+                                    <label for="onceA15tasa" class="col-sm-4 control-label">TASA</label>
+                                    <div class="col-sm-8">
+                                    <input name="onceA15tasa" type="text" autofocus required class="form-control" id="onceA15tasa" tabindex="16" value="{{configuration.onceA15tasa}}">
+                                    </div>
+                                </div>
+                            <div class="form-group">
+                                    <label for="onceA15tea" class="col-sm-4 control-label">TEA</label>
+                                    <div class="col-sm-8">
+                                    <input name="onceA15tea" type="text" autofocus required class="form-control" id="onceA15tea" tabindex="17" value="{{configuration.onceA15tea}}">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                          <div class="col-sm-12 topmar">
+                                <div class="alert alert-titulo" role="alert">
+                                    <h4 class="nomar text-uppercase">Coeficientes por cuotas</h4>
+                                </div>
+                            </div>
+                        	<div class="col-sm-3"> 
+                              <h4 class="nomar text-center"><strong>0 KM</strong></h4>
+                                <div class="form-group toppad10">
+                                  <label for="cerokmCuotas2" class="col-sm-4 control-label">2</label>
+                                  <div class="col-sm-8">
+                                    <input name="cerokmCuotas2" type="text" autofocus required class="form-control" id="cerokmCuotas2" tabindex="20" value="{{configuration.cerokmCuotas2}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas4" class="col-sm-4 control-label">4</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas4" type="text" autofocus required class="form-control" id="cerokmCuotas4" tabindex="21" value="{{configuration.cerokmCuotas4}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas6" class="col-sm-4 control-label">6</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas6" type="text" autofocus required class="form-control" id="cerokmCuotas6" tabindex="22" value="{{configuration.cerokmCuotas6}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas8" class="col-sm-4 control-label">8</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas8" type="text" autofocus required class="form-control" id="cerokmCuotas8" tabindex="23" value="{{configuration.cerokmCuotas8}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas10" class="col-sm-4 control-label">10</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas10" type="text" autofocus required class="form-control" id="cerokmCuotas10" tabindex="24" value="{{configuration.cerokmCuotas10}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas12" class="col-sm-4 control-label">12</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas12" type="text" autofocus required class="form-control" id="cerokmCuotas12" tabindex="25" value="{{configuration.cerokmCuotas12}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas14" class="col-sm-4 control-label">14</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas14" type="text" autofocus required class="form-control" id="cerokmCuotas14" tabindex="26" value="{{configuration.cerokmCuotas14}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas16" class="col-sm-4 control-label">16</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas16" type="text" autofocus required class="form-control" id="cerokmCuotas16" tabindex="27" value="{{configuration.cerokmCuotas16}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas18" class="col-sm-4 control-label">18</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas18" type="text" autofocus required class="form-control" id="cerokmCuotas18" tabindex="28" value="{{configuration.cerokmCuotas18}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas20" class="col-sm-4 control-label">20</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas20" type="text" autofocus required class="form-control" id="cerokmCuotas20" tabindex="29" value="{{configuration.cerokmCuotas20}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas22" class="col-sm-4 control-label">22</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas22" type="text" autofocus required class="form-control" id="cerokmCuotas22" tabindex="30" value="{{configuration.cerokmCuotas22}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas24" class="col-sm-4 control-label">24</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas24" type="text" autofocus required class="form-control" id="cerokmCuotas24" tabindex="31" value="{{configuration.cerokmCuotas24}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas26" class="col-sm-4 control-label">26</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas26" type="text" autofocus required class="form-control" id="cerokmCuotas26" tabindex="32" value="{{configuration.cerokmCuotas26}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas28" class="col-sm-4 control-label">28</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas28" type="text" autofocus required class="form-control" id="cerokmCuotas28" tabindex="33" value="{{configuration.cerokmCuotas28}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas30" class="col-sm-4 control-label">30</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas30" type="text" autofocus required class="form-control" id="cerokmCuotas30" tabindex="34" value="{{configuration.cerokmCuotas30}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas32" class="col-sm-4 control-label">32</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas32" type="text" autofocus required class="form-control" id="cerokmCuotas32" tabindex="35" value="{{configuration.cerokmCuotas32}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas34" class="col-sm-4 control-label">34</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas34" type="text" autofocus required class="form-control" id="cerokmCuotas34" tabindex="36" value="{{configuration.cerokmCuotas34}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="cerokmCuotas36" class="col-sm-4 control-label">36</label>
+                                  <div class="col-sm-8">
+                                  	<input name="cerokmCuotas36" type="text" autofocus required class="form-control" id="cerokmCuotas36" tabindex="37" value="{{configuration.cerokmCuotas36}}">
+                                  </div>
+                                </div>
+                          </div>
+                          <div class="col-xs-12 visible-xs"><hr class="toppad10"></div>
+                          			<div class="col-sm-3"> 
+                              <h4 class="nomar text-center"><strong>1 a 5</strong></h4>
+                                <div class="form-group toppad10">
+                                  <label for="unoA5Cuotas2" class="col-sm-4 control-label">2</label>
+                                  <div class="col-sm-8">
+                                    <input name="unoA5Cuotas2" type="text" autofocus required class="form-control" id="unoA5Cuotas2" tabindex="40" value="{{configuration.unoA5Cuotas2}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas4" class="col-sm-4 control-label">4</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas4" type="text" autofocus required class="form-control" id="unoA5Cuotas4" tabindex="41" value="{{configuration.unoA5Cuotas4}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas6" class="col-sm-4 control-label">6</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas6" type="text" autofocus required class="form-control" id="unoA5Cuotas6" tabindex="42" value="{{configuration.unoA5Cuotas6}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas8" class="col-sm-4 control-label">8</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas8" type="text" autofocus required class="form-control" id="unoA5Cuotas8" tabindex="43" value="{{configuration.unoA5Cuotas8}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas10" class="col-sm-4 control-label">10</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas10" type="text" autofocus required class="form-control" id="unoA5Cuotas10" tabindex="44" value="{{configuration.unoA5Cuotas10}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas12" class="col-sm-4 control-label">12</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas12" type="text" autofocus required class="form-control" id="unoA5Cuotas12" tabindex="45" value="{{configuration.unoA5Cuotas12}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas14" class="col-sm-4 control-label">14</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas14" type="text" autofocus required class="form-control" id="unoA5Cuotas14" tabindex="46" value="{{configuration.unoA5Cuotas14}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas16" class="col-sm-4 control-label">16</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas16" type="text" autofocus required class="form-control" id="unoA5Cuotas16" tabindex="47" value="{{configuration.unoA5Cuotas16}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas18" class="col-sm-4 control-label">18</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas18" type="text" autofocus required class="form-control" id="unoA5Cuotas18" tabindex="48" value="{{configuration.unoA5Cuotas18}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas20" class="col-sm-4 control-label">20</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas20" type="text" autofocus required class="form-control" id="unoA5Cuotas20" tabindex="49" value="{{configuration.unoA5Cuotas20}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas22" class="col-sm-4 control-label">22</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas22" type="text" autofocus required class="form-control" id="unoA5Cuotas22" tabindex="50" value="{{configuration.unoA5Cuotas22}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas24" class="col-sm-4 control-label">24</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas24" type="text" autofocus required class="form-control" id="unoA5Cuotas24" tabindex="51" value="{{configuration.unoA5Cuotas24}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas26" class="col-sm-4 control-label">26</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas26" type="text" autofocus required class="form-control" id="unoA5Cuotas26" tabindex="52" value="{{configuration.unoA5Cuotas26}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas28" class="col-sm-4 control-label">28</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas28" type="text" autofocus required class="form-control" id="unoA5Cuotas28" tabindex="53" value="{{configuration.unoA5Cuotas28}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas30" class="col-sm-4 control-label">30</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas30" type="text" autofocus required class="form-control" id="unoA5Cuotas30" tabindex="54" value="{{configuration.unoA5Cuotas30}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas32" class="col-sm-4 control-label">32</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas32" type="text" autofocus required class="form-control" id="unoA5Cuotas32" tabindex="55" value="{{configuration.unoA5Cuotas32}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas34" class="col-sm-4 control-label">34</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas34" type="text" autofocus required class="form-control" id="unoA5Cuotas34" tabindex="56" value="{{configuration.unoA5Cuotas34}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="unoA5Cuotas36" class="col-sm-4 control-label">36</label>
+                                  <div class="col-sm-8">
+                                  	<input name="unoA5Cuotas36" type="text" autofocus required class="form-control" id="unoA5Cuotas36" tabindex="57" value="{{configuration.unoA5Cuotas36}}">
+                                  </div>
+                                </div>
+                          </div>
+                          <div class="col-xs-12 visible-xs"><hr class="toppad10"></div>
+                          			<div class="col-sm-3"> 
+                              <h4 class="nomar text-center"><strong>6 a 10</strong></h4>
+                                <div class="form-group toppad10">
+                                  <label for="seisA10Cuotas2" class="col-sm-4 control-label">2</label>
+                                  <div class="col-sm-8">
+                                    <input name="seisA10Cuotas2" type="text" autofocus required class="form-control" id="seisA10Cuotas2" tabindex="60" value="{{configuration.seisA10Cuotas2}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas4" class="col-sm-4 control-label">4</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas4" type="text" autofocus required class="form-control" id="seisA10Cuotas4" tabindex="61" value="{{configuration.seisA10Cuotas4}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas6" class="col-sm-4 control-label">6</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas6" type="text" autofocus required class="form-control" id="seisA10Cuotas6" tabindex="62" value="{{configuration.seisA10Cuotas6}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas8" class="col-sm-4 control-label">8</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas8" type="text" autofocus required class="form-control" id="seisA10Cuotas8" tabindex="63" value="{{configuration.seisA10Cuotas8}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas10" class="col-sm-4 control-label">10</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas10" type="text" autofocus required class="form-control" id="seisA10Cuotas10" tabindex="64" value="{{configuration.seisA10Cuotas10}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas12" class="col-sm-4 control-label">12</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas12" type="text" autofocus required class="form-control" id="seisA10Cuotas12" tabindex="65" value="{{configuration.seisA10Cuotas12}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas14" class="col-sm-4 control-label">14</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas14" type="text" autofocus required class="form-control" id="seisA10Cuotas14" tabindex="66" value="{{configuration.seisA10Cuotas14}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas16" class="col-sm-4 control-label">16</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas16" type="text" autofocus required class="form-control" id="seisA10Cuotas16" tabindex="67" value="{{configuration.seisA10Cuotas16}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas18" class="col-sm-4 control-label">18</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas18" type="text" autofocus required class="form-control" id="seisA10Cuotas18" tabindex="68" value="{{configuration.seisA10Cuotas18}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas20" class="col-sm-4 control-label">20</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas20" type="text" autofocus required class="form-control" id="seisA10Cuotas20" tabindex="69" value="{{configuration.seisA10Cuotas20}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas22" class="col-sm-4 control-label">22</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas22" type="text" autofocus required class="form-control" id="seisA10Cuotas22" tabindex="70" value="{{configuration.seisA10Cuotas22}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas24" class="col-sm-4 control-label">24</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas24" type="text" autofocus required class="form-control" id="seisA10Cuotas24" tabindex="71" value="{{configuration.seisA10Cuotas24}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas26" class="col-sm-4 control-label">26</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas26" type="text" autofocus required class="form-control" id="seisA10Cuotas26" tabindex="72" value="{{configuration.seisA10Cuotas26}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas28" class="col-sm-4 control-label">28</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas28" type="text" autofocus required class="form-control" id="seisA10Cuotas28" tabindex="73" value="{{configuration.seisA10Cuotas28}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas30" class="col-sm-4 control-label">30</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas30" type="text" autofocus required class="form-control" id="seisA10Cuotas30" tabindex="74" value="{{configuration.seisA10Cuotas30}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas32" class="col-sm-4 control-label">32</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas32" type="text" autofocus required class="form-control" id="seisA10Cuotas32" tabindex="75" value="{{configuration.seisA10Cuotas32}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas34" class="col-sm-4 control-label">34</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas34" type="text" autofocus required class="form-control" id="seisA10Cuotas34" tabindex="76" value="{{configuration.seisA10Cuotas34}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="seisA10Cuotas36" class="col-sm-4 control-label">36</label>
+                                  <div class="col-sm-8">
+                                  	<input name="seisA10Cuotas36" type="text" autofocus required class="form-control" id="seisA10Cuotas36" tabindex="77" value="{{configuration.seisA10Cuotas36}}">
+                                  </div>
+                                </div>
+                          </div>
+                          <div class="col-xs-12 visible-xs"><hr class="toppad10"></div>
+                          			<div class="col-sm-3"> 
+                              <h4 class="nomar text-center"><strong>11 a 15</strong></h4>
+                                <div class="form-group toppad10">
+                                  <label for="onceA15Cuotas2" class="col-sm-4 control-label">2</label>
+                                  <div class="col-sm-8">
+                                    <input name="onceA15Cuotas2" type="text" autofocus required class="form-control" id="onceA15Cuotas2" tabindex="80" value="{{configuration.onceA15Cuotas2}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="onceA15Cuotas4" class="col-sm-4 control-label">4</label>
+                                  <div class="col-sm-8">
+                                  	<input name="onceA15Cuotas4" type="text" autofocus required class="form-control" id="onceA15Cuotas4" tabindex="81" value="{{configuration.onceA15Cuotas4}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="onceA15Cuotas6" class="col-sm-4 control-label">6</label>
+                                  <div class="col-sm-8">
+                                  	<input name="onceA15Cuotas6" type="text" autofocus required class="form-control" id="onceA15Cuotas6" tabindex="82" value="{{configuration.onceA15Cuotas6}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="onceA15Cuotas8" class="col-sm-4 control-label">8</label>
+                                  <div class="col-sm-8">
+                                  	<input name="onceA15Cuotas8" type="text" autofocus required class="form-control" id="onceA15Cuotas8" tabindex="83" value="{{configuration.onceA15Cuotas8}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="onceA15Cuotas10" class="col-sm-4 control-label">10</label>
+                                  <div class="col-sm-8">
+                                  	<input name="onceA15Cuotas10" type="text" autofocus required class="form-control" id="onceA15Cuotas10" tabindex="84" value="{{configuration.onceA15Cuotas10}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="onceA15Cuotas12" class="col-sm-4 control-label">12</label>
+                                  <div class="col-sm-8">
+                                  	<input name="onceA15Cuotas12" type="text" autofocus required class="form-control" id="onceA15Cuotas12" tabindex="85" value="{{configuration.onceA15Cuotas12}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="onceA15Cuotas14" class="col-sm-4 control-label">14</label>
+                                  <div class="col-sm-8">
+                                  	<input name="onceA15Cuotas14" type="text" autofocus required class="form-control" id="onceA15Cuotas14" tabindex="86" value="{{configuration.onceA15Cuotas14}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="onceA15Cuotas16" class="col-sm-4 control-label">16</label>
+                                  <div class="col-sm-8">
+                                  	<input name="onceA15Cuotas16" type="text" autofocus required class="form-control" id="onceA15Cuotas16" tabindex="87" value="{{configuration.onceA15Cuotas16}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="onceA15Cuotas18" class="col-sm-4 control-label">18</label>
+                                  <div class="col-sm-8">
+                                  	<input name="onceA15Cuotas18" type="text" autofocus required class="form-control" id="onceA15Cuotas18" tabindex="88" value="{{configuration.onceA15Cuotas18}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="onceA15Cuotas20" class="col-sm-4 control-label">20</label>
+                                  <div class="col-sm-8">
+                                  	<input name="onceA15Cuotas20" type="text" autofocus required class="form-control" id="onceA15Cuotas20" tabindex="89" value="{{configuration.onceA15Cuotas20}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="onceA15Cuotas22" class="col-sm-4 control-label">22</label>
+                                  <div class="col-sm-8">
+                                  	<input name="onceA15Cuotas22" type="text" autofocus required class="form-control" id="onceA15Cuotas22" tabindex="90" value="{{configuration.onceA15Cuotas22}}">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="onceA15Cuotas24" class="col-sm-4 control-label">24</label>
+                                  <div class="col-sm-8">
+                                  	<input name="onceA15Cuotas24" type="text" autofocus required class="form-control" id="onceA15Cuotas24" tabindex="91" value="{{configuration.onceA15Cuotas24}}">
+                                  </div>
+                                </div>
+                          </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-md-12 toppad botpad text-center"> 
+                    <input type="button" value="Cancelar" class="btn btn-default" onClick="location.href='home.php'"> &nbsp; <input type="submit" value="Guardar cambios" class="btn btn-primary btn-lg">
+                </div>
+                </form>
+            </div>		  	
+        </div>
+    </div>
+ {% endblock %}

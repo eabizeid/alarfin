@@ -191,4 +191,13 @@ class DefaultController extends Controller
         return $this->render('KellsBackBundle:Default:configuracion.html.twig', array("message"=>$message,"configuration"=>$configuration));
     }
     
+    public function creditosAction()
+    {
+    	
+    	$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Credito');
+		$creditos = $repository->findAll();
+		return $this->render('KellsBackBundle:Default:creditos.html.twig', array("creditos"=>$creditos));
+		
+    }
 }

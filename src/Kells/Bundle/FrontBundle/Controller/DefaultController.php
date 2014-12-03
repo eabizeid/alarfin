@@ -990,7 +990,15 @@ class DefaultController extends Controller
 		}
 		return;
 	}
-	
+
+	protected function createFotocopia($fotocopiaFile) {
+		if ($fotocopiaFile) {
+			$image = new Fotocopias();
+			$image->setFile($fotocopiaFile);
+			return $image;
+		}
+		return;
+	}
 	
 	public function toFinalizeAction(Request $request) {
 		$logger = $this->get('logger');
@@ -1031,7 +1039,7 @@ class DefaultController extends Controller
 		
 	}
 	
-	public function showCreditRequestAction() {
+	public function showCreditRequestAction($message = null) {
 		
 		$user = $this->get('security.context')->getToken()->getUser();
 		
@@ -1056,7 +1064,7 @@ class DefaultController extends Controller
 		$logger->info("user_role: ".$user->getRoles()[0]);
 		return $this->render(
         'KellsFrontBundle:Default:solicitar-credito-usuario.html.twig', array("form"=>$form->createView(), "userRole"=>$user->getRoles()[0], 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
-        	'directions'=>$directions, 'transmissions'=>$transmissions));
+        	'directions'=>$directions, 'transmissions'=>$transmissions, 'message'=>$message));
 		
 	}
 	
@@ -1074,6 +1082,7 @@ class DefaultController extends Controller
    		$domicilioSolicitante = $request->get('solicitante-domicilio');
    		$provinceId = $request->get('solicitante-provincia');
    		$cityId = $request->get('solicitante-ciudad');
+   		$logger->info('Ciudad Solicitante: '.$cityId);
 		$celularSolicitante = $request->get('solicitante-celular');  		
 		$fijoSolicitante = $request->get('solicitante-telefono');
 		$mailSolicitante = $request->get('solicitante-email');
@@ -1089,31 +1098,30 @@ class DefaultController extends Controller
 	    $solicitanteOtra1 = $files->get('solicitante-fotocopia-otra-1');
 	    $solicitanteOtra2 = $files->get('solicitante-fotocopia-otra-2');
 	 
-	    
 	    //CONYUGE
-
-	    $nombreConyuge = $request->get('conyuge-nombre');
-   		$apellidoConyuge = $request->get('conyuge-apellido');
-   		$dniConyuge = $request->get('conyuge-dni');
-   		$estadoCivilConyuge = $request->get('conyuge-estado-civil');
-   		$domicilioConyuge = $request->get('conyuge-domicilio');
-   		$provinceId = $request->get('conyuge-provincia');
-   		$cityId = $request->get('conyuge-ciudad');
-		$celularConyuge = $request->get('conyuge-celular');  		
-		$fijoConyuge = $request->get('conyuge-telefono');
-		$mailConyuge = $request->get('conyuge-email');
-   		$actividadLaboralConyuge = $request->get('conyuge-laboral');
-   		$telLaboralConyuge = $request->get('conyuge-telefono-trabajo');
-   		
-   		//fotocopias
-   		$files = $request->files;
-	    $conyugeFotoDni = $files->get('conyuge-fotocopia-dni');
-	    $conyugeOtra1 = $files->get('conyuge-fotocopia-otra-1');
-	    $conyugeOtra2 = $files->get('conyuge-fotocopia-otra-2');
-	    $conyugeOtra3 = $files->get('conyuge-fotocopia-otra-3');
-	 
+	    if ($estadoCivilSolicitante == 'Casado/a') {
+		    $nombreConyuge = $request->get('conyuge-nombre');
+	   		$apellidoConyuge = $request->get('conyuge-apellido');
+	   		$dniConyuge = $request->get('conyuge-dni');
+	   		$estadoCivilConyuge = $request->get('conyuge-estado-civil');
+	   		$domicilioConyuge = $request->get('conyuge-domicilio');
+	   		$conyugeProvinceId = $request->get('conyuge-provincia');
+	   		$conyugeCityId = $request->get('conyuge-ciudad');
+			$celularConyuge = $request->get('conyuge-celular');  		
+			$fijoConyuge = $request->get('conyuge-telefono');
+			$mailConyuge = $request->get('conyuge-email');
+	   		$actividadLaboralConyuge = $request->get('conyuge-laboral');
+	   		$telLaboralConyuge = $request->get('conyuge-telefono-trabajo');
+	   		
+	   		//fotocopias
+	   		$files = $request->files;
+		    $conyugeFotoDni = $files->get('conyuge-fotocopia-dni');
+		    $conyugeOtra1 = $files->get('conyuge-fotocopia-otra-1');
+		    $conyugeOtra2 = $files->get('conyuge-fotocopia-otra-2');
+		    $conyugeOtra3 = $files->get('conyuge-fotocopia-otra-3');
+	    }
 	    
-	    if ($user->getRoles()[0] == 'ROLE_USER') {
+	    if ($user->getRoles()[0] == 'ROLE_LICENSEE') {
 	    	//	Garante
 
 		    $nombreGarante = $request->get('garante-nombre');
@@ -1155,13 +1163,285 @@ class DefaultController extends Controller
 		$credito = new Credito();
 		$credito->setNombreSolicitante($nombreSolicitante);
 		$credito->setApellidoSolicitante($apellidoSolicitante);
+		$logger->info('Apellido Solicitante '.$credito->getApellidoSolicitante());
 		$credito->setDniSolicitante($dniSolicitante);
 		$credito->setEstadoCivilSolicitante($estadoCivilSolicitante);
 		$credito->setNacimientoSolicitante($nacimientoSolicitante);
 		$credito->setDomicilioSolicitante($domicilioSolicitante);
-		$credito->setProvinciaSolicitante();
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Province');
+		$provincia = $repository->find($provinceId);
+		$credito->setProvinciaSolicitante($provincia->getDescription());
+		
+		$repository = $em->getRepository('KellsFrontBundle:City');
+		$city = $repository->find($cityId);
+		$credito->setCiudadSolicitante($city->getDescription());		
+		$credito->setCelularSolicitante($celularSolicitante);
+		$credito->setFijoSolicitante($fijoSolicitante);
+		$credito->setMailSolicitante($mailSolicitante);
+   		$credito->setActividadLaboralSolicitante($actividadLaboralSolicitante);
+   		$telLaboralSolicitante = $request->get('solicitante-telefono-trabajo');
+   		$credito->setTelLaboralSolicitante($telLaboralSolicitante);
+   		
+   		
+    	if ($solicitanteServicio) {
+			$fotocopiaServicioSolicitante = $this->createFotocopia($solicitanteServicio);
+			$credito->setFotocopiaServicioSolicitante($fotocopiaServicioSolicitante);
+		}
+    	if ($solicitanteFotoDni) {
+			$fotocopiaDniSolicitante = $this->createFotocopia($solicitanteFotoDni);
+			$credito->setFotocopiaDniSolicitante($fotocopiaDniSolicitante);
+		}
+    	if ($solicitanteRecibo) {
+			$fotocopiaReciboSolicitante = $this->createFotocopia($solicitanteRecibo);
+			$credito->setFotocopiaReciboSolicitante($fotocopiaReciboSolicitante);
+		}
+    	if ($solicitanteIngresos) {
+			$fotocopiaIngresosSolicitante = $this->createFotocopia($solicitanteIngresos);
+			$credito->setFotocopiaIngresosSolicitante($fotocopiaIngresosSolicitante);
+		}
+    	if ($solicitanteOtra1) {
+			$fotocopiaOtra1Solicitante = $this->createFotocopia($solicitanteOtra1);
+			$credito->setFotocopiaOtra1Solicitante($fotocopiaOtra1Solicitante);
+		}
+		
+    	if ($solicitanteOtra2) {
+			$fotocopiaOtra2Solicitante = $this->createFotocopia($solicitanteOtra2);
+			$credito->setFotocopiaOtra2Solicitante($fotocopiaOtra2Solicitante);
+		}
+	    
+   		
+   		//Conyuge
+		if ($estadoCivilSolicitante == 'Casado/a') {
+	   		$credito->setNombreConyuge($nombreConyuge);
+			$credito->setApellidoConyuge($apellidoConyuge);
+			$credito->setDniConyuge($dniConyuge);
+			$credito->setEstadoCivilConyuge($estadoCivilConyuge);
+			$credito->setDomicilioConyuge($domicilioConyuge);
+			$repository = $em->getRepository('KellsFrontBundle:Province');
+			$provincia = $repository->find($provinceId);
+			$credito->setProvinciaConyuge($provincia->getDescription());
+			
+			$repository = $em->getRepository('KellsFrontBundle:City');
+			$city = $repository->find($cityId);
+			$credito->setCiudadConyuge($city->getDescription());		
+			$credito->setCelularConyuge($celularConyuge);
+			$credito->setFijoConyuge($fijoConyuge);
+	   		$credito->setActividadLaboralConyuge($actividadLaboralConyuge);
+	   		$telLaboralConyuge = $request->get('Conyuge-telefono-trabajo');
+	   		$credito->setTelLaboralConyuge($telLaboralConyuge);
+	   		
+	    	if ($conyugeFotoDni) {
+				$fotocopiaDniConyuge = $this->createFotocopia($conyugeFotoDni);
+				$credito->setFotocopiaDniConyuge($fotocopiaDniConyuge);
+			}
+	    	if ($conyugeOtra1) {
+				$fotocopiaOtra1Conyuge = $this->createFotocopia($conyugeOtra1);
+				$credito->setFotocopiaOtra1Conyuge($fotocopiaOtra1Conyuge);
+			}
+			
+	    	if ($conyugeOtra2) {
+				$fotocopiaOtra2Conyuge = $this->createFotocopia($conyugeOtra2);
+				$credito->setFotocopiaOtra2Solicitante($fotocopiaOtra2Conyuge);
+			}
+	    	
+			if ($conyugeOtra3) {
+				$fotocopiaOtra3Conyuge = $this->createFotocopia($conyugeOtra3);
+				$credito->setFotocopiaOtra3Conyuge($fotocopiaOtra3Conyuge);
+			}
+		}
+		//Unidad a adquirir
+		$repository = $em->getRepository('KellsFrontBundle:Trademark');
+		$marca = $repository->find($marcaId);
+		$credito->setMarca($marca->getDescription());		
+		$modeloId = $request->get('modelo');
+		
+		$repository = $em->getRepository('KellsFrontBundle:Model');
+		$modelo = $repository->find($modeloId);
+		$credito->setModelo($modelo->getDescription());
+		
+		$repository = $em->getRepository('KellsFrontBundle:Year');
+		$year = $repository->find($yearId);
+		$credito->setYear($year->getDescription());
+		
+		$repository = $em->getRepository('KellsFrontBundle:Fuel');
+		$fuel = $repository->find($fuelId);
+		$credito->setCombustible($fuel->getDescription());
+		
+		$credito->setValor($value);
+		$credito->setType($type);
+		$credito->setDomain($domain);
+		
+		//credito
+		$credito->setMontoCredito($montoCredito);
+		$credito->setCantidadCuotas($cantidadCuotas);
+		$credito->setComentarios($comments);
+		
+		$credito->setDate(new \DateTime());
+		$credito->setUser($this->getUser()->getName());
+		
+		//calculo valor cuota
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
+		$configuration = $repository->findAll()[0];
+		
+		$intervalo0 = 2014;
+		$intervalo1 = $intervalo0 - 6;
+		$intervalo2 = $intervalo1 - 5;
+		$intervalo3 = $intervalo2 - 5;
+		$y = (int) $year->getDescription();
+		$cuota = 0;
+		if ($y == $intervalo0) {
+			if ($cantidadCuotas == 2) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas24();
+			} else if ($cantidadCuotas == 26) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas26();
+			} else if ($cantidadCuotas == 28) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas28();
+			} else if ($cantidadCuotas == 30) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas30();
+			} else if ($cantidadCuotas == 32) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas32();
+			} else if ($cantidadCuotas == 34) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas34();
+			} else if ($cantidadCuotas == 36) {
+				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas36();
+			}
+		} else if ($y < $intervalo0 && $y >= $intervalo1) {
+			if ($cantidadCuotas == 2) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas24();
+			} else if ($cantidadCuotas == 26) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas26();
+			} else if ($cantidadCuotas == 28) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas28();
+			} else if ($cantidadCuotas == 30) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas30();
+			} else if ($cantidadCuotas == 32) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas32();
+			} else if ($cantidadCuotas == 34) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas34();
+			} else if ($cantidadCuotas == 36) {
+				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas36();
+			}
+		} else if ($y < $intervalo1 && $y >= $intervalo2) {	
+			if ($cantidadCuotas == 2) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas24();
+			} else if ($cantidadCuotas == 26) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas26();
+			} else if ($cantidadCuotas == 28) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas28();
+			} else if ($cantidadCuotas == 30) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas30();
+			} else if ($cantidadCuotas == 32) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas32();
+			} else if ($cantidadCuotas == 34) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas34();
+			} else if ($cantidadCuotas == 36) {
+				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas36();
+			}
+		} else if($y < $intervalo2 ) {
+			if ($cantidadCuotas == 2) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas24();
+			}
+    	}
+    	
+    	$credito->setValorCuota($cuota);
+    	
+		$em->persist($credito);
+		$em->flush();
+		
+    	return $this->redirect($this->generateUrl('creditRequestSuccess', array("message"=>"Se ha enviado la solicitud exitosamente")));
 		
     }	
+    
 
      public function showSimuladorAction() {
 		$searchForm = new Search();

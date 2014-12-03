@@ -27,4 +27,9 @@ configuracion:
     
 saveChanges:
     path:     /admin/saveconfiguracion
-    defaults: { _controller: KellsBackBundle:Default:saveChanges } 
+    defaults: { _controller: KellsBackBundle:Default:saveChanges }
+    
+creditos:
+    path:     /admin/creditos
+    defaults: { _controller: KellsBackBundle:Default:creditos }
+ 

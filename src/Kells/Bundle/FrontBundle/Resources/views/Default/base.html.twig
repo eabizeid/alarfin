@@ -99,7 +99,7 @@
                 			sub.empty();
                 			$.each(data , function(key, description) { 
                     			sub.append($("<option></option>")
-                    				.attr("value",key)
+                    				.attr("value",description.id)
                     				.text(description.description)); 
                 		    })
                 		

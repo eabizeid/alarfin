@@ -333,4 +333,8 @@ class User implements UserInterface {
     {
         return $this->cars;
     }
+    
+    public function getName() {
+    	return $this->firstName + " " + $this->lastName;
+    }
 }

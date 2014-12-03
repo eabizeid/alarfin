@@ -1,73 +1,87 @@
-{% extends 'KellsFrontBundle:Default:base.html.twig' %}
-{% block body %} 
-        <div class="contenido-gris linea-gris-abajo">
-            <div class="container botpad publicar">
-                <div class="row">
-                    <div class="col-xs-12 titulo">
-                        <h1>Solicitar Cr&eacute;dito</h1>
-                    </div>
+{% extends 'KellsBackBundle:Default:base2.php.twig' %}
+{% block body %}
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Ver cr&eacute;dito</h1>
                 </div>
-                <div class="row">                
-					<form role="form" method="post" action="{{ path('credit')}}" enctype="multipart/form-data" >
-						{% if (message) %}
-						<div  id="divSuccess" class="alert alert-success" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i> {{message}}</div>
-						{% endif %} 
+            </div>            
+		  	<div class="row">
+				<form role="form">
+                       <div class="col-md-12">
+                        	<div class="well well-gris-claro">
+                                <div class="row">
+                                	<div class="col-sm-12">
+                                        <div class="alert alert-titulo" role="alert">
+                                            <h4 class="nomar text-uppercase"> usuario / concesionaria</h4>
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6">                                
+                                        <div class="form-group">
+                                            <label for="publicador-tipo">Tipo</label>
+                                            <select name="publicador-tipo" id="publicador-tipo" class="form-control input-lg" disabled>
+                                            	<option> Seleccion&aacute; un tipo</option>
+                                                <option> Usuario </option>
+                                                <option selected> Concesionaria </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="publicador-nombre">Nombre</label>
+                                            <input type="text" name="publicador-nombre" value="Autolatina S.A." id="publicador-nombre" class="form-control input-lg" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+	                   		</div> 
+                        </div>
                         <div id="solicitante-1">                   
                         <div class="col-md-12 topmar">
                         	<div class="well well-gris-claro">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <div class="alert alert-danger" role="alert">
+                                        <div class="alert alert-titulo" role="alert">
                                             <h4 class="nomar text-uppercase">Datos del solicitante 1</h4>
                                         </div>
                                     </div> 
                                 	<div class="col-sm-5"> 
                                         <div class="form-group">
                                             <label for="solicitante-nombre">Nombre</label>
-                                          *
-                                          <input type="text" name="solicitante-nombre" id="solicitante-nombre" required class="form-control input-lg" tabindex="1" autofocus>
+                                          <input name="solicitante-nombre" type="text" autofocus disabled class="form-control input-lg" id="solicitante-nombre" tabindex="1" value="Juan Carlos">
                                         </div>
                                     </div>
                                     <div class="col-sm-5"> 
                                         <div class="form-group">
                                             <label for="solicitante-apellido">Apellido</label>
-                                            *
-                                            <input type="text" name="solicitante-apellido" id="solicitante-apellido" required class="form-control input-lg" tabindex="2">
+                                            <input name="solicitante-nombre" type="text" disabled class="form-control input-lg" id="solicitante-apellido" tabindex="2" value="Gimenez">
                                         </div>
                                     </div>
-                                    {% if userRole == 'ROLE_LICENSEE'%}
-                                    
                                     <div class="col-sm-2"> 
                                         <div class="form-group">
                                             <label for="porcentaje">Porcentaje</label>
-                                          *
-                                          <input type="number" name="porcentaje" id="porcentaje" min="1" max="100" required class="form-control input-lg" tabindex="1" value="100">
+                                          <input type="number" name="porcentaje" id="porcentaje" min="1" max="100" disabled class="form-control input-lg" tabindex="1" value="100">
                                         </div>
                                     </div>
-                                    {% endif %}
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                   <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-dni">DNI</label>
-                                            *
-                                            <input type="number" name="solicitante-dni" id="solicitante-dni" maxlength="8" required class="form-control" tabindex="3">
+                                            <input name="solicitante-dni" type="number" disabled class="form-control" id="solicitante-dni" tabindex="3" value="25789552" maxlength="8">
                                         </div>
                                   </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-nacimiento">Fecha de nacimiento</label>
-                                            *
-                                            <input type="date" name="solicitante-nacimiento" id="solicitante-nacimiento" required class="form-control" tabindex="4">
+                                            <input name="solicitante-nacimiento" type="date" disabled class="form-control" id="solicitante-nacimiento" tabindex="4" value="1977-02-25">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-estado-civil">Estado civil</label>
-                                            *
-                                            <select type="date" name="solicitante-estado-civil" id="solicitante-estado-civil" required class="form-control" tabindex="5">
+                                            <select type="date" name="solicitante-estado-civil" id="solicitante-estado-civil" disabled class="form-control" tabindex="5">
                                             	<option>&nbsp;</option>
                                                 <option>Soltero/a</option>
-                                                <option>Casado/a</option>
+                                                <option selected>Casado/a</option>
                                                 <option>Divorciado/a</option>
                                                 <option>Viudo/a</option>
                                             </select>
@@ -76,105 +90,102 @@
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-domicilio">Domicilio</label>
-                                            *
-                                            <input type="text" name="solicitante-domicilio" id="solicitante-domicilio" required class="form-control" tabindex="6">
+                                            <input name="solicitante-domicilio" type="text" disabled class="form-control" id="solicitante-domicilio" tabindex="6" value="San Martin 485">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-provincia">Provincia</label>
-                                            *
-                                            <select name="solicitante-provincia" id="solicitante-provincia" required class="form-control" tabindex="7">
+                                            <select name="solicitante-provincia" id="solicitante-provincia" disabled class="form-control" tabindex="7">
                                             	<option>&nbsp;</option>
-												{% for pcia in provinces %}
-                                                <option value="{{ pcia.id }}">{{ pcia.description }}</option>
-                                                {% endfor %}
+                                                <option selected="selected">Buenos Aires</option>
+                                                <option>Capital Federal</option>
+                                                <option>C&oacute;rdoba</option>
                                             </select>
                                         </div>
                                     </div>
                                   <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-ciudad">Ciudad</label>
-                                            *
-                                            <select name="solicitante-ciudad" id="solicitante-ciudad" required class="form-control" tabindex="8">
+                                            <select name="solicitante-ciudad" id="solicitante-ciudad" disabled class="form-control" tabindex="8">
                                             	<option>&nbsp;</option>
+                                                <option selected="selected">Ciudad 1</option>
+                                                <option>Ciudad 2</option>
                                             </select>
                                         </div>
                                   </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-celular">Tel&eacute;fono celular</label>
-                                            *
-                                            <input type="tel" name="solicitante-celular" id="solicitante-celular" required class="form-control" tabindex="9">
+                                            <input name="solicitante-celular" type="tel" disabled class="form-control" id="solicitante-celular" tabindex="9" value="15-5487-6625">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-telefono">Tel&eacute;fono fijo</label>
-                                            <input type="tel" name="solicitante-telefono" id="solicitante-telefono" class="form-control" tabindex="10">
+                                            <input name="solicitante-telefono" type="tel" disabled class="form-control" id="solicitante-telefono" tabindex="10" value="2579-8856">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-email">Email</label>
-                                            <input type="email" name="solicitante-email" id="solicitante-email" class="form-control" tabindex="11">
+                                            <input name="solicitante-email" type="email" disabled class="form-control" id="solicitante-email" tabindex="11" value="mgimenez@gmail.com">
                                         </div>
                                     </div>     
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-laboral">Actividad laboral</label>
-                                          *
-                                          <input type="text" name="solicitante-laboral" id="solicitante-laboral" required class="form-control" tabindex="12">
+                                          <input name="solicitante-laboral" type="text" disabled class="form-control" id="solicitante-laboral" tabindex="12" value="Gerente de Marketing">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-telefono-trabajo">Tel&eacute;fono del trabajo</label>
-                                            <input type="tel" name="solicitante-telefono-trabajo" id="solicitante-telefono-trabajo" class="form-control" tabindex="13">
+                                            <input name="solicitante-telefono-trabajo" type="tel" disabled class="form-control" id="solicitante-telefono-trabajo" tabindex="13" value="4588-8426">
                                         </div>
                                     </div> 
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                   <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="solicitante-fotocopia-servicio">Fotocopia de un servicio</label>
-                                            <input type="file" name="solicitante-fotocopia-servicio" id="solicitante-fotocopia-servicio" class="form-control" tabindex="14">
+                                            <label for="solicitante-fotocopia-servicio">Fotocopia de un servicio</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                          <label for="solicitante-fotocopia-dni">Fotocopia del DNI</label>
-                                          <input type="file" name="solicitante-fotocopia-dni" id="solicitante-fotocopia-dni" class="form-control" tabindex="15">
+                                          <label for="solicitante-fotocopia-dni">Fotocopia del DNI</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                          <label for="solicitante-fotocopia-recibo">Fotocopia del recibo de sueldo</label>
-                                          <input type="file" name="solicitante-fotocopia-recibo" id="solicitante-fotocopia-recibo" class="form-control" tabindex="16">
+                                          <label for="solicitante-fotocopia-recibo">Fotocopia del recibo de sueldo</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                          <label for="solicitante-fotocopia-ingresos">Fotocopia de comprobante de ingresos</label>
-                                          <input type="file" name="solicitante-fotocopia-ingresos" id="solicitante-fotocopia-ingresos" class="form-control" tabindex="17">
+                                          <label for="solicitante-fotocopia-ingresos">Fotocopia de comprobante de ingresos</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="solicitante-fotocopia-otra-1">Otra fotocopia</label>
-                                            <input type="file" name="solicitante-fotocopia-otra-1" id="solicitante-fotocopia-otra-1" class="form-control" tabindex="18">
+                                            <label for="solicitante-fotocopia-otra-1">Otra fotocopia</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                          <label for="solicitante-fotocopia-otra-2">Otra fotocopia</label>
-                                          <input type="file" name="solicitante-fotocopia-otra-2" id="solicitante-fotocopia-otra-2" class="form-control" tabindex="19">
+                                          <label for="solicitante-fotocopia-otra-2">Otra fotocopia</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
 
 
-							<div id="conyuge-1"  style="display: none;" >
+							<div id="conyuge-1">
                                    <div class="col-sm-12 topmar">
-                                   	<div class="alert alert-danger" role="alert">
+                                   	<div class="alert alert-titulo" role="alert">
                                         <h4 class="nomar text-uppercase">Datos del c&oacute;nyuge 1</h4>
                                     </div>
                                    </div> 
@@ -182,33 +193,29 @@
 								<div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="conyuge-nombre">Nombre</label>
-                                          *
-                                          <input type="text" name="conyuge-nombre" id="conyuge-nombre" class="form-control input-lg" tabindex="20" autofocus>
+                                          <input name="conyuge-nombre" type="text" autofocus disabled class="form-control input-lg" id="conyuge-nombre" tabindex="20" value="Mariana">
                                         </div>
                                 </div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="conyuge-apellido">Apellido</label>
-                                            *
-                                            <input type="text" name="conyuge-apellido" id="conyuge-apellido" class="form-control input-lg" tabindex="21">
+                                            <input name="conyuge-nombre" type="text" disabled class="form-control input-lg" id="conyuge-apellido" tabindex="21" value="Pedraza">
                                         </div>
                                     </div>
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="conyuge-dni">DNI</label>
-                                            *
-                                            <input type="number" name="conyuge-dni" id="conyuge-dni" maxlength="8" class="form-control" autofocus tabindex="22">
+                                            <input name="conyuge-dni" type="number" autofocus disabled class="form-control" id="conyuge-dni" tabindex="22" value="28689587" maxlength="8">
                                         </div>
                                     </div>
 									<div class="col-sm-4"> 
                                       <div class="form-group">
                                             <label for="conyuge-estado-civil">Estado civil</label>
-                                            *
-                                            <select type="date" name="conyuge-estado-civil" id="conyuge-estado-civil" class="form-control" tabindex="23">
+                                            <select type="date" name="conyuge-estado-civil" id="conyuge-estado-civil" disabled class="form-control" tabindex="23">
                                             	<option>&nbsp;</option>
                                                 <option>Soltero/a</option>
-                                                <option>Casado/a</option>
+                                                <option selected="selected">Casado/a</option>
                                                 <option>Divorciado/a</option>
                                                 <option>Viudo/a</option>
                                             </select>
@@ -218,80 +225,78 @@
 									<div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="conyuge-domicilio">Domicilio</label>
-                                          *
-                                          <input type="text" name="conyuge-domicilio" id="conyuge-domicilio"  class="form-control" tabindex="24">
+                                          <input name="conyuge-domicilio" type="text" disabled class="form-control" id="conyuge-domicilio" tabindex="24" value="San Martin 485">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                           <label for="conyuge-provincia">Provincia</label>
-                                          *
-                                          <select name="conyuge-provincia" id="conyuge-provincia"  class="form-control" tabindex="25">
+                                          <select name="conyuge-provincia" id="conyuge-provincia" disabled class="form-control" tabindex="25">
                                             	<option>&nbsp;</option>
-												{% for pcia in provinces %}
-                                                <option value="{{ pcia.id }}">{{ pcia.description }}</option>
-                                                {% endfor %}
-                                           </select>
+                                                <option selected="selected">Buenos Aires</option>
+                                                <option>Capital Federal</option>
+                                                <option>C&oacute;rdoba</option>
+                                            </select>
                                         </div>
                                     </div>
                                 <div class="col-sm-4"> 
                                         <div class="form-group">
                                           <label for="conyuge-ciudad">Ciudad</label>
-                                          *
-                                          <select name="conyuge-ciudad" id="conyuge-ciudad"  class="form-control" tabindex="26">
+                                          <select name="conyuge-ciudad" id="conyuge-ciudad" disabled class="form-control" tabindex="26">
                                             	<option>&nbsp;</option>
+                                                <option selected="selected">Ciudad 1</option>
+                                                <option>Ciudad 2</option>
                                             </select>
                                         </div>
                                 </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
-                                            <label for="conyuge-celular">Tel&eacute;fono celular</label>
-                                            <input type="tel" name="conyuge-celular" id="conyuge-celular" class="form-control" tabindex="27">
+                                          <label for="conyuge-celular">Tel&eacute;fono celular</label>
+                                            <input name="conyuge-celular" type="tel" disabled class="form-control" id="conyuge-celular" tabindex="27" value="15-5575-8552">
                                       </div>
                                 </div>
                                 <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="conyuge-telefono">Tel&eacute;fono fijo</label>
-                                            <input type="tel" name="conyuge-telefono" id="conyuge-telefono" class="form-control" tabindex="28">
+                                            <input type="tel" name="conyuge-telefono" id="conyuge-telefono" class="form-control" tabindex="28" disabled value="2579-8856">
                                         </div>
                                   </div>    
                                   <div class="clearfix"></div>
                                 <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="conyuge-laboral">Actividad laboral</label>
-                                          *
-                                          <input type="text" name="conyuge-laboral" id="conyuge-laboral" class="form-control" tabindex="29">
+                                          <input name="conyuge-laboral" type="text" disabled class="form-control" id="conyuge-laboral" tabindex="29" value="Docente">
                                         </div>
                                 </div>
                                 <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="conyuge-telefono-trabajo">Tel&eacute;fono del trabajo</label>
-                                          <input type="tel" name="conyuge-telefono-trabajo" id="conyuge-telefono-trabajo" class="form-control" tabindex="30">
+                                          <input name="conyuge-telefono-trabajo" type="tel" disabled class="form-control" id="conyuge-telefono-trabajo" tabindex="30" value="4578-5523">
                                         </div>
                                 </div>
                                  <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                          <label for="conyuge-fotocopia-dni">Fotocopia del DNI</label>
-                                          <input type="file" name="conyuge-fotocopia-dni" id="conyuge-fotocopia-dni" class="form-control" tabindex="31">
+                                          <label for="conyuge-fotocopia-dni">Fotocopia del DNI</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="conyuge-fotocopia-otra-1">Otra fotocopia</label>
-                                            <input type="file" name="conyuge-fotocopia-otra-1" id="conyuge-fotocopia-otra-1" class="form-control" tabindex="32">
+                                            <label for="conyuge-fotocopia-otra-1">Otra fotocopia</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                          <label for="conyuge-fotocopia-otra-2">Otra fotocopia</label>
-                                          <input type="file" name="conyuge-fotocopia-otra-2" id="conyuge-fotocopia-otra-2" class="form-control" tabindex="33">
+                                          <label for="conyuge-fotocopia-otra-2">Otra fotocopia</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="conyuge-fotocopia-otra-3">Otra fotocopia</label>
-                                            <input type="file" name="conyuge-fotocopia-otra-3" id="conyuge-fotocopia-otra-3" class="form-control" tabindex="34">
+                                            <label for="conyuge-fotocopia-otra-3">Otra fotocopia</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     </div>
@@ -299,53 +304,43 @@
 	                   		</div> 
                         </div>
                         </div>
-                        <div class="col-md-12 topmar10">
-                        	<!-- button type="button" class="btn btn-form" tabindex="35"><i class="fa fa-plus-square fa-fw"></i> Agregar otro solicitante</button>
-                            &nbsp; <button type="button" class="btn btn-form" tabindex="35"><i class="fa fa-plus-square fa-fw"></i> Agregar garante</button -->
-                        </div>
-                        
-                        {% if userRole == 'ROLE_LICENSEE'%}
-                        
+                       
 
 						<div id="garante-1">
                         <div class="col-md-12 topmar">
                         	<div class="well well-gris-claro">
                               <div class="row">
                               		<div class="col-sm-12">
-                                        <div class="alert alert-danger" role="alert">
+                                        <div class="alert alert-titulo" role="alert">
                                             <h4 class="nomar text-uppercase">Datos del garante 1</h4>
                                         </div>
                                     </div> 
 									<div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="garante-nombre">Nombre</label>
-                                          *
-                                          <input type="text" name="garante-nombre" id="garante-nombre" required class="form-control input-lg" tabindex="40" autofocus>
+                                          <input name="garante-nombre" type="text" autofocus disabled class="form-control input-lg" id="garante-nombre" tabindex="40" value="Miguel Angel">
                                         </div>
                                 </div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="garante-apellido">Apellido</label>
-                                            *
-                                            <input type="text" name="garante-nombre" id="garante-apellido" required class="form-control input-lg" tabindex="41">
+                                            <input name="garante-nombre" type="text" disabled class="form-control input-lg" id="garante-apellido" tabindex="41" value="Ortigoza">
                                         </div>
                                     </div>
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-dni">DNI</label>
-                                            *
-                                            <input type="number" name="garante-dni" id="garante-dni" maxlength="8" required class="form-control" autofocus tabindex="42">
+                                            <input name="garante-dni" type="number" autofocus disabled class="form-control" id="garante-dni" tabindex="42" value="28547365" maxlength="8">
                                         </div>
                                     </div>
 									<div class="col-sm-4"> 
                                       <div class="form-group">
                                             <label for="garante-estado-civil">Estado civil</label>
-                                            *
-                                            <select type="date" name="garante-estado-civil" id="garante-estado-civil" class="form-control" tabindex="43">
+                                            <select type="date" name="garante-estado-civil" id="garante-estado-civil" class="form-control" tabindex="43" disabled>
                                             	<option>&nbsp;</option>
-                                                <option>Soltero/a</option>
-                                                <option>Casado/a</option>
+                                                <option selected>Soltero/a</option>
+                                                <option selected>Casado/a</option>
                                                 <option>Divorciado/a</option>
                                                 <option>Viudo/a</option>
                                             </select>
@@ -355,163 +350,194 @@
 									<div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-domicilio">Domicilio</label>
-                                            *
-                                            <input type="text" name="garante-domicilio" id="garante-domicilio" required class="form-control" tabindex="44">
+                                            <input name="garante-domicilio" type="text" disabled class="form-control" id="garante-domicilio" tabindex="44" value="Corrientes 523 5&ordm;A">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-provincia">Provincia</label>
-                                            *
-                                            <select name="garante-provincia" id="garante-provincia" required class="form-control" tabindex="45">
+                                            <select name="garante-provincia" id="garante-provincia" disabled class="form-control" tabindex="45">
                                             	<option>&nbsp;</option>
-												{% for pcia in provinces %}
-                                                <option value="{{ pcia.id }}">{{ pcia.description }}</option>
-                                                {% endfor %}
+                                                <option>Buenos Aires</option>
+                                                <option selected="selected">Capital Federal</option>
+                                                <option>C&oacute;rdoba</option>
                                             </select>
                                         </div>
                                     </div>
                                   <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-ciudad">Ciudad</label>
-                                            *
-                                            <select name="garante-ciudad" id="garante-ciudad" required class="form-control" tabindex="46">
+                                            <select name="garante-ciudad" id="garante-ciudad" disabled class="form-control" tabindex="46">
                                             	<option>&nbsp;</option>
+                                                <option>Ciudad 1</option>
+                                                <option selected="selected">Ciudad 2</option>
                                             </select>
                                         </div>
                                 </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-celular">Tel&eacute;fono celular</label>
-                                            *
-                                            <input type="tel" name="garante-celular" id="garante-celular" class="form-control" tabindex="47">
+                                            <input name="garante-celular" type="tel" disabled class="form-control" id="garante-celular" tabindex="47" value="15-8547-5524">
                                       </div>
                                 </div>
                                 <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-telefono">Tel&eacute;fono fijo</label>
-                                            <input type="tel" name="garante-telefono" id="garante-telefono" class="form-control" tabindex="48">
+                                            <input name="garante-telefono" type="tel" disabled class="form-control" id="garante-telefono" tabindex="48" value="5485-5577">
                                         </div>
                                 </div>    
                                   <div class="clearfix"></div>
                                 <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-laboral">Actividad laboral</label>
-                                            *
-                                            <input type="text" name="garante-laboral" id="garante-laboral" required class="form-control" tabindex="49">
+                                            <input name="garante-laboral" type="text" disabled class="form-control" id="garante-laboral" tabindex="49" value="Comerciante">
                                         </div>
                                 </div>
                                       <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-telefono-trabajo">Tel&eacute;fono del trabajo</label>
-                                            <input type="tel" name="garante-telefono-trabajo" id="garante-telefono-trabajo" class="form-control" tabindex="50">
+                                            <input name="garante-telefono-trabajo" type="tel" disabled class="form-control" id="garante-telefono-trabajo" tabindex="50" value="8547-5524">
                                         </div>
                                     </div>
 									<div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="garante-fotocopia-servicio">Fotocopia de un servicio</label>
-                                            <input type="file" name="garante-fotocopia-servicio" id="garante-fotocopia-servicio" class="form-control" tabindex="51">
+                                            <label for="garante-fotocopia-servicio">Fotocopia de un servicio</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="garante-fotocopia-dni">Fotocopia del DNI</label>
-                                            <input type="file" name="garante-fotocopia-dni" id="garante-fotocopia-dni" class="form-control" tabindex="52">
+                                            <label for="garante-fotocopia-dni">Fotocopia del DNI</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="garante-fotocopia-recibo">Fotocopia del recibo de sueldo</label>
-                                            <input type="file" name="garante-fotocopia-recibo" id="garante-fotocopia-recibo" class="form-control" tabindex="53">
+                                            <label for="garante-fotocopia-recibo">Fotocopia del recibo de sueldo</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="garante-fotocopia-ingresos">Fotocopia de comprobante de ingresos</label>
-                                          	<input type="file" name="garante-fotocopia-ingresos" id="garante-fotocopia-ingresos" class="form-control" tabindex="54">
+                                            <label for="garante-fotocopia-ingresos">Fotocopia de comprobante de ingresos</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="garante-fotocopia-otra-1">Otra fotocopia</label>
-                                            <input type="file" name="garante-fotocopia-otra-1" id="garante-fotocopia-otra-1" class="form-control" tabindex="55">
+                                            <label for="garante-fotocopia-otra-1">Otra fotocopia</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                          <label for="garante-fotocopia-otra-2">Otra fotocopia</label>
-                                          <input type="file" name="garante-fotocopia-otra-2" id="garante-fotocopia-otra-2" class="form-control" tabindex="56">
+                                          <label for="garante-fotocopia-otra-2">Otra fotocopia</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                               </div>
 	                   		</div> 
                         </div>
                         </div>
-						<div class="col-md-12 topmar10">
-                        	<!-- button type="button" class="btn btn-form" tabindex="57"><i class="fa fa-plus-square fa-fw"></i> Agregar otro garante</button -->
-                        </div>
-						{% endif %}
 
 	                    <div class="col-md-12 topmar">
                         	<div class="well well-gris-claro">
                               <div class="row">
                               		<div class="col-sm-12">
-                                        <div class="alert alert-danger" role="alert">
+                                        <div class="alert alert-titulo" role="alert">
                                             <h4 class="nomar text-uppercase">Unidad a adquirir</h4>
                                         </div>
                                     </div> 
                                     <div class="col-sm-5">                                
                                         <div class="form-group">
                                             <label for="marca">Marca</label>
-                                            *
-                                            <select name="marca" id="marca" class="form-control input-lg" required tabindex="60">
+                                            <select name="marca" id="marca" class="form-control input-lg" disabled tabindex="60">
                                             	<option> &nbsp; </option>
-                                               <option> Seleccioná una marca </option>
-                                            	{% for trademark in trademarks %}
-                                                <option value="{{ trademark.id }}">{{ trademark.description }}</option>
-                                                {% endfor %}
+                                                <option value="MLA6039"> Alfa Romeo </option>
+                                                <option value="MLA10356"> Asia </option>
+                                                <option value="MLA5782"> Audi </option>
+                                                <option value="MLA5783"> BMW </option>
+                                                <option value="MLA42429"> Chery </option>
+                                                <option value="MLA3185"> Chevrolet </option>
+                                                <option value="MLA4357"> Chrysler </option>
+                                                <option value="MLA5779"> Citro�n </option>
+                                                <option value="MLA5680"> Daewoo </option>
+                                                <option value="MLA6619"> Daihatsu </option>
+                                                <option value="MLA6671"> Dodge </option>
+                                                <option value="MLA97714"> Ferrari </option>
+                                                <option value="MLA3174"> Fiat </option>
+                                                <option value="MLA3180"> Ford </option>
+                                                <option value="MLA5791"> Honda </option>
+                                                <option value="MLA8509"> Hummer </option>
+                                                <option value="MLA5683"> Hyundai </option>
+                                                <option value="MLA6599"> Isuzu </option>
+                                                <option value="MLA83415"> Jaguar </option>
+                                                <option value="MLA6600"> Jeep </option>
+                                                <option value="MLA7079"> Kia </option>
+                                                <option value="MLA7219"> Lada </option>
+                                                <option value="MLA8125"> Land Rover </option>
+                                                <option value="MLA5681"> Mazda </option>
+                                                <option value="MLA6038"> Mercedes Benz </option>
+                                                <option value="MLA8480"> Mini </option>
+                                                <option value="MLA5743"> Mitsubishi </option>
+                                                <option value="MLA6173"> Nissan </option>
+                                                <option value="MLA4100"> Peugeot </option>
+                                                <option value="MLA8503"> Porsche </option>
+                                                <option value="MLA99993"> Ram </option>
+                                                <option value="MLA3205"> Renault </option>
+                                                <option value="MLA6041"> Rover </option>
+                                                <option value="MLA6109"> Seat </option>
+                                                <option value="MLA106929"> Smart </option>
+                                                <option value="MLA11927"> Ssangyong </option>
+                                                <option value="MLA7078"> Subaru </option>
+                                                <option value="MLA6583"> Suzuki </option>
+                                                <option value="MLA11807"> Tata </option>
+                                                <option value="MLA5753"> Toyota </option>
+                                                <option value="MLA3196" selected> Volkswagen </option>
+                                                <option value="MLA7080"> Volvo </option>
+                                                <option value="MLA1939"> Otras Marcas </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-5"> 
                                       <div class="form-group">
                                             <label for="modelo">Modelo</label>
-                                            *
-                                            <select name="modelo" id="modelo" class="form-control input-lg" required tabindex="61">
+                                            <select name="modelo" id="modelo" class="form-control input-lg" disabled tabindex="61">
                                             	<option>&nbsp;</option>
+                                                <option> 1500 </option>
+                                                <option> 2000 </option>
+                                                <option selected> Gol </option>
+                                                <option> Golf </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-2">                                
                                         <div class="form-group">
-                                          <label for="ano">Año</label>
-                                          *
-                                          <select name="ano" id="ano" required class="form-control input-lg" tabindex="62">
+                                          <label for="ano">A�o</label>
+                                          <select name="ano" id="ano" disabled class="form-control input-lg" tabindex="62">
                                             	<option>&nbsp;</option>
-                                            {% for year in years %}
-                                                <option value="{{ year.id }}">{{ year.description }}</option>
-                                                {% endfor %}
+                                            <option selected>2014</option>
+                                            <option>2013</option>
+                                            <option>2012</option>
                                           </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-3"> 
                                         <div class="form-group">
                                             <label for="valor">Valor</label>
-                                            *
-                                            <input type="text" name="valor" id="valor" required class="form-control" tabindex="63">
+                                            <input type="text" name="valor" id="valor" disabled class="form-control" tabindex="63" value="150000">
                                         </div>
                                 	</div>
                                     <div class="col-sm-3"> 
                                         <div class="form-group">
                                             <label for="tipo">Tipo</label>
-                                            *
-                                            <select name="tipo" id="tipo" required class="form-control" tabindex="64">
+                                            <select name="tipo" id="tipo" disabled class="form-control" tabindex="64">
                                             	<option>&nbsp;</option>
                                                 <option>Sedan</option>
                                                 <option>Sedan 2 puertas</option>
                                                 <option>Sedan 3 puertas</option>
-                                                <option>Sedan 4 puertas</option>
+                                                <option selected>Sedan 4 puertas</option>
                                                 <option>Sedan 5 puertas</option>
                                                 <option>Rural</option>
                                                 <option>Rural 4 puertas</option>
@@ -540,80 +566,76 @@
                                     <div class="col-sm-3"> 
                                         <div class="form-group">
                                             <label for="dominio">Dominio</label>
-                                            <input type="text" name="dominio" id="dominio" class="form-control" tabindex="65">
+                                            <input type="text" name="dominio" id="dominio" class="form-control" tabindex="65" disabled value="TRI523">
                                         </div>
                                 	</div>
                                     <div class="col-sm-3">                                
                                         <div class="form-group">
                                           <label for="combustible">Combustible</label>
-                                          *
-                                          <select name="combustible" id="combustible" required class="form-control" tabindex="66">
+                                          <select name="combustible" id="combustible" disabled class="form-control" tabindex="66">
                                             	<option>&nbsp;</option>
-                                            {% for fuel in fuels %}
-                                                <option value="{{ fuel.id }}">{{ fuel.description }}</option>
-                                            {% endfor %}
+                                            <option>Diesel</option>
+                                            <option selected>Nafta</option>
+                                            <option>Nafta/Gnc</option>
                                           </select>
                                         </div>
                                     </div>
-                                   {% if userRole == 'ROLE_LICENSEE'%}
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="seguro">Seguro</label>
-                                            *
-                                            <input type="text" name="seguro" id="seguro" required class="form-control" tabindex="67">
+                                            <input type="text" name="seguro" id="seguro" disabled class="form-control" tabindex="67" value="La Caja contra terceros">
                                         </div>
                                 	</div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="tarjeta">D&eacute;bito en tarjeta</label>
-                                            <input type="text" name="tarjeta" id="tarjeta" class="form-control" tabindex="68">
+                                            <input type="text" name="tarjeta" id="tarjeta" class="form-control" tabindex="68" disabled value="Visa">
                                         </div>
                                 	</div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="tarjeta-numero">N&uacute;mero de tarjeta</label>
-                                            <input type="text" name="tarjeta-numero" id="tarjeta-numero" class="form-control" tabindex="69">
+                                            <input type="text" name="tarjeta-numero" id="tarjeta-numero" class="form-control" tabindex="69" disabled value="4546 1245 1222 6723">
                                         </div>
                                 	</div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="tarjeta-codigo">C&oacute;digo de seguridad</label>
-                                            <input type="text" name="tarjeta-codigo" id="tarjeta-codigo" class="form-control" tabindex="70">
+                                            <input type="text" name="tarjeta-codigo" id="tarjeta-codigo" class="form-control" tabindex="70" disabled value="352">
                                         </div>
                                 	</div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="tarjeta-vencimiento">Vencimiento</label>
-                                            <input type="text" name="tarjeta-vencimiento" id="tarjeta-vencimiento" class="form-control" tabindex="71">
+                                            <input type="text" name="tarjeta-vencimiento" id="tarjeta-vencimiento" class="form-control" tabindex="71" disabled value="10/04/2020">
                                         </div>
                                 	</div>
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="unidad-fotocopia-1">Fotocopia referente a la unidad</label>
-                                            <input type="file" name="unidad-fotocopia-1" id="unidad-fotocopia-1" class="form-control" tabindex="72">
+                                            <label for="unidad-fotocopia-1">Fotocopia referente a la unidad</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                          <label for="unidad-fotocopia-2">Fotocopia referente a la unidad</label>
-                                          <input type="file" name="unidad-fotocopia-2" id="unidad-fotocopia-2" class="form-control" tabindex="73">
+                                          <label for="unidad-fotocopia-2">Fotocopia referente a la unidad</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="unidad-fotocopia-3">Fotocopia referente a la unidad</label>
-                                            <input type="file" name="unidad-fotocopia-3" id="unidad-fotocopia-3" class="form-control" tabindex="74">
+                                            <label for="unidad-fotocopia-3">Fotocopia referente a la unidad</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                          <label for="unidad-fotocopia-4">Fotocopia referente a la unidad</label>
-                                          <input type="file" name="unidad-fotocopia-4" id="unidad-fotocopia-4" class="form-control" tabindex="75">
+                                          <label for="unidad-fotocopia-4">Fotocopia referente a la unidad</label><br>
+                                            <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
-                                	{% endif %}
                                 </div>
 	                   		</div> 
                         </div>                        
@@ -623,28 +645,26 @@
                         	<div class="well well-gris-claro">
                               <div class="row">
                               		<div class="col-sm-12">
-                                        <div class="alert alert-danger" role="alert">
+                                        <div class="alert alert-titulo" role="alert">
                                             <h4 class="nomar text-uppercase">Cr&eacute;dito prendario</h4>
                                         </div>
                                     </div> 
                                     <div class="col-sm-6">                                
                                         <div class="form-group">
                                             <label for="monto">Monto solicitado</label>
-                                          	*
-                                          	<input type="text" name="monto" id="monto" required class="form-control input-lg" tabindex="80">
+                                          	<input type="text" name="monto" id="monto" disabled class="form-control input-lg" tabindex="80" value="$50000">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3"> 
+                                    <div class="col-sm-6"> 
                                       <div class="form-group">
                                             <label for="cuotas">Cuotas</label>
-                                            *
-                                            <select name="cuotas" id="cuotas" class="form-control input-lg" required tabindex="81">
+                                            <select name="cuotas" id="cuotas" class="form-control input-lg" disabled tabindex="81">
 												<option>&nbsp;</option>
                                                 <option>2</option>
                                                 <option>4</option>
                                                 <option>6</option>
                                                 <option>8</option>
-                                                <option>10</option>
+                                                <option selected>10</option>
                                                 <option>12</option>
                                                 <option>14</option>
                                                 <option>18</option>
@@ -659,52 +679,44 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-6">
                                     	<h5 class="nomar"><strong>Valor de la cuota</strong></h5>
-                                        <h1 class="topmar10">-</h1>
+                                        <h1 class="topmar10">$2580</h1>
+                                    </div>
+                                    <div class="col-sm-3">
+                                    	<h5 class="nomar"><strong>Tasa</strong></h5>
+                                        <h1 class="topmar10">4,20%</h1>
+                                    </div>
+                                    <div class="col-sm-3">
+                                    	<h5 class="nomar"><strong>TEA</strong></h5>
+                                        <h1 class="topmar10">62</h1>
                                     </div>
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
-                                	{% if userRole == 'ROLE_LICENSEE'%}
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="gastos">Gastos de otorgamiento</label>
-                                            *
-                                            <input type="text" name="gastos" id="gastos" required class="form-control" tabindex="82">
+                                            <input type="text" name="gastos" id="gastos" disabled class="form-control" tabindex="82" value="$150">
                                         </div>
                                 	</div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="vencimiento">Primer vencimiento</label>
-                                            *
-                                            <input type="date" name="vencimiento" id="vencimiento" required class="form-control" tabindex="83">
+                                            <input type="date" name="vencimiento" id="vencimiento" disabled class="form-control" tabindex="83" value="2014-12-09">
                                         </div>
                                 	</div>
-                                	{% endif %}
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                     <div class="col-sm-12">
                                    	  	<label for="comentarios">Introduzca un comentario, consulta o indicaci&oacute;n que quiera hacernos llegar</label>
-                                    	<textarea name="comentarios" id="comentarios" class="form-control" rows="8" tabindex="90"></textarea>
+                                    	<textarea name="comentarios" id="comentarios" class="form-control" rows="8" tabindex="90" disabled>Tengan en cuenta que es el segundo cr&eacute;dito que saco con ustedes, gracias.</textarea>
                                     </div>
                                 </div>
 	                   		</div> 
                         </div>  
-                        
-                                               
-                      <div class="col-md-12 text-center toppad"> 
-                       	  <button type="submit" class="btn btn-alarfin btn-lg" tabindex="100">SOLICITAR CR&Eacute;DITO</button>&nbsp;&nbsp; 
-                          <button type="button" class="btn btn-form" tabindex="101">Cancelar</button>
+                        <div class="col-md-12 toppad botpad"> 
+                        	<input type="button" value="&laquo; Volver" class="btn btn-primary" onClick="location.href='creditos.php'">
                         </div>
-                    </form>
-                </div>           
+                    </form>  
             </div>
         </div>
-        
-        <script type="text/javascript">
-        	$("#solicitante-estado-civil").change(function(){
-        		$("#conyuge-1").hide();
-        		if ('Casado/a' == $(this).val()) {
-        			$("#conyuge-1").show();	
-        		}
-        	})
-        </script>
-             {% endblock %}
+    </div>
+{% endblock %}

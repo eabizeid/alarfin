@@ -1595,4 +1595,172 @@ class DefaultController extends Controller
         $response->setContent(json_encode($output));
         return $response;
      }
+     
+     public function getValorCuotasAction(Request $request) {
+     //calculo valor cuota
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
+		$configuration = $repository->findAll()[0];
+		
+		$cantidadCuotas = $request->get('cuotas');
+		$montoCredito = $request->get('monto');
+		$yearId = $request->get('yearId');
+		$repository = $em->getRepository('KellsFrontBundle:Year');
+		$year = $repository->find($yearId);
+		
+		$intervalo0 = 2014;
+		
+		$intervalo0 = 2014;
+		$intervalo1 = $intervalo0 - 6;
+		$intervalo2 = $intervalo1 - 5;
+		$intervalo3 = $intervalo2 - 5;
+		$y = (int) $year->getDescription();
+		if ($y == $intervalo0) {
+			if ($cantidadCuotas == 2) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas24();
+			} else if ($cantidadCuotas == 26) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas26();
+			} else if ($cantidadCuotas == 28) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas28();
+			} else if ($cantidadCuotas == 30) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas30();
+			} else if ($cantidadCuotas == 32) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas32();
+			} else if ($cantidadCuotas == 34) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas34();
+			} else if ($cantidadCuotas == 36) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas36();
+			}
+		} else if ($y < $intervalo0 && $y >= $intervalo1) {
+			if ($cantidadCuotas == 2) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas24();
+			} else if ($cantidadCuotas == 26) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas26();
+			} else if ($cantidadCuotas == 28) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas28();
+			} else if ($cantidadCuotas == 30) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas30();
+			} else if ($cantidadCuotas == 32) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas32();
+			} else if ($cantidadCuotas == 34) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas34();
+			} else if ($cantidadCuotas == 36) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas36();
+			}
+		} else if ($y < $intervalo1 && $y >= $intervalo2) {	
+			if ($cantidadCuotas == 2) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas24();
+			} else if ($cantidadCuotas == 26) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas26();
+			} else if ($cantidadCuotas == 28) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas28();
+			} else if ($cantidadCuotas == 30) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas30();
+			} else if ($cantidadCuotas == 32) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas32();
+			} else if ($cantidadCuotas == 34) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas34();
+			} else if ($cantidadCuotas == 36) {
+				$cuota = (int)$montoCredito * (float)$configuration->getSeisA10Cuotas36();
+			}
+		} else if($y < $intervalo2 ) {
+			if ($cantidadCuotas == 2) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (int)$montoCredito * (float)$configuration->getOnceA15Cuotas24();
+			}
+    	}
+    	
+    	$output = $cuota;
+    	$response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent(json_encode($output));
+    	return $response;
+     }
 }

@@ -661,7 +661,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                     	<h5 class="nomar"><strong>Valor de la cuota</strong></h5>
-                                        <h1 class="topmar10">-</h1>
+                                        <h1 id="valorCuota" class="topmar10">-</h1>
                                     </div>
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                 	{% if userRole == 'ROLE_LICENSEE'%}
@@ -706,5 +706,38 @@
         			$("#conyuge-1").show();	
         		}
         	})
+        	
+        	$("#cuotas").change(function(){
+        		var monto = $("#monto").val()
+        		var cuotas = $(this).val();
+        		var yearId = $("#ano").val();
+        		if ('' == $("#monto").val()) {
+        			alert('debe completar monto solicitado, Año y Cuotas');	
+        		} else {
+        			 url = Routing.generate('getValorCuotas', { 'monto': monto, 'cuotas': cuotas, 'yearId': yearId  });
+        			$.post(url, function(data){
+        						$("#valorCuota").empty();
+        						$("#valorCuota").append(data);
+        					}
+        				)
+        		}
+        	})
+        	
+        	$("#monto").change(function(){
+        		var monto = $(this).val()
+        		var cuotas = $("#cuotas").val();
+        		var yearId = $("#ano").val();
+        		if ("" == cuotas) {
+        			alert('debe completar monto solicitado, Año y Cuotas');	
+        		} else {
+        			 url = Routing.generate('getValorCuotas', { 'monto': monto, 'cuotas': cuotas, 'yearId': yearId  });
+        			$.post(url, function(data){
+        						$("#valorCuota").empty();
+        						$("#valorCuota").append(data);
+        					}
+        				)
+        		}
+        	})
+        	
         </script>
              {% endblock %}

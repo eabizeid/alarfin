@@ -105,4 +105,10 @@ simularCuotas:
     defaults: {_controller: KellsFrontBundle:Default:simularCuotas }
     options:
         expose: true
+
+getValorCuotas:
+    pattern: /valorCuotas/
+    defaults: {_controller: KellsFrontBundle:Default:getValorCuotas }
+    options:
+        expose: true
     

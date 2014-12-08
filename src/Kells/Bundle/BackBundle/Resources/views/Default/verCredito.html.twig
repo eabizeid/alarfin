@@ -19,17 +19,13 @@
                                     <div class="col-sm-6">                                
                                         <div class="form-group">
                                             <label for="publicador-tipo">Tipo</label>
-                                            <select name="publicador-tipo" id="publicador-tipo" class="form-control input-lg" disabled>
-                                            	<option> Seleccion&aacute; un tipo</option>
-                                                <option> Usuario </option>
-                                                <option selected> Concesionaria </option>
-                                            </select>
-                                        </div>
+                                            <label name="publicador-tipo" id="publicador-tipo" class="form-control input-lg" disabled>{{tipoUsuario}}</label>
+                                        </div> 
                                     </div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="publicador-nombre">Nombre</label>
-                                            <input type="text" name="publicador-nombre" value="Autolatina S.A." id="publicador-nombre" class="form-control input-lg" disabled>
+                                            <input type="text" name="publicador-nombre" value="{{credito.user}}" id="publicador-nombre" class="form-control input-lg" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -47,142 +43,142 @@
                                 	<div class="col-sm-5"> 
                                         <div class="form-group">
                                             <label for="solicitante-nombre">Nombre</label>
-                                          <input name="solicitante-nombre" type="text" autofocus disabled class="form-control input-lg" id="solicitante-nombre" tabindex="1" value="Juan Carlos">
+                                          <input name="solicitante-nombre" type="text" autofocus disabled class="form-control input-lg" id="solicitante-nombre" tabindex="1" value="{{credito.nombreSolicitante}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-5"> 
                                         <div class="form-group">
                                             <label for="solicitante-apellido">Apellido</label>
-                                            <input name="solicitante-nombre" type="text" disabled class="form-control input-lg" id="solicitante-apellido" tabindex="2" value="Gimenez">
+                                            <input name="solicitante-nombre" type="text" disabled class="form-control input-lg" id="solicitante-apellido" tabindex="2" value="{{credito.apellidoSolicitante}}">
                                         </div>
                                     </div>
+                                    {% if tipoUsuario == 'Concesionaria' %}
                                     <div class="col-sm-2"> 
                                         <div class="form-group">
                                             <label for="porcentaje">Porcentaje</label>
                                           <input type="number" name="porcentaje" id="porcentaje" min="1" max="100" disabled class="form-control input-lg" tabindex="1" value="100">
                                         </div>
                                     </div>
+                                    {% endif %}
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                   <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-dni">DNI</label>
-                                            <input name="solicitante-dni" type="number" disabled class="form-control" id="solicitante-dni" tabindex="3" value="25789552" maxlength="8">
+                                            <input name="solicitante-dni" type="number" disabled class="form-control" id="solicitante-dni" tabindex="3" value="{{credito.dniSolicitante}}" maxlength="8">
                                         </div>
                                   </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-nacimiento">Fecha de nacimiento</label>
-                                            <input name="solicitante-nacimiento" type="date" disabled class="form-control" id="solicitante-nacimiento" tabindex="4" value="1977-02-25">
+                                            <input name="solicitante-nacimiento" type="date" disabled class="form-control" id="solicitante-nacimiento" tabindex="4" value="{{credito.nacimientoSolicitante}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-estado-civil">Estado civil</label>
-                                            <select type="date" name="solicitante-estado-civil" id="solicitante-estado-civil" disabled class="form-control" tabindex="5">
-                                            	<option>&nbsp;</option>
-                                                <option>Soltero/a</option>
-                                                <option selected>Casado/a</option>
-                                                <option>Divorciado/a</option>
-                                                <option>Viudo/a</option>
-                                            </select>
+                                            <input type="input" name="solicitante-estado-civil" id="solicitante-estado-civil" disabled class="form-control" tabindex="5" value="{{credito.estadoCivilSolicitante}}">
+                                            	
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-domicilio">Domicilio</label>
-                                            <input name="solicitante-domicilio" type="text" disabled class="form-control" id="solicitante-domicilio" tabindex="6" value="San Martin 485">
+                                            <input name="solicitante-domicilio" type="text" disabled class="form-control" id="solicitante-domicilio" tabindex="6" value="{{credito.domicilioSolicitante}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-provincia">Provincia</label>
-                                            <select name="solicitante-provincia" id="solicitante-provincia" disabled class="form-control" tabindex="7">
-                                            	<option>&nbsp;</option>
-                                                <option selected="selected">Buenos Aires</option>
-                                                <option>Capital Federal</option>
-                                                <option>C&oacute;rdoba</option>
-                                            </select>
+                                            <input type="text" name="solicitante-provincia" id="solicitante-provincia" value="{{credito.provinciaSolicitante}}" disabled class="form-control" tabindex="7">
                                         </div>
                                     </div>
                                   <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-ciudad">Ciudad</label>
-                                            <select name="solicitante-ciudad" id="solicitante-ciudad" disabled class="form-control" tabindex="8">
-                                            	<option>&nbsp;</option>
-                                                <option selected="selected">Ciudad 1</option>
-                                                <option>Ciudad 2</option>
-                                            </select>
+                                            <input type="text" value="{{credito.ciudadSolicitante}}" name="solicitante-ciudad" id="solicitante-ciudad" disabled class="form-control" tabindex="8">
                                         </div>
                                   </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-celular">Tel&eacute;fono celular</label>
-                                            <input name="solicitante-celular" type="tel" disabled class="form-control" id="solicitante-celular" tabindex="9" value="15-5487-6625">
+                                            <input name="solicitante-celular" type="tel" disabled class="form-control" id="solicitante-celular" tabindex="9" value="{{credito.celularSolicitante}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-telefono">Tel&eacute;fono fijo</label>
-                                            <input name="solicitante-telefono" type="tel" disabled class="form-control" id="solicitante-telefono" tabindex="10" value="2579-8856">
+                                            <input name="solicitante-telefono" type="tel" disabled class="form-control" id="solicitante-telefono" tabindex="10" value="{{credito.fijoSolicitante}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-email">Email</label>
-                                            <input name="solicitante-email" type="email" disabled class="form-control" id="solicitante-email" tabindex="11" value="mgimenez@gmail.com">
+                                            <input name="solicitante-email" type="email" disabled class="form-control" id="solicitante-email" tabindex="11" value="{{credito.mailSolicitante}}">
                                         </div>
                                     </div>     
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-laboral">Actividad laboral</label>
-                                          <input name="solicitante-laboral" type="text" disabled class="form-control" id="solicitante-laboral" tabindex="12" value="Gerente de Marketing">
+                                          <input name="solicitante-laboral" type="text" disabled class="form-control" id="solicitante-laboral" tabindex="12" value="{{credito.actividadLaboralSolicitante}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="solicitante-telefono-trabajo">Tel&eacute;fono del trabajo</label>
-                                            <input name="solicitante-telefono-trabajo" type="tel" disabled class="form-control" id="solicitante-telefono-trabajo" tabindex="13" value="4588-8426">
+                                            <input name="solicitante-telefono-trabajo" type="tel" disabled class="form-control" id="solicitante-telefono-trabajo" tabindex="13" value="{{credito.telLaboralSolicitante}}">
                                         </div>
                                     </div> 
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                   <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="solicitante-fotocopia-servicio">Fotocopia de un servicio</label><br>
-                                            <a href="#" target="_blank">Ver archivo</a>
+                                             {% if credito.fotocopiaServicioSolicitante  %}
+                                            <a href="{{asset(credito.fotocopiaServicioSolicitante.webPath)}}" target="_blank">Ver archivo</a>
+                                            {% endif %}
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                           <label for="solicitante-fotocopia-dni">Fotocopia del DNI</label><br>
-                                            <a href="#" target="_blank">Ver archivo</a>
+                                          {% if credito.fotocopiaDniSolicitante  %}
+                                            <a href="{{asset(credito.fotocopiaDniSolicitante.webPath)}}" target="_blank">Ver archivo</a>
+                                            {% endif %}
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                           <label for="solicitante-fotocopia-recibo">Fotocopia del recibo de sueldo</label><br>
-                                            <a href="#" target="_blank">Ver archivo</a>
+                                          {% if credito.fotocopiaReciboSolicitante  %}
+                                            <a href="{{asset(credito.fotocopiaReciboSolicitante.webPath)}}" target="_blank">Ver archivo</a>
+                                          {% endif %}
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                           <label for="solicitante-fotocopia-ingresos">Fotocopia de comprobante de ingresos</label><br>
-                                            <a href="#" target="_blank">Ver archivo</a>
+                                          {% if credito.fotocopiaIngresosSolicitante  %}
+                                            <a href="{{asset(credito.fotocopiaIngresosSolicitante.webPath)}}" target="_blank">Ver archivo</a>
+                                          {% endif %}
                                         </div>
                                     </div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="solicitante-fotocopia-otra-1">Otra fotocopia</label><br>
-                                            <a href="#" target="_blank">Ver archivo</a>
+                                            {% if credito.fotocopiaOtra1Solicitante  %}
+                                            <a href="{{asset(credito.fotocopiaOtra1Solicitante.webPath)}}" target="_blank">Ver archivo</a>
+                                            {% endif %}
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                           <label for="solicitante-fotocopia-otra-2">Otra fotocopia</label><br>
-                                            <a href="#" target="_blank">Ver archivo</a>
+                                          	{% if credito.fotocopiaOtra2Solicitante  %}
+                                            <a href="{{asset(credito.fotocopiaOtra2Solicitante.webPath)}}" target="_blank">Ver archivo</a>
+                                            {% endif %}
                                         </div>
                                     </div> 
 
-
+                            {% if credito.estadoCivilSolicitante == 'Casado/a' %}
 							<div id="conyuge-1">
                                    <div class="col-sm-12 topmar">
                                    	<div class="alert alert-titulo" role="alert">
@@ -193,110 +189,104 @@
 								<div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="conyuge-nombre">Nombre</label>
-                                          <input name="conyuge-nombre" type="text" autofocus disabled class="form-control input-lg" id="conyuge-nombre" tabindex="20" value="Mariana">
+                                          <input name="conyuge-nombre" type="text" autofocus disabled class="form-control input-lg" id="conyuge-nombre" tabindex="20" value="{{credito.nombreConyuge}}">
                                         </div>
                                 </div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="conyuge-apellido">Apellido</label>
-                                            <input name="conyuge-nombre" type="text" disabled class="form-control input-lg" id="conyuge-apellido" tabindex="21" value="Pedraza">
+                                            <input name="conyuge-nombre" type="text" disabled class="form-control input-lg" id="conyuge-apellido" tabindex="21" value="{{credito.apellidoConyuge}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="conyuge-dni">DNI</label>
-                                            <input name="conyuge-dni" type="number" autofocus disabled class="form-control" id="conyuge-dni" tabindex="22" value="28689587" maxlength="8">
+                                            <input name="conyuge-dni" type="number" autofocus disabled class="form-control" id="conyuge-dni" tabindex="22" value="{{credito.dniConyuge}}" maxlength="8">
                                         </div>
                                     </div>
 									<div class="col-sm-4"> 
                                       <div class="form-group">
                                             <label for="conyuge-estado-civil">Estado civil</label>
-                                            <select type="date" name="conyuge-estado-civil" id="conyuge-estado-civil" disabled class="form-control" tabindex="23">
-                                            	<option>&nbsp;</option>
-                                                <option>Soltero/a</option>
-                                                <option selected="selected">Casado/a</option>
-                                                <option>Divorciado/a</option>
-                                                <option>Viudo/a</option>
-                                            </select>
+                                            <input type="text" name="conyuge-estado-civil" id="conyuge-estado-civil" disabled class="form-control" tabindex="23" value="{{credito.estadoCivilConyuge}}">
+                                            	
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
 									<div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="conyuge-domicilio">Domicilio</label>
-                                          <input name="conyuge-domicilio" type="text" disabled class="form-control" id="conyuge-domicilio" tabindex="24" value="San Martin 485">
+                                          <input name="conyuge-domicilio" type="text" disabled class="form-control" id="conyuge-domicilio" tabindex="24" value="{{credito.domicilioConyuge}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                           <label for="conyuge-provincia">Provincia</label>
-                                          <select name="conyuge-provincia" id="conyuge-provincia" disabled class="form-control" tabindex="25">
-                                            	<option>&nbsp;</option>
-                                                <option selected="selected">Buenos Aires</option>
-                                                <option>Capital Federal</option>
-                                                <option>C&oacute;rdoba</option>
-                                            </select>
+                                          <input name="conyuge-provincia" id="conyuge-provincia" disabled class="form-control" tabindex="25" value="{{credito.provinciaConyuge}}">
                                         </div>
                                     </div>
                                 <div class="col-sm-4"> 
                                         <div class="form-group">
                                           <label for="conyuge-ciudad">Ciudad</label>
-                                          <select name="conyuge-ciudad" id="conyuge-ciudad" disabled class="form-control" tabindex="26">
-                                            	<option>&nbsp;</option>
-                                                <option selected="selected">Ciudad 1</option>
-                                                <option>Ciudad 2</option>
-                                            </select>
+                                          <input type="text" name="conyuge-ciudad" id="conyuge-ciudad" disabled class="form-control" tabindex="26" value="{{credito.ciudadConyuge}}">
                                         </div>
                                 </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                           <label for="conyuge-celular">Tel&eacute;fono celular</label>
-                                            <input name="conyuge-celular" type="tel" disabled class="form-control" id="conyuge-celular" tabindex="27" value="15-5575-8552">
+                                            <input name="conyuge-celular" type="tel" disabled class="form-control" id="conyuge-celular" tabindex="27" value="{{credito.celularConyuge}}">
                                       </div>
                                 </div>
                                 <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="conyuge-telefono">Tel&eacute;fono fijo</label>
-                                            <input type="tel" name="conyuge-telefono" id="conyuge-telefono" class="form-control" tabindex="28" disabled value="2579-8856">
+                                            <input type="tel" name="conyuge-telefono" id="conyuge-telefono" class="form-control" tabindex="28" disabled value="{{credito.fijoConyuge}}">
                                         </div>
                                   </div>    
                                   <div class="clearfix"></div>
                                 <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="conyuge-laboral">Actividad laboral</label>
-                                          <input name="conyuge-laboral" type="text" disabled class="form-control" id="conyuge-laboral" tabindex="29" value="Docente">
+                                          <input name="conyuge-laboral" type="text" disabled class="form-control" id="conyuge-laboral" tabindex="29" value="{{credito.actividadLaboralConyuge}}">
                                         </div>
                                 </div>
                                 <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="conyuge-telefono-trabajo">Tel&eacute;fono del trabajo</label>
-                                          <input name="conyuge-telefono-trabajo" type="tel" disabled class="form-control" id="conyuge-telefono-trabajo" tabindex="30" value="4578-5523">
+                                          <input name="conyuge-telefono-trabajo" type="tel" disabled class="form-control" id="conyuge-telefono-trabajo" tabindex="30" value="{{credito.telLaboralConyuge}}">
                                         </div>
                                 </div>
                                  <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                           <label for="conyuge-fotocopia-dni">Fotocopia del DNI</label><br>
-                                            <a href="#" target="_blank">Ver archivo</a>
+                                          {% if credito.fotocopiaDniConyuge %}
+                                            <a href="{{asset(credito.fotocopiaDniConyuge.webPath)}}" target="_blank">Ver archivo</a>
+                                          {% endif%}
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="conyuge-fotocopia-otra-1">Otra fotocopia</label><br>
-                                            <a href="#" target="_blank">Ver archivo</a>
+                                            {% if credito.fotocopiaOtra1Conyuge %}
+                                            <a href="{{asset(credito.fotocopiaOtra1Conyuge.webPath)}}" target="_blank">Ver archivo</a>
+                                             {% endif%}
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                           <label for="conyuge-fotocopia-otra-2">Otra fotocopia</label><br>
-                                            <a href="#" target="_blank">Ver archivo</a>
+                                          {% if credito.fotocopiaOtra2Conyuge %}
+                                            <a href="{{asset(credito.fotocopiaOtra2Conyuge.webPath)}}" target="_blank">Ver archivo</a>
+                                             {% endif%}
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="conyuge-fotocopia-otra-3">Otra fotocopia</label><br>
-                                            <a href="#" target="_blank">Ver archivo</a>
+                                            {% if credito.fotocopiaOtra3Conyuge %}
+                                            <a href="{{asset(credito.fotocopiaOtra3Conyuge.webPath)}}" target="_blank">Ver archivo</a>
+                                            {% endif%}
                                         </div>
                                     </div> 
                                     </div>
@@ -304,8 +294,8 @@
 	                   		</div> 
                         </div>
                         </div>
-                       
-
+                       {% endif %}
+						{% if tipoUsuario == 'Concesionaria' %}
 						<div id="garante-1">
                         <div class="col-md-12 topmar">
                         	<div class="well well-gris-claro">
@@ -440,7 +430,7 @@
 	                   		</div> 
                         </div>
                         </div>
-
+						{% endif %}	
 	                    <div class="col-md-12 topmar">
                         	<div class="well well-gris-claro">
                               <div class="row">
@@ -452,134 +442,49 @@
                                     <div class="col-sm-5">                                
                                         <div class="form-group">
                                             <label for="marca">Marca</label>
-                                            <select name="marca" id="marca" class="form-control input-lg" disabled tabindex="60">
-                                            	<option> &nbsp; </option>
-                                                <option value="MLA6039"> Alfa Romeo </option>
-                                                <option value="MLA10356"> Asia </option>
-                                                <option value="MLA5782"> Audi </option>
-                                                <option value="MLA5783"> BMW </option>
-                                                <option value="MLA42429"> Chery </option>
-                                                <option value="MLA3185"> Chevrolet </option>
-                                                <option value="MLA4357"> Chrysler </option>
-                                                <option value="MLA5779"> Citro�n </option>
-                                                <option value="MLA5680"> Daewoo </option>
-                                                <option value="MLA6619"> Daihatsu </option>
-                                                <option value="MLA6671"> Dodge </option>
-                                                <option value="MLA97714"> Ferrari </option>
-                                                <option value="MLA3174"> Fiat </option>
-                                                <option value="MLA3180"> Ford </option>
-                                                <option value="MLA5791"> Honda </option>
-                                                <option value="MLA8509"> Hummer </option>
-                                                <option value="MLA5683"> Hyundai </option>
-                                                <option value="MLA6599"> Isuzu </option>
-                                                <option value="MLA83415"> Jaguar </option>
-                                                <option value="MLA6600"> Jeep </option>
-                                                <option value="MLA7079"> Kia </option>
-                                                <option value="MLA7219"> Lada </option>
-                                                <option value="MLA8125"> Land Rover </option>
-                                                <option value="MLA5681"> Mazda </option>
-                                                <option value="MLA6038"> Mercedes Benz </option>
-                                                <option value="MLA8480"> Mini </option>
-                                                <option value="MLA5743"> Mitsubishi </option>
-                                                <option value="MLA6173"> Nissan </option>
-                                                <option value="MLA4100"> Peugeot </option>
-                                                <option value="MLA8503"> Porsche </option>
-                                                <option value="MLA99993"> Ram </option>
-                                                <option value="MLA3205"> Renault </option>
-                                                <option value="MLA6041"> Rover </option>
-                                                <option value="MLA6109"> Seat </option>
-                                                <option value="MLA106929"> Smart </option>
-                                                <option value="MLA11927"> Ssangyong </option>
-                                                <option value="MLA7078"> Subaru </option>
-                                                <option value="MLA6583"> Suzuki </option>
-                                                <option value="MLA11807"> Tata </option>
-                                                <option value="MLA5753"> Toyota </option>
-                                                <option value="MLA3196" selected> Volkswagen </option>
-                                                <option value="MLA7080"> Volvo </option>
-                                                <option value="MLA1939"> Otras Marcas </option>
-                                            </select>
+                                            <input name="marca" id="marca" class="form-control input-lg" disabled tabindex="60" value="{{credito.marca}}"> 
+                                            	
                                         </div>
                                     </div>
                                     <div class="col-sm-5"> 
                                       <div class="form-group">
                                             <label for="modelo">Modelo</label>
-                                            <select name="modelo" id="modelo" class="form-control input-lg" disabled tabindex="61">
-                                            	<option>&nbsp;</option>
-                                                <option> 1500 </option>
-                                                <option> 2000 </option>
-                                                <option selected> Gol </option>
-                                                <option> Golf </option>
-                                            </select>
+                                            <input name="modelo" id="modelo" class="form-control input-lg" disabled tabindex="61" value="{{credito.modelo}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">                                
                                         <div class="form-group">
-                                          <label for="ano">A�o</label>
-                                          <select name="ano" id="ano" disabled class="form-control input-lg" tabindex="62">
-                                            	<option>&nbsp;</option>
-                                            <option selected>2014</option>
-                                            <option>2013</option>
-                                            <option>2012</option>
-                                          </select>
+                                          <label for="ano">Año</label>
+                                          <input name="ano" id="ano" disabled class="form-control input-lg" tabindex="62" type="text" value="{{credito.year}}">
+                                            	
                                         </div>
                                     </div>
                                     <div class="col-sm-3"> 
                                         <div class="form-group">
                                             <label for="valor">Valor</label>
-                                            <input type="text" name="valor" id="valor" disabled class="form-control" tabindex="63" value="150000">
+                                            <input type="text" name="valor" id="valor" disabled class="form-control" tabindex="63" value="{{credito.valor}}">
                                         </div>
                                 	</div>
                                     <div class="col-sm-3"> 
                                         <div class="form-group">
                                             <label for="tipo">Tipo</label>
-                                            <select name="tipo" id="tipo" disabled class="form-control" tabindex="64">
-                                            	<option>&nbsp;</option>
-                                                <option>Sedan</option>
-                                                <option>Sedan 2 puertas</option>
-                                                <option>Sedan 3 puertas</option>
-                                                <option selected>Sedan 4 puertas</option>
-                                                <option>Sedan 5 puertas</option>
-                                                <option>Rural</option>
-                                                <option>Rural 4 puertas</option>
-                                                <option>Rural 5 puertas</option>
-                                                <option>Familiar</option>
-                                                <option>Coupe</option>
-                                                <option>Microcoupe</option>
-                                                <option>Todo terreno</option>
-                                                <option>Pick up</option>
-                                                <option>Pick up cabina simple</option>
-                                                <option>Pick up cabina dobble</option>
-                                                <option>Autom&oacute;vil</option>
-                                                <option>Berlina</option>
-                                                <option>Chasis con cabina</option>
-                                                <option>Cami&oacute;n</option>
-                                                <option>Tractor de carretera</option>
-                                                <option>Semi remolque</option>
-                                                <option>Furgon</option>
-                                                <option>Furgoneta</option>
-                                                <option>Combi</option>
-                                                <option>&Oacute;mnibus</option>
-                                                <option>Minibus</option>
-                                            </select>
+                                            <input type="text" name="tipo" id="tipo" disabled class="form-control" tabindex="64" value="{{credito.type}}" >
+                                            	
                                         </div>
                                 	</div>
                                     <div class="col-sm-3"> 
                                         <div class="form-group">
                                             <label for="dominio">Dominio</label>
-                                            <input type="text" name="dominio" id="dominio" class="form-control" tabindex="65" disabled value="TRI523">
+                                            <input type="text" name="dominio" id="dominio" class="form-control" tabindex="65" disabled value="{{credito.domain}}">
                                         </div>
                                 	</div>
                                     <div class="col-sm-3">                                
                                         <div class="form-group">
                                           <label for="combustible">Combustible</label>
-                                          <select name="combustible" id="combustible" disabled class="form-control" tabindex="66">
-                                            	<option>&nbsp;</option>
-                                            <option>Diesel</option>
-                                            <option selected>Nafta</option>
-                                            <option>Nafta/Gnc</option>
-                                          </select>
+                                          <input type="text" name="combustible" id="combustible" disabled class="form-control" tabindex="66" value="{{credito.combustible}}">
                                         </div>
                                     </div>
+                                    {% if tipoUsuario == "Concesionaria" %}
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
@@ -636,6 +541,7 @@
                                             <a href="#" target="_blank">Ver archivo</a>
                                         </div>
                                     </div> 
+                                    {%  endif %}
                                 </div>
 	                   		</div> 
                         </div>                        
@@ -652,46 +558,30 @@
                                     <div class="col-sm-6">                                
                                         <div class="form-group">
                                             <label for="monto">Monto solicitado</label>
-                                          	<input type="text" name="monto" id="monto" disabled class="form-control input-lg" tabindex="80" value="$50000">
+                                          	<input type="text" name="monto" id="monto" disabled class="form-control input-lg" tabindex="80" value="${{credito.montoCredito}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-6"> 
                                       <div class="form-group">
                                             <label for="cuotas">Cuotas</label>
-                                            <select name="cuotas" id="cuotas" class="form-control input-lg" disabled tabindex="81">
-												<option>&nbsp;</option>
-                                                <option>2</option>
-                                                <option>4</option>
-                                                <option>6</option>
-                                                <option>8</option>
-                                                <option selected>10</option>
-                                                <option>12</option>
-                                                <option>14</option>
-                                                <option>18</option>
-                                                <option>22</option>
-                                                <option>24</option>
-                                                <option>26</option>
-                                                <option>28</option>
-                                                <option>30</option>
-                                                <option>32</option>
-                                                <option>34</option>
-                                                <option>36</option>
-                                            </select>
+                                            <input name="cuotas" id="cuotas" class="form-control input-lg" disabled tabindex="81" type="text" value="{{credito.cantidadCuotas}}">
+												
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                     	<h5 class="nomar"><strong>Valor de la cuota</strong></h5>
-                                        <h1 class="topmar10">$2580</h1>
+                                        <h1 class="topmar10">${{credito.valorCuota}}</h1>
                                     </div>
                                     <div class="col-sm-3">
                                     	<h5 class="nomar"><strong>Tasa</strong></h5>
-                                        <h1 class="topmar10">4,20%</h1>
+                                        <h1 class="topmar10">{{credito.tasa}}%</h1>
                                     </div>
                                     <div class="col-sm-3">
                                     	<h5 class="nomar"><strong>TEA</strong></h5>
-                                        <h1 class="topmar10">62</h1>
+                                        <h1 class="topmar10">{{credito.tea}}</h1>
                                     </div>
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                	{% if tipoUsuario == "Concesionaria" %}
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="gastos">Gastos de otorgamiento</label>
@@ -705,15 +595,17 @@
                                         </div>
                                 	</div>
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                	{% endif %}
                                     <div class="col-sm-12">
                                    	  	<label for="comentarios">Introduzca un comentario, consulta o indicaci&oacute;n que quiera hacernos llegar</label>
-                                    	<textarea name="comentarios" id="comentarios" class="form-control" rows="8" tabindex="90" disabled>Tengan en cuenta que es el segundo cr&eacute;dito que saco con ustedes, gracias.</textarea>
-                                    </div>
+                                    	<textarea name="comentarios" id="comentarios" class="form-control" rows="8" tabindex="90" disabled>{{credito.comentarios}}</textarea>
+                                    </div>						
+                                    
                                 </div>
 	                   		</div> 
                         </div>  
                         <div class="col-md-12 toppad botpad"> 
-                        	<input type="button" value="&laquo; Volver" class="btn btn-primary" onClick="location.href='creditos.php'">
+                        	<input type="button" value="&laquo; Volver" class="btn btn-primary" onClick="location.href='{{path('creditos')}}'">
                         </div>
                     </form>  
             </div>

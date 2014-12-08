@@ -39,7 +39,7 @@
                                                 <td>$ {{ c.montoCredito}}00</td> 
                                                 <td>{{ c.cantidadCuotas }}</td> 
                                                 <td nowrap>
-                                                	<button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Ver" onClick="location.href='creditos-ver.php'"><i class="fa fa-eye fa-fw"></i></button>
+                                                	<button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Ver" onClick="location.href='{{ path('verCredito', {'id': c.id})}}'"><i class="fa fa-eye fa-fw"></i></button>
                                                 </td>
                                             </tr>	
                                             {% endfor %}	  

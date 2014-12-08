@@ -33,3 +33,10 @@ creditos:
     path:     /admin/creditos
     defaults: { _controller: KellsBackBundle:Default:creditos }
  
+verCredito:
+    path:     /admin/creditos/{id}
+    defaults: { _controller: KellsBackBundle:Default:showCredito }
+    
+alarfin:
+    path:     /admin/alarfin
+    defaults: { _controller: KellsBackBundle:Default:alarfin }

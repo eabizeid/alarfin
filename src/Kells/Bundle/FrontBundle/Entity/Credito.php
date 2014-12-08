@@ -251,6 +251,18 @@ class Credito {
      */
 	protected $user;
 	
+
+	/**
+     * @ORM\Column(type="string", length=150)
+     */
+	protected $tasa;
+	
+	/**
+     * @ORM\Column(type="string", length=150)
+     */
+	protected $tea;
+	
+	
 	
     /**
      * Constructor
@@ -1433,5 +1445,51 @@ class Credito {
     public function getValorCuota()
     {
         return $this->valorCuota;
+    }
+
+    /**
+     * Set tasa
+     *
+     * @param string $tasa
+     * @return Credito
+     */
+    public function setTasa($tasa)
+    {
+        $this->tasa = $tasa;
+
+        return $this;
+    }
+
+    /**
+     * Get tasa
+     *
+     * @return string 
+     */
+    public function getTasa()
+    {
+        return $this->tasa;
+    }
+
+    /**
+     * Set tea
+     *
+     * @param string $tea
+     * @return Credito
+     */
+    public function setTea($tea)
+    {
+        $this->tea = $tea;
+
+        return $this;
+    }
+
+    /**
+     * Get tea
+     *
+     * @return string 
+     */
+    public function getTea()
+    {
+        return $this->tea;
     }
 }

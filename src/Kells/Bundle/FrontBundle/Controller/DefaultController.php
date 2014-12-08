@@ -66,6 +66,7 @@ class DefaultController extends Controller
     		->leftJoin('c.trademark', 't')
     		->where('m.description LIKE :pattern')
     		->orwhere('t.description LIKE :pattern')
+    		->andwhere('c.status = PUBLISHED')
     		->setParameter('pattern', $search->getPattern())
     		->getQuery();
     		
@@ -1279,7 +1280,10 @@ class DefaultController extends Controller
 		
 		$credito->setDate(new \DateTime());
 		$credito->setUser($this->getUser()->getName());
-		
+
+		$credito->setTasa($this->getUser()->getName());
+		$credito->setTea($this->getUser()->getName());
+				
 		//calculo valor cuota
 		$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
@@ -1329,6 +1333,9 @@ class DefaultController extends Controller
 			} else if ($cantidadCuotas == 36) {
 				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas36();
 			}
+			$credito->setTasa($configuration->getCerokmtasa());
+			$credito->setTea($configuration->getCerokmtea());
+		
 		} else if ($y < $intervalo0 && $y >= $intervalo1) {
 			if ($cantidadCuotas == 2) {
 				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas2();
@@ -1367,6 +1374,8 @@ class DefaultController extends Controller
 			} else if ($cantidadCuotas == 36) {
 				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas36();
 			}
+			$credito->setTasa($configuration->getUnoA5tasa());
+			$credito->setTea($configuration->getUnoA5tea());
 		} else if ($y < $intervalo1 && $y >= $intervalo2) {	
 			if ($cantidadCuotas == 2) {
 				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas2();
@@ -1405,6 +1414,8 @@ class DefaultController extends Controller
 			} else if ($cantidadCuotas == 36) {
 				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas36();
 			}
+			$credito->setTasa($configuration->getSeisA10tasa());
+			$credito->setTea($configuration->getSeisA10tea());
 		} else if($y < $intervalo2 ) {
 			if ($cantidadCuotas == 2) {
 				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas2();
@@ -1431,6 +1442,8 @@ class DefaultController extends Controller
 			} else if ($cantidadCuotas == 24) {
 				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas24();
 			}
+			$credito->setTasa($configuration->getOnceA15tasa());
+			$credito->setTea($configuration->getOnceA15tea());
     	}
     	
     	$credito->setValorCuota($cuota);

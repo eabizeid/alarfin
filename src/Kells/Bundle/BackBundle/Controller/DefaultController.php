@@ -200,4 +200,23 @@ class DefaultController extends Controller
 		return $this->render('KellsBackBundle:Default:creditos.html.twig', array("creditos"=>$creditos));
 		
     }
+    
+	public function showCreditoAction($id)
+    {
+    	
+    	$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Credito');
+		$credito = $repository->find($id);
+		return $this->render('KellsBackBundle:Default:verCredito.html.twig', array("credito"=>$credito,  "tipoUsuario"=>"Usuario"));
+		
+    }
+    
+    public function alarfinAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsBackBundle:Alarfin');
+		$alarfines = $repository->findAll();
+		return $this->render('KellsBackBundle:Default:alarfin.html.twig', array('alarfines'=>$alarfines));
+    }
+       
 }

@@ -36,7 +36,7 @@
                                                 <td>{{c.date|date('d/m/Y')}}</td>
                                                 <td>{{ c.user }}</td>
                                                 <td>{{ c.nombreSolicitante}} {{ c.apellidoSolicitante}}</td>
-                                                <td>$ {{ c.montoCredito}}00</td> 
+                                                <td>$ {{ c.montoCredito}}</td> 
                                                 <td>{{ c.cantidadCuotas }}</td> 
                                                 <td nowrap>
                                                 	<button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Ver" onClick="location.href='{{ path('verCredito', {'id': c.id})}}'"><i class="fa fa-eye fa-fw"></i></button>

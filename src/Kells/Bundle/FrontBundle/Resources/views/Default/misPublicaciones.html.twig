@@ -40,7 +40,7 @@
                                         <td>{{ car.model.description}}</td>
                                         <td>${{ car.price}}</td>
                                         <td nowrap><a role="button" href="{{ path('to_edit', {'id': car.id})}}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Modificar publicaci&oacute;n"><i class="fa fa-pencil fa-fw"></i></a>&nbsp;
-                                        <a role="button" href="{{ path('to_finalize', {'id': car.id})}}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Finalizar publicaci&oacute;n"><i class="fa fa-thumbs-o-down fa-fw"></i></a></td>
+                                        <a id="finalizeCar" role="button" href="{{ path('to_finalize', {'id': car.id})}}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Finalizar publicaci&oacute;n"><i class="fa fa-thumbs-o-down fa-fw"></i></a></td>
                                     </tr>
                                     {% endif %}
                                       {% endfor %}
@@ -85,26 +85,27 @@
             </div>
         </div>
         <?php include('inc/inc-footer.php'); ?>  
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+         <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
         <script>
             $(document).ready(function() {
-                $('#tabla-publicados').dataTable({
-					"order": [[ 1, "desc" ]],
-                    "aoColumnDefs" : [{
-                    "bSortable" : false,
-                    "aTargets" : [ "no-sort" ]
-                    }]
-                });
-				$('#tabla-finalizados').dataTable({
-					"order": [[ 1, "desc" ]],
-                    "aoColumnDefs" : [{
-                    "bSortable" : false,
-                    "aTargets" : [ "no-sort" ]
-                    }]
-                });
-				$('.myTooltip').tooltip({
-					selector: "[data-toggle=tooltip]",
-					container: "body"
-				})
+            	
+            	$("#finalizeCar").on("click", function(e) {
+   					var link = this;
+    				e.preventDefault();
+    				$("<div title='Confirmar'>Está seguro que desea finalizar esta publicación?</div>").dialog({
+        				buttons: {
+            					"Sí": function() {
+                						window.location = link.href;
+            						},
+            					"No": function() {
+                						$(this).dialog("close");
+            					}
+        				}
+    				});
+				});
 			})
+			
+			
 		</script>
  {% endblock %}

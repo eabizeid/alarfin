@@ -712,7 +712,6 @@
         		var cuotas = $(this).val();
         		var yearId = $("#ano").val();
         		if ('' == $("#monto").val()) {
-        			alert('debe completar monto solicitado, Año y Cuotas');	
         		} else {
         			 url = Routing.generate('getValorCuotas', { 'monto': monto, 'cuotas': cuotas, 'yearId': yearId  });
         			$.post(url, function(data){
@@ -728,7 +727,7 @@
         		var cuotas = $("#cuotas").val();
         		var yearId = $("#ano").val();
         		if ("" == cuotas) {
-        			alert('debe completar monto solicitado, Año y Cuotas');	
+        				
         		} else {
         			 url = Routing.generate('getValorCuotas', { 'monto': monto, 'cuotas': cuotas, 'yearId': yearId  });
         			$.post(url, function(data){

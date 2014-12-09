@@ -1628,6 +1628,7 @@ class DefaultController extends Controller
 		$intervalo2 = $intervalo1 - 5;
 		$intervalo3 = $intervalo2 - 5;
 		$y = (int) $year->getDescription();
+		$cuota=0;
 		if ($y == $intervalo0) {
 			if ($cantidadCuotas == 2) {
 				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas2();

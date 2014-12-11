@@ -66,7 +66,7 @@ class User implements UserInterface {
     protected $salt = "";
     
     /**
-     * @ORM\OneToMany(targetEntity="Car", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Car", mappedBy="user", cascade="remove")
      **/
     protected $cars;
 

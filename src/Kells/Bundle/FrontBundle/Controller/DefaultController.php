@@ -66,7 +66,7 @@ class DefaultController extends Controller
     		->leftJoin('c.trademark', 't')
     		->where('m.description LIKE :pattern')
     		->orwhere('t.description LIKE :pattern')
-    		->andwhere('c.status = PUBLISHED')
+    		->andwhere('c.status = \'PUBLISHED\'')
     		->setParameter('pattern', $search->getPattern())
     		->getQuery();
     		

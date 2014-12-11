@@ -5,6 +5,11 @@ kells_back_homepage:
 usuarios:
     path:     /admin/usuarios
     defaults: { _controller: KellsBackBundle:Default:usuarios }
+
+    
+deleteUser:
+    path:     /admin/user/delete/{id}
+    defaults: { _controller: KellsBackBundle:Default:deleteUser }
     
 alarfin_login_view:
     path:     /admin/login/
@@ -40,3 +45,19 @@ verCredito:
 alarfin:
     path:     /admin/alarfin
     defaults: { _controller: KellsBackBundle:Default:alarfin }
+    
+agregar_alarfin:
+    path:     /admin/alarfin/agregar
+    defaults: { _controller: KellsBackBundle:Default:agregarAlarfin }
+    
+save-alarfin:
+    path:     /admin/alarfin/save
+    defaults: { _controller: KellsBackBundle:Default:saveAlarfin }
+    
+deleteAlarfin:
+    path:     /admin/alarfin/delete/{id}
+    defaults: { _controller: KellsBackBundle:Default:deleteAlarfin }
+    
+editar-alarfin:
+    path:     /admin/alarfin/editar/{id}
+    defaults: { _controller: KellsBackBundle:Default:editarAlarfin }

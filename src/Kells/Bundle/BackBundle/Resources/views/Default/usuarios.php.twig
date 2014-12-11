@@ -37,7 +37,7 @@
                                                 <td nowrap>
                                                 	<button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" onClick="location.href='usuarios-editar.php'"><i class="fa fa-pencil fa-fw"></i></button>
                                                     <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Publicaciones" href="{{ path('publicaciones_usuario', {'userId': user.id})}}"><i class="fa fa-car fa-fw"></i></a>
-                                                    <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick=""><i class="fa fa-trash fa-fw"></i></a>
+                                                    <a  class="btn btn-primary btn-sm userRemove" data-toggle="tooltip" data-placement="top" title="Eliminar" href="{{ path('deleteUser', {'id': user.id})}}" ><i class="fa fa-trash fa-fw"></i></a>
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -51,6 +51,7 @@
             </div>
         </div>
     </div>
+    
 <script>
 	$(document).ready(function() {
 		$('#tabla').dataTable({
@@ -63,6 +64,21 @@
 			selector: "[data-toggle=tooltip]",
 			container: "body"
 		});
+		
+		$(".userRemove").on("click", function(e) {
+   					var link = this;
+    				e.preventDefault();
+    				$("<div title='Confirmar'>Está seguro que desea eliminar el usuario?</div>").dialog({
+        				buttons: {
+            					"Sí": function() {
+                						window.location = link.href;
+            						},
+            					"No": function() {
+                						$(this).dialog("close");
+            					}
+        				}
+    				});
+				});
 	});
 </script>
 {% endblock %}

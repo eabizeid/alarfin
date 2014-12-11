@@ -9,7 +9,7 @@
             <!--div class="alert alert-success" role="alert">Usuario de Alarfin agregado con &eacute;xito</div-->
 			<div class="row">
             	<div class="col-xs-12">
-                	<a href="alarfin-agregar.php" class="btn btn-primary"><i class="fa fa-user fa-fw"></i> Agregar usuario de Alarfin</a>
+                	<a href="{{path('agregar_alarfin')}}" class="btn btn-primary"><i class="fa fa-user fa-fw"></i> Agregar usuario de Alarfin</a>
                 </div>
             </div>
 		  	<div class="row toppad10">
@@ -30,13 +30,13 @@
                                         <tbody>
                                         {% for alarfin in alarfines%}
                                             <tr>
-                                                <td>{{alarfin.firstName}}</td>
                                                 <td>{{alarfin.lastName}}</td>
+                                                <td>{{alarfin.firstName}}</td>
                                                 <td>{{alarfin.mail}}</td> 
                                                 <td>Administrador</td>
                                                 <td nowrap>
-                                                	<button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" onClick="location.href='alarfin-editar.php'"><i class="fa fa-pencil fa-fw"></i></button>
-                                                    <button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick=""><i class="fa fa-trash fa-fw"></i></button>
+                                                	<button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" onClick="location.href='{{ path('editar-alarfin', {'id': alarfin.id})}}'"><i class="fa fa-pencil fa-fw"></i></button>
+                                                    <button  class="btn btn-primary btn-sm alarfinRemove" data-toggle="tooltip" data-placement="top" title="Eliminar" href="{{ path('deleteAlarfin', {'id': alarfin.id})}}"><i class="fa fa-trash fa-fw"></i></button>
                                                 </td>
                                             </tr>	
 										{% endfor %}
@@ -49,4 +49,23 @@
             </div>
         </div>
     </div>
+    <script>
+	$(document).ready(function() {
+		
+		$(".alarfinRemove").on("click", function(e) {
+   					var link = this;
+    				e.preventDefault();
+    				$("<div title='Confirmar'>Está seguro que desea eliminar el usuario?</div>").dialog({
+        				buttons: {
+            					"Sí": function() {
+                						window.location = link.href;
+            						},
+            					"No": function() {
+                						$(this).dialog("close");
+            					}
+        				}
+    				});
+				});
+	});
+</script>
 {% endblock %}

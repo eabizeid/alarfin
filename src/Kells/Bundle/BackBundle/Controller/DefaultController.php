@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 use Kells\Bundle\BackBundle\Entity\AlarfinConfiguration;
+use Kells\Bundle\BackBundle\Entity\Alarfin;
 
 class DefaultController extends Controller
 {
@@ -23,6 +24,16 @@ class DefaultController extends Controller
         return $this->render('KellsBackBundle:Default:usuarios.php.twig', array('users'=>$users));
     }
     
+    public function deleteUserAction( $id )
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$repository = $em->getRepository('KellsFrontBundle:User');
+    	$alarfin = $repository->find($id);
+    	
+    	$em->remove($alarfin);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('usuarios'));
+    }
     public function adminLoginAction()
     {
     	 $request = $this->getRequest();
@@ -218,5 +229,48 @@ class DefaultController extends Controller
 		$alarfines = $repository->findAll();
 		return $this->render('KellsBackBundle:Default:alarfin.html.twig', array('alarfines'=>$alarfines));
     }
+    
+ 	public function agregarAlarfinAction()
+    {
+		return $this->render('KellsBackBundle:Default:agregar-alarfin.html.twig');
+    }
        
+	public function editarAlarfinAction($id )
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$repository = $em->getRepository('KellsBackBundle:Alarfin');
+    	$alarfin = $repository->find($id);
+		return $this->render('KellsBackBundle:Default:editar-alarfin.html.twig', array("alarfin"=>$alarfin));
+    }
+    public function saveAlarfinAction(Request $request)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$alarfin = new Alarfin();
+    	if ($request->get('id')) {
+    		$alarfin =$em->getRepository('KellsBackBundle:Alarfin')->find($request->get('id'));
+    	}  
+    	
+    	$alarfin->setLastName($request->get('apellido'));
+    	$alarfin->setFirstName($request->get('nombre'));
+    	$alarfin->setMail($request->get('email'));
+    	if ($request->get('contrasena')) {
+    		$alarfin->setPassword($request->get('contrasena'));
+    	}
+    	if (!$request->get('id')) {
+    		$em->persist($alarfin);
+    	}
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('alarfin'));
+    }
+    
+  	public function deleteAlarfinAction( $id )
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$repository = $em->getRepository('KellsBackBundle:Alarfin');
+    	$alarfin = $repository->find($id);
+    	
+    	$em->remove($alarfin);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('alarfin'));
+    }
 }

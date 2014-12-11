@@ -12,3 +12,16 @@
 <script src="{{ asset('bundles/kellsback/js/sb-admin-2.js') }}"></script>
 <script src="{{ asset('bundles/kellsback/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('bundles/kellsback/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script type="text/javascript" >
+    var checkPasswordMatch = function() {
+    var password = $("#contrasena").val();
+    var confirmPassword = $("#repetircontrasena").val();
+
+    if (password != confirmPassword)
+        $("#divCheckPasswordMatch").html("Las Contraseñas no son iguales");
+    else
+        $("#divCheckPasswordMatch").html("Contraseñas iguales.");
+}
+</script>

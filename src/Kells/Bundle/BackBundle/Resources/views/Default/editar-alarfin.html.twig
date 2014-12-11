@@ -1,0 +1,67 @@
+{% extends 'KellsBackBundle:Default:base2.php.twig' %}
+{% block body %} 
+       <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Editar usuario Alarfin</h1>
+                </div>
+            </div>
+            
+            <div class="row"> 
+            <form role="role" method="post" action="{{path('save-alarfin')}}" >      
+                <div class="col-md-12">
+                    <div class="well well-gris-claro">
+                        <div class="row">
+                            <div class="col-sm-6">                                
+                                <div class="form-group">
+                                    <label for="nombre">Nombre</label>
+                                    <input name="nombre" type="text" autofocus required class="form-control" id="nombre" tabindex="1" value="{{alarfin.firstName}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6"> 
+                                <div class="form-group">
+                                    <label for="apellido">Apellido</label>
+                                    <input name="apellido" type="text" required class="form-control" id="apellido" tabindex="2" value="{{alarfin.lastName}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6"> 
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input name="email" type="email" required class="form-control" id="email" tabindex="3" value="{{alarfin.mail}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6"> 
+                                <div class="form-group">
+                                    <label for="tipo">Tipo de usuario</label>
+                                    <select class="form-control" name="tipo" id="tipo" required tabindex="4">
+                                    	<option>Empleado</option>
+                                        <option selected>Administrador</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6"> 
+                                <div class="form-group">
+                                    <label for="contrasena">Contrase&ntilde;a</label>
+                                    <input name="contrasena" type="password" required class="form-control" id="contrasena" tabindex="5" value="{{alarfin.password}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6"> 
+                                <div class="form-group">
+                                    <label for="repetircontrasena">Repetir contrase&ntilde;a</label>
+                                    <input name="repetircontrasena" type="password" required class="form-control" id="repetircontrasena" tabindex="6" value="{{alarfin.password}}" onKeyUp="checkPasswordMatch();">
+                                </div>
+                                <div class="registrationFormAlert" id="divCheckPasswordMatch">
+                            </div>
+
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-md-12 toppad botpad text-center"> 
+                    <input type="button" value="Cancelar" class="btn btn-default" onClick="location.href='{{path('alarfin')}}'"> &nbsp; <input type="submit" value="Guardar cambios" class="btn btn-primary btn-lg">
+                </div>
+                <input name="id" type="hidden" autofocus required class="form-control" id="id" tabindex="1" value="{{alarfin.id}}">
+            </div>	
+            </form>	  	
+        </div>
+    </div>
+{% endblock %}

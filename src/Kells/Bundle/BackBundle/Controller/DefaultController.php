@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 use Kells\Bundle\BackBundle\Entity\AlarfinConfiguration;
 use Kells\Bundle\BackBundle\Entity\Alarfin;
+use Kells\Bundle\FrontBundle\Entity\User;
 
 class DefaultController extends Controller
 {
@@ -22,6 +23,43 @@ class DefaultController extends Controller
 		$repository = $em->getRepository('KellsFrontBundle:User');
 		$users = $repository->findAll();
         return $this->render('KellsBackBundle:Default:usuarios.php.twig', array('users'=>$users));
+    }
+    
+	public function addUserAction()
+    {
+    	
+    	return $this->render('KellsBackBundle:Default:usuarios-agregar.html.twig');
+    }
+    
+ 	public function modifyUserAction( $id )
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$repository = $em->getRepository('KellsFrontBundle:User');
+    	$user = $repository->find($id);
+    	
+    	
+    	return $this->render('KellsBackBundle:Default:usuarios-editar.html.twig', array("user"=>$user));
+    }
+    
+ 	public function saveUserAction(Request $request)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$user = new User();
+    	if ($request->get('id')) {
+    		$user =$em->getRepository('KellsFrontBundle:User')->find($request->get('id'));
+    	}  
+    	
+    	$user->setLastName($request->get('apellido'));
+    	$user->setFirstName($request->get('nombre'));
+    	$user->setMail($request->get('email'));
+    	if ($request->get('contrasena')) {
+    		$user->setPassword($request->get('contrasena'));
+    	}
+    	if (!$request->get('id')) {
+    		$em->persist($user);
+    	}
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('usuarios'));
     }
     
     public function deleteUserAction( $id )
@@ -273,4 +311,13 @@ class DefaultController extends Controller
     	$em->flush();
     	return $this->redirect($this->generateUrl('alarfin'));
     }
+    
+    public function publicacionesAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Car');
+		$cars = $repository->findAll();
+        return $this->render('KellsBackBundle:Default:publicaciones.html.twig', array('cars'=>$cars));
+    }
+    
 }

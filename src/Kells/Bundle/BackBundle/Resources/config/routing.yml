@@ -6,7 +6,19 @@ usuarios:
     path:     /admin/usuarios
     defaults: { _controller: KellsBackBundle:Default:usuarios }
 
+
+addUser:
+    path:     /admin/user/add
+    defaults: { _controller: KellsBackBundle:Default:addUser }
     
+saveUser:
+    path:     /admin/user/save
+    defaults: { _controller: KellsBackBundle:Default:saveUser }
+
+modifyUser:
+    path:     /admin/user/edit/{id}
+    defaults: { _controller: KellsBackBundle:Default:modifyUser }
+        
 deleteUser:
     path:     /admin/user/delete/{id}
     defaults: { _controller: KellsBackBundle:Default:deleteUser }
@@ -61,3 +73,7 @@ deleteAlarfin:
 editar-alarfin:
     path:     /admin/alarfin/editar/{id}
     defaults: { _controller: KellsBackBundle:Default:editarAlarfin }
+    
+publicaciones:
+    path:     /admin/publicaciones
+    defaults: { _controller: KellsBackBundle:Default:publicaciones }

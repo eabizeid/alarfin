@@ -1,0 +1,492 @@
+{% extends 'KellsBackBundle:Default:base2.php.twig' %}
+{% block body %}
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Agregar publicaci&oacute;n</h1>
+                </div>
+            </div>
+            <div class="row">
+				<form role="form" method="post" action="{{path('admin_publish')}}">
+						<input type="hidden" name="carId" value="{% if car %}{{ car.id}} {% endif %}" />
+                        <div class="col-md-12">
+                        	<div class="well well-gris-claro">
+                                <div class="row">
+                                	<div class="col-sm-12">
+                                        <div class="alert alert-titulo" role="alert">
+                                            <h4 class="nomar text-uppercase">Publicador</h4>
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6">                                
+                                        <div class="form-group">
+                                            <label for="publicador-tipo">Tipo</label>
+                                            <select name="publicador-tipo" id="publicador-tipo" class="form-control input-lg" required>
+                                            	<option> Seleccion&aacute; un tipo</option>
+                                                <option> Usuario </option>
+                                                <option> Concesionaria </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="publicador-nombre">Nombre</label>
+                                            <input type="text" name="publicador-nombre" id="publicador-nombre" class="form-control input-lg" required>
+                                        </div>
+                                    </div>
+                                </div>
+	                   		</div> 
+                        </div>
+                
+                
+                        <div class="col-md-12 topmar">
+                        	<div class="well well-gris-claro">
+                                <div class="row">
+                                	<div class="col-sm-12">
+                                        <div class="alert alert-titulo" role="alert">
+                                            <h4 class="nomar text-uppercase">Marca y modelo</h4>
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6">                                
+                                        <div class="form-group">
+                                            <label for="marca">Marca</label>
+                                            <select name="marca" id="marca" class="form-control input-lg" required>
+                                            	<option> Seleccion&aacute; una marca </option>
+                                                {% for trademark in trademarks %}
+                                                <option value="{{ trademark.id }}">{{ trademark.description }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="modelo">Modelo</label>
+                                            <select name="modelo" id="modelo" class="form-control input-lg" required>
+                                            	<option> Seleccion&aacute; un modelo </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+	                   		</div> 
+                        </div>
+                        
+                        
+                        <div class="col-md-12 topmar">
+                        	<div class="well well-gris-claro">
+                                <div class="row">
+                                	<div class="col-sm-12">
+                                        <div class="alert alert-titulo" role="alert">
+                                            <h4 class="nomar text-uppercase">T&iacute;tulo, precio y descripci&oacute;n</h4>
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-8">                                
+                                        <div class="form-group">
+                                            <label for="titulo">T&iacute;tulo de la publicación</label>
+                                            <input type="text" class="form-control input-lg" id="titulo" required placeholder="Ej.: Volkswagen Golf Motor 2.0 2006 Azul 5 puertas" maxlength="60" {% if car and car.description %} value="{{ car.title }}" {% endif %}>
+                                            <span class="help-block">Hasta 60 caracteres</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">                                
+                                        <div class="form-group">
+                                            <label for="precio">Precio</label>
+                                            <input type="text" class="form-control input-lg" id="precio" required {% if car and car.price %} value="{{ car.price }}" {% endif %}>
+                                            <span class="help-block">En Pesos Argentinos</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">                                
+                                        <div class="form-group">
+                                            <label for="titulo">Descripción</label>
+                                            <textarea rows="5" class="form-control input-lg" id="descripcion" placeholder="Ej.: Tiene las cubiertas con pocos kil&oacute;metros y se hizo un cambio de correas recientemente.">{% if car and car.description %}
+                                            		{{car.description}}
+                                            	{% endif %}
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+	                   		</div> 
+                        </div>
+
+                        <div class="col-md-12 topmar">
+                        	<div class="well well-gris-claro">
+                            	<div class="row">
+                                	<div class="col-sm-12">
+                                        <div class="alert alert-titulo" role="alert">
+                                            <h4 class="nomar text-uppercase">Fotograf&iacute;as</h4>
+                                        </div>
+                                    </div> 
+                                	<div class="col-sm-4 col-lg-3">
+                                      <p>La fotograf&iacute;a principal aparecer&aacute; en la home y en los resultados de b&uacute;squeda.</p>
+                                    </div>
+                                	<div class="col-sm-4 col-lg-3">                                
+                                        <div class="form-group">
+                                            <label for="fotoprincipal">Foto principal</label>
+                                            <input type="file" name="fotoprincipal" id="fotoprincipal" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                	<div class="col-xs-12">
+                                    	<hr class="botmar20 topmar10">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4 col-lg-3">
+                                      <p>Pod&eacute;s subir hasta 6 fotograf&iacute;as de tu autom&oacute;vil mostrando diferentes vistas y &aacute;ngulos, tanto interiores como exteriores.</p>
+                                      <p>El tama&ntilde;o ideal para las fotograf&iacute;as es de <strong>800 x 600 pixels</strong>.</p>
+                                    </div>
+                                    <div class="col-sm-8 col-lg-9">
+                                        <div class="row">
+                                          <div class="col-sm-6 col-lg-4">                                
+                                                <div class="form-group">
+                                                    <label for="foto1">Foto 1</label>
+                                                    <input type="file" name="foto1" id="foto1" class="form-control">
+                                                </div>
+                                            </div>
+                                          <div class="col-sm-6 col-lg-4"> 
+                                                <div class="form-group">
+                                                    <label for="foto2">Foto 2</label>
+                                                    <input type="file" name="foto2" id="foto2" class="form-control">
+                                                </div>
+                                            </div>
+                                          <div class="col-sm-6 col-lg-4"> 
+                                                <div class="form-group">
+                                                    <label for="foto3">Foto 3</label>
+                                                    <input type="file" name="foto3" id="foto3" class="form-control">
+                                                </div>
+                                            </div>
+                                          <div class="col-sm-6 col-lg-4"> 
+                                                <div class="form-group">
+                                                    <label for="foto4">Foto 4</label>
+                                                    <input type="file" name="foto4" id="foto4" class="form-control">
+                                                </div>
+                                            </div>
+                                          <div class="col-sm-6 col-lg-4"> 
+                                                <div class="form-group">
+                                                    <label for="foto5">Foto 5</label>
+                                                    <input type="file" name="foto5" id="foto5" class="form-control">
+                                                </div>
+                                            </div>
+                                          <div class="col-sm-6 col-lg-4"> 
+                                                <div class="form-group">
+                                                    <label for="foto6">Foto 6</label>
+                                                    <input type="file" name="foto6" id="foto6" class="form-control">
+                                                </div>
+                                            </div>
+                                    	</div>
+                                    </div>
+                                </div>
+	                   		</div> 
+                        </div>
+                        
+
+                        <div class="col-md-12 topmar">
+                        	<div class="well well-gris-claro">
+                                <div class="row">
+                                	<div class="col-sm-12">
+                                        <div class="alert alert-titulo" role="alert">
+                                            <h4 class="nomar text-uppercase">Ubicaci&oacute;n</h4>
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6">                                
+                                        <div class="form-group">
+                                            <label for="provincia">Provincia</label>
+                                            <select name="provincia" id="provincia" class="form-control" required>
+                                            	<option> Seleccion&aacute; una provincia </option>
+                                                {% for pcia in provinces %}
+                                                <option value="{{ pcia.id }}">{{ pcia.description }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="ciud">Ciudad</label>
+                                            <select name="ciudad" id="ciudad" class="form-control" required>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+	                   		</div> 
+                        </div>
+                        
+                        
+                        <div class="col-md-12 topmar">
+                        	<div class="well well-gris-claro">
+                                <div class="row">
+                                	<div class="col-sm-12">
+                                        <div class="alert alert-titulo" role="alert">
+                                            <h4 class="nomar text-uppercase">Caracter&iacute;sticas principales</h4>
+                                        </div>
+                                    </div> 
+                                   <div class="col-sm-4">                                
+                                        <div class="form-group">
+											<label for="COMBUS">Combustible</label>
+											<select name="COMBUS" id="COMBUS" required class="form-control">
+												<option value="">Elegir</option>
+												 {% for fuel in fuels %}
+                                                <option value="{{ fuel.id }}">{{ fuel.description }}</option>
+                                                {% endfor %}
+											</select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+											<label for="DOOR">Cant. de puertas</label>
+											<select name="DOOR" id="DOOR"  class="form-control">
+												<option value="">Elegir</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+											<label for="KMTS">Kilómetros</label>
+											<input type="number" name="KMTS" id="KMTS" {% if car %} value="{{car.km}}" {% endif %} maxlength="250" required class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">                                
+                                        <div class="form-group">
+											<label for="YEAR">Año</label>
+											<select name="YEAR" id="YEAR" required class="form-control">
+												<option value="">Elegir</option>
+												{% for year in years %}
+                                                <option value="{{ year.id }}">{{ year.description }}</option>
+                                                {% endfor %}
+											</select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">                                
+                                        <div class="form-group">
+										    <label for="COLOREXT">Color</label>
+										    <input type="text" name="COLOREXT" id="COLOREXT"  {% if car %} value="{{car.color}}" {% endif %}  maxlength="250" required class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">                                
+                                        <div class="form-group">
+										    <label for="DIREC">Dirección</label>
+										    <select name="DIREC" id="DIREC" class="form-control">
+										    	<option value="">Elegir</option>
+										    	{% for direction in directions %}
+                                                <option value="{{ direction.id }}">{{ direction.description }}</option>
+                                                {% endfor %}
+										    </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">                                
+                                        <div class="form-group">
+    										<label for="OWNER">Único dueño</label>
+    										<select name="OWNER" id="OWNER" class="form-control">
+    											<option value="">Elegir</option>
+    											<option value="OWNER-SI">Sí</option>
+    											<option value="OWNER-NO">No</option>
+    										</select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">                                
+                                        <div class="form-group">
+									    	<label for="TRANS">Transmisión</label>
+									    	<select name="TRANS" id="TRANS" class="form-control">
+									    		<option value="">Elegir</option>
+									    		{% for trans in transmissions %}
+                                                <option value="{{ trans.id }}">{{ trans.description }}</option>
+                                                {% endfor %}
+									    	</select>
+                                        </div>
+                                    </div>
+                                </div>
+	                   		</div> 
+                        </div>
+                        <div class="col-md-12"> 
+                        	<h2>Otras caracter&iacute;sticas</h2>
+                        </div>
+                        <div class="col-md-12">
+                        	<div class="well well-gris-claro">
+                                <div class="row">
+                                     <div class="col-sm-4"> 
+                                        <div class="checkbox">
+											<h5><strong>Confort</strong></h5>
+                                            <label for="AIRACON"><input type="checkbox" name="AIRACON" id="AIRACON" >Aire acondicionado</label><br>
+                                            <label for="ALARMLUC"><input type="checkbox" name="ALARMLUC" id="ALARMLUC" >Alarma de luces encendidas</label><br>
+                                            <label for="APERBAUL"><input type="checkbox" name="APERBAUL" id="APERBAUL" >Apertura remota de baúl</label><br>
+                                            <label for="ASIENELEC"><input type="checkbox" name="ASIENELEC" id="ASIENELEC" >Asientos eléctricos</label><br>
+                                            <label for="ASREBAT"><input type="checkbox" name="ASREBAT" id="ASREBAT" >Asiento trasero rebatible</label><br>
+                                            <label for="ASREGULA"><input type="checkbox" name="ASREGULA" id="ASREGULA" >Asiento conductor regulable en altura</label><br>
+                                            <label for="BLQCNTDOOR"><input type="checkbox" name="BLQCNTDOOR" id="BLQCNTDOOR" >Cierre centralizado de puertas</label><br>
+                                            <label for="CLIMAUT"><input type="checkbox" name="CLIMAUT" id="CLIMAUT" >Climatizador automático</label><br>
+                                            <label for="COMPABO"><input type="checkbox" name="COMPABO" id="COMPABO" >Computadora de abordo</label><br>
+                                            <label for="CTRLVEL"><input type="checkbox" name="CTRLVEL" id="CTRLVEL" >Control de velocidad de crucero</label><br>
+                                            <label for="ESPELEC"><input type="checkbox" name="ESPELEC" id="ESPELEC" >Espejos eléctricos</label><br>
+                                            <label for="ESTACIONAM"><input type="checkbox" name="ESTACIONAM" id="ESTACIONAM" >Sensor de estacionamiento</label><br>
+                                            <label for="FAROREG"><input type="checkbox" name="FAROREG" id="FAROREG" >Faros regulables desde el interior</label><br>
+                                            <label for="GPS"><input type="checkbox" name="GPS" id="GPS" >GPS</label><br>
+                                            <label for="SENSLL"><input type="checkbox" name="SENSLL" id="SENSLL" >Sensor de lluvia</label><br>
+                                            <label for="SENSLUZ"><input type="checkbox" name="SENSLUZ" id="SENSLUZ" >Sensor de luz</label><br>
+                                            <label for="TAPCUERO"><input type="checkbox" name="TAPCUERO" id="TAPCUERO" >Tapizado de cuero</label><br>
+                                            <label for="TECHOCORR"><input type="checkbox" name="TECHOCORR" id="TECHOCORR" >Techo corredizo</label><br>
+                                            <label for="VIDELEC"><input type="checkbox" name="VIDELEC" id="VIDELEC" >Cristales eléctricos</label>
+                                        </div>
+                                    </div>
+                                   <div class="col-sm-4"> 
+                                        <div class="checkbox">
+<div class="visible-xs">&nbsp;</div>
+											<h5><strong>Seguridad</strong></h5>
+                                            <label for="3LUZSTOP"><input type="checkbox" name="3LUZSTOP" id="3LUZSTOP" >Tercer stop</label><br>
+                                            <label for="ABS"><input type="checkbox" name="ABS" id="ABS" >Frenos ABS</label><br>
+                                            <label for="AIR1"><input type="checkbox" name="AIR1" id="AIR1" >Airbag conductor</label><br>
+                                            <label for="AIR2"><input type="checkbox" name="AIR2" id="AIR2" >Airbag pasajero</label><br>
+                                            <label for="AIR3"><input type="checkbox" name="AIR3" id="AIR3" >Airbag laterales</label><br>
+                                            <label for="AIRBAGCORT"><input type="checkbox" name="AIRBAGCORT" id="AIRBAGCORT" >Airbag de cortina</label><br>
+                                            <label for="ALAR"><input type="checkbox" name="ALAR" id="ALAR" >Alarma</label><br>
+                                            <label for="APCABEZA"><input type="checkbox" name="APCABEZA" id="APCABEZA" >Apoya cabeza en asientos traseros</label><br>
+                                            <label for="BLIND"><input type="checkbox" name="BLIND" id="BLIND" >Blindado</label><br>
+                                            <label for="CNTTRACC"><input type="checkbox" name="CNTTRACC" id="CNTTRACC" >Control de tracción</label><br>
+                                            <label for="CONTR"><input type="checkbox" name="CONTR" id="CONTR" >Control de estabilidad</label><br>
+                                            <label for="DOBTRACC"><input type="checkbox" name="DOBTRACC" id="DOBTRACC" >Doble tracción</label><br>
+                                            <label for="FARANTI"><input type="checkbox" name="FARANTI" id="FARANTI" >Faros antinieblas delanteros</label><br>
+                                            <label for="FAROXEN"><input type="checkbox" name="FAROXEN" id="FAROXEN" >Faros de xenón</label><br>
+                                            <label for="INMOVMOT"><input type="checkbox" name="INMOVMOT" id="INMOVMOT" >Inmovilizador de motor</label><br>
+                                            <label for="ISOFIX"><input type="checkbox" name="ISOFIX" id="ISOFIX" >Isofix</label><br>
+                                            <label for="NEBLTRAS"><input type="checkbox" name="NEBLTRAS" id="NEBLTRAS" >Faros antinieblas traseros</label><br>
+                                            <label for="REPFUERZA"><input type="checkbox" name="REPFUERZA" id="REPFUERZA" >Repartidor electrónico de fuerza de frenado</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">                                
+                                        <div class="checkbox">
+<div class="visible-xs">&nbsp;</div>
+                                            <h5><strong>Sonido</strong></h5>
+                                            <label for="CAJACD"><input type="checkbox" name="CAJACD" id="CAJACD">Caja de CD</label><br>
+                                            <label for="AM/FM"><input type="checkbox" name="AM/FM" id="AM/FM" >AM/FM</label><br>
+                                            <label for="BLUETOOTH"><input type="checkbox" name="BLUETOOTH" id="BLUETOOTH" >Bluetooth</label><br>
+                                            <label for="CARGADORCD"><input type="checkbox" name="CARGADORCD" id="CARGADORCD" >Cargador de CD</label><br>
+                                            <label for="CASET"><input type="checkbox" name="CASET" id="CASET" >Pasacassette</label><br>
+                                            <label for="COMANDOSAT"><input type="checkbox" name="COMANDOSAT" id="COMANDOSAT" >Comando satelital de stereo</label><br>
+                                            <label for="DVD"><input type="checkbox" name="DVD" id="DVD" >DVD</label><br>
+                                            <label for="ENTAUXILIA"><input type="checkbox" name="ENTAUXILIA" id="ENTAUXILIA" >Entrada auxiliar</label><br>
+                                            <label for="MP3"><input type="checkbox" name="MP3" id="MP3" >MP3</label><br>
+                                            <label for="REPRODCD"><input type="checkbox" name="REPRODCD" id="REPRODCD" >CD</label><br>
+                                            <label for="TARJETASD"><input type="checkbox" name="TARJETASD" id="TARJETASD" >Tarjeta SD</label><br>
+                                            <label for="USB"><input type="checkbox" name="USB" id="USB" >Entrada USB</label><div>&nbsp;</div>
+                                            
+                                            <h5><strong>Exterior</strong></h5>
+                                            <label for="LIMPIA/LAV"><input type="checkbox" name="LIMPIA/LAV" id="LIMPIA/LAV" >Limpia/lava luneta</label><br>
+                                            <label for="LLANALEAC"><input type="checkbox" name="LLANALEAC" id="LLANALEAC" >Llantas de aleación</label><br>
+                                            <label for="PARAGOLPES"><input type="checkbox" name="PARAGOLPES" id="PARAGOLPES" >Paragolpes pintados</label><br>
+                                            <label for="VIDPOLARIZ"><input type="checkbox" name="VIDPOLARIZ" id="VIDPOLARIZ" >Vidrios polarizados</label>
+                                        </div>
+                                    </div>
+                                </div>
+	                   		</div> 
+                        </div>
+	                    <div class="col-md-12 toppad botpad text-center"> 
+                        	<input type="button" value="Cancelar" class="btn btn-default" onClick="location.href='publicaciones.php'"> &nbsp; <input type="submit" value="Publicar" class="btn btn-primary btn-lg">
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+      </div>
+        <script type="text/javascript" >
+        	 
+        	 $(document).ready( function(){
+        	 
+        	
+        	 $('#marca').change( function(e) {
+ 					// get the value of the selection
+        			var id = $(this).val(),
+		            url = Routing.generate('route_to_retrieve_model', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#modelo');
+                			sub.empty();
+                			$.each(data , function(id, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",description.id)
+                    				.text(description.description)); 
+                		    })
+                		
+ 						} )
+					})
+        	 
+        	 $('#provincia').change( function(e) {
+ 					// get the value of the selection
+        			var id = $(this).val(),
+		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#ciudad');
+                			sub.empty();
+                			$.each(data , function(key, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",key)
+                    				.text(description.description)); 
+                		    })
+                		
+ 						} )
+					})
+        	 
+        	 	//recorro las features cargadas en el car, la busco en el dom y la checkeo.
+        	 	{% if (car) %}
+	        	 	{% for feature in car.features%}
+	        	 		selector = "#{{feature.id}}".replace("/", "\\/")
+	        	 		$(selector).attr('checked', 'checked')
+	        	 	{% endfor %} 
+	        	 	
+	        	 	
+	        	 	$("#marca").val("{{car.trademark.id}}")
+	        	 	
+	        	 	var id = '{{car.trademark.id}}',
+		            url = Routing.generate('route_to_retrieve_model', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#modelo');
+                			sub.empty();
+                			$.each(data , function(id, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",description.id)
+                    				.text(description.description)); 
+                		    })
+                		
+ 						} )
+	        	 	
+	        	 	$("#modelo").val("{{ car.model.id}}");
+	        	 	
+	        	 	$("#provincia").val("{{car.province.id}}")
+	        	 	
+	        	 	
+	        	 	var id = "{{car.province.id}}";
+		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#ciudad');
+                			sub.empty();
+                			$.each(data , function(key, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",key)
+                    				.text(description.description)); 
+                		    })
+                		
+ 						} )
+					{% if car.city %}
+	        	 	$("#ciudad").val("{{ car.city.id }}");
+	        	 	{% endif %}
+	        	 	
+	        	 	{% if car.fuel%}
+	        	 	$("#COMBUS").val("{{car.fuel.id}}")
+	        	 	{% endif %}
+	        	 	{% if car.year %}
+	        	 	$("#YEAR").val("{{car.year.id}}")
+	        	 	{% endif %}
+	        	 	{% if car.direction %}
+	        	 	$("#DIREC").val("{{car.direction.id}}")
+	        	 	{% endif %}
+	        	 	{% if car.transmission%}
+	        	 	$("#TRANS").val("{{car.transmission.id}}")
+	        	 	{% endif %}
+        	 	{% endif %}
+        	 
+        	 })	
+ 		</script>
+ {% endblock %}
+    

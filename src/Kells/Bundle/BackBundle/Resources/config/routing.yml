@@ -77,3 +77,27 @@ editar-alarfin:
 publicaciones:
     path:     /admin/publicaciones
     defaults: { _controller: KellsBackBundle:Default:publicaciones }
+    
+agregarPublicacion:
+    path:     /admin/publicaciones/agregar
+    defaults: { _controller: KellsBackBundle:Default:agregarPublicacion }
+    
+route_to_retrieve_model:
+    pattern: /getModels/
+    defaults: {_controller: KellsFrontBundle:Default:getModels}
+    options:
+        expose: true
+        
+route_to_retrieve_city:
+    pattern: /getCities/
+    defaults: {_controller: KellsFrontBundle:Default:getCities}
+    options:
+        expose: true
+
+admin_publish:
+    path:     /admin/publicaciones/publish/
+    defaults: { _controller: KellsBackBundle:Default:publish  }
+    
+editar-publicacion:
+    path:     /admin/publicaciones/editar/{carId}
+    defaults: { _controller: KellsBackBundle:Default:editCar }

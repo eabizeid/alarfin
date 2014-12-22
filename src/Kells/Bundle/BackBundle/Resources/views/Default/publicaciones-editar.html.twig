@@ -136,47 +136,17 @@
                                     </div>
                                     <div class="col-sm-8 col-lg-9">
                                         <div class="row">
-                                          <div class="col-sm-6 col-lg-4">                                
+										{% for image in car.images %}
+										
+                                          <div class="col-sm-6 col-lg-4">  
                                                 <div class="form-group">
                                                     <label for="foto1">Foto 1</label>
-                                                    <img src="../img/foto-auto-2.jpg" width="800" height="600" class="img-responsive">
+                                                    <img src={{ asset(image.webPath) }}" width="800" height="600" class="img-responsive">
                                                     <input type="file" name="foto1" id="foto1" class="form-control">
                                                 </div>
                                             </div>
-                                          <div class="col-sm-6 col-lg-4"> 
-                                                <div class="form-group">
-                                                    <label for="foto2">Foto 2</label>
-                                                    <img src="../img/foto-auto-3.jpg" width="800" height="600" class="img-responsive">
-                                                    <input type="file" name="foto2" id="foto2" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="clearfix visible-sm visible-md"></div>
-                                          <div class="col-sm-6 col-lg-4"> 
-                                                <div class="form-group">
-                                                    <label for="foto3">Foto 3</label>
-                                                    <input type="file" name="foto3" id="foto3" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="clearfix visible-lg"></div>
-                                          <div class="col-sm-6 col-lg-4"> 
-                                                <div class="form-group">
-                                                    <label for="foto4">Foto 4</label>
-                                                    <input type="file" name="foto4" id="foto4" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="clearfix visible-sm visible-md"></div>
-                                          <div class="col-sm-6 col-lg-4"> 
-                                                <div class="form-group">
-                                                    <label for="foto5">Foto 5</label>
-                                                    <input type="file" name="foto5" id="foto5" class="form-control">
-                                                </div>
-                                            </div>
-                                          <div class="col-sm-6 col-lg-4"> 
-                                                <div class="form-group">
-                                                    <label for="foto6">Foto 6</label>
-                                                    <input type="file" name="foto6" id="foto6" class="form-control">
-                                                </div>
-                                            </div>
+                                         {% endfor %}
+											 
                                     	</div>
                                     </div>
                                 </div>

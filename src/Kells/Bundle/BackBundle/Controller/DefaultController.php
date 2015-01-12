@@ -56,9 +56,13 @@ class DefaultController extends Controller
     	$user->setLastName($request->get('apellido'));
     	$user->setFirstName($request->get('nombre'));
     	$user->setMail($request->get('email'));
+    	$user->setTelephone($request->get('telefono'));
+    	$user->setToken("");
+    	$user->setStatus(1);
     	if ($request->get('contrasena')) {
     		$user->setPassword($request->get('contrasena'));
     	}
+    	
     	if (!$request->get('id')) {
     		$em->persist($user);
     	}

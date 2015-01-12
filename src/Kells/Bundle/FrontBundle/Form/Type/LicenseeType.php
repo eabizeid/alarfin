@@ -13,7 +13,7 @@ class LicenseeType extends AbstractType {
         $builder->add('fantasyName', 'text');
         $builder->add('telephone', 'text');
         $builder->add('mail', 'email');
-        $builder->add('plainPassword', 'repeated', array(
+        $builder->add('password', 'repeated', array(
            'first_name'  => 'password',
            'second_name' => 'confirm',
            'type'        => 'password',

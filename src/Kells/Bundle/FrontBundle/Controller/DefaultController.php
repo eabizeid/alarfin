@@ -14,6 +14,7 @@ use Kells\Bundle\FrontBundle\Form\Type\RegistrationType;
 use Kells\Bundle\FrontBundle\Form\Model\Registration;
 use Kells\Bundle\FrontBundle\Form\Type\UserRegistrationType;
 use Kells\Bundle\FrontBundle\Form\Model\UserRegistration;
+use Kells\Bundle\FrontBundle\Form\Model\LicenseeRegistration;
 use Kells\Bundle\FrontBundle\Entity\Car;
 use Kells\Bundle\FrontBundle\Entity\Feature;
 use Kells\Bundle\FrontBundle\Entity\ImageFile;
@@ -145,10 +146,10 @@ class DefaultController extends Controller
 	/* ******************** Licensee Registration ***********************************************  */
     
  	public function licenseeRegistrationAction() {
-    	$registration = new UserRegistration();
-		$form = $this->createForm(new UserRegistrationType(), $registration, array('action' => $this->generateUrl('user_create'),));
+    	$registration = new Registration();
+		$form = $this->createForm(new RegistrationType(), $registration, array('action' => $this->generateUrl('licensee_create'),));
     	
-     	return $this->render('KellsFrontBundle:Default:userRegistration.html.twig', array('form' => $form->createView()));
+     	return $this->render('KellsFrontBundle:Default:licenseeRegistration.html.twig', array('form' => $form->createView()));
     }
     
     
@@ -157,24 +158,24 @@ class DefaultController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$form = $this->createForm(new UserRegistrationType(), new UserRegistration());
+		$form = $this->createForm(new RegistrationType(), new Registration());
 
 		$form->handleRequest($request);
 
 		if ($form->isValid()) {
 			$registration = $form->getData();
 
-			$user = $registration->getUser(); 
-			$user->setStatus(false);
-			$user->setToken(Util::getToken());
-			$em->persist($user);
+			$licensee = $registration->getLicensee(); 
+			$licensee->setStatus(false);
+			$licensee->setToken(Util::getToken());
+			$em->persist($licensee);
 			$em->flush();
 
-			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/user/register/confirm/'.$user->getToken();
+			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/licensee/register/confirm/'.$licensee->getToken();
 			$message = \Swift_Message::newInstance()
         	->setSubject('Confirmar su registracion')
         	->setFrom('eduardo.abizeid@gmail.com')
-        	->setTo($user->getMail())
+        	->setTo($licensee->getMail())
         	->setBody('<p>Gracias por registrarse</p>'.
         	'<p>Para terminar con el registro por favor haga click en el siguiente vínculo </p>'.
         	'<p><a href="'.$url.'">Confirmar</a></p>', 'text/html'
@@ -186,7 +187,7 @@ class DefaultController extends Controller
 		}
 
 		return $this->render(
-        'KellsFrontBundle:Default:userRegistration.html.twig',
+        'KellsFrontBundle:Default:licenseeRegistration.html.twig',
 		array('form' => $form->createView())
 		);
 	}
@@ -194,18 +195,18 @@ class DefaultController extends Controller
 	public function licenseeRegisterConfirmAction($token) {
 		if ($token) {
 			$em = $this->getDoctrine()->getManager();
-			$repository = $em->getRepository('KellsFrontBundle:User');
-			$user = $repository->findOneByToken($token);
-			if ($user) {
+			$repository = $em->getRepository('KellsFrontBundle:Licensee');
+			$licensee = $repository->findOneByToken($token);
+			if ($licensee) {
 				//delete token and change status
-				$user->setToken('');
-				$user->setStatus(true);
+				$licensee->setToken('');
+				$licensee->setStatus(true);
 				$em->flush();
 				
 				return $this->redirect($this->generateUrl('kells_front_homepage'));
 			}
 		}
-			return $this->redirect($this->generateUrl('userRegistration'));
+			return $this->redirect($this->generateUrl('licenseeRegistration'));
 	}
     	
 	public function registerMessageConfirmAction() {

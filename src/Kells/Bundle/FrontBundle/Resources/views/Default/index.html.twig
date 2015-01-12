@@ -4,10 +4,15 @@
 	<div class="container">
 		<div class="row">          
 			{{ include('KellsFrontBundle:Default:buscador.html.twig') }}
+			{% if cars %}
 			<div class="row botmar resultados">
 				{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
 			
 			</div>
+			{% else %}
+				<div class="alert alert-danger role="alert">
+				<p  ALIGN=center>No se encontraron automóviles, por favor intente con otra búsqueda.</p>
+			{% endif %}
 		</div>
 	</div>
 </div>

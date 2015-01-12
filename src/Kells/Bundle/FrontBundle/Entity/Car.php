@@ -136,6 +136,13 @@ class Car {
      **/
 	protected $user;
 	
+	
+	 /**
+     * @ORM\ManyToOne(targetEntity="Licensee", inversedBy="licensees")
+     * @ORM\JoinColumn(name="licensee_id", referencedColumnName="id")
+     **/
+	protected $licensee;
+	
 	/**
 	 * 
 	 * @ORM\Column(type="date")

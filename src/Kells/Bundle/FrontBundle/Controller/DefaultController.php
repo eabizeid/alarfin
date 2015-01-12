@@ -1045,6 +1045,17 @@ class DefaultController extends Controller
 		
 	}
 	
+	public function republishAction(Request $request) {
+		$logger = $this->get('logger');
+		$id = $request->get('id');
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Car');
+		$car = $repository->find($id);
+		$car->setStatus("PUBLISHED");
+		$em->flush();
+		return $this->redirect($this->generateUrl('user_myPublications'));
+	}
+	
 	public function showCreditRequestAction($message = null) {
 		
 		$user = $this->get('security.context')->getToken()->getUser();

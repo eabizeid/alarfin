@@ -84,6 +84,10 @@ to_edit:
     path:     /edit/
     defaults: { _controller: KellsFrontBundle:Default:toEdit  }
     
+republish:
+    path:     /republish/
+    defaults: { _controller: KellsFrontBundle:Default:republish  }
+    
 creditRequest:
     path:     /creditRequest/
     defaults: { _controller: KellsFrontBundle:Default:showCreditRequest }

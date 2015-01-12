@@ -70,7 +70,7 @@
                                         <td>{{ car.trademark.description}}</td>
                                         <td>{{ car.model.description}}</td>
                                         <td>${{ car.price}}</td>
-                                        <td nowrap><button class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Republicar"><i class="fa fa-undo fa-fw"></i></button></td>
+                                        <td nowrap><a href="{{ path('republish', {'id': car.id})}}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Republicar"><i class="fa fa-undo fa-fw"></i></a></td>
                                     </tr>
                                    {%endif%}
                                    {%endfor%}
@@ -83,25 +83,31 @@
                     </div>
                 </div>
             </div>
+            <div id="dialog-confirm" title="Confirmar">
+  				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Está seguro que desea finalizar esta publicación?</p>
+			</div>
         </div>
         <?php include('inc/inc-footer.php'); ?>  
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-         <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+        
         <script>
             $(document).ready(function() {
             	
             	$(".finalizeCar").on("click", function(e) {
    					var link = this;
     				e.preventDefault();
-    				$("<div title='Confirmar'>Está seguro que desea finalizar esta publicación?</div>").dialog({
-        				buttons: {
-            					"Sí": function() {
+    				$("#dialog-confirm").dialog({
+    					   resizable: false,
+    				 	   height:170,
+    				 	   width:450,
+      						modal: true,
+      					    buttons: {
+        						"Sí": function() {
                 						window.location = link.href;
-            						},
-            					"No": function() {
-                						$(this).dialog("close");
-            					}
-        				}
+            					},
+        				        No: function() {
+          								$( this ).dialog( "close" );
+        						}
+      						}
     				});
 				});
 			})

@@ -557,4 +557,28 @@ class Car {
     {
         return $this->publishedDate;
     }
+    
+
+    /**
+     * Set user
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Licensee $licensee
+     * @return Car
+     */
+    public function setLicensee(\Kells\Bundle\FrontBundle\Entity\Licensee $licensee = null)
+    {
+        $this->licensee = $licensee;
+
+        return $this;
+    }
+
+    /**
+     * Get licensee
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\Licensee 
+     */
+    public function getLicensee()
+    {
+        return $this->licensee;
+    }
 }

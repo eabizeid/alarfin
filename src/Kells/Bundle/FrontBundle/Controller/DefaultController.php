@@ -351,7 +351,11 @@ class DefaultController extends Controller
    		$car->setDescription($description);
    		$car->setPrice($price);
    		$car->setKm($kms);
-   		$car->setUser($user);
+   		if ($user->getRoles()[0] == 'ROLE_USER') {
+   			$car->setUser($user);
+   		} else {
+   			$car->setLicensee($user);
+   		}
    		$car->setColor($color);
    		
    		if ($mandatoryImageFile) {

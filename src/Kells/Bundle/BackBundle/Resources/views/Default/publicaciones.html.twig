@@ -37,7 +37,11 @@
                                 	{% if car.status == "PUBLISHED" %}
                                     <tr>
                                         <td>{{car.publishedDate|date('d/m/Y')}}</td>
-                                        <td><a href="{{path('modifyUser', {'id': car.user.id})}}">{{car.user.lastName}} {{car.user.firstName}}</a></td>
+                                        {% if (car.user) %}
+                                        	<td><a href="{{path('modifyUser', {'id': car.user.id})}}">{{car.user.lastName}} {{car.user.firstName}}</a></td>
+                                        {% else %}
+                                        	<td><a href="{{path('modifyUser', {'id': car.licensee.id})}}">{{car.licensee.fantasyName}} </a></td>
+                                        {% endif %}	
                                         <td>{{car.title}}</td>
                                         <td>{{car.trademark.description}}</td>
                                         <td>{{car.model.description}}</td>
@@ -67,7 +71,11 @@
                                 	{% if car.status == "FINALIZED" %}
                                     <tr>
                                         <td>{{car.publishedDate|date('d/m/Y')}}</td>
-                                        <td><a href="{{path('modifyUser', {'id': car.user.id})}}">{{car.user.lastName}} {{car.user.firstName}}</a></td>
+                                        {% if (car.user) %}
+                                        	<td><a href="{{path('modifyUser', {'id': car.user.id})}}">{{car.user.lastName}} {{car.user.firstName}}</a></td>
+                                        {% else %}
+                                        	<td><a href="{{path('modifyUser', {'id': car.licensee.id})}}">{{car.licensee.fantasyName}} </a></td>
+                                        {% endif %}	
                                         <td>{{car.title}}</td>
                                         <td>{{car.trademark.description}}</td>
                                         <td>{{car.model.description}}</td>

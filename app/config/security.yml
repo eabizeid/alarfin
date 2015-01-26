@@ -79,3 +79,5 @@ security:
         - { path: ^/admin/configuracion, roles: ROLE_ALARFIN}
         - { path: ^/admin/creditos, roles: ROLE_ALARFIN}
         - { path: ^/admin/alarfin, roles: ROLE_ALARFIN}
+        - { path: ^/admin/concesionarias, roles: ROLE_ALARFIN}
+        - { path: ^/admin/menu, roles: ROLE_ALARFIN}

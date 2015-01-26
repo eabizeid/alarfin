@@ -1,5 +1,5 @@
 kells_back_homepage:
-    path:     /admin/
+    path:     /admin/menu
     defaults: { _controller: KellsBackBundle:Default:index }
     
 usuarios:

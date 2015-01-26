@@ -22,6 +22,27 @@ modifyUser:
 deleteUser:
     path:     /admin/user/delete/{id}
     defaults: { _controller: KellsBackBundle:Default:deleteUser }
+
+concesionarias:
+    path:     /admin/concesionarias
+    defaults: { _controller: KellsBackBundle:Default:concesionarias }
+
+
+addLicensee:
+    path:     /admin/licensee/add
+    defaults: { _controller: KellsBackBundle:Default:addLicensee }    
+
+saveLicensee:
+    path:     /admin/licensee/save
+    defaults: { _controller: KellsBackBundle:Default:saveLicensee }
+
+modifyLicensee:
+    path:     /admin/licensee/edit/{id}
+    defaults: { _controller: KellsBackBundle:Default:modifyLicensee }
+
+deleteLicensee:
+    path:     /admin/licensee/delete/{id}
+    defaults: { _controller: KellsBackBundle:Default:deleteLicensee }
     
 alarfin_login_view:
     path:     /admin/login/

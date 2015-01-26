@@ -80,6 +80,68 @@ class DefaultController extends Controller
     	$em->flush();
     	return $this->redirect($this->generateUrl('usuarios'));
     }
+    
+	public function concesionariasAction()
+    {
+    	$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Licensee');
+		$users = $repository->findAll();
+        return $this->render('KellsBackBundle:Default:concesionarias.php.twig', array('concesionarias'=>$users));
+    }
+    
+	public function addLicenseeAction()
+    {
+    	
+    	return $this->render('KellsBackBundle:Default:licensee-agregar.html.twig');
+    }
+    
+	public function saveLicenseeAction(Request $request)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$user = new Licensee();
+    	if ($request->get('id')) {
+    		$user =$em->getRepository('KellsFrontBundle:Licensee')->find($request->get('id'));
+    	}  
+    	
+    	$user->setSocialReason($request->get('razonSocial'));
+    	$user->setFabtasyName($request->get('fantasy'));
+    	$user->setFirstName($request->get('cuit'));
+    	$user->setMail($request->get('email'));
+    	$user->setTelephone($request->get('telefono'));
+    	$user->setToken("");
+    	$user->setStatus(1);
+    	if ($request->get('contrasena')) {
+    		$user->setPassword($request->get('contrasena'));
+    	}
+    	
+    	if (!$request->get('id')) {
+    		$em->persist($user);
+    	}
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('concesionarias'));
+    }
+    
+	public function modifyLicenseeAction( $id )
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$repository = $em->getRepository('KellsFrontBundle:Licensee');
+    	$user = $repository->find($id);
+    	
+    	
+    	return $this->render('KellsBackBundle:Default:concesionarias-editar.html.twig', array("user"=>$user));
+    }
+
+    public function deleteLicenseeAction( $id )
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$repository = $em->getRepository('KellsFrontBundle:Licensee');
+    	$alarfin = $repository->find($id);
+    	
+    	$em->remove($alarfin);
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('concesionarias'));
+    }
+    
     public function adminLoginAction()
     {
     	 $request = $this->getRequest();

@@ -4,9 +4,11 @@ namespace Kells\Bundle\FrontBundle\Entity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(fields={"mail"}, message="Este mail ya se encuentra registrado"), 
  * @ORM\Table(name="users") 
  */
 class User implements UserInterface {
@@ -335,6 +337,6 @@ class User implements UserInterface {
     }
     
     public function getName() {
-    	return $this->firstName + " " + $this->lastName;
+    	return $this->firstName." ".$this->lastName;
     }
 }

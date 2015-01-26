@@ -8,9 +8,10 @@
                     </div>
                 </div>
                 <div class="row">                
-					<form action="{{ path('publish') }}" role="form" enctype="multipart/form-data" method="post">
+					<form action="{{ path('publish') }}" role="form" enctype="multipart/form-data" method="post" onsubmit="return validateForm();">
 					 	<input type="hidden" name="_target_path" value="{{ path('publish') }}" />
 					 	<input type="hidden" name="carId" value="{% if car %}{{ car.id}} {% endif %}" />
+						<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>Marca, Modelo y Provincia son obligatorios</div>
 	                    <div class="col-md-12"> 
                         	<h2>Marca y modelo</h2>
                         </div>
@@ -428,6 +429,18 @@
         	 	{% endif %}
         	 
         	 })	
+        	 
+        	 var validateForm = function() {
+        	 
+        	 	var marca = $("#marca").val();
+    			var modelo = $("#modelo").val();
+	        	var provincia = $("#provincia").val();
+    			if (marca = "Seleccioná una marca" || modelo == "Seleccioná una marca" || provincia == "Seleccioná una provincia") {
+        			$("#divMsg").show();
+        			$('html, body').animate({ scrollTop: $('#divMsg').offset().top }, 'slow');
+        			return false;
+    			}
+			}
  		</script>
  {% endblock %}
 

@@ -13,6 +13,11 @@
 	                    			<h4 class="tit-concesionaria nomar">Por favor complete todos los campos del formulario para registrarse.</h4>
 	                			</div>
 	            			</div>  
+        					{% if not form.vars.valid %}
+                			<div class="row">
+                				<div  class="alert alert-danger" role="alert">{{ form_errors(form.licensee.mail) }}{{ form_errors(form.licensee.password.password) }}</div>
+               				</div>
+                			{% endif %}
         
         			    <div class="row linea-alarfin-clara-arriba topmar20">    
                 			<div class="col-sm-6 topmar20">

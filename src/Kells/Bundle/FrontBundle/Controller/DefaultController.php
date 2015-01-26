@@ -247,7 +247,7 @@ class DefaultController extends Controller
 		
 	}
 	
-	public function toPublishAction() {
+	public function toPublishAction($message = null) {
 		$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('KellsFrontBundle:Trademark');
 		$trademarks = $repository->findAll();
@@ -266,7 +266,7 @@ class DefaultController extends Controller
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'), ));
 		return $this->render(
-        'KellsFrontBundle:Default:publicar.html.twig', array("form"=>$form->createView(), 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
+        'KellsFrontBundle:Default:publicar.html.twig', array("message" => $message, "form"=>$form->createView(), 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
         	'directions'=>$directions, 'transmissions'=>$transmissions, 'car' => null));
 		
 	}
@@ -284,8 +284,10 @@ class DefaultController extends Controller
    		$description = $request->get('descripcion');
    		$price = $request->get('precio');
 
-   		$modelId = $request->get('modelo');
+   		$errorMsg = "Marca, Modelo y Provincia son obligatorios";
    		$trademarkId = $request->get('marca');
+   		$modelId = $request->get('modelo');
+   		
    		$provinceId = $request->get('provincia');
    		$cityId = $request->get('ciudad');
    		$fuelId = $request->get('COMBUS');
@@ -1085,7 +1087,14 @@ class DefaultController extends Controller
 		
 	}
 	
+    public function showCreditRequestSuccessAction() {
+    	$searchForm = new Search();
+		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
 		
+    	return $this->render(
+        'KellsFrontBundle:Default:solicitar-credito-success.html.twig', array("form"=>$form->createView() ));
+    }
+    
     public function creditAction(Request $request) {
 	   	$logger = $this->get('logger');
    		$user = $this->getUser();

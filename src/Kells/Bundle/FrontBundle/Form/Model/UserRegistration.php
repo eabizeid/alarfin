@@ -41,4 +41,5 @@ class UserRegistration
     {
         $this->termsAccepted = (Boolean) $termsAccepted;
     }
+    
 }

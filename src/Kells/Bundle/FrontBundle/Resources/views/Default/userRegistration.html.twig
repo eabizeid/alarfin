@@ -7,11 +7,17 @@
                     <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
     					<div class="well well-alarfin">
 			{{ form_start(form, {'attr' : {  'role': 'form' }}) }}
-		 	<div class="row">
+		 	 <div class="row">
                 <div class="col-xs-12">         
                     <h4 class="tit-usuario nomar">Por favor complete todos los campos del formulario para registrarse.</h4>
                 </div>
+			    	
             </div>  
+                {% if not form.vars.valid %}
+                <div class="row">
+                	<div  class="alert alert-danger" role="alert">{{ form_errors(form.user.mail) }}{{ form_errors(form.user.password.password) }}</div>
+               	</div>
+                {% endif %}
         
             <div class="row linea-alarfin-clara-arriba topmar20">
                 <div class="col-sm-6 topmar20">

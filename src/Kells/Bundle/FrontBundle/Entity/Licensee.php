@@ -6,8 +6,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 /**
  * @ORM\Entity
+ * @UniqueEntity(fields={"mail"}, message="Este mail ya se encuentra registrado"),
  * @ORM\Table(name="licensees") 
  */
 class Licensee implements UserInterface {
@@ -277,5 +279,9 @@ class Licensee implements UserInterface {
     public function getUsername()
     {
         return $this->mail;
+    }
+    
+	public function getName() {
+    	return $this->getSocialReason();
     }
 }

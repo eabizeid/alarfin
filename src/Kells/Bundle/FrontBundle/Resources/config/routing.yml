@@ -58,6 +58,10 @@ user_myPublications:
 user_toPublish:
     path:     /user/toPublish/
     defaults: { _controller: KellsFrontBundle:Default:toPublish }
+
+user_toPublish_error:
+    path:     /user/toPublish/{message}
+    defaults: { _controller: KellsFrontBundle:Default:toPublish }
     
     
 route_to_retrieve_model:
@@ -93,8 +97,8 @@ creditRequest:
     defaults: { _controller: KellsFrontBundle:Default:showCreditRequest }
     
 creditRequestSuccess:
-    path:     /creditRequest/{message}
-    defaults: { _controller: KellsFrontBundle:Default:showCreditRequest }
+    path:     /creditRequest/Success
+    defaults: { _controller: KellsFrontBundle:Default:showCreditRequestSuccess }
     
 credit:
     path:     /credit/

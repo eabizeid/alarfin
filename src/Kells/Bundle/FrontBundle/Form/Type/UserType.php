@@ -16,6 +16,7 @@ class UserType extends AbstractType {
            'first_name'  => 'password',
            'second_name' => 'confirm',
            'type'        => 'password',
+        	'invalid_message' => 'Las contraseñas deben coincidir',
            'required' => true,
     	   'first_options'  => array('label' => 'Contraseña '),
     	   'second_options' => array('label' => 'Repetir contraseña '),

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="iso-8859-1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Kells - www.kells.com.ar" />
+    <title>Inicio | Alarfin</title>
+    <link rel="stylesheet" href="{{ asset('bundles/kellsback/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/kellsback/css/plugins/metisMenu/metisMenu.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/kellsback/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/kellsback/css/styles.css') }}" />
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+                <div class="login-panel panel panel-default">
+                  	<div class="panel-heading fondo-blanco">
+                        <div class="panel-title text-center login-header"><img src="{{ asset('bundles/kellsback/images/logo-alarfin.png') }}" width="178" height="59" alt="Alarfin"></div>
+                    </div>
+                    <div class="panel-body login-body">
+                    	<div class="row">
+                        	<div class="col-xs-12 text-center">
+								<strong>Pronto recibir&aacute;s un mail con la contrase&ntilde;a para poder ingresar en Alarfin.</strong>
+                            </div>
+                            <div class="col-xs-12 toppad">
+                      			<input name="Submit" type="submit" class="btn btn-lg btn-primary btn-block" value="Ingresar ahora" tabindex="3" onClick="location.href='{{path('kells_back_homepage')}}'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="{{ asset('bundles/kellsfront/js/jquery-1.11.1.min.js') }}"></script> 
+<script src="{{ asset('bundles/kellsback/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/kellsback/js/plugins/metisMenu/metisMenu.min.js') }}"></script>
+<script src="{{ asset('bundles/kellsback/js/sb-admin-2.js') }}"></script>
+</body>
+</html>

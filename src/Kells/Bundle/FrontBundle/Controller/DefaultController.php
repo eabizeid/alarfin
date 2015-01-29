@@ -1802,4 +1802,28 @@ class DefaultController extends Controller
         $response->setContent(json_encode($output));
     	return $response;
      }
+     
+     public function recuperarUserAction() {
+     	return $this->render('KellsFrontBundle:Default:recuperar-mi-contrasena.html.twig', array('error'=>""));
+     }
+     
+ 	public function recuperarUserContrasenaAction(Request $request) {
+ 		$mail = $request->get('email');
+ 		$em = $this->getDoctrine()->getManager();
+   		$user = $em->getRepository('KellsFrontBundle:User')->findOneByMail($mail);
+ 		if (!$user) {
+ 				$user = $em->getRepository('KellsFrontBundle:Licensee')->findOneByMail($mail);
+ 				if (!$user) {
+ 					return $this->render('KellsBackBundle:Default:recuperar-mi-contrasena.html.twig', array('error'=>"Yes!"));
+ 				}
+ 		}
+ 		$message = \Swift_Message::newInstance()
+        	->setSubject('Alarfin recuperación contraseña')
+        	->setFrom('no-reply@alarfin.com.ar')
+        	->setTo($user->getMail())
+        	->setBody('<p>Su contraseña es:'.$user->getPassword().'</p>', 'text/html'            	
+        	);
+    		$this->get('mailer')->send($message);
+     	return $this->render('KellsFrontBundle:Default:recuperar-mi-contrasena-ok.html.twig', array('error'=>"Yes!"));
+     }	
 }

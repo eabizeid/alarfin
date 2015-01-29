@@ -1090,4 +1090,25 @@ class DefaultController extends Controller
         return $this->render('KellsBackBundle:Default:publicaciones-editar.html.twig', array('trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
         	'directions'=>$directions, 'transmissions'=>$transmissions, 'car' => $car));
     }
+    
+     public function recuperarAction() {
+     	return $this->render('KellsBackBundle:Default:recuperar.html.twig', array('error'=>""));
+     }
+     
+ 	public function recuperarContrasenaAction(Request $request) {
+ 		$mail = $request->get('email');
+ 		$em = $this->getDoctrine()->getManager();
+   		$user = $em->getRepository('KellsBackBundle:Alarfin')->findOneByMail($mail);
+ 		if (!$user) {
+ 				return $this->render('KellsBackBundle:Default:recuperar.html.twig', array('error'=>"Yes!"));
+ 		}
+ 		$message = \Swift_Message::newInstance()
+        	->setSubject('Alarfin recuperación contraseña')
+        	->setFrom('no-reply@alarfin.com.ar')
+        	->setTo($user->getMail())
+        	->setBody('<p>Su contraseña es:'.$user->getPassword().'</p>', 'text/html'            	
+        	);
+    		$this->get('mailer')->send($message);
+     	return $this->render('KellsBackBundle:Default:recuperar-contrasena-ok.php.twig', array('error'=>"Yes!"));
+     }	
 }

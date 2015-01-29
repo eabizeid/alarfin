@@ -122,3 +122,11 @@ admin_publish:
 editar-publicacion:
     path:     /admin/publicaciones/editar/{carId}
     defaults: { _controller: KellsBackBundle:Default:editCar }
+    
+recuperar-admin:
+    path:     /recuperar
+    defaults: { _controller: KellsBackBundle:Default:recuperar }
+    
+recuperarContrasena-admin:
+    path:     /recuperar/confirmacion
+    defaults: { _controller: KellsBackBundle:Default:recuperarContrasena }

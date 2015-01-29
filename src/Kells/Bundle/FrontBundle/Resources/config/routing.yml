@@ -119,4 +119,12 @@ getValorCuotas:
     defaults: {_controller: KellsFrontBundle:Default:getValorCuotas }
     options:
         expose: true
+        
+olvideContrasena:
+    path:     /recuperar-contrasena
+    defaults: { _controller: KellsFrontBundle:Default:recuperarUser }
+    
+recuperarUser:
+    path:     /recuperar-contrasena/message
+    defaults: { _controller: KellsFrontBundle:Default:recuperarUserContrasena }
     

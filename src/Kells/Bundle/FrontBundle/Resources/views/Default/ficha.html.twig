@@ -11,10 +11,11 @@
                                  <h2 class="text-negro"><strong>{{ car.title }}</strong></h2>
                                  <h2><span class="label label-default">$ {{car.price}}</span></h2>
                                  <div class="well well-gris topmar">
-                                 	<form>
+                                 	<form action="{{path('consultar')}}" role="form" >
                                  		<h4 class="nomar">Escriba su consulta</h4>
-                                        <textarea rows="6" class="form-control topmar20" tabindex="1" autofocus></textarea>
+                                        <textarea name="consulta"rows="6" class="form-control topmar20" tabindex="1" autofocus></textarea>
                                         <input name="btn_consultar" type="submit" value="Consultar ahora" tabindex="2" class="btn btn-alarfin btn-lg topmar20" required>
+                                    	<input type="hidden" name="id" value="{{car.id}}"/>
                                     </form>
                                  </div>
                             </div>

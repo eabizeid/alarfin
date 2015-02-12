@@ -1826,4 +1826,26 @@ class DefaultController extends Controller
     		$this->get('mailer')->send($message);
      	return $this->render('KellsFrontBundle:Default:recuperar-mi-contrasena-ok.html.twig', array('error'=>"Yes!"));
      }	
+     
+     public function enviarConsultaAction(request $request) {
+     	
+     	$consulta = $request->get('consulta');
+     	$publicacionId = $request->get('id');
+     	$em = $this->getDoctrine()->getManager();
+   		$car = $em->getRepository('KellsFrontBundle:Car')->find($publicacionId);
+   		$user = $car->getUser();
+   	
+   		$message = \Swift_Message::newInstance()
+        	->setSubject('Realizaron una consulta por la publicación '.$car->getTitle())
+        	->setFrom('no-reply@alarfin.com.ar')
+        	->setTo($user->getMail())
+        	->setBody($consulta, 'text/html');
+    		
+        $this->get('mailer')->send($message);
+        
+     	$searchForm = new Search();
+		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
+		
+        return $this->render('KellsFrontBundle:Default:ficha.html.twig', array( 'car' => $car , 'features' => $car->getFeatures(), 'form'=>$form->createView()));
+     }
 }

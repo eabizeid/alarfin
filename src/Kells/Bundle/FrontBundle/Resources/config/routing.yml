@@ -128,3 +128,7 @@ recuperarUser:
     path:     /recuperar-contrasena/message
     defaults: { _controller: KellsFrontBundle:Default:recuperarUserContrasena }
     
+consultar:
+    path:     /consultar
+    defaults: { _controller: KellsFrontBundle:Default:enviarConsulta }
+    

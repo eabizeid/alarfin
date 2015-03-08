@@ -5,10 +5,109 @@
 		<div class="row">          
 			{{ include('KellsFrontBundle:Default:buscador.html.twig') }}
 			{% if cars %}
-			<div class="row botmar resultados">
-				{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
-			
-			</div>
+				{% if filter %} 
+					<div class="row botmar">
+						<div class="col-sm-6 col-md-4 col-lg-3 toppad filtros">
+                        	<div class="panel-group" id="accordion">
+                            	<div class="panel panel-default">
+                              		<div class="panel-heading">
+                                  		<h4 class="panel-title text-uppercase">
+                                    		<a data-toggle="collapse" data-parent="#accordion" href="#filtros">
+                                      			Filtrar por <span class="caret"></span>
+                                    		</a>
+                                  		</h4>
+                                	</div><!-- panel heading -->
+                               
+                                	<div id="filtros" class="panel-collapse collapse in">
+                                  		<div class="panel-body">
+                                  		 	{% if markFilter %}
+                                    		<div class="alert alert-dismissible" role="alert">
+                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'markShouldBeFilter' : false, 'modelFilter' : modelFilter, 'fuelFilter': fuelFilter, 'directionFilter': directionFilter} )}}" 
+                                        		type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Eliminar filtro</span></a>
+                                        			{{markFilter}}
+                                    		</div> <!-- alert -->
+                                    		{% endif %}
+                                    		{% if modelFilter %}
+                                    		<div class="alert alert-dismissible" role="alert">
+                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'modelShouldBeFilter' : false, 'markFilter' : markFilter, 'fuelFilter': fuelFilter, 'directionFilter': directionFilter} )}}" 
+                                        		type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Eliminar filtro</span></a>
+                                        			{{modelFilter}}
+                                    		</div> <!-- alert -->
+                                    		{% endif %}
+
+											{% if fuelFilter %}
+                                    		<div class="alert alert-dismissible" role="alert">
+                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'fuelShouldBeFilter' : false, 'markFilter' : markFilter, 'modelFilter' : modelFilter, 'directionFilter': directionFilter} )}}" 
+                                        		type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Eliminar filtro</span></a>
+                                        			{{fuelFilter}}
+                                    		</div> <!-- alert -->
+                                    		{% endif %}
+                                    		
+                                    		{% if directionFilter %}
+                                    		<div class="alert alert-dismissible" role="alert">
+                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'directionShouldBeFilter' : false, 'markFilter' : markFilter, 'modelFilter' : modelFilter,'fuelFilter': fuelFilter} )}}" 
+                                        		type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Eliminar filtro</span></a>
+                                        			{{directionFilter}}
+                                    		</div> <!-- alert -->
+                                    		{% endif %}
+                                    		
+                                    		
+
+                                    		{% if trademarksFilter %}
+                                   			<div class="list-group">
+                                      			<div class="list-group-item list-group-title">Marca</div>
+                                      			{% for mark in marksKeysFilter %}
+                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : mark, 'directionFilter': directionFilter, 'modelFilter' :modelFilter } )}}" class="list-group-item"><span class="badge">{{ trademarksFilter[mark]}}</span>{{mark}}</a>
+                                      			{% endfor %}
+                                  			</div> <!-- list group -->
+                                  			{% endif  %}
+                                  			
+                                  			{% if modelsFilter %}
+                                  			<div class="list-group">
+                                      			<div class="list-group-item list-group-title">Modelo</div>
+                                      			{% for model in modelKeysFilter %}
+                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'directionFilter': directionFilter,'modelFilter' : model} )}}" class="list-group-item"><span class="badge">{{ modelsFilter[model]}}</span>{{model}}</a>
+                                      			{% endfor %}
+                                    			</div><!-- Filtro marca -->
+                                  			{% endif  %}
+                                  			{% if fuelsFilter %}
+                                  			<div class="list-group">
+                                      			<div class="list-group-item list-group-title">Combustible</div>
+                                      			{% for fuel in fuelKeysFilter %}
+                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'modelFilter' : modelFilter,  'directionFilter': directionFilter, 'fuelFilter': fuel} )}}" class="list-group-item"><span class="badge">{{ fuelsFilter[fuel]}}</span>{{fuel}}</a>
+                                      			{% endfor %}
+                                    			</div><!-- list group -->
+                                  			{% endif  %}
+                                  			
+                                  			{% if directionsFilter %}
+                                  			<div class="list-group">
+                                      			<div class="list-group-item list-group-title">Dirección</div>
+                                      			{% for direction in directionKeysFilter %}
+                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'modelFilter' : modelFilter, 'fuelFilter': fuelFilter, 'directionFilter': direction} )}}" 
+                                      				class="list-group-item"><span class="badge">{{ directionsFilter[direction]}}</span>{{direction}}</a>
+                                      			{% endfor %}
+                                    			</div><!-- list group -->
+                                  			{% endif  %}
+                                  			</div> 
+                                		</div> <!-- panel body -->
+                              		</div><!-- panel filtros -->
+                            	</div>
+                        	</div> <!-- accordion -->
+						<div class="col-sm-6 col-md-8 col-lg-9 toppad">
+            				<div class="row resultados">
+            					<div class="col-xs-12">
+                         			<h3 class="nomar">B&uacute;squeda realizada: <strong><em>&quot;{{pattern}}&quot;</em></strong></h3>
+                         		</div>
+                         		<div class="clearfix"></div>
+								{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
+						</div>
+					</div>
+				</div>
+            	{% else %}   
+				<div class="row botmar resultados">
+					{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
+				</div>
+				{% endif %}   
 			{% else %}
 				<div class="alert alert-danger role="alert">
 				<p  ALIGN=center>No se encontraron automóviles, por favor intente con otra búsqueda.</p>

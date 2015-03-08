@@ -131,4 +131,12 @@ recuperarUser:
 consultar:
     path:     /consultar
     defaults: { _controller: KellsFrontBundle:Default:enviarConsulta }
+   
+filterResults:
+    path:     /filterResults/
+    defaults: { _controller: KellsFrontBundle:Default:filterResults }
+    
+removeFilter:
+    path:     /removeFilter/
+    defaults: { _controller: KellsFrontBundle:Default:removeFilter }
     

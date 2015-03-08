@@ -2129,15 +2129,17 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$car = $em->getRepository('KellsFrontBundle:Car')->find($publicacionId);
 		$user = $car->getUser();
-
+		$userThatMakeARequest = $this->getUser();
 		$message = \Swift_Message::newInstance()
 		->setSubject('Realizaron una consulta por la publicación '.$car->getTitle())
 		->setFrom('no-reply@alarfin.com.ar')
 		->setTo($user->getMail())
-		->setBody($consulta, 'text/html');
+		->setBody("<p>".$consulta."</p><p>Nombre: ".$userThatMakeARequest->getFirstName()."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p>", 'text/html');
 
 		$this->get('mailer')->send($message);
 
+		 // store a message for the very next request
+   		$this->get('session')->getFlashBag()->add('notice', 'Su consulta fue enviada exitosamente!');
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
 

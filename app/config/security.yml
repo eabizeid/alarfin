@@ -81,3 +81,4 @@ security:
         - { path: ^/admin/alarfin, roles: ROLE_ALARFIN}
         - { path: ^/admin/concesionarias, roles: ROLE_ALARFIN}
         - { path: ^/admin/menu, roles: ROLE_ALARFIN}
+        - { path: ^/consultar, roles: [ROLE_USER, ROLE_LICENSEE] }

@@ -11,7 +11,7 @@
 					<form action="{{ path('publish') }}" role="form" enctype="multipart/form-data" method="post" onsubmit="return validateForm();">
 					 	<input type="hidden" name="_target_path" value="{{ path('publish') }}" />
 					 	<input type="hidden" name="carId" value="{% if car %}{{ car.id}} {% endif %}" />
-						<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>Marca, Modelo y Provincia son obligatorios</div>
+						<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>Marca, Modelo, Provincia y Foto principal son obligatorios</div>
 	                    <div class="col-md-12"> 
                         	<h2>Marca y modelo</h2>
                         </div>
@@ -63,11 +63,7 @@
                                     <div class="col-sm-12">                                
                                         <div class="form-group">
                                             <label for="description">Descripción</label>
-                                            	<textarea rows="5" class="form-control input-lg" id="descripcion" name="descripcion"placeholder="Ej.: Tiene las cubiertas con pocos kil&oacute;metros y se hizo un cambio de correas recientemente.">
-                                            	{% if car and car.description %}
-                                            		{{car.description}}
-                                            	{% endif %}
-                                            </textarea>
+                                            	<textarea rows="5" class="form-control input-lg" id="descripcion" name="descripcion"placeholder="Ej.: Tiene las cubiertas con pocos kil&oacute;metros y se hizo un cambio de correas recientemente.">{% if car and car.description %}{{car.description}}{% endif %}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -435,7 +431,8 @@
         	 	var marca = $("#marca").val();
     			var modelo = $("#modelo").val();
 	        	var provincia = $("#provincia").val();
-    			if (marca == "Seleccioná una marca" || modelo == "Seleccioná una marca" || provincia == "Seleccioná una provincia") {
+	        	
+    			if (marca == "Seleccioná una marca" || modelo == "Seleccioná una marca" || provincia == "Seleccioná una provincia" || $("#fotoprincipal").val() == '') {
         			$("#divMsg").show();
         			$('html, body').animate({ scrollTop: $('#divMsg').offset().top }, 'slow');
         			return false;

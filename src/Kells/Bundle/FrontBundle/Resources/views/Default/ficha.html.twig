@@ -10,6 +10,11 @@
                 				 <h4 class="nomar text-negro">{{car.year.description}}  | {{car.km}} Km</h4>
                                  <h2 class="text-negro"><strong>{{ car.title }}</strong></h2>
                                  <h2><span class="label label-default">$ {{car.price}}</span></h2>
+                                 {% for flashMessage in app.session.flashbag.get('notice') %}
+    								<div  id="divSuccess" class="alert alert-success" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>
+       							 {{ flashMessage }}
+    								</div>
+									{% endfor %}
                                  <div class="well well-gris topmar">
                                  	<form action="{{path('consultar')}}" role="form" >
                                  		<h4 class="nomar">Escriba su consulta</h4>

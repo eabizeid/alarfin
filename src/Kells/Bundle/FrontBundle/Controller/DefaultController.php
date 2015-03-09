@@ -420,7 +420,8 @@ class DefaultController extends Controller
 		);
 	}
 
-	public function userRegisterConfirmAction($token) {
+	public function userRegisterConfirmAction(Request $request, $token) {
+		
 		if ($token) {
 			$em = $this->getDoctrine()->getManager();
 			$repository = $em->getRepository('KellsFrontBundle:User');
@@ -431,6 +432,10 @@ class DefaultController extends Controller
 				$user->setStatus(true);
 				$em->flush();
 
+			$request->getSession()->getFlashBag()->add(
+            'notice',
+            'Gracias por la confirmación, ya se encuentra registrado en Alarfin'
+        	);
 				return $this->redirect($this->generateUrl('kells_front_homepage'));
 			}
 		}
@@ -487,7 +492,7 @@ class DefaultController extends Controller
 		);
 	}
 
-	public function licenseeRegisterConfirmAction($token) {
+	public function licenseeRegisterConfirmAction(Request $request, $token) {
 		if ($token) {
 			$em = $this->getDoctrine()->getManager();
 			$repository = $em->getRepository('KellsFrontBundle:Licensee');
@@ -498,6 +503,11 @@ class DefaultController extends Controller
 				$licensee->setStatus(true);
 				$em->flush();
 
+				
+        $request->getSession()->getFlashBag()->add(
+            'notice',
+            'Gracias por la confirmación, ya se encuentra registrado en Alarfin'
+        );
 				return $this->redirect($this->generateUrl('kells_front_homepage'));
 			}
 		}

@@ -9,7 +9,9 @@
                     </div>
                     <div class="panel-body login-body">
                     {% if error %}
-					<div>{{ error.message }}</div>
+					{% if error %}
+				<div class="alert alert-danger role="alert">{{ error.message|trans }}</div>
+			{% endif %}
 					{% endif %}
           				<!--div class="alert alert-danger text-center" role="alert">Los datos son incorrectos, intente nuevamente.</div-->
                         <form role="form" name="form" method="post" action="{{ path('admin_check') }}">

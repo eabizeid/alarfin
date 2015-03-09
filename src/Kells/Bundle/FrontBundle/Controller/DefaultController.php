@@ -401,7 +401,7 @@ class DefaultController extends Controller
 
 			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/user/register/confirm/'.$user->getToken();
 			$message = \Swift_Message::newInstance()
-			->setSubject('Confirmar su registracion')
+			->setSubject('Confirmación de registración a Alarfin')
 			->setFrom('eduardo.abizeid@gmail.com')
 			->setTo($user->getMail())
 			->setBody('<p>Gracias por registrarse</p>'.
@@ -468,7 +468,7 @@ class DefaultController extends Controller
 
 			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/licensee/register/confirm/'.$licensee->getToken();
 			$message = \Swift_Message::newInstance()
-			->setSubject('Confirmar su registracion')
+			->setSubject('Confirmación de registración a Alarfin')
 			->setFrom('eduardo.abizeid@gmail.com')
 			->setTo($licensee->getMail())
 			->setBody('<p>Gracias por registrarse</p>'.
@@ -530,7 +530,7 @@ class DefaultController extends Controller
             'error'         => $error,
 		));
 	}
-
+	
 
 	public function userMyPublicationsAction() {
 		$user = $this->get('security.context')->getToken()->getUser();
@@ -1801,7 +1801,7 @@ class DefaultController extends Controller
 
 		$logger->info('Año '.$y);
 		$logger->info('Capital '.$capital);
-		$intervalo0 = 2014;
+		$intervalo0 = 2015;
 		$intervalo1 = $intervalo0 - 6;
 		$intervalo2 = $intervalo1 - 5;
 		$intervalo3 = $intervalo2 - 5;
@@ -1941,9 +1941,9 @@ class DefaultController extends Controller
 		$repository = $em->getRepository('KellsFrontBundle:Year');
 		$year = $repository->find($yearId);
 
-		$intervalo0 = 2014;
+		$intervalo0 = 2015;
 
-		$intervalo0 = 2014;
+		$intervalo0 = 2015;
 		$intervalo1 = $intervalo0 - 6;
 		$intervalo2 = $intervalo1 - 5;
 		$intervalo3 = $intervalo2 - 5;

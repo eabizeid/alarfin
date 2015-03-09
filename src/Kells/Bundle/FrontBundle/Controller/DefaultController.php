@@ -225,18 +225,19 @@ class DefaultController extends Controller
 		$directions = array();
 		if ($directionFilter) {
 			for ($index = 0; $index < count($carsWithoutFilter); $index++){
-				if ($carsWithoutFilter[$index]->getdirection()->getDescription() != $directionFilter){
+				if ($carsWithoutFilter[$index]->getDirection()->getDescription() != $directionFilter){
 					unset($carsWithoutFilter[$index]);
 				}
 			}
 		} else {
 			foreach ($carsWithoutFilter as $car) {
-				$direction = $car->getdirection();
-				if(!array_key_exists ($direction->getDescription(), $direction)) {
-					$directions[$direction->getDescription()] = 1;
-				} else {
-					$directions[$direction->getDescription()] = $directions[$direction->getDescription()] + 1;
-				}
+				$direction = $car->getDirection();
+				if ($direction)
+					if(!array_key_exists ($direction->getDescription(), $direction)) {
+						$directions[$direction->getDescription()] = 1;
+					} else {
+						$directions[$direction->getDescription()] = $directions[$direction->getDescription()] + 1;
+					}
 			}
 		}
 		
@@ -344,19 +345,20 @@ class DefaultController extends Controller
 		if ($directionFilter && !$directionShouldBeFilter) {
 			$i=0;
 			foreach ($carsWithoutFilter as $car) {
-				if ($car->getdirection()->getDescription() != $directionFilter){
+				if ($car->getDirection()->getDescription() != $directionFilter){
 					unset($carsWithoutFilter[$i]);
 				}
 				$i++;
 			}
 		} else {
 			foreach ($carsWithoutFilter as $car) {
-				$direction = $car->getdirection();
-				if(!array_key_exists ($direction->getDescription(), $directions)) {
-					$directions[$direction->getDescription()] = 1;
-				} else {
-					$directions[$direction->getDescription()] = $directions[$direction->getDescription()] + 1;
-				}
+				$direction = $car->getDirection();
+				if ($direction)
+					if(!array_key_exists ($direction->getDescription(), $directions)) {
+						$directions[$direction->getDescription()] = 1;
+					} else {
+						$directions[$direction->getDescription()] = $directions[$direction->getDescription()] + 1;
+					}
 			}
 		}
 		

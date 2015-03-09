@@ -33,7 +33,7 @@
                                 	{% for car in myCars%}
                                 	{% if car.status == "PUBLISHED" %}
                                     <tr>
-                                        <td><img src="{{asset(car.mandatoryImage.webPath)}}"  class="img-responsive"></td>
+                                        <td><img src="{% if car.mandatoryImage %}{{asset(car.mandatoryImage.webPath)}}{% endif %}"  class="img-responsive"></td>
                                         <td>{{car.publishedDate|date('d/m/Y')}}</td>
                                         <td class="publicaciones-titulo"><a href="publicar.php">{{ car.title }}</a></td>
                                         <td>{{ car.trademark.description}}</td>
@@ -64,7 +64,7 @@
                                 	{% for car in myCars%}
                                 	{% if car.status == "FINALIZED" %}
                                     <tr>
-                                        <td><img src="{{asset(car.mandatoryImage.webPath)}}" width="800" height="600" class="img-responsive"></td>
+                                        <td><img src="{% if car.mandatoryImage %}{{asset(car.mandatoryImage.webPath)}}{% endif %}" width="800" height="600" class="img-responsive"></td>
                                         <td>{{car.publishedDate|date('d/m/Y')}}</td>
                                         <td class="publicaciones-titulo"><a href="publicar.php">{{ car.title }}</a></td>
                                         <td>{{ car.trademark.description}}</td>

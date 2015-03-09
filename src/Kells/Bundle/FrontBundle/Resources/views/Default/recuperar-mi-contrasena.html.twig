@@ -24,6 +24,11 @@
 				                        </div>
 				                    </div>
 				                </div>
+				                 {% for flashMessage in app.session.flashbag.get('notice') %}
+									<div class="alert alert-danger role="alert">
+										<p  ALIGN=center>{{flashMessage}}</p>
+									</div>
+								{% endfor %}	
 				                <div class="row linea-alarfin-clara-arriba topmar10">
 				                  <div class="col-xs-6 topmar20">
 				                    <input name="btn_enviar" type="submit" value="Continuar" tabindex="3" class="btn btn-form btn-lg">

@@ -2119,7 +2119,11 @@ class DefaultController extends Controller
 		if (!$user) {
 			$user = $em->getRepository('KellsFrontBundle:Licensee')->findOneByMail($mail);
 			if (!$user) {
-				return $this->render('KellsBackBundle:Default:recuperar-mi-contrasena.html.twig', array('error'=>"Yes!"));
+				$request->getSession()->getFlashBag()->add(
+            'notice',
+            'El E-mail no se encuentra registrado'
+        );
+				return $this->render('KellsFrontBundle:Default:recuperar-mi-contrasena.html.twig', array('error'=>"Yes!"));
 			}
 		}
 		$message = \Swift_Message::newInstance()

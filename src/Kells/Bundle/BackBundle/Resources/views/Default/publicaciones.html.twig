@@ -80,7 +80,7 @@
                                         <td>{{car.trademark.description}}</td>
                                         <td>{{car.model.description}}</td>
                                         <td>${{car.price}}</td>
-                                        <td nowrap><button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Republicar" onClick="location.href='publicaciones-editar.php'"><i class="fa fa-undo fa-fw"></i></button></td>
+                                        <td nowrap><button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Republicar" onClick="location.href='{{path('republicar', {'id': car.id})}}'"><i class="fa fa-undo fa-fw"></i></button></td>
                                     </tr>
                                     {% endif %}
                                    {% endfor %}

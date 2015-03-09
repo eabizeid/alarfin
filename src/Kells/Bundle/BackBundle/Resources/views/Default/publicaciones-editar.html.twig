@@ -30,7 +30,7 @@
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="publicador-nombre">Nombre</label>
-                                            <input type="text" name="publicador-nombre" id="publicador-nombre" class="form-control input-lg" required>
+                                            <input type="text" name="publicador-nombre" id="publicador-nombre" class="form-control input-lg" required value="{{ car.user.lastName }} {{ car.user.firstName }}">
                                         </div>
                                     </div>
                                 </div>
@@ -95,10 +95,7 @@
                                     <div class="col-sm-12">                                
                                         <div class="form-group">
                                             <label for="titulo">Descripción</label>
-                                            <textarea rows="5" class="form-control input-lg" id="descripcion" placeholder="Ej.: Tiene las cubiertas con pocos kil&oacute;metros y se hizo un cambio de correas recientemente.">{% if car and car.description %}
-                                            		{{car.description}}
-                                            	{% endif %}
-                                            </textarea>
+                                            <textarea rows="5" class="form-control input-lg" id="descripcion" placeholder="Ej.: Tiene las cubiertas con pocos kil&oacute;metros y se hizo un cambio de correas recientemente.">{% if car and car.description %}{{car.description}}{% endif %}</textarea>
                                         </div>
                                     </div>
                                 </div>

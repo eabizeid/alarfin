@@ -1111,4 +1111,16 @@ class DefaultController extends Controller
     		$this->get('mailer')->send($message);
      	return $this->render('KellsBackBundle:Default:recuperar-contrasena-ok.php.twig', array('error'=>"Yes!"));
      }	
+	
+     public function republishAction(Request $request) {
+		$logger = $this->get('logger');
+		$id = $request->get('id');
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Car');
+		$car = $repository->find($id);
+		$car->setStatus("PUBLISHED");
+		$em->flush();
+		return $this->redirect($this->generateUrl('publicaciones'));
+	}
+     
 }

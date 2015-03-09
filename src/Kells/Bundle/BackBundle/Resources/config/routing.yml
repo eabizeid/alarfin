@@ -130,3 +130,7 @@ recuperar-admin:
 recuperarContrasena-admin:
     path:     /recuperar/confirmacion
     defaults: { _controller: KellsBackBundle:Default:recuperarContrasena }
+    
+republicar:
+    path:     /admin/republish
+    defaults: { _controller: KellsBackBundle:Default:republish }

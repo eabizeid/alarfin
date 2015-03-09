@@ -181,6 +181,7 @@ class DefaultController extends Controller
 			}
 		}
 		
+		$carsWithoutFilter = array_values($carsWithoutFilter);
 		$models= array();
 		if ($modelFilter) {
 			$logger->info("modelFilter = ".$modelFilter);
@@ -202,11 +203,17 @@ class DefaultController extends Controller
 			}
 		}
 		
-		
+		$carsWithoutFilter = array_values($carsWithoutFilter);
 		$fuels = array();
+		$logger->info("fuelFilter = ".$fuelFilter);
+		$logger->info("count of cars: ".count($carsWithoutFilter));
 		if ($fuelFilter) {
 			for ($index = 0; $index < count($carsWithoutFilter); $index++){
-				if ($carsWithoutFilter[$index]->getFuel()->getDescription() != $fuelFilter){
+				$logger->info("fuelFilter index = ".$index);
+				$car = $carsWithoutFilter[$index];
+				$fuelCar = $car->getFuel();
+				$logger->info("Fuel Description  = ".$fuelCar->getDescription());
+				if ($fuelCar->getDescription() != $fuelFilter){
 					unset($carsWithoutFilter[$index]);
 				}
 			}
@@ -221,11 +228,13 @@ class DefaultController extends Controller
 			}
 		}
 		
-		
+		$carsWithoutFilter = array_values($carsWithoutFilter);
 		$directions = array();
+		$logger->info("directionFilter = ".$directionFilter);
 		if ($directionFilter) {
 			for ($index = 0; $index < count($carsWithoutFilter); $index++){
-				if ($carsWithoutFilter[$index]->getDirection()->getDescription() != $directionFilter){
+				$direction = $carsWithoutFilter[$index];
+				if ($direction && ($direction->getDescription() != $directionFilter)) {
 					unset($carsWithoutFilter[$index]);
 				}
 			}
@@ -299,7 +308,7 @@ class DefaultController extends Controller
 			}
 		}
 		
-		
+		$carsWithoutFilter = array_values($carsWithoutFilter);
 		
 		$models= array();
 		if ($modelFilter && !$modelShouldBeFilter) {
@@ -321,6 +330,7 @@ class DefaultController extends Controller
 			}
 		}
 		
+		$carsWithoutFilter = array_values($carsWithoutFilter);
 		$fuels= array();
 		if ($fuelFilter && !$fuelShouldBeFilter) {
 			$i=0;
@@ -341,6 +351,7 @@ class DefaultController extends Controller
 			}
 		}
 		
+		$carsWithoutFilter = array_values($carsWithoutFilter);
 		$directions= array();
 		if ($directionFilter && !$directionShouldBeFilter) {
 			$i=0;

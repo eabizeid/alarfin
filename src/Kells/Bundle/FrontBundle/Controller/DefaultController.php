@@ -1586,7 +1586,7 @@ class DefaultController extends Controller
 				
 			if ($conyugeOtra2) {
 				$fotocopiaOtra2Conyuge = $this->createFotocopia($conyugeOtra2);
-				$credito->setFotocopiaOtra2Solicitante($fotocopiaOtra2Conyuge);
+				$credito->setFotocopiaOtra2Conyuge($fotocopiaOtra2Conyuge);
 			}
 
 			if ($conyugeOtra3) {

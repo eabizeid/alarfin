@@ -135,7 +135,6 @@
                                         <div class="row">
                                         
 										{% for image in car.images %}
-										
                                           <div class="col-sm-6 col-lg-4">  
                                                 <div class="form-group">
                                                     <label for="foto{{ loop.index }}">Foto {{ loop.index }}</label>
@@ -144,7 +143,15 @@
                                                 </div>
                                             </div>
                                          {% endfor %}
-											 
+                                         {% set firstIndex =  car.images|length +1 %}
+										{% for index in firstIndex..6  %}
+											<div class="col-sm-6 col-lg-4">  
+                                                <div class="form-group">
+                                                    <label for="foto{{ index }}">Foto{{index}}</label>
+                                                    <input type="file" name="foto{{ index}}" id="foto{{index}}" class="form-control">
+                                                </div>
+                                            </div>
+                                        {% endfor %}
                                     	</div>
                                     </div>
                                 </div>

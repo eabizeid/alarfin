@@ -450,9 +450,6 @@ class DefaultController extends Controller
    		$logger->info('model Car Id: '.$modelId);
 		
 		if ($mandatoryImageFile) {
-			$logger->info('mandatoryImage: '.$mandatoryImageFile->getClientOriginalName());
-			$logger->info('mandatoryImage extension: '.$mandatoryImageFile->guessExtension());
-   		
 			$mandatoryImage = new ImageFile();
 			$mandatoryImage->setFile($mandatoryImageFile);
 		}
@@ -489,7 +486,19 @@ class DefaultController extends Controller
    		$car->setDescription($description);
    		$car->setPrice($price);
    		$car->setKm($kms);
-   		$car->setUser($user);
+   		$publicador = $request->get('publicador-nombre');
+   		$car->setLicensee(null);
+   		$car->setUser(null);
+   		if ($request->get('publicador-tipo') == "Usuario" ) {
+   			$publicadorSplitted = explode(" ", $publicador);
+   			$repository = $em->getRepository('KellsFrontBundle:User');
+   			$carUser = $repository->findOneBy(array('lastName'=>$publicadorSplitted[0], 'firstName'=>$publicadorSplitted[1]));
+   			$car->setUser($carUser);
+   		} else {
+   			$repository = $em->getRepository('KellsFrontBundle:Licensee');
+   			$carUser = $repository->findBy(array('fantasyName'=>$publicador));
+   			$car->setLicensee($carUser);
+   		}
    		$car->setColor($color);
    		
    		if ($mandatoryImageFile) {
@@ -1121,6 +1130,33 @@ class DefaultController extends Controller
 		$car->setStatus("PUBLISHED");
 		$em->flush();
 		return $this->redirect($this->generateUrl('publicaciones'));
+	}
+	
+	public function checkUserLicenseeExistsAction(Request $request) {
+			$logger = $this->get('logger');
+			$logger->info("checking user");
+			
+			
+		$publicador = $request->get('publicador-nombre');
+		$logger->info("publicador-nombre".$publicador);
+		$em = $this->getDoctrine()->getManager();
+		if ($request->get('publicador-tipo') == "Usuario" ) {
+			
+   			$publicadorSplitted = explode(" ", $publicador);
+   			 $repository = $em->getRepository('KellsFrontBundle:User');
+   			$carUser = $repository->findOneBy(array('lastName'=>$publicadorSplitted[0], 'firstName'=>$publicadorSplitted[1]));
+   		} else {
+   			$repository = $em->getRepository('KellsFrontBundle:Licensee');
+   			$carUser = $repository->findBy(array('fantasyName'=>$publicador));
+   		}
+   		$output = null;
+   		if (!$carUser) {
+   			$output = "El publicador no se encuentra registrado.";
+   		}
+   		$response = new Response();
+		$response->headers->set('Content-Type', 'application/text');
+		$response->setContent(json_encode($output));
+		return $response;
 	}
      
 }

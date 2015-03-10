@@ -134,3 +134,9 @@ recuperarContrasena-admin:
 republicar:
     path:     /admin/republish
     defaults: { _controller: KellsBackBundle:Default:republish }
+    
+checkUserLicenseeExists:
+    pattern: /checkUserLicenseeExists    
+    defaults: {_controller: KellsBackBundle:Default:checkUserLicenseeExists }
+    options:
+        expose: true

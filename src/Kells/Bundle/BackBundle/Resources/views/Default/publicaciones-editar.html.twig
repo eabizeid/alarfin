@@ -7,8 +7,9 @@
                 </div>
             </div>
              <div class="row">
-				<form role="form" method="post" action="{{path('admin_publish')}}">
+				<form id ="publishForm" role="form" method="post" action="{{path('admin_publish')}}" enctype="multipart/form-data"  >
 						<input type="hidden" name="carId" value="{% if car %}{{ car.id}} {% endif %}" />
+						<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>El publicador no se encuentra registrado.</div>
                         <div class="col-md-12">
                         	<div class="well well-gris-claro">
                                 <div class="row">
@@ -29,8 +30,13 @@
                                     </div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="publicador-nombre">Nombre</label>
+                                            {% if car.user %}
+                                            <label for="publicador-nombre">Apellido y Nombre</label>
                                             <input type="text" name="publicador-nombre" id="publicador-nombre" class="form-control input-lg" required value="{{ car.user.lastName }} {{ car.user.firstName }}">
+                                            {% else %}
+                                             <label for="publicador-nombre">Nombre de fantasía</label>
+                                            <input type="text" name="publicador-nombre" id="publicador-nombre" class="form-control input-lg" required value="{{ car.licensee.fantasyName }}">
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +123,7 @@
                                         <div class="form-group">
                                             <label for="fotoprincipal">Foto principal</label>
                                             <img src="{{ asset(car.mandatoryImage.webPath) }}" width="800" height="600" class="img-responsive">
-											<input type="file" name="fotoprincipal" id="fotoprincipal" class="form-control">
+											<input type="file" name="fotoprincipal" id="fotoprincipal" class="form-control" >
                                         </div>
                                     </div>
                                 </div>
@@ -361,7 +367,7 @@
 	                   		</div> 
                         </div>
 	                    <div class="col-md-12 toppad botpad text-center"> 
-                        	<input type="button" value="Cancelar" class="btn btn-default" onClick="location.href='publicaciones.php'"> &nbsp; <input type="submit" value="Guardar cambios" class="btn btn-primary btn-lg">
+                        	<input type="button" value="Cancelar" class="btn btn-default" onClick="location.href='publicaciones.php'"> &nbsp; <input type="button" value="Guardar cambios" class="btn btn-primary btn-lg" onclick="javascript:validateForm();">
                         </div>
                     </form>
             </div>
@@ -408,6 +414,11 @@
         	 
         	 	//recorro las features cargadas en el car, la busco en el dom y la checkeo.
         	 	{% if (car) %}
+        	 		{% if car.user %}
+        	 		 $("#publicador-tipo").val("Usuario");
+        	 		{% else %}
+        	 			$("#publicador-tipo").val("Concesionaria");
+        	 		{% endif%} 
 	        	 	{% for feature in car.features%}
 	        	 		selector = "#{{feature.id}}".replace("/", "\\/")
 	        	 		$(selector).attr('checked', 'checked')
@@ -467,5 +478,37 @@
         	 	{% endif %}
         	 
         	 })	
+        	 
+        	  var validateForm = function() {
+        	 
+        	 	var marca = $("#marca").val();
+    			var modelo = $("#modelo").val();
+	        	var provincia = $("#provincia").val();
+	        	
+    			if (marca == "Seleccioná una marca" || modelo == "Seleccioná una marca" || provincia == "Seleccioná una provincia" ) {
+        			$("#divMsg").show();
+        			$('html, body').animate({ scrollTop: $('#divMsg').offset().top }, 'slow');
+        			return false;
+    			}
+    			
+    			var publicadornombre = $("#publicador-nombre").val();
+    			var publicadortipo = $("#publicador-tipo").val();
+    			url = Routing.generate('checkUserLicenseeExists', { 'publicador-nombre': publicadornombre, 'publicador-tipo': publicadortipo  });
+		        
+		        resultado = true;
+		        $.post(url, function(data){
+                			if (data != "null") {
+                				$("#divMsg").show();
+        							$('html, body').animate({ scrollTop: $('#divMsg').offset().top }, 'slow');
+        							resultado = false;
+        							return false;
+                			} else {
+                				$("#publishForm").submit();
+                			}
+                		
+ 						} );
+ 			 
+
+			}
  		</script>
 {% endblock %}

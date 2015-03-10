@@ -133,13 +133,14 @@
                                     </div>
                                     <div class="col-sm-8 col-lg-9">
                                         <div class="row">
+                                        
 										{% for image in car.images %}
 										
                                           <div class="col-sm-6 col-lg-4">  
                                                 <div class="form-group">
-                                                    <label for="foto1">Foto 1</label>
+                                                    <label for="foto {{ loop.index }}">Foto  {{ loop.index }}</label>
                                                     <img src={{ asset(image.webPath) }}" width="800" height="600" class="img-responsive">
-                                                    <input type="file" name="foto1" id="foto1" class="form-control">
+                                                    <input type="file" name="foto {{ loop.index }}" id="foto {{ loop.index }}" class="form-control">
                                                 </div>
                                             </div>
                                          {% endfor %}

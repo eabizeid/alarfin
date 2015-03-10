@@ -10,6 +10,7 @@
 				<form id ="publishForm" role="form" method="post" action="{{path('admin_publish')}}" enctype="multipart/form-data"  >
 						<input type="hidden" name="carId" value="{% if car %}{{ car.id}} {% endif %}" />
 						<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>El publicador no se encuentra registrado.</div>
+						<div  id="divMsg1" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>Marca, Modelo, Provincia y Foto principal son obligatorios</div>
                         <div class="col-md-12">
                         	<div class="well well-gris-claro">
                                 <div class="row">
@@ -487,7 +488,7 @@
 	        	
     			if (marca == "Seleccioná una marca" || modelo == "Seleccioná una marca" || provincia == "Seleccioná una provincia" ) {
         			$("#divMsg").show();
-        			$('html, body').animate({ scrollTop: $('#divMsg').offset().top }, 'slow');
+        			$('html, body').animate({ scrollTop: $('#divMsg1').offset().top }, 'slow');
         			return false;
     			}
     			

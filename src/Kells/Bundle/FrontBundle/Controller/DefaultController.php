@@ -152,25 +152,28 @@ class DefaultController extends Controller
 		$query = $repository->createQueryBuilder('c')
 		->leftJoin('c.model', 'm')
 		->leftJoin('c.trademark', 't')
-		->where('m.description LIKE :pattern')
-		->orwhere('t.description LIKE :pattern')
+		->leftJoin('c.fuel', 'f')
+		->leftJoin('c.direction', 'd')
+		->where('m.description LIKE :model')
+		->orwhere('t.description LIKE :trademark')
+		 ->andwhere('f.description LIKE :fuel')
+		 ->andwhere('d.description LIKE :direction')
 		->andwhere('c.status = \'PUBLISHED\'')
-		->setParameter('pattern', $pattern)
+		->setParameter('trademark', $this->getParameter($markFilter, $pattern))
+		->setParameter('model', $this->getParameter($modelFilter, $pattern))
+		->setParameter('fuel', $this->getParameter($fuelFilter, "%"))
+		->setParameter('direction', $this->getParameter($directionFilter, "%"))
 		->getQuery();
 
 		$cars = array();
 		$carsWithoutFilter =  $query->getResult();
 		
+		$logger->info("QUERY : ".count($carsWithoutFilter));
 		$trademarks = array();
 		
 		
-		if ($markFilter) {
-			for ($index = 0; $index < count($carsWithoutFilter); $index++){
-				if ($carsWithoutFilter[$index]->getTrademark()->getDescription() != $markFilter){
-					unset($carsWithoutFilter[$index]);
-				}
-			}
-		} else {
+		if (!$markFilter) {
+			
 			foreach ($carsWithoutFilter as $car) {
 				$trademark = $car->getTrademark();
 				if(!array_key_exists ($trademark->getDescription(), $trademarks)) {
@@ -181,18 +184,8 @@ class DefaultController extends Controller
 			}
 		}
 		
-		$carsWithoutFilter = array_values($carsWithoutFilter);
 		$models= array();
-		if ($modelFilter) {
-			$logger->info("modelFilter = ".$modelFilter);
-			$i=0;
-			foreach ($carsWithoutFilter as $car) {
-				if ($car->getModel()->getDescription() != $modelFilter){
-					unset($carsWithoutFilter[$i]);
-				}
-				$i++;
-			}
-		} else {
+		if (!$modelFilter) {
 			foreach ($carsWithoutFilter as $car) {
 				$model = $car->getModel();
 				if(!array_key_exists ($model->getDescription(), $models)) {
@@ -203,21 +196,10 @@ class DefaultController extends Controller
 			}
 		}
 		
-		$carsWithoutFilter = array_values($carsWithoutFilter);
 		$fuels = array();
 		$logger->info("fuelFilter = ".$fuelFilter);
 		$logger->info("count of cars: ".count($carsWithoutFilter));
-		if ($fuelFilter) {
-			for ($index = 0; $index < count($carsWithoutFilter); $index++){
-				$logger->info("fuelFilter index = ".$index);
-				$car = $carsWithoutFilter[$index];
-				$fuelCar = $car->getFuel();
-				$logger->info("Fuel Description  = ".$fuelCar->getDescription());
-				if ($fuelCar->getDescription() != $fuelFilter){
-					unset($carsWithoutFilter[$index]);
-				}
-			}
-		} else {
+		if (!$fuelFilter) {
 			foreach ($carsWithoutFilter as $car) {
 				$fuel = $car->getFuel();
 				if(!array_key_exists ($fuel->getDescription(), $fuel)) {
@@ -228,17 +210,9 @@ class DefaultController extends Controller
 			}
 		}
 		
-		$carsWithoutFilter = array_values($carsWithoutFilter);
 		$directions = array();
 		$logger->info("directionFilter = ".$directionFilter);
-		if ($directionFilter) {
-			for ($index = 0; $index < count($carsWithoutFilter); $index++){
-				$direction = $carsWithoutFilter[$index];
-				if ($direction && ($direction->getDescription() != $directionFilter)) {
-					unset($carsWithoutFilter[$index]);
-				}
-			}
-		} else {
+		if (!$directionFilter) {
 			foreach ($carsWithoutFilter as $car) {
 				$direction = $car->getDirection();
 				if ($direction)
@@ -263,6 +237,18 @@ class DefaultController extends Controller
 		));
 	}
 	
+	
+	public function getParameter($parameter, $pattern) {
+		$logger = $this->get('logger');
+		$logger->info ("parameter: ".$parameter." pattern: ".$pattern);
+		if ($parameter) {
+			$logger->info ("return parameter");
+			return $parameter;
+		}
+		$logger->info ("return pattern");
+		return $pattern;
+	}
+	
 	public function removeFilterAction(Request $request) {
 		
 		$pattern = $request->get('pattern');
@@ -278,15 +264,24 @@ class DefaultController extends Controller
 		$directionFilter = $request->get('directionFilter');
 		$directionShouldBeFilter = $request->get('directionShoulBeFilter');
 		
+		
 		$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Car');
 		$query = $repository->createQueryBuilder('c')
 		->leftJoin('c.model', 'm')
 		->leftJoin('c.trademark', 't')
-		->where('m.description LIKE :pattern')
-		->orwhere('t.description LIKE :pattern')
+		->leftJoin('c.fuel', 'f')
+		->leftJoin('c.direction', 'd')
+		->where('m.description LIKE :model')
+		->orwhere('t.description LIKE :trademark')
+		 ->andwhere('f.description LIKE :fuel')
+		 ->andwhere('d.description LIKE :direction')
 		->andwhere('c.status = \'PUBLISHED\'')
-		->setParameter('pattern', $pattern)
+		->setParameter('trademark', $this->getParameter($markFilter, $pattern))
+		->setParameter('model', $this->getParameter($modelFilter, $pattern))
+		->setParameter('fuel', $this->getParameter($fuelFilter, "%"))
+		->setParameter('direction', $this->getParameter($directionFilter, "%"))
 		->getQuery();
+		
 
 		$cars = array();
 		$carsWithoutFilter =  $query->getResult();
@@ -356,9 +351,9 @@ class DefaultController extends Controller
 		if ($directionFilter && !$directionShouldBeFilter) {
 			$i=0;
 			foreach ($carsWithoutFilter as $car) {
-				if ($car->getDirection()->getDescription() != $directionFilter){
-					unset($carsWithoutFilter[$i]);
-				}
+					if (!$car->getDirection() || $car->getDirection()->getDescription() != $directionFilter ){
+						unset($carsWithoutFilter[$i]);
+					}
 				$i++;
 			}
 		} else {

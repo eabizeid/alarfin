@@ -33,7 +33,7 @@
                                         	{% for c in creditos %}
                                             <tr>
                                             	<td>{{ c.id }}</td>
-                                                <td>{{c.date|date('d/m/Y')}}</td>
+                                                <td>{{c.date|date('Y/m/d')}}</td>
                                                 <td>{{ c.user }}</td>
                                                 <td>{{ c.nombreSolicitante}} {{ c.apellidoSolicitante}}</td>
                                                 <td>$ {{ c.montoCredito}}</td> 

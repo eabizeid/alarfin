@@ -39,7 +39,7 @@ assetic:
 #swiftmailer:
 #    delivery_address: me@example.com
 swiftmailer:
-    transport:  smtp
+    transport:  gmail
     encryption: ssl
     auth_mode:  login
     host:       smtp.gmail.com

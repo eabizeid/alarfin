@@ -415,7 +415,7 @@ class DefaultController extends Controller
 			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/user/register/confirm/'.$user->getToken();
 			$message = \Swift_Message::newInstance()
 			->setSubject('Confirmación de registración a Alarfin')
-			->setFrom('eduardo.abizeid@gmail.com')
+			->setFrom('no-responder@alarfin.com.ar')
 			->setTo($user->getMail())
 			->setBody('<p>Gracias por registrarse</p>'.
         	'<p>Para terminar con el registro por favor haga click en el siguiente vínculo </p>'.
@@ -487,7 +487,7 @@ class DefaultController extends Controller
 			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/licensee/register/confirm/'.$licensee->getToken();
 			$message = \Swift_Message::newInstance()
 			->setSubject('Confirmación de registración a Alarfin')
-			->setFrom('eduardo.abizeid@gmail.com')
+			->setFrom('no-responder@alarfin.com.ar')
 			->setTo($licensee->getMail())
 			->setBody('<p>Gracias por registrarse</p>'.
         	'<p>Para terminar con el registro por favor haga click en el siguiente vínculo </p>'.

@@ -140,3 +140,7 @@ removeFilter:
     path:     /removeFilter/
     defaults: { _controller: KellsFrontBundle:Default:removeFilter }
     
+registerNow:
+    path:     /registerMe/
+    defaults: { _controller: KellsFrontBundle:Default:registerNow }
+    

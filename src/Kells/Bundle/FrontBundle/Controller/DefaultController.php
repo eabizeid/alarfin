@@ -2172,4 +2172,8 @@ class DefaultController extends Controller
 
 		return $this->render('KellsFrontBundle:Default:ficha.html.twig', array( 'car' => $car , 'features' => $car->getFeatures(), 'form'=>$form->createView()));
 	}
+	
+	public function registerNowAction() {
+		return $this->render('KellsFrontBundle:Default:registrarmeAhora.html.twig');
+	}
 }

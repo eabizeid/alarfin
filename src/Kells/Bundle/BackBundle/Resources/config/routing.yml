@@ -51,7 +51,7 @@ alarfin_login_view:
 admin_check:
     pattern: /admin/login_check
     
-logout:
+adminlogout:
     pattern: /admin/logout
     
 publicaciones_usuario:

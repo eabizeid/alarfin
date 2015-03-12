@@ -88,21 +88,21 @@
                                     <div class="col-sm-8">                                
                                         <div class="form-group">
                                             <label for="titulo">T&iacute;tulo de la publicación</label>
-                                            <input type="text" class="form-control input-lg" id="titulo" required placeholder="Ej.: Volkswagen Golf Motor 2.0 2006 Azul 5 puertas" maxlength="60" {% if car and car.description %} value="{{ car.title }}" {% endif %}>
+                                            <input type="text" name="titulo" class="form-control input-lg" id="titulo" required placeholder="Ej.: Volkswagen Golf Motor 2.0 2006 Azul 5 puertas" maxlength="60" {% if car and car.description %} value="{{ car.title }}" {% endif %}>
                                             <span class="help-block">Hasta 60 caracteres</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">                                
                                         <div class="form-group">
                                             <label for="precio">Precio</label>
-                                            <input type="text" class="form-control input-lg" id="precio" required {% if car and car.price %} value="{{ car.price }}" {% endif %}>
+                                            <input type="text" name="precio" class="form-control input-lg" id="precio" required {% if car and car.price %} value="{{ car.price }}" {% endif %}>
                                             <span class="help-block">En Pesos Argentinos</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">                                
                                         <div class="form-group">
                                             <label for="titulo">Descripción</label>
-                                            <textarea rows="5" class="form-control input-lg" id="descripcion" placeholder="Ej.: Tiene las cubiertas con pocos kil&oacute;metros y se hizo un cambio de correas recientemente.">{% if car and car.description %}{{car.description}}{% endif %}</textarea>
+                                            <textarea name="descripcion" rows="5" class="form-control input-lg" id="descripcion" placeholder="Ej.: Tiene las cubiertas con pocos kil&oacute;metros y se hizo un cambio de correas recientemente.">{% if car and car.description %}{{car.description}}{% endif %}</textarea>
                                         </div>
                                     </div>
                                 </div>

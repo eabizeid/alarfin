@@ -78,10 +78,10 @@ class DefaultController extends Controller
 		$query = $repository->createQueryBuilder('c')
 		->leftJoin('c.model', 'm')
 		->leftJoin('c.trademark', 't')
-		->where('m.description LIKE :pattern')
-		->orwhere('t.description LIKE :pattern')
+		->where('lower(m.description) LIKE lower(:pattern)')
+		->orwhere('lower(t.description) LIKE lower(:pattern)')
 		->andwhere('c.status = \'PUBLISHED\'')
-		->setParameter('pattern', $pattern)
+		->setParameter('pattern', '%'.$pattern.'%')
 		->getQuery();
 
 		$cars =  $query->getResult();
@@ -149,21 +149,26 @@ class DefaultController extends Controller
 		
 		
 		$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Car');
-		$query = $repository->createQueryBuilder('c')
-		->leftJoin('c.model', 'm')
-		->leftJoin('c.trademark', 't')
-		->leftJoin('c.fuel', 'f')
+		$queryBuilder = $repository->createQueryBuilder('c')
+		->join('c.model', 'm')
+		->join('c.trademark', 't')
+		->join('c.fuel', 'f')
 		->leftJoin('c.direction', 'd')
-		->where('m.description LIKE :model')
-		->orwhere('t.description LIKE :trademark')
-		 ->andwhere('f.description LIKE :fuel')
-		 ->andwhere('d.description LIKE :direction')
-		->andwhere('c.status = \'PUBLISHED\'')
-		->setParameter('trademark', $this->getParameter($markFilter, $pattern))
-		->setParameter('model', $this->getParameter($modelFilter, $pattern))
-		->setParameter('fuel', $this->getParameter($fuelFilter, "%"))
-		->setParameter('direction', $this->getParameter($directionFilter, "%"))
-		->getQuery();
+		->where('lower(m.description) LIKE lower(:model)')
+		->andwhere('lower(t.description) LIKE lower(:trademark)');
+		if ($fuelFilter)
+			$queryBuilder ->andwhere('lower(f.description) LIKE lower(:fuel)');
+		if ($directionFilter) 
+			$queryBuilder ->andwhere('d.description LIKE lower(:direction)');
+		
+		$queryBuilder->andwhere('c.status = \'PUBLISHED\'');
+		$queryBuilder->setParameter('trademark', '%'.$this->getParameter($markFilter, $pattern).'%');
+		$queryBuilder->setParameter('model', '%'.$this->getParameter($modelFilter, $pattern).'%');
+		if ($fuelFilter)
+			$queryBuilder->setParameter('fuel', $this->getParameter($fuelFilter, "%"));
+		if ($directionFilter)
+			$queryBuilder->setParameter('direction', $this->getParameter($directionFilter, "%"));
+		$query = $queryBuilder->getQuery();
 
 		$cars = array();
 		$carsWithoutFilter =  $query->getResult();
@@ -201,11 +206,14 @@ class DefaultController extends Controller
 		$logger->info("count of cars: ".count($carsWithoutFilter));
 		if (!$fuelFilter) {
 			foreach ($carsWithoutFilter as $car) {
+				
 				$fuel = $car->getFuel();
-				if(!array_key_exists ($fuel->getDescription(), $fuel)) {
-					$fuels[$fuel->getDescription()] = 1;
+				$logger->info("fuel description = ".$fuelFilter);
+				$description = $fuel->getDescription();
+				if(!array_key_exists ($description, $fuels)) {
+					$fuels[$description] = 1;
 				} else {
-					$fuels[$fuel->getDescription()] = $fuels[$fuel->getDescription()] + 1;
+					$fuels[$description] = $fuels[$description] + 1;
 				}
 			}
 		}
@@ -216,10 +224,11 @@ class DefaultController extends Controller
 			foreach ($carsWithoutFilter as $car) {
 				$direction = $car->getDirection();
 				if ($direction)
-					if(!array_key_exists ($direction->getDescription(), $direction)) {
-						$directions[$direction->getDescription()] = 1;
+					$descripcion = $direction->getDescription();
+					if(!array_key_exists ($descripcion, $directions)) {
+						$directions[$descripcion] = 1;
 					} else {
-						$directions[$direction->getDescription()] = $directions[$direction->getDescription()] + 1;
+						$directions[$descripcion] = $directions[$descripcion] + 1;
 					}
 			}
 		}
@@ -266,21 +275,26 @@ class DefaultController extends Controller
 		
 		
 		$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Car');
-		$query = $repository->createQueryBuilder('c')
-		->leftJoin('c.model', 'm')
-		->leftJoin('c.trademark', 't')
-		->leftJoin('c.fuel', 'f')
+		$queryBuilder = $repository->createQueryBuilder('c')
+		->join('c.model', 'm')
+		->join('c.trademark', 't')
+		->join('c.fuel', 'f')
 		->leftJoin('c.direction', 'd')
-		->where('m.description LIKE :model')
-		->orwhere('t.description LIKE :trademark')
-		 ->andwhere('f.description LIKE :fuel')
-		 ->andwhere('d.description LIKE :direction')
-		->andwhere('c.status = \'PUBLISHED\'')
-		->setParameter('trademark', $this->getParameter($markFilter, $pattern))
-		->setParameter('model', $this->getParameter($modelFilter, $pattern))
-		->setParameter('fuel', $this->getParameter($fuelFilter, "%"))
-		->setParameter('direction', $this->getParameter($directionFilter, "%"))
-		->getQuery();
+		->where('lower(m.description) LIKE lower(:model)')
+		->orwhere('lower(t.description) LIKE lower(:trademark)');
+		if ($fuelFilter)
+			$queryBuilder ->andwhere('lower(f.description) LIKE lower(:fuel)');
+		if ($directionFilter) 
+			$queryBuilder ->andwhere('d.description LIKE lower(:direction)');
+		
+		$queryBuilder->andwhere('c.status = \'PUBLISHED\'');
+		$queryBuilder->setParameter('trademark', '%'.$this->getParameter($markFilter, $pattern).'%');
+		$queryBuilder->setParameter('model', '%'.$this->getParameter($modelFilter, $pattern).'%');
+		if ($fuelFilter)
+			$queryBuilder->setParameter('fuel', $this->getParameter($fuelFilter, "%"));
+		if ($directionFilter)
+			$queryBuilder->setParameter('direction', $this->getParameter($directionFilter, "%"));
+		$query = $queryBuilder->getQuery();
 		
 
 		$cars = array();

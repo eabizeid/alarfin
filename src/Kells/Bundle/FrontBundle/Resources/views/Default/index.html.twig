@@ -62,7 +62,7 @@
                                    			<div class="list-group">
                                       			<div class="list-group-item list-group-title">Marca</div>
                                       			{% for mark in marksKeysFilter %}
-                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : mark, 'directionFilter': directionFilter, 'modelFilter' :modelFilter } )}}" class="list-group-item"><span class="badge">{{ trademarksFilter[mark]}}</span>{{mark}}</a>
+                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : mark, 'directionFilter': directionFilter, 'modelFilter' :modelFilter, 'fuelFilter': fuelFilter } )}}" class="list-group-item"><span class="badge">{{ trademarksFilter[mark]}}</span>{{mark}}</a>
                                       			{% endfor %}
                                   			</div> <!-- list group -->
                                   			{% endif  %}
@@ -71,7 +71,7 @@
                                   			<div class="list-group">
                                       			<div class="list-group-item list-group-title">Modelo</div>
                                       			{% for model in modelKeysFilter %}
-                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'directionFilter': directionFilter,'modelFilter' : model} )}}" class="list-group-item"><span class="badge">{{ modelsFilter[model]}}</span>{{model}}</a>
+                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'directionFilter': directionFilter,'modelFilter' : model, 'fuelFilter': fuelFilter} )}}" class="list-group-item"><span class="badge">{{ modelsFilter[model]}}</span>{{model}}</a>
                                       			{% endfor %}
                                     			</div><!-- Filtro marca -->
                                   			{% endif  %}

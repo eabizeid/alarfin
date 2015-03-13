@@ -235,13 +235,14 @@ class DefaultController extends Controller
 		if (!$directionFilter) {
 			foreach ($carsWithoutFilter as $car) {
 				$direction = $car->getDirection();
-				if ($direction)
+				if ($direction) {
 					$descripcion = $direction->getDescription();
 					if(!array_key_exists ($descripcion, $directions)) {
 						$directions[$descripcion] = 1;
 					} else {
 						$directions[$descripcion] = $directions[$descripcion] + 1;
 					}
+				}
 			}
 		}
 		

@@ -153,17 +153,29 @@ class DefaultController extends Controller
 		->join('c.model', 'm')
 		->join('c.trademark', 't')
 		->join('c.fuel', 'f')
-		->leftJoin('c.direction', 'd')
-		->where('lower(m.description) LIKE lower(:model)')
-		->andwhere('lower(t.description) LIKE lower(:trademark)');
+		->leftJoin('c.direction', 'd');
+		if ($markFilter && $modelFilter){
+			$queryBuilder->where('lower(t.description) LIKE lower(:trademark)');
+			$queryBuilder->andwhere('lower(m.description) LIKE lower(:model)');
+			$queryBuilder->setParameter('trademark', '%'.$this->getParameter($markFilter, $pattern).'%');
+			$queryBuilder->setParameter('model', '%'.$this->getParameter($modelFilter, $pattern).'%');
+		} else  if ($markFilter) {
+			$queryBuilder->where('lower(t.description) LIKE lower(:trademark)');
+			$queryBuilder->setParameter('trademark', '%'.$this->getParameter($markFilter, $pattern).'%');
+		} else if ($modelFilter) {
+		 	$queryBuilder->andwhere('lower(m.description) LIKE lower(:model)');
+		 	$queryBuilder->setParameter('model', '%'.$this->getParameter($modelFilter, $pattern).'%');
+		} else {
+			$queryBuilder->where('lower(m.description) LIKE lower(:pattern)');
+			$queryBuilder->orwhere('lower(t.description) LIKE lower(:pattern)');
+			$queryBuilder->setParameter('pattern', '%'.$this->getParameter($markFilter, $pattern).'%');
+		}
 		if ($fuelFilter)
 			$queryBuilder ->andwhere('lower(f.description) LIKE lower(:fuel)');
 		if ($directionFilter) 
 			$queryBuilder ->andwhere('d.description LIKE lower(:direction)');
 		
 		$queryBuilder->andwhere('c.status = \'PUBLISHED\'');
-		$queryBuilder->setParameter('trademark', '%'.$this->getParameter($markFilter, $pattern).'%');
-		$queryBuilder->setParameter('model', '%'.$this->getParameter($modelFilter, $pattern).'%');
 		if ($fuelFilter)
 			$queryBuilder->setParameter('fuel', $this->getParameter($fuelFilter, "%"));
 		if ($directionFilter)
@@ -273,23 +285,34 @@ class DefaultController extends Controller
 		$directionFilter = $request->get('directionFilter');
 		$directionShouldBeFilter = $request->get('directionShoulBeFilter');
 		
-		
 		$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Car');
 		$queryBuilder = $repository->createQueryBuilder('c')
 		->join('c.model', 'm')
 		->join('c.trademark', 't')
 		->join('c.fuel', 'f')
-		->leftJoin('c.direction', 'd')
-		->where('lower(m.description) LIKE lower(:model)')
-		->orwhere('lower(t.description) LIKE lower(:trademark)');
+		->leftJoin('c.direction', 'd');
+		if ($markFilter && $modelFilter){
+			$queryBuilder->where('lower(t.description) LIKE lower(:trademark)');
+			$queryBuilder->andwhere('lower(m.description) LIKE lower(:model)');
+			$queryBuilder->setParameter('trademark', '%'.$this->getParameter($markFilter, $pattern).'%');
+			$queryBuilder->setParameter('model', '%'.$this->getParameter($modelFilter, $pattern).'%');
+		} else  if ($markFilter) {
+			$queryBuilder->where('lower(t.description) LIKE lower(:trademark)');
+			$queryBuilder->setParameter('trademark', '%'.$this->getParameter($markFilter, $pattern).'%');
+		} else if ($modelFilter) {
+		 	$queryBuilder->andwhere('lower(m.description) LIKE lower(:model)');
+		 	$queryBuilder->setParameter('model', '%'.$this->getParameter($modelFilter, $pattern).'%');
+		} else {
+			$queryBuilder->where('lower(m.description) LIKE lower(:pattern)');
+			$queryBuilder->orwhere('lower(t.description) LIKE lower(:pattern)');
+			$queryBuilder->setParameter('pattern', '%'.$this->getParameter($markFilter, $pattern).'%');
+		}
 		if ($fuelFilter)
 			$queryBuilder ->andwhere('lower(f.description) LIKE lower(:fuel)');
 		if ($directionFilter) 
 			$queryBuilder ->andwhere('d.description LIKE lower(:direction)');
 		
 		$queryBuilder->andwhere('c.status = \'PUBLISHED\'');
-		$queryBuilder->setParameter('trademark', '%'.$this->getParameter($markFilter, $pattern).'%');
-		$queryBuilder->setParameter('model', '%'.$this->getParameter($modelFilter, $pattern).'%');
 		if ($fuelFilter)
 			$queryBuilder->setParameter('fuel', $this->getParameter($fuelFilter, "%"));
 		if ($directionFilter)

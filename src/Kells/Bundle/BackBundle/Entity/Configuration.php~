@@ -1,0 +1,338 @@
+<?php
+namespace Kells\Bundle\BackBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="configuration") 
+ */
+class Configuration {
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $email1;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $email2;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $email3;
+    
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmtasa;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmtea;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5tasa;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5tea;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10tasa; 
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10tea;
+    
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15tasa;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15tea;
+    
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas2; 
+    
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas4;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas6;
+    
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas8;
+    
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas10;
+    
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas12;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas14;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas16;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas18;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas20;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas22;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas24;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas26;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas28;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas30;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas32;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas34;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas36;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas2;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas4;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas6;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas8;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas10;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas12;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas14;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas16;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas18;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas20;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas22;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas24;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas26;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas28;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas30;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas32;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas34;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas36;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas2;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas4;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas6;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas8;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas10;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas12;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas14;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas16;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas18;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas20;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas22;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas24;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas26;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas28;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas30;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas32;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas34;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $seisA10Cuotas36;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas2;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas4;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas6;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas8;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas10;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas12;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas14;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas16;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas18;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas20;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas22;
+	/**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $onceA15Cuotas24;
+    
+}

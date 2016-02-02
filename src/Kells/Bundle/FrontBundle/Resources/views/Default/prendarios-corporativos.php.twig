@@ -1,0 +1,69 @@
+ {% extends 'KellsFrontBundle:Default:base.html.twig' %}
+{% block body %}  
+{% set seccion = 'corporativos' %}           
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 titulo">
+                	<h2>Productos y Servicios</h2>
+                    <h1>Cr&eacute;ditos Prendarios Corporativos</h1>
+                </div>
+            </div>
+        </div>
+        <div class="productos-titulo-imagen">
+        	<img src="{{ asset('bundles/kellsfront/img/imagen-creditos-prendarios-corporativos.jpg')}}" class="img-responsive" alt="Cr&eacute;ditos Prensarios Corporativos" title="Cr&eacute;ditos Prensarios Corporativos">
+            <div class="productos-titulo">
+            	<h3 class="nomar text-normal"><strong>Alarfin</strong> te da la posibilidad del cr&eacute;dito a medida para tu empresa.</h3>
+            </div>
+        </div>
+        <div class="container">   
+            <div class="row">
+				<div class="col-xs-12 col-md-10 col-md-offset-1">
+                    <div class="row botpad text-center linea-punteada-gris-abajo">
+                        <div class="col-sm-3 text-center topmar">
+                   	    	<img src="img/imagen-vehiculos.png" width="141" height="141" alt="Veh&iacute;culos">
+                            <h3 class="topmar10">Veh&iacute;culos</h3>
+                        </div>
+                        <div class="col-sm-3 text-center topmar">
+                   	    	<img src="img/imagen-instalaciones.png" width="141" height="141" alt="Instalaciones">
+                            <h3 class="topmar10">Instalaciones</h3>
+                        </div>
+                        <div class="col-sm-3 text-center topmar">
+                   	    	<img src="img/imagen-equipos.png" width="141" height="141" alt="Equipos">
+                            <h3 class="topmar10">Equipos</h3>
+                        </div>
+                        <div class="col-sm-3 text-center topmar">
+                   	    	<img src="img/imagen-capital-de-trabajo.png" width="141" height="141" alt="Capital de Trabajo">
+                            <h3 class="topmar10">Capital de Trabajo</h3>
+                        </div>
+                    </div>                   
+                  	<div class="row topmar botpad linea-punteada-gris-abajo productos-caracteristicas">
+                    	<div class="col-xs-12 text-center botmar20">
+	                    	<h3 class="text-uppercase nomar text-bordo">Caracter&iacute;sticas</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-5 col-md-offset-1">
+                            <ul>
+                            	<li>Moneda del pr&eacute;stamo: Pesos.</li>
+                            	<li>Tipo de Tasa: Fija.</li>
+                            	<li>Plazo de pago: mensuales, bimestrales o semestrales.</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-5">
+                            <ul>
+                            	<li>Sin gastos de otorgamiento.</li>
+                            	<li>Sin gastos administrativos mensuales.</li>
+                            </ul>
+                        </div>
+                    </div>                    
+                    <div class="row topmar botpad linea-punteada-gris-abajo">
+                    	{{ include('KellsFrontBundle:Default:inc-productos-y-servicios-formulario.php.twig')}}
+                    </div>                    
+                    <div class="row topmar">
+                    	<div class="col-xs-12 text-center">
+	                    	<h3 class="text-uppercase nomar">Otros Productos y Servicios</h3>
+    	                	{{ include('KellsFrontBundle:Default:inc-productos-y-servicios.php.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+  {% endblock %}

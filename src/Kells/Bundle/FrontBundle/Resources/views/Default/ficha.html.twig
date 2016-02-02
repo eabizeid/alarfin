@@ -7,9 +7,10 @@
                 	<div class="col-xs-12">
                     	<div class="row">   
 		                	<div class="col-md-6 col-md-push-6 toppad">
-                				 <h4 class="nomar text-negro">{{car.year.description}}  | {{car.km}} Km</h4>
+                				 <h4 class="nomar text-negro">{%if car.year %} {{car.year.description}}  | {%endif%}{{car.km}} Km</h4>
                                  <h2 class="text-negro"><strong>{{ car.title }}</strong></h2>
-                                 <h2><span class="label label-default">$ {{car.price}}</span></h2>
+                                 <h4>{{car.description}}</h4>
+                                 <h2><span class="label label-default">{%if car.price and car.price != 0 %}$ {{car.price}} {% else %} A Convenir {% endif %}</span></h2>
                                  {% for flashMessage in app.session.flashbag.get('notice') %}
     								<div  id="divSuccess" class="alert alert-success" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>
        							 {{ flashMessage }}
@@ -29,6 +30,25 @@
                                     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                       <ol class="carousel-indicators">
                                        <li data-target="#carousel-example-generic" data-slide-to="0" ></li>
+                                       {% if car.image1 %}
+                                       		<li data-target="#carousel-example-generic" data-slide-to="1" ></li>
+                                       {% endif %}
+                                       {% if car.image2 %}
+                                       		<li data-target="#carousel-example-generic" data-slide-to="2" ></li>
+                                       {% endif %}
+                                       {% if car.image3 %}
+                                       		<li data-target="#carousel-example-generic" data-slide-to="3" ></li>
+                                       {% endif %}
+                                       {% if car.image4 %}
+                                       		<li data-target="#carousel-example-generic" data-slide-to="4" ></li>
+                                       {% endif %}
+                                       {% if car.image5 %}
+                                       		<li data-target="#carousel-example-generic" data-slide-to="5" ></li>
+                                       {% endif %}
+                                       {% if car.image6 %}
+	                                       <li data-target="#carousel-example-generic" data-slide-to="6" ></li>
+									   {% endif %}
+									   
                                       {% set  i = 1 %}
                                       {% for image in car.images %}
                                         <li data-target="#carousel-example-generic" data-slide-to="{{i}}" ></li>
@@ -37,12 +57,43 @@
                                       </ol> 
                                       <div class="carousel-inner">
                                       	<div class="item active">
-                                          <img src="{{ asset(car.mandatoryImage.webPath) }}" style="width:515px;  height:387px; ">  
+                                          <img src="{{ asset(car.mandatoryImage.webPath) }}">  
                                         </div>
-                                      
+                                        {% if car.image1 %}
+                                      	 <div class="item">
+                                          <img src="{{asset(car.image1.webPath)}}"  >
+                                        </div>
+                                        {% endif %}
+                                       {% if car.image2 %}
+                                         <div class="item">
+                                          <img src="{{asset(car.image2.webPath)}}"  >
+                                        </div>
+                                        {% endif %}
+                                       {% if car.image3 %}
+                                         <div class="item">
+                                          <img src="{{asset(car.image3.webPath)}}"  >
+                                        </div>
+                                        {% endif %}
+                                       {% if car.image4 %}
+                                         <div class="item">
+                                          <img src="{{asset(car.image4.webPath)}}"  >
+                                        </div>
+                                        {% endif %}
+                                       {% if car.image5 %}
+                                         <div class="item">
+                                          <img src="{{asset(car.image5.webPath)}}"   >
+                                        </div>
+                                        {% endif %}
+                                       {% if car.image6 %}
+                                       <div class="item">
+                                          <img src="{{asset(car.image6.webPath)}}"   >
+                                        </div>
+                                        {% endif %}
+                                       
+                                       
                                       {% for image in car.images %}
                                         <div class="item">
-                                          <img src="{{asset(image.webPath)}}"  style="width:515px;  height:387px; ">
+                                          <img src="{{asset(image.webPath)}}"  >
                                         </div>
                                         {% endfor %}
                                       </div>

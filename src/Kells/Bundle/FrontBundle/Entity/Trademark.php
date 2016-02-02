@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Kells\Bundle\FrontBundle\EntityRepository\TrademarkRepository")
  * @ORM\Table(name="trademarks") 
  */
 class Trademark {
@@ -25,6 +25,7 @@ class Trademark {
 	
 	/**
      * @ORM\OneToMany(targetEntity="Model", mappedBy="trademark")
+     * @ORM\OrderBy({"description" = "ASC"})
      */
 	protected $models;
 	

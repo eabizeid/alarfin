@@ -55,7 +55,7 @@ adminlogout:
     pattern: /admin/logout
     
 publicaciones_usuario:
-    path:     /admin/usuarios/publicaciones/{userId}
+    path:     /admin/usuarios/publicaciones/{userId}/{userType}
     defaults: { _controller: KellsBackBundle:Default:publicacionesUsuario }
 
     
@@ -122,7 +122,11 @@ admin_publish:
 editar-publicacion:
     path:     /admin/publicaciones/editar/{carId}
     defaults: { _controller: KellsBackBundle:Default:editCar }
-    
+
+remove-publicacion:
+    path:     /admin/publicaciones/delete/{carId}
+    defaults: { _controller: KellsBackBundle:Default:deleteCar }
+        
 recuperar-admin:
     path:     /recuperar
     defaults: { _controller: KellsBackBundle:Default:recuperar }
@@ -140,3 +144,21 @@ checkUserLicenseeExists:
     defaults: {_controller: KellsBackBundle:Default:checkUserLicenseeExists }
     options:
         expose: true
+
+route_to_retrieve_users:
+    pattern: /route_to_retrieve_users/{userType}    
+    defaults: {_controller: KellsBackBundle:Default:retrieveUsers }
+    options:
+        expose: true
+        
+removeImage:
+    path:     /admin/publicaciones/image/remove
+    defaults: { _controller: KellsBackBundle:Default:removeImage  }
+    
+adminCreditRequest:
+    path:     /admin/creditRequest/
+    defaults: { _controller: KellsBackBundle:Default:showCreditRequest }
+    
+saveCredit:
+    path:     /admin/saveCredit/
+    defaults: {_controller: KellsBackBundle:Default:credit}

@@ -31,11 +31,6 @@ class Fotocopias {
      */
     public $path;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Credito", inversedBy="fotocopiasSolicitante")
-     * @ORM\JoinColumn(name="credito_id", referencedColumnName="id")
-     */
-	protected $credito;
 	
     public function getAbsolutePath()
     {

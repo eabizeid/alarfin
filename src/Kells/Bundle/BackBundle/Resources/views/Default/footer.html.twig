@@ -6,14 +6,18 @@
 	</div>
 </footer>
 
-<script src="{{ asset('bundles/kellsfront/js/jquery-1.11.1.min.js') }}"></script> 
+
 <script src="{{ asset('bundles/kellsback/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/kellsback/js/plugins/metisMenu/metisMenu.min.js') }}"></script>
 <script src="{{ asset('bundles/kellsback/js/sb-admin-2.js') }}"></script>
 <script src="{{ asset('bundles/kellsback/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('bundles/kellsback/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
+<script src="https://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<script src="{{ asset('bundles/kellsfront/js/jquery.blockUI.js') }}"></script>
 <script type="text/javascript" >
     var checkPasswordMatch = function() {
     var password = $("#contrasena").val();
@@ -25,3 +29,9 @@
         $("#divCheckPasswordMatch").html("Contraseñas iguales.");
 }
 </script>
+   <script type="text/javascript">
+            $(document).ready(function() {
+             $.blockUI.defaults.message = 'Cargando...';
+            	$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+            });
+     </script>   

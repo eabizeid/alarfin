@@ -9,9 +9,14 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Kells\Bundle\BackBundle\Entity\AlarfinConfiguration;
 use Kells\Bundle\BackBundle\Entity\Alarfin;
 use Kells\Bundle\FrontBundle\Entity\User;
+use Kells\Bundle\FrontBundle\Entity\Licensee;
 use Kells\Bundle\FrontBundle\Entity\Car;
 use Kells\Bundle\FrontBundle\Entity\Feature;
 use Kells\Bundle\FrontBundle\Entity\ImageFile;
+use Kells\Bundle\FrontBundle\Entity\CarImage;
+use Kells\Bundle\FrontBundle\Entity\Fotocopias;
+use Kells\Bundle\FrontBundle\Entity\FotocopiasConyuge;
+use Kells\Bundle\FrontBundle\Entity\Credito;
 use Kells\Bundle\FrontBundle\Utils\Util;
 
 class DefaultController extends Controller
@@ -98,14 +103,16 @@ class DefaultController extends Controller
 	public function saveLicenseeAction(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
-    	$user = new Licensee();
+    	
     	if ($request->get('id')) {
     		$user =$em->getRepository('KellsFrontBundle:Licensee')->find($request->get('id'));
-    	}  
+    	}  else {
+    		$user = new Licensee();
+    	}
     	
     	$user->setSocialReason($request->get('razonSocial'));
-    	$user->setFabtasyName($request->get('fantasy'));
-    	$user->setFirstName($request->get('cuit'));
+    	$user->setFantasyName($request->get('fantasia'));
+    	$user->setCuit($request->get('cuit'));
     	$user->setMail($request->get('email'));
     	$user->setTelephone($request->get('telefono'));
     	$user->setToken("");
@@ -162,15 +169,20 @@ class DefaultController extends Controller
     }
     
     
-	public function publicacionesUsuarioAction($userId)
+	public function publicacionesUsuarioAction($userId, $userType)
     {
     	$em = $this->getDoctrine()->getManager();
-		$repository = $em->getRepository('KellsFrontBundle:User');
-		$user = $repository->find($userId);
+    	$user;
+		$licensee;
+    	if ("U" == $userType) {
+			$repository = $em->getRepository('KellsFrontBundle:User');
+			$user = $repository->find($userId);
+    	} else {
+			$repository = $em->getRepository('KellsFrontBundle:licensee');
+			$licensee = $repository->find($userId);
+		}
 		
-		$logger = $this->get('logger');
-		$logger->info("user ".$userId);
-        return $this->render('KellsBackBundle:Default:usuario-publicaciones.php.twig', array('user'=>$user));
+        return $this->render('KellsBackBundle:Default:usuario-publicaciones.php.twig', array('user'=>$user, 'licensee'=>$licensee));
     }
     
 	public function configurationAction()
@@ -300,6 +312,7 @@ class DefaultController extends Controller
 	    $configuration->setOnceA15Cuotas20($request->get('onceA15Cuotas20'));
 	    $configuration->setOnceA15Cuotas22($request->get('onceA15Cuotas22'));
 	    $configuration->setOnceA15Cuotas24($request->get('onceA15Cuotas24'));
+	    $configuration->setImpuestos($request->get('impuestos'));
 		
 	    if (!$configurations) {
 			$em->persist($configuration);
@@ -410,12 +423,10 @@ class DefaultController extends Controller
     }
     
  	public function publishAction(Request $request) {
-	   	$logger = $this->get('logger');
    		$user = $this->getUser();
     	
    		$carId = $request->get('carId');
    		
-   		$logger->info('Es auto nuevo?: '.$carId);
    		
    		
    		$title = $request->get('titulo');
@@ -444,19 +455,15 @@ class DefaultController extends Controller
      	$imageFile5 = $files->get('foto5');
      	$imageFile6 = $files->get('foto6');
    		
-   		$logger->info('Nuevo auto va a ser publicado: ');
-   		$logger->info('Car title: '.$title);
-   		$logger->info('Trademark Car Id: '.$trademarkId);
-   		$logger->info('model Car Id: '.$modelId);
 		
 		if ($mandatoryImageFile) {
-			$mandatoryImage = new ImageFile();
-			$mandatoryImage->setFile($mandatoryImageFile);
+			$mandatoryImage =  $this->createImage($mandatoryImageFile);
 		}
 		
 		
 		if ($imageFile1) {
 			$image1 = $this->createImage($imageFile1);
+			
 		}
 		if ($imageFile2) {
 			$image2 = $this->createImage($imageFile2);
@@ -482,65 +489,63 @@ class DefaultController extends Controller
 		if (!$car) {
 			$car = new Car();
 		}
-		$car->setTitle($title);		
-   		$car->setDescription($description);
-   		$car->setPrice($price);
-   		$car->setKm($kms);
+		if (!empty($title)) {
+			$car->setTitle($title);		
+		}
+		if (!empty($description)) {
+			$car->setDescription($description);
+		}
+		if (!empty($price)) {
+   			$car->setPrice($price);
+		}
+   		$car->setKm($kms); 
    		$publicador = $request->get('publicador-nombre');
    		$car->setLicensee(null);
    		$car->setUser(null);
-   		if ($request->get('publicador-tipo') == "Usuario" ) {
-   			$publicadorSplitted = explode(" ", $publicador);
+   		$publicadorTipo = $request->get('publicador-tipo');
+   		if ($publicadorTipo == "Usuario" ) {
+   			$publicadorSplitted = explode(", ", $publicador);
    			$repository = $em->getRepository('KellsFrontBundle:User');
-   			$carUser = $repository->findOneBy(array('lastName'=>$publicadorSplitted[0], 'firstName'=>$publicadorSplitted[1]));
+   			$lastName = $publicadorSplitted[0];
+   			$carUser = $repository->findOneBy(array('lastName'=>$lastName, 'firstName'=>$publicadorSplitted[1]));
    			$car->setUser($carUser);
    		} else {
    			$repository = $em->getRepository('KellsFrontBundle:Licensee');
-   			$carUser = $repository->findBy(array('fantasyName'=>$publicador));
-   			$car->setLicensee($carUser);
+   			$licensee = $repository->findOneBy(array('fantasyName'=>$publicador));
+   			$car->setLicensee($licensee);
    		}
    		$car->setColor($color);
+
    		
-   		if ($mandatoryImageFile) {
+ 		if ($mandatoryImageFile) {
 			$car->setMandatoryImage($mandatoryImage);
-   		}
-		if ($imageFile1){ 
-			$car->addImage($image1);
+		}
+		if ($imageFile1){
+			$car->setImage1($image1);
 		}
 		if ($imageFile2) {
-			$car->addImage($image2);
-			$image2->setCar($car);
+			$car->setImage2($image2);
 		}
 		if ($imageFile3) {
-			$car->addImage($image3);
-			$image2->setCar($car);
+			$car->setImage3($image3);
 		}
 		if ($imageFile4) {
-			$car->addImage($image4);
-			$image2->setCar($car);
+			$car->setImage4($image4);
 		}
 		if ($imageFile5) {
-			$car->addImage($image5);
-			$image2->setCar($car);
+			$car->setImage5($image5);
 		}
 		if ($imageFile6) {
-			$car->addImage($image6);
-			$image2->setCar($car);
-		}	
-		
-		
-		
-		
-		
+			$car->setImage6($image6);
+		}
+
 		$repository = $em->getRepository('KellsFrontBundle:Fuel');
 		$fuel = $repository->find($fuelId);
 		$car->setFuel($fuel);
-		$logger->info('Trademark Car description: '.$car->getFuel()->getDescription());
 		
    		$repository = $em->getRepository('KellsFrontBundle:Trademark');
 		$trademark = $repository->find($trademarkId);
    		$car->setTrademark($trademark);
-		$logger->info('Trademark Car description: '.$car->getTrademark()->getDescription());
 		
 		$repository = $em->getRepository('KellsFrontBundle:Model');
 		$model = $repository->find($modelId);
@@ -729,16 +734,12 @@ class DefaultController extends Controller
     	
     	if( $carId ) {
     		foreach ($car->getFeatures() as $f) {
-    			$logger->info("feature: ".$f->getDescription());
     			if (!in_array($f, $featuresList)) {
-    				$logger->info("no está en la lista");
     				$car->removeFeature($f);
     			}
     		} 
     	 
-    		$logger->info("Agregar");
     		foreach ($featuresList as $feature) {
-    			$logger->info("feature: ".$feature->getDescription());
     			if (!in_array($feature, $car->getFeatures()->toArray())) {
     				$car->addFeature($feature);
     			}
@@ -1073,13 +1074,35 @@ class DefaultController extends Controller
 			$em->persist($car);
 		}
 		$em->flush();
+
 		
-		
+		if ($mandatoryImageFile){
+			
+			$this->corteImagen($car->getMandatoryImage()->getWebPath());
+		}
+ 		if ($imageFile1){
+			$this->corteImagen($car->getImage1()->getWebPath());
+		}
+		if ($imageFile2) {
+			$this->corteImagen($car->getImage2()->getWebPath());
+		}
+		if ($imageFile3) {
+			$this->corteImagen($car->getImage3()->getWebPath());
+		}
+		if ($imageFile4) {
+			$this->corteImagen($car->getImage4()->getWebPath());
+		}
+		if ($imageFile5) {
+			$this->corteImagen($car->getImage5()->getWebPath());
+		}
+		if ($imageFile6) {
+			$this->corteImagen($car->getImage6()->getWebPath());
+		}
+	
 		return $this->redirect($this->generateUrl('publicaciones'));
     }
     
     public function editCarAction($carId) {
-	   	$logger = $this->get('logger');
    		$user = $this->getUser();
     	
    		$em = $this->getDoctrine()->getManager();
@@ -1100,6 +1123,14 @@ class DefaultController extends Controller
         	'directions'=>$directions, 'transmissions'=>$transmissions, 'car' => $car));
     }
     
+    public function deleteCarAction($carId) {
+    	$em = $this->getDoctrine()->getManager();
+   		$car = $em->getRepository('KellsFrontBundle:Car')->find($carId);
+		$car->setStatus("FINALIZED");
+		$em->flush();
+    	return $this->redirect($this->generateUrl('publicaciones'));
+    }
+    
      public function recuperarAction() {
      	return $this->render('KellsBackBundle:Default:recuperar.html.twig', array('error'=>""));
      }
@@ -1113,7 +1144,7 @@ class DefaultController extends Controller
  		}
  		$message = \Swift_Message::newInstance()
         	->setSubject('Alarfin recuperación contraseña')
-        	->setFrom('no-reply@alarfin.com.ar')
+        	->setFrom('no-responder@alarfin.com.ar')
         	->setTo($user->getMail())
         	->setBody('<p>Su contraseña es:'.$user->getPassword().'</p>', 'text/html'            	
         	);
@@ -1122,7 +1153,6 @@ class DefaultController extends Controller
      }	
 	
      public function republishAction(Request $request) {
-		$logger = $this->get('logger');
 		$id = $request->get('id');
 		$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('KellsFrontBundle:Car');
@@ -1133,30 +1163,676 @@ class DefaultController extends Controller
 	}
 	
 	public function checkUserLicenseeExistsAction(Request $request) {
-			$logger = $this->get('logger');
-			$logger->info("checking user");
 			
 			
 		$publicador = $request->get('publicador-nombre');
-		$logger->info("publicador-nombre".$publicador);
 		$em = $this->getDoctrine()->getManager();
-		if ($request->get('publicador-tipo') == "Usuario" ) {
-			
-   			$publicadorSplitted = explode(" ", $publicador);
-   			 $repository = $em->getRepository('KellsFrontBundle:User');
-   			$carUser = $repository->findOneBy(array('lastName'=>$publicadorSplitted[0], 'firstName'=>$publicadorSplitted[1]));
-   		} else {
-   			$repository = $em->getRepository('KellsFrontBundle:Licensee');
-   			$carUser = $repository->findBy(array('fantasyName'=>$publicador));
-   		}
-   		$output = null;
-   		if (!$carUser) {
-   			$output = "El publicador no se encuentra registrado.";
-   		}
+		try {
+			if ($request->get('publicador-tipo') == "Usuario" ) {
+				
+	   			$publicadorSplitted = explode(", ", $publicador);
+	   			if (sizeof($publicadorSplitted) > 1) {
+	   				$repository = $em->getRepository('KellsFrontBundle:User');
+	   				$carUser = $repository->findOneBy(array('lastName'=>$publicadorSplitted[0], 'firstName'=>$publicadorSplitted[1]));
+	   			}else {
+	   				$carUser = null;
+	   			}
+	   		} else {
+	   			$repository = $em->getRepository('KellsFrontBundle:Licensee');
+	   			$carUser = $repository->findBy(array('fantasyName'=>$publicador));
+	   		}
+	   		$output = null;
+	   		if (!$carUser) {
+	   			$output = "El publicador no se encuentra registrado.";
+	   		}
+		} catch (Exception $e) {
+			$output = "El publicador no se encuentra registrado.";
+		}	
    		$response = new Response();
 		$response->headers->set('Content-Type', 'application/text');
 		$response->setContent(json_encode($output));
 		return $response;
 	}
-     
+	
+	
+	public function retrieveUsers($userType) {
+		$em = $this->getDoctrine()->getManager();
+		try {
+			if ($userType == "Usuario" ) {
+	   			$repository = $em->getRepository('KellsFrontBundle:User');
+	   			$users = $repository->findAll();
+	   		} else {
+	   			$repository = $em->getRepository('KellsFrontBundle:Licensee');
+	   			$users = $repository->findAll();
+	   		}
+		
+	   		$output = null;
+	   		if (!$users) {
+	   			$output = "El publicador no se encuentra registrado.";
+	   		}else {
+	   			$oputput = $users;
+	   		}
+		} catch (Exception $e) {
+			$output = "El publicador no se encuentra registrado.";
+		}
+   		$response = new Response();
+		$response->headers->set('Content-Type', 'application/text');
+		$response->setContent(json_encode($output));
+		return $response;
+	}
+	
+	protected function createImage($imageFile) {
+		if ($imageFile) {
+			$image = new ImageFile();
+			$image->setFile($imageFile);
+			return $image;
+		}
+		return;
+	}
+
+	protected function createFotocopia($fotocopiaFile) {
+		if ($fotocopiaFile) {
+			$image = new Fotocopias();
+			$image->setFile($fotocopiaFile);
+			return $image;
+		}
+		return;
+	}
+	
+	public function removeImageAction(Request $request) {
+    	$em = $this->getDoctrine()->getManager();
+   		$car = $em->getRepository('KellsFrontBundle:Car')->find($request->get('carId'));
+   		$imageId =$request->get('id');
+   		if ($imageId == 1) {
+   			$car->setImage1(null);
+   		}else if ($imageId == 2) {
+   			$car->setImage2(null);
+   		} else if ($imageId == 3) {
+   			$car->setImage3(null);
+   		} else if ($imageId == 4) {
+   			$car->setImage4(null);
+   		} else if ($imageId == 5) {
+   			$car->setImage5(null);
+   		} else if ($imageId == 6) {
+   			$car->setImage6(null);
+   		} 
+    	$em->flush();
+    	return $this->redirect($this->generateUrl('editar-publicacion', array("carId"=>$request->get('carId'))));
+    }
+    
+    protected function corteImagen($ruta_imagen) {
+    	$miniatura_ancho_maximo = 520;
+		$miniatura_alto_maximo = 390;
+
+		$info_imagen = getimagesize($ruta_imagen);
+		$imagen_ancho = $info_imagen[0];
+		$imagen_alto = $info_imagen[1];
+		$imagen_tipo = $info_imagen['mime'];
+		
+		
+		$proporcion_imagen = $imagen_ancho / $imagen_alto;
+		$proporcion_miniatura = $miniatura_ancho_maximo / $miniatura_alto_maximo;
+		if ( $proporcion_imagen > $proporcion_miniatura ){
+			$miniatura_ancho = $miniatura_alto_maximo * $proporcion_imagen;
+			$miniatura_alto = $miniatura_alto_maximo;
+		} else if ( $proporcion_imagen < $proporcion_miniatura ){
+			$miniatura_ancho = $miniatura_ancho_maximo;
+			$miniatura_alto = $miniatura_ancho_maximo / $proporcion_imagen;
+		} else {
+			return;
+		}
+		
+		$x = ( $miniatura_ancho - $miniatura_ancho_maximo ) / 2;
+		$y = ( $miniatura_alto - $miniatura_alto_maximo ) / 2;
+		
+		switch ( $imagen_tipo ){
+			case "image/jpg":
+			case "image/jpeg":
+				$imagen = imagecreatefromjpeg( $ruta_imagen );
+				break;
+			case "image/png":
+				$imagen = imagecreatefrompng( $ruta_imagen );
+				break;
+			case "image/gif":
+				$imagen = imagecreatefromgif( $ruta_imagen );
+				break;
+		}
+		
+		$lienzo = imagecreatetruecolor( $miniatura_ancho_maximo, $miniatura_alto_maximo );
+		$lienzo_temporal = imagecreatetruecolor( $miniatura_ancho, $miniatura_alto );
+		
+		imagecopyresampled($lienzo_temporal, $imagen, 0, 0, 0, 0, $miniatura_ancho, $miniatura_alto, $imagen_ancho, $imagen_alto);
+		imagecopy($lienzo, $lienzo_temporal, 0,0, $x, $y, $miniatura_ancho_maximo, $miniatura_alto_maximo);
+		
+		imagejpeg($lienzo, "$ruta_imagen", 80);
+    }
+    
+	public function showCreditRequestAction($message = null) {
+
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsFrontBundle:Trademark');
+		$trademarks = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Province');
+		$provinces = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Fuel');
+		$fuels = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Year');
+		$years = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Direction');
+		$directions = $repository->findAll();
+		$repository = $em->getRepository('KellsFrontBundle:Transmission');
+		$transmissions = $repository->findAll();
+			
+		return $this->render(
+        'KellsBackBundle:Default:creditos-agregar.php.twig', array('trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
+        	'directions'=>$directions, 'transmissions'=>$transmissions, 'message'=>$message));
+
+	}
+	
+	public function creditAction(Request $request) {
+		
+		$publicadorTipo = $request->get('publicador-tipo');
+		$publicador = $request->get('publicador-nombre');
+		
+		$em = $this->getDoctrine()->getManager();
+		if ($publicadorTipo == "Usuario") {
+				
+	   			$publicadorSplitted = explode(", ", $publicador);
+	   			if (sizeof($publicadorSplitted) > 1) {
+	   				$repository = $em->getRepository('KellsFrontBundle:User');
+	   				$user = $repository->findOneBy(array('lastName'=>$publicadorSplitted[0], 'firstName'=>$publicadorSplitted[1]));
+	   			}
+	   	} else {
+	   			$repository = $em->getRepository('KellsFrontBundle:Licensee');
+	   			$user = $repository->findBy(array('fantasyName'=>$publicador));
+	   	}
+	   	
+		$em = $this->getDoctrine()->getManager();
+		$credito = new Credito();
+			 
+		$nombreSolicitante = $request->get('solicitante-nombre');
+		$apellidoSolicitante = $request->get('solicitante-apellido');
+		$dniSolicitante = $request->get('solicitante-dni');
+		$nacimientoSolicitante = $request->get('solicitante-nacimiento');
+		$estadoCivilSolicitante = $request->get('solicitante-estado-civil');
+		$domicilioSolicitante = $request->get('solicitante-domicilio');
+		$provinceId = $request->get('solicitante-provincia');
+		$cityId = $request->get('solicitante-ciudad');
+		$celularSolicitante = $request->get('solicitante-celular');
+		$fijoSolicitante = $request->get('solicitante-telefono');
+		$mailSolicitante = $request->get('solicitante-email');
+		$actividadLaboralSolicitante = $request->get('solicitante-laboral');
+		$telLaboralSolicitante = $request->get('solicitante-telefono-trabajo');
+		 
+		//fotocopias
+		$files = $request->files;
+		$solicitanteServicio = $files->get('solicitante-fotocopia-servicio');
+		$solicitanteVehiculo = $files->get('solicitante-fotocopia-vehiculo');
+		$solicitanteFotoDni = $files->get('solicitante-fotocopia-dni');
+		$solicitanteFotoDni2 = $files->get('solicitante-fotocopia-dni2');
+		$solicitanteRecibo = $files->get('solicitante-fotocopia-recibo');
+		$solicitanteIngresos = $files->get('solicitante-fotocopia-ingresos');
+		$solicitanteOtra1 = $files->get('solicitante-fotocopia-otra-1');
+		$solicitanteOtra2 = $files->get('solicitante-fotocopia-otra-2');
+
+		//CONYUGE
+		if ($estadoCivilSolicitante == 'Casado/a') {
+			$nombreConyuge = $request->get('conyuge-nombre');
+			$apellidoConyuge = $request->get('conyuge-apellido');
+			$dniConyuge = $request->get('conyuge-dni');
+			$estadoCivilConyuge = $request->get('conyuge-estado-civil');
+			$domicilioConyuge = $request->get('conyuge-domicilio');
+			$conyugeProvinceId = $request->get('conyuge-provincia');
+			$conyugeCityId = $request->get('conyuge-ciudad');
+			$celularConyuge = $request->get('conyuge-celular');
+			$fijoConyuge = $request->get('conyuge-telefono');
+			$mailConyuge = $request->get('conyuge-email');
+			$actividadLaboralConyuge = $request->get('conyuge-laboral');
+			$telLaboralConyuge = $request->get('conyuge-telefono-trabajo');
+
+			//fotocopias
+			$files = $request->files;
+			$conyugeFotoDni = $files->get('conyuge-fotocopia-dni');
+			$conyugeOtra1 = $files->get('conyuge-fotocopia-otra-1');
+			$conyugeOtra2 = $files->get('conyuge-fotocopia-otra-2');
+			$conyugeOtra3 = $files->get('conyuge-fotocopia-otra-3');
+		}
+	  
+		if ($publicadorTipo == 'Concesionaria') {
+			//	Garante
+
+			$nombreGarante = $request->get('garante-nombre');
+			$apellidoGarante = $request->get('garante-apellido');
+			$dniGarante = $request->get('garante-dni');
+			$estadoCivilGarante = $request->get('garante-estado-civil');
+			$domicilioGarante = $request->get('garante-domicilio');
+			$provinceGarante = $request->get('garante-provincia');
+			$cityGaranteId = $request->get('garante-ciudad');
+			$celularGarante = $request->get('garante-celular');
+			$fijoGarante = $request->get('garante-telefono');
+			$mailGarante = $request->get('garante-email');
+			$actividadLaboralGarante = $request->get('garante-laboral');
+			$telLaboralGarante = $request->get('garante-telefono-trabajo');
+
+			//fotocopias
+			$garanteFotoDni = $files->get('garante-fotocopia-dni');
+			$garanteOtra1 = $files->get('garante-fotocopia-otra-1');
+			$garanteOtra2 = $files->get('garante-fotocopia-otra-2');
+			$garanteRecibo = $files->get('garante-fotocopia-recibo');
+			$garanteIngresos = $files->get('garante-fotocopia-ingresos');
+			$garanteServicio = $files->get('garante-fotocopia-servicio');
+			
+			
+			$credito->setNombreGarante($nombreGarante);
+			$credito->setApellidoGarante($apellidoGarante);
+			$credito->setDniGarante($dniGarante);
+			$credito->setEstadoCivilGarante($estadoCivilGarante);
+			$credito->setDomicilioGarante($domicilioGarante);
+			$repository = $em->getRepository('KellsFrontBundle:Province');
+			$provinciaG = $repository->find($provinceGarante);
+			if ($provinciaG){
+				$credito->setProvinciaGarante($provinciaG->getDescription());
+			}
+			$repository = $em->getRepository('KellsFrontBundle:City');
+			$cityG = $repository->find($cityGaranteId);
+			if ($cityG){
+			$credito->setCiudadGarante($cityG->getDescription());
+			}
+			$credito->setCelularGarante($celularGarante);
+			$credito->setFijoGarante($fijoGarante);
+			$credito->setActividadLaboralGarante($actividadLaboralGarante);
+			$telLaboralGarante = $request->get('Garante-telefono-trabajo');
+			$credito->setTelLaboralGarante($telLaboralGarante);
+
+			if ($garanteFotoDni) {
+				$fotocopiaDniGarante = $this->createFotocopia($garanteFotoDni);
+				$credito->setFotocopiaDniGarante($fotocopiaDniGarante);
+			}
+			if ($garanteOtra1) {
+				$fotocopiaOtra1Garante = $this->createFotocopia($garanteOtra1);
+				$credito->setFotocopiaOtra1Garante($fotocopiaOtra1Garante);
+			}
+				
+			if ($garanteOtra2) {
+				$fotocopiaOtra2Garante = $this->createFotocopia($conyugeOtra2);
+				$credito->setFotocopiaOtra2Garante($fotocopiaOtra2Garante);
+			}
+
+			if ($garanteRecibo) {
+				$fotocopiaOtraReciboGarante = $this->createFotocopia($garanteRecibo);
+				$credito->setFotocopiaReciboGarante($fotocopiaOtraReciboGarante);
+			}
+			if ($garanteIngresos) {
+				$fotocopiaIngresosGarante = $this->createFotocopia($garanteIngresos);
+				$credito->setFotocopiaIngresosGarante($fotocopiaIngresosGarante);
+			}
+			if ($garanteServicio) {
+				$fotocopiaServicioGarante = $this->createFotocopia($garanteServicio);
+				$credito->setFotocopiaServicioGarante($fotocopiaServicioGarante);
+			}
+		}
+		//Unidad a adquirir
+		$marcaId = $request->get('marca');
+		$modeloId = $request->get('modelo');
+		$yearId = $request->get('ano');
+		$value = $request->get('valor');
+		$type = $request->get('tipo');
+		$domain = $request->get('dominio');
+		$fuelId = $request->get('combustible');
+
+		//credito
+		$montoCredito = $request->get('monto');
+		$cantidadCuotas = $request->get('cuotas');
+		$comments =$request->get('comentarios');
+
+
+		$credito = new Credito();
+		$credito->setNombreSolicitante($nombreSolicitante);
+		$credito->setApellidoSolicitante($apellidoSolicitante);
+		$credito->setDniSolicitante($dniSolicitante);
+		$credito->setEstadoCivilSolicitante($estadoCivilSolicitante);
+		$credito->setNacimientoSolicitante($nacimientoSolicitante);
+		$credito->setDomicilioSolicitante($domicilioSolicitante);
+		
+		$repository = $em->getRepository('KellsFrontBundle:Province');
+		
+		$provincia = $repository->find($provinceId);
+		if ($provincia) {
+			$credito->setProvinciaSolicitante($provincia->getDescription());
+		}
+		$repository = $em->getRepository('KellsFrontBundle:City');
+		$city = $repository->find($cityId);
+		if ($city) {
+			$credito->setCiudadSolicitante($city->getDescription());
+		}
+		$credito->setCelularSolicitante($celularSolicitante);
+		$credito->setFijoSolicitante($fijoSolicitante);
+		$credito->setMailSolicitante($mailSolicitante);
+		$credito->setActividadLaboralSolicitante($actividadLaboralSolicitante);
+		$telLaboralSolicitante = $request->get('solicitante-telefono-trabajo');
+		$credito->setTelLaboralSolicitante($telLaboralSolicitante);
+		 
+		 
+		if ($solicitanteServicio) {
+			$fotocopiaServicioSolicitante = $this->createFotocopia($solicitanteServicio);
+			$credito->setFotocopiaServicioSolicitante($fotocopiaServicioSolicitante);
+		}
+		
+		if ($solicitanteVehiculo) {
+			$fotocopiaVehiculo = $this->createFotocopia($solicitanteVehiculo);
+			$credito->setFotocopiaVehiculo($fotocopiaVehiculo);
+		}
+		if ($solicitanteFotoDni) {
+			$fotocopiaDniSolicitante = $this->createFotocopia($solicitanteFotoDni);
+			$credito->setFotocopiaDniSolicitante($fotocopiaDniSolicitante);
+		}
+		if ($solicitanteFotoDni2) {
+			$fotocopiaDni2Solicitante = $this->createFotocopia($solicitanteFotoDni2);
+			$credito->setFotocopiaDni2Solicitante($fotocopiaDni2Solicitante);
+		}
+		if ($solicitanteRecibo) {
+			$fotocopiaReciboSolicitante = $this->createFotocopia($solicitanteRecibo);
+			$credito->setFotocopiaReciboSolicitante($fotocopiaReciboSolicitante);
+		}
+		if ($solicitanteIngresos) {
+			$fotocopiaIngresosSolicitante = $this->createFotocopia($solicitanteIngresos);
+			$credito->setFotocopiaIngresosSolicitante($fotocopiaIngresosSolicitante);
+		}
+		if ($solicitanteOtra1) {
+			$fotocopiaOtra1Solicitante = $this->createFotocopia($solicitanteOtra1);
+			$credito->setFotocopiaOtra1Solicitante($fotocopiaOtra1Solicitante);
+		}
+
+		if ($solicitanteOtra2) {
+			$fotocopiaOtra2Solicitante = $this->createFotocopia($solicitanteOtra2);
+			$credito->setFotocopiaOtra2Solicitante($fotocopiaOtra2Solicitante);
+		}
+	  
+		 
+		//Conyuge
+		if ($estadoCivilSolicitante == 'Casado/a') {
+			$credito->setNombreConyuge($nombreConyuge);
+			$credito->setApellidoConyuge($apellidoConyuge);
+			$credito->setDniConyuge($dniConyuge);
+			$credito->setEstadoCivilConyuge($estadoCivilConyuge);
+			$credito->setDomicilioConyuge($domicilioConyuge);
+			$repository = $em->getRepository('KellsFrontBundle:Province');
+			$provinciaC = $repository->find($conyugeProvinceId);
+			$credito->setProvinciaConyuge($provinciaC->getDescription());
+				
+			$repository = $em->getRepository('KellsFrontBundle:City');
+			$city = $repository->find($cityId);
+			$credito->setCiudadConyuge($city->getDescription());
+			$credito->setCelularConyuge($celularConyuge);
+			$credito->setFijoConyuge($fijoConyuge);
+			$credito->setActividadLaboralConyuge($actividadLaboralConyuge);
+			$telLaboralConyuge = $request->get('Conyuge-telefono-trabajo');
+			$credito->setTelLaboralConyuge($telLaboralConyuge);
+
+			if ($conyugeFotoDni) {
+				$fotocopiaDniConyuge = $this->createFotocopia($conyugeFotoDni);
+				$credito->setFotocopiaDniConyuge($fotocopiaDniConyuge);
+			}
+			if ($conyugeOtra1) {
+				$fotocopiaOtra1Conyuge = $this->createFotocopia($conyugeOtra1);
+				$credito->setFotocopiaOtra1Conyuge($fotocopiaOtra1Conyuge);
+			}
+				
+			if ($conyugeOtra2) {
+				$fotocopiaOtra2Conyuge = $this->createFotocopia($conyugeOtra2);
+				$credito->setFotocopiaOtra2Conyuge($fotocopiaOtra2Conyuge);
+			}
+
+			if ($conyugeOtra3) {
+				$fotocopiaOtra3Conyuge = $this->createFotocopia($conyugeOtra3);
+				$credito->setFotocopiaOtra3Conyuge($fotocopiaOtra3Conyuge);
+			}
+		}
+		//Unidad a adquirir
+		$repository = $em->getRepository('KellsFrontBundle:Trademark');
+		$marca = $repository->find($marcaId);
+		$credito->setMarca($marca->getDescription());
+		$modeloId = $request->get('modelo');
+
+		$repository = $em->getRepository('KellsFrontBundle:Model');
+		$modelo = $repository->find($modeloId);
+		$credito->setModelo($modelo->getDescription());
+
+		$repository = $em->getRepository('KellsFrontBundle:Year');
+		$year = $repository->find($yearId);
+		$credito->setYear($year->getDescription());
+
+		$repository = $em->getRepository('KellsFrontBundle:Fuel');
+		$fuel = $repository->find($fuelId);
+		$credito->setCombustible($fuel->getDescription());
+
+		$credito->setValor($value);
+		$credito->setType($type);
+		$credito->setDomain($domain);
+		
+		$credito->setSeguro($request->get('seguro'));
+		$credito->setTarjeta($request->get('tarjeta'));
+		$credito->setNumeroTarjeta($request->get('tarjeta-numero'));
+		$credito->setCodigoTarjeta($request->get('tarjeta-codigo'));
+		$credito->setVencimientoTarjeta($request->get('tarjeta-vencimiento'));
+		
+
+		//credito
+		$credito->setMontoCredito($montoCredito);
+		$credito->setCantidadCuotas($cantidadCuotas);
+		$credito->setGastos($request->get('gastos'));
+		$credito->setPrimerVencimiento($request->get('vencimiento'));
+		$credito->setComentarios($comments);
+
+		$credito->setDate(new \DateTime());
+		$credito->setUser($user->getName());
+
+
+		//calculo valor cuota
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
+		$configuration = $repository->findAll()[0];
+
+		$intervalo0 = $configuration->getAnio0km();
+		$intervalo1 = $intervalo0 - 5;
+		$intervalo2 = $intervalo1 - 5;
+		$intervalo3 = $intervalo2 - 5;
+		$y = (int) $year->getDescription();
+		$cuota = 0;
+		if ($configuration->getImpuestos()) {
+			$capital = (int)$montoCredito + (int)$configuration->getImpuestos();
+		}
+		if ($y == $intervalo0) {
+			if ($cantidadCuotas == 2) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas24();
+			} else if ($cantidadCuotas == 26) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas26();
+			} else if ($cantidadCuotas == 28) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas28();
+			} else if ($cantidadCuotas == 30) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas30();
+			} else if ($cantidadCuotas == 32) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas32();
+			} else if ($cantidadCuotas == 34) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas34();
+			} else if ($cantidadCuotas == 36) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas36();
+			}
+			$credito->setTasa($configuration->getCerokmtasa());
+			$credito->setTea($configuration->getCerokmtea());
+
+		} else if ($y < $intervalo0 && $y >= $intervalo1) {
+			if ($cantidadCuotas == 2) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas24();
+			} else if ($cantidadCuotas == 26) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas26();
+			} else if ($cantidadCuotas == 28) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas28();
+			} else if ($cantidadCuotas == 30) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas30();
+			} else if ($cantidadCuotas == 32) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas32();
+			} else if ($cantidadCuotas == 34) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas34();
+			} else if ($cantidadCuotas == 36) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas36();
+			}
+			$credito->setTasa($configuration->getUnoA5tasa());
+			$credito->setTea($configuration->getUnoA5tea());
+		} else if ($y < $intervalo1 && $y >= $intervalo2) {
+			if ($cantidadCuotas == 2) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas24();
+			} else if ($cantidadCuotas == 26) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas26();
+			} else if ($cantidadCuotas == 28) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas28();
+			} else if ($cantidadCuotas == 30) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas30();
+			} else if ($cantidadCuotas == 32) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas32();
+			} else if ($cantidadCuotas == 34) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas34();
+			} else if ($cantidadCuotas == 36) {
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas36();
+			}
+			$credito->setTasa($configuration->getSeisA10tasa());
+			$credito->setTea($configuration->getSeisA10tea());
+		} else if($y < $intervalo2 ) {
+			if ($cantidadCuotas == 2) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas2();
+			} else if ($cantidadCuotas == 4) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas4();
+			} else if ($cantidadCuotas == 6) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas6();
+			} else if ($cantidadCuotas == 8) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas8();
+			} else if ($cantidadCuotas == 10) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas10();
+			} else if ($cantidadCuotas == 12) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas12();
+			} else if ($cantidadCuotas == 14) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas14();
+			} else if ($cantidadCuotas == 16) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas16();
+			} else if ($cantidadCuotas == 18) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas18();
+			} else if ($cantidadCuotas == 20) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas20();
+			} else if ($cantidadCuotas == 22) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas22();
+			} else if ($cantidadCuotas == 24) {
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas24();
+			}
+			$credito->setTasa($configuration->getOnceA15tasa());
+			$credito->setTea($configuration->getOnceA15tea());
+		}
+		 
+		$credito->setValorCuota($cuota);
+		 
+		$em->persist($credito);
+		$em->flush();
+
+		$url = $this->generateUrl('verCredito', array('id' => $credito->getId()), true);
+		$repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
+		$configuration = $repository->findAll()[0];
+		
+		$message1 = \Swift_Message::newInstance()
+		->setSubject('Nuevo Crédito: '.$credito->getNombreSolicitante().' '.$credito->getApellidoSolicitante())
+		->setFrom('no-responder@alarfin.com.ar')
+		->setTo($configuration->getEmail1())
+		->setBody("<p>Para acceder al nuevo crédito, por favor, haga click en: ".$url."</p>", 'text/html');
+
+		
+		$this->get('mailer')->send($message1);
+		
+		
+		if ($configuration->getEmail2()) {
+			$message1 = \Swift_Message::newInstance()
+			->setSubject('Nuevo Crédito: '.$credito->getNombreSolicitante().' '.$credito->getApellidoSolicitante())
+			->setFrom('no-responder@alarfin.com.ar')
+			->setTo($configuration->getEmail2())
+			->setBody("<p>Para acceder al nuevo crédito, por favor, haga click en: ".$url."</p>", 'text/html');
+			
+			$this->get('mailer')->send($message1);
+		}
+		
+		if ($configuration->getEmail3()) {
+			$message1 = \Swift_Message::newInstance()
+			->setSubject('Nuevo Crédito: '.$credito->getNombreSolicitante().' '.$credito->getApellidoSolicitante())
+			->setFrom('no-responder@alarfin.com.ar')
+			->setTo($configuration->getEmail3())
+			->setBody("<p>Para acceder al nuevo crédito, por favor, haga click en: ".$url."</p>", 'text/html');
+
+			$this->get('mailer')->send($message1);
+		}
+		
+		return $this->redirect($this->generateUrl('creditos', array("message"=>"Se ha enviado la solicitud exitosamente")));
+
+	}
 }

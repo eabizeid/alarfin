@@ -49,16 +49,68 @@ class DefaultController extends Controller
         	'trademarksFilter'=> array(), 'pattern' => "", 'filter'=>false, 'model'=>"" ));
 	}
 
+	public function allCarsAction() {
+		$searchForm = new Search();
+		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
+
+		$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Car');
+
+		$cars =  $repository->findBy(array('status'=>"PUBLISHED"), array('publishedDate' => 'DESC'));
+		$trademarks = array();
+		$models = array();
+		$directions = array();
+		$fuels = array();
+		
+
+		
+		foreach ($cars as $car) {
+			//Filtro de marcas
+			$trademark = $car->getTrademark();
+			if(!array_key_exists ($trademark->getDescription(), $trademarks)) {
+				$trademarks[$trademark->getDescription()] = 1;
+			} else {
+				$trademarks[$trademark->getDescription()] = $trademarks[$trademark->getDescription()] + 1;
+			}
+			
+			//Filtro de modelos
+			$model = $car->getModel();
+			if(!array_key_exists ($model->getDescription(), $models)) {
+				$models[$model->getDescription()] = 1;
+			} else {
+				$models[$model->getDescription()] = $models[$model->getDescription()] + 1;
+			}
+			
+		//Filtro de combustibles
+			$fuel = $car->getFuel();
+			if(!array_key_exists ($fuel->getDescription(), $fuels)) {
+				$fuels[$fuel->getDescription()] = 1;
+			} else {
+				$fuels[$fuel->getDescription()] = $fuels[$fuel->getDescription()] + 1;
+			}
+			
+			//Filtro de direccion
+			$direction = $car->getDirection();
+			if ($direction)
+				if(!array_key_exists ($direction->getDescription(), $directions)) {
+					$directions[$direction->getDescription()] = 1;
+				} else {
+					$directions[$direction->getDescription()] = $directions[$direction->getDescription()] + 1;
+				}
+			
+		}
+		
+		return $this->render('KellsFrontBundle:Default:index.html.twig', array( 'cars' => $cars, 'form' => $form->createView(),"pattern" => "",'filter'=>true,
+			'marksKeysFilter' => array_keys($trademarks), 'trademarksFilter'=> $trademarks, 'markFilter' => "", 
+        	'modelKeysFilter' => array_keys($models), 'modelsFilter'=> $models, 'modelFilter'=>"",
+			'directionKeysFilter' => array_keys($directions), 'directionsFilter'=> $directions, 'directionFilter'=>"",
+		    'fuelKeysFilter' => array_keys($fuels), 'fuelsFilter'=> $fuels, 'fuelFilter'=>"",));
+	}
+	
 	public function detailsAction( $carId ) {
 		$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Car');
 
 		$car =  $repository->find($carId);
 
-		$logger = $this->get('logger');
-		$logger->info('car ==> '.$car->getId());
-		$logger->info('car ==> '.$car->getMandatoryImage()->getPath());
-
-		$logger->info('car ==> '.sizeof($car->getImages()));
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
 
@@ -80,6 +132,7 @@ class DefaultController extends Controller
 		->leftJoin('c.trademark', 't')
 		->where('lower(m.description) LIKE lower(:pattern)')
 		->orwhere('lower(t.description) LIKE lower(:pattern)')
+		->orwhere('lower(c.title) LIKE lower(:pattern)')
 		->andwhere('c.status = \'PUBLISHED\'')
 		->setParameter('pattern', '%'.$pattern.'%')
 		->getQuery();
@@ -138,7 +191,6 @@ class DefaultController extends Controller
 	}
 
 	public function filterResultsAction(Request $request) {
-		$logger = $this->get('logger');
 		 
 		 
 		$pattern = $request->get('pattern');
@@ -185,7 +237,6 @@ class DefaultController extends Controller
 		$cars = array();
 		$carsWithoutFilter =  $query->getResult();
 		
-		$logger->info("QUERY : ".count($carsWithoutFilter));
 		$trademarks = array();
 		
 		
@@ -214,13 +265,10 @@ class DefaultController extends Controller
 		}
 		
 		$fuels = array();
-		$logger->info("fuelFilter = ".$fuelFilter);
-		$logger->info("count of cars: ".count($carsWithoutFilter));
 		if (!$fuelFilter) {
 			foreach ($carsWithoutFilter as $car) {
 				
 				$fuel = $car->getFuel();
-				$logger->info("fuel description = ".$fuelFilter);
 				$description = $fuel->getDescription();
 				if(!array_key_exists ($description, $fuels)) {
 					$fuels[$description] = 1;
@@ -231,7 +279,6 @@ class DefaultController extends Controller
 		}
 		
 		$directions = array();
-		$logger->info("directionFilter = ".$directionFilter);
 		if (!$directionFilter) {
 			foreach ($carsWithoutFilter as $car) {
 				$direction = $car->getDirection();
@@ -261,13 +308,9 @@ class DefaultController extends Controller
 	
 	
 	public function getParameter($parameter, $pattern) {
-		$logger = $this->get('logger');
-		$logger->info ("parameter: ".$parameter." pattern: ".$pattern);
 		if ($parameter) {
-			$logger->info ("return parameter");
 			return $parameter;
 		}
-		$logger->info ("return pattern");
 		return $pattern;
 	}
 	
@@ -306,6 +349,7 @@ class DefaultController extends Controller
 		} else {
 			$queryBuilder->where('lower(m.description) LIKE lower(:pattern)');
 			$queryBuilder->orwhere('lower(t.description) LIKE lower(:pattern)');
+			$queryBuilder->orwhere('lower(c.title) LIKE lower(:pattern)');
 			$queryBuilder->setParameter('pattern', '%'.$this->getParameter($markFilter, $pattern).'%');
 		}
 		if ($fuelFilter)
@@ -445,7 +489,7 @@ class DefaultController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/user/register/confirm/'.$user->getToken();
+			$url = $this->generateUrl('user_confirm', array('token' => $user->getToken()), true);
 			$message = \Swift_Message::newInstance()
 			->setSubject('Confirmación de registración a Alarfin')
 			->setFrom('no-responder@alarfin.com.ar')
@@ -517,7 +561,7 @@ class DefaultController extends Controller
 			$em->persist($licensee);
 			$em->flush();
 
-			$url = 'http://'.$_SERVER['SERVER_NAME'].':8000/app_dev.php/licensee/register/confirm/'.$licensee->getToken();
+			$url =   $url = $this->generateUrl('licensee_confirm', array('token' => $licensee->getToken()), true);
 			$message = \Swift_Message::newInstance()
 			->setSubject('Confirmación de registración a Alarfin')
 			->setFrom('no-responder@alarfin.com.ar')
@@ -584,6 +628,7 @@ class DefaultController extends Controller
 		// last username entered by the user
             'last_mail' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
+			'tipo' => $request->get('tipo'),
 		));
 	}
 	
@@ -623,13 +668,9 @@ class DefaultController extends Controller
 	}
 
 	public function publishAction(Request $request) {
-		$logger = $this->get('logger');
 		$user = $this->getUser();
 		 
 		$carId = $request->get('carId');
-		 
-		$logger->info('Es auto nuevo?: '.$carId);
-		 
 		 
 		$title = $request->get('titulo');
 		$description = $request->get('descripcion');
@@ -659,14 +700,9 @@ class DefaultController extends Controller
 		$imageFile5 = $files->get('foto5');
 		$imageFile6 = $files->get('foto6');
 		 
-		$logger->info('Nuevo auto va a ser publicado: ');
-		$logger->info('Car title: '.$title);
-		$logger->info('Trademark Car Id: '.$trademarkId);
-		$logger->info('model Car Id: '.$modelId);
+		
 
 		if ($mandatoryImageFile) {
-			$logger->info('mandatoryImage: '.$mandatoryImageFile->getClientOriginalName());
-			$logger->info('mandatoryImage extension: '.$mandatoryImageFile->guessExtension());
 			 
 			$mandatoryImage = new ImageFile();
 			$mandatoryImage->setFile($mandatoryImageFile);
@@ -715,42 +751,32 @@ class DefaultController extends Controller
 			$car->setMandatoryImage($mandatoryImage);
 		}
 		if ($imageFile1){
-			$car->addImage($image1);
+			$car->setImage1($image1);
 		}
 		if ($imageFile2) {
-			$car->addImage($image2);
-			$image2->setCar($car);
+			$car->setImage2($image2);
 		}
 		if ($imageFile3) {
-			$car->addImage($image3);
-			$image2->setCar($car);
+			$car->setImage3($image3);
 		}
 		if ($imageFile4) {
-			$car->addImage($image4);
-			$image2->setCar($car);
+			$car->setImage4($image4);
 		}
 		if ($imageFile5) {
-			$car->addImage($image5);
-			$image2->setCar($car);
+			$car->setImage5($image5);
 		}
 		if ($imageFile6) {
-			$car->addImage($image6);
-			$image2->setCar($car);
+			$car->setImage6($image6);
 		}
-
-
-
 
 
 		$repository = $em->getRepository('KellsFrontBundle:Fuel');
 		$fuel = $repository->find($fuelId);
 		$car->setFuel($fuel);
-		$logger->info('Trademark Car description: '.$car->getFuel()->getDescription());
 
 		$repository = $em->getRepository('KellsFrontBundle:Trademark');
 		$trademark = $repository->find($trademarkId);
 		$car->setTrademark($trademark);
-		$logger->info('Trademark Car description: '.$car->getTrademark()->getDescription());
 
 		$repository = $em->getRepository('KellsFrontBundle:Model');
 		$model = $repository->find($modelId);
@@ -939,16 +965,12 @@ class DefaultController extends Controller
 		 
 		if( $carId ) {
 			foreach ($car->getFeatures() as $f) {
-				$logger->info("feature: ".$f->getDescription());
 				if (!in_array($f, $featuresList)) {
-					$logger->info("no está en la lista");
 					$car->removeFeature($f);
 				}
 			}
 
-			$logger->info("Agregar");
 			foreach ($featuresList as $feature) {
-				$logger->info("feature: ".$feature->getDescription());
 				if (!in_array($feature, $car->getFeatures()->toArray())) {
 					$car->addFeature($feature);
 				}
@@ -1284,7 +1306,68 @@ class DefaultController extends Controller
 		}
 		$em->flush();
 
+		if ($mandatoryImageFile){
+			$this->corteImagen($car->getMandatoryImage()->getWebPath());
+		}
+ 		if ($imageFile1){
+			$this->corteImagen($car->getImage1()->getWebPath());
+		}
+		if ($imageFile2) {
+			$this->corteImagen($car->getImage2()->getWebPath());
+		}
+		if ($imageFile3) {
+			$this->corteImagen($car->getImage3()->getWebPath());
+		}
+		if ($imageFile4) {
+			$this->corteImagen($car->getImage4()->getWebPath());
+		}
+		if ($imageFile5) {
+			$this->corteImagen($car->getImage5()->getWebPath());
+		}
+		if ($imageFile6) {
+			$this->corteImagen($car->getImage6()->getWebPath());
+		}
+	
+		$userDescription = '';
+		if ($user->getRoles()[0] == 'ROLE_USER') {
+			$userDescription = $user->getFirstName(). ' '.$user->getLastName();
+		} else {
+			$userDescription = $user->getFantasyName();
+		}
+		
+		$url = $this->generateUrl('details', array('carId' => $car->getId()), true);
+	    $repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
+		$configuration = $repository->findAll()[0];
+		
+		$message1 = \Swift_Message::newInstance()
+		->setSubject('Nueva publicación: '.$userDescription.' / '.$car->getTitle())
+		->setFrom('no-responder@alarfin.com.ar')
+		->setTo($configuration->getEmail1())
+		->setBody("<p>Para acceder a la nueva publicacion, por favor, haga click en: ".$url."</p>", 'text/html');
 
+		
+		$this->get('mailer')->send($message1);
+		
+		
+		if ($configuration->getEmail2()) {
+			$message1 = \Swift_Message::newInstance()
+			->setSubject('Nueva publicación: '.$userDescription.' / '.$car->getTitle())
+		->setFrom('no-responder@alarfin.com.ar')
+		->setTo($configuration->getEmail2())
+		->setBody("<p>Para acceder a la nueva publicacion, por favor, haga click en: ".$url."</p>", 'text/html');
+			
+			$this->get('mailer')->send($message1);
+		}
+		
+		if ($configuration->getEmail3()) {
+			$message1 = \Swift_Message::newInstance()
+			->setSubject('Nueva publicación: '.$userDescription.' / '.$car->getTitle())
+		->setFrom('no-responder@alarfin.com.ar')
+		->setTo($configuration->getEmail3())
+		->setBody("<p>Para acceder a la nueva publicacion, por favor, haga click en: ".$url."</p>", 'text/html');
+
+			$this->get('mailer')->send($message1);
+		}
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
 
@@ -1294,16 +1377,12 @@ class DefaultController extends Controller
 	 
 	public function getModelsAction(Request $request) {
 
-		$logger = $this->get('logger');
 		$id = $request->get('id');
 		$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('KellsFrontBundle:Trademark');
 		$trademark = $repository->find($id);
-		$logger->info('trademark: '.$trademark->getId().' ');
-		$logger->info('models: ');
 		$output = array();
 		foreach  ($trademark->getModels() as $model) {
-			$logger->info('model: '.$model->getId());
 			$output[] = array(
               'id' => $model->getId(),
               'description' => $model->getDescription(),
@@ -1318,16 +1397,12 @@ class DefaultController extends Controller
 	}
 
 	public function getCitiesAction(Request $request) {
-		$logger = $this->get('logger');
 		$id = $request->get('id');
 		$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('KellsFrontBundle:Province');
 		$province = $repository->find($id);
-		$logger->info('province: '.$province->getId().' ');
-		$logger->info('cities: ');
 		$output = array();
 		foreach  ($province->getCities() as $city) {
-			$logger->info('city: '.$city->getId());
 			$output[] = array(
               'id' => $city->getId(),
               'description' => $city->getDescription(),
@@ -1336,14 +1411,14 @@ class DefaultController extends Controller
 
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/json');
-		$response->setContent(json_encode($output));
+		$response->setContent(json_encode( $output));
 		return $response;
 
 	}
 
 	protected function createImage($imageFile) {
 		if ($imageFile) {
-			$image = new CarImage();
+			$image = new ImageFile();
 			$image->setFile($imageFile);
 			return $image;
 		}
@@ -1360,7 +1435,6 @@ class DefaultController extends Controller
 	}
 
 	public function toFinalizeAction(Request $request) {
-		$logger = $this->get('logger');
 		$id = $request->get('id');
 		$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('KellsFrontBundle:Car');
@@ -1371,7 +1445,6 @@ class DefaultController extends Controller
 	}
 
 	public function toEditAction(Request $request) {
-		$logger = $this->get('logger');
 		$id = $request->get('id');
 		$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('KellsFrontBundle:Car');
@@ -1399,7 +1472,6 @@ class DefaultController extends Controller
 	}
 
 	public function republishAction(Request $request) {
-		$logger = $this->get('logger');
 		$id = $request->get('id');
 		$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('KellsFrontBundle:Car');
@@ -1430,8 +1502,6 @@ class DefaultController extends Controller
 		$repository = $em->getRepository('KellsFrontBundle:Transmission');
 		$transmissions = $repository->findAll();
 			
-		$logger = $this->get('logger');
-		$logger->info("user_role: ".$user->getRoles()[0]);
 		return $this->render(
         'KellsFrontBundle:Default:solicitar-credito-usuario.html.twig', array("form"=>$form->createView(), "userRole"=>$user->getRoles()[0], 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
         	'directions'=>$directions, 'transmissions'=>$transmissions, 'message'=>$message));
@@ -1447,10 +1517,10 @@ class DefaultController extends Controller
 	}
 
 	public function creditAction(Request $request) {
-		$logger = $this->get('logger');
 		$user = $this->getUser();
-		 
-		 
+		 $em = $this->getDoctrine()->getManager();
+		$credito = new Credito();
+			 
 		$nombreSolicitante = $request->get('solicitante-nombre');
 		$apellidoSolicitante = $request->get('solicitante-apellido');
 		$dniSolicitante = $request->get('solicitante-dni');
@@ -1459,7 +1529,6 @@ class DefaultController extends Controller
 		$domicilioSolicitante = $request->get('solicitante-domicilio');
 		$provinceId = $request->get('solicitante-provincia');
 		$cityId = $request->get('solicitante-ciudad');
-		$logger->info('Ciudad Solicitante: '.$cityId);
 		$celularSolicitante = $request->get('solicitante-celular');
 		$fijoSolicitante = $request->get('solicitante-telefono');
 		$mailSolicitante = $request->get('solicitante-email');
@@ -1469,7 +1538,9 @@ class DefaultController extends Controller
 		//fotocopias
 		$files = $request->files;
 		$solicitanteServicio = $files->get('solicitante-fotocopia-servicio');
+		$solicitanteVehiculo = $files->get('solicitante-fotocopia-vehiculo');
 		$solicitanteFotoDni = $files->get('solicitante-fotocopia-dni');
+		$solicitanteFotoDni2 = $files->get('solicitante-fotocopia-dni2');
 		$solicitanteRecibo = $files->get('solicitante-fotocopia-recibo');
 		$solicitanteIngresos = $files->get('solicitante-fotocopia-ingresos');
 		$solicitanteOtra1 = $files->get('solicitante-fotocopia-otra-1');
@@ -1506,8 +1577,8 @@ class DefaultController extends Controller
 			$dniGarante = $request->get('garante-dni');
 			$estadoCivilGarante = $request->get('garante-estado-civil');
 			$domicilioGarante = $request->get('garante-domicilio');
-			$provinceId = $request->get('garante-provincia');
-			$cityId = $request->get('garante-ciudad');
+			$provinceGarante = $request->get('garante-provincia');
+			$cityGaranteId = $request->get('garante-ciudad');
 			$celularGarante = $request->get('garante-celular');
 			$fijoGarante = $request->get('garante-telefono');
 			$mailGarante = $request->get('garante-email');
@@ -1515,12 +1586,61 @@ class DefaultController extends Controller
 			$telLaboralGarante = $request->get('garante-telefono-trabajo');
 
 			//fotocopias
-			$garanteServicio = $files->get('garante-fotocopia-servicio');
 			$garanteFotoDni = $files->get('garante-fotocopia-dni');
-			$garanteRecibo = $files->get('garante-fotocopia-recibo');
-			$garanteIngresos = $files->get('garante-fotocopia-ingresos');
 			$garanteOtra1 = $files->get('garante-fotocopia-otra-1');
 			$garanteOtra2 = $files->get('garante-fotocopia-otra-2');
+			$garanteRecibo = $files->get('garante-fotocopia-recibo');
+			$garanteIngresos = $files->get('garante-fotocopia-ingresos');
+			$garanteServicio = $files->get('garante-fotocopia-servicio');
+			
+			
+			$credito->setNombreGarante($nombreGarante);
+			$credito->setApellidoGarante($apellidoGarante);
+			$credito->setDniGarante($dniGarante);
+			$credito->setEstadoCivilGarante($estadoCivilGarante);
+			$credito->setDomicilioGarante($domicilioGarante);
+			$repository = $em->getRepository('KellsFrontBundle:Province');
+			$provinciaG = $repository->find($provinceGarante);
+			if ($provinciaG){
+				$credito->setProvinciaGarante($provinciaG->getDescription());
+			}
+			$repository = $em->getRepository('KellsFrontBundle:City');
+			$cityG = $repository->find($cityGaranteId);
+			if ($cityG){
+			$credito->setCiudadGarante($cityG->getDescription());
+			}
+			$credito->setCelularGarante($celularGarante);
+			$credito->setFijoGarante($fijoGarante);
+			$credito->setActividadLaboralGarante($actividadLaboralGarante);
+			$telLaboralGarante = $request->get('Garante-telefono-trabajo');
+			$credito->setTelLaboralGarante($telLaboralGarante);
+
+			if ($garanteFotoDni) {
+				$fotocopiaDniGarante = $this->createFotocopia($garanteFotoDni);
+				$credito->setFotocopiaDniGarante($fotocopiaDniGarante);
+			}
+			if ($garanteOtra1) {
+				$fotocopiaOtra1Garante = $this->createFotocopia($garanteOtra1);
+				$credito->setFotocopiaOtra1Garante($fotocopiaOtra1Garante);
+			}
+				
+			if ($garanteOtra2) {
+				$fotocopiaOtra2Garante = $this->createFotocopia($garanteOtra2);
+				$credito->setFotocopiaOtra2Garante($fotocopiaOtra2Garante);
+			}
+
+			if ($garanteRecibo) {
+				$fotocopiaOtraReciboGarante = $this->createFotocopia($garanteRecibo);
+				$credito->setFotocopiaReciboGarante($fotocopiaOtraReciboGarante);
+			}
+			if ($garanteIngresos) {
+				$fotocopiaIngresosGarante = $this->createFotocopia($garanteIngresos);
+				$credito->setFotocopiaIngresosGarante($fotocopiaIngresosGarante);
+			}
+			if ($garanteServicio) {
+				$fotocopiaServicioGarante = $this->createFotocopia($garanteServicio);
+				$credito->setFotocopiaServicioGarante($fotocopiaServicioGarante);
+			}
 		}
 		//Unidad a adquirir
 		$marcaId = $request->get('marca');
@@ -1540,19 +1660,21 @@ class DefaultController extends Controller
 		$credito = new Credito();
 		$credito->setNombreSolicitante($nombreSolicitante);
 		$credito->setApellidoSolicitante($apellidoSolicitante);
-		$logger->info('Apellido Solicitante '.$credito->getApellidoSolicitante());
 		$credito->setDniSolicitante($dniSolicitante);
 		$credito->setEstadoCivilSolicitante($estadoCivilSolicitante);
 		$credito->setNacimientoSolicitante($nacimientoSolicitante);
 		$credito->setDomicilioSolicitante($domicilioSolicitante);
-		$em = $this->getDoctrine()->getManager();
+		
 		$repository = $em->getRepository('KellsFrontBundle:Province');
 		$provincia = $repository->find($provinceId);
-		$credito->setProvinciaSolicitante($provincia->getDescription());
-
+		if ($provincia) {
+			$credito->setProvinciaSolicitante($provincia->getDescription());
+		}
 		$repository = $em->getRepository('KellsFrontBundle:City');
 		$city = $repository->find($cityId);
-		$credito->setCiudadSolicitante($city->getDescription());
+		if ($city) {
+			$credito->setCiudadSolicitante($city->getDescription());
+		}
 		$credito->setCelularSolicitante($celularSolicitante);
 		$credito->setFijoSolicitante($fijoSolicitante);
 		$credito->setMailSolicitante($mailSolicitante);
@@ -1565,9 +1687,18 @@ class DefaultController extends Controller
 			$fotocopiaServicioSolicitante = $this->createFotocopia($solicitanteServicio);
 			$credito->setFotocopiaServicioSolicitante($fotocopiaServicioSolicitante);
 		}
+		
+		if ($solicitanteVehiculo) {
+			$fotocopiaVehiculo = $this->createFotocopia($solicitanteVehiculo);
+			$credito->setFotocopiaVehiculo($fotocopiaVehiculo);
+		}
 		if ($solicitanteFotoDni) {
 			$fotocopiaDniSolicitante = $this->createFotocopia($solicitanteFotoDni);
 			$credito->setFotocopiaDniSolicitante($fotocopiaDniSolicitante);
+		}
+		if ($solicitanteFotoDni2) {
+			$fotocopiaDni2Solicitante = $this->createFotocopia($solicitanteFotoDni2);
+			$credito->setFotocopiaDni2Solicitante($fotocopiaDni2Solicitante);
 		}
 		if ($solicitanteRecibo) {
 			$fotocopiaReciboSolicitante = $this->createFotocopia($solicitanteRecibo);
@@ -1596,8 +1727,8 @@ class DefaultController extends Controller
 			$credito->setEstadoCivilConyuge($estadoCivilConyuge);
 			$credito->setDomicilioConyuge($domicilioConyuge);
 			$repository = $em->getRepository('KellsFrontBundle:Province');
-			$provincia = $repository->find($provinceId);
-			$credito->setProvinciaConyuge($provincia->getDescription());
+			$provinciaC = $repository->find($conyugeProvinceId);
+			$credito->setProvinciaConyuge($provinciaC->getDescription());
 				
 			$repository = $em->getRepository('KellsFrontBundle:City');
 			$city = $repository->find($cityId);
@@ -1648,10 +1779,19 @@ class DefaultController extends Controller
 		$credito->setValor($value);
 		$credito->setType($type);
 		$credito->setDomain($domain);
+		
+		$credito->setSeguro($request->get('seguro'));
+		$credito->setTarjeta($request->get('tarjeta'));
+		$credito->setNumeroTarjeta($request->get('tarjeta-numero'));
+		$credito->setCodigoTarjeta($request->get('tarjeta-codigo'));
+		$credito->setVencimientoTarjeta($request->get('tarjeta-vencimiento'));
+		
 
 		//credito
 		$credito->setMontoCredito($montoCredito);
 		$credito->setCantidadCuotas($cantidadCuotas);
+		$credito->setGastos($request->get('gastos'));
+		$credito->setPrimerVencimiento($request->get('vencimiento'));
 		$credito->setComentarios($comments);
 
 		$credito->setDate(new \DateTime());
@@ -1665,158 +1805,161 @@ class DefaultController extends Controller
 		$repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
 		$configuration = $repository->findAll()[0];
 
-		$intervalo0 = 2014;
-		$intervalo1 = $intervalo0 - 6;
+		$intervalo0 = $configuration->getAnio0km();
+		$intervalo1 = $intervalo0 - 5;
 		$intervalo2 = $intervalo1 - 5;
 		$intervalo3 = $intervalo2 - 5;
 		$y = (int) $year->getDescription();
 		$cuota = 0;
+		if ($configuration->getImpuestos()) {
+			$capital = (int)$montoCredito + (int)$configuration->getImpuestos();
+		}
 		if ($y == $intervalo0) {
 			if ($cantidadCuotas == 2) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas2();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas2();
 			} else if ($cantidadCuotas == 4) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas4();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas4();
 			} else if ($cantidadCuotas == 6) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas6();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas6();
 			} else if ($cantidadCuotas == 8) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas8();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas8();
 			} else if ($cantidadCuotas == 10) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas10();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas10();
 			} else if ($cantidadCuotas == 12) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas12();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas12();
 			} else if ($cantidadCuotas == 14) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas14();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas14();
 			} else if ($cantidadCuotas == 16) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas16();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas16();
 			} else if ($cantidadCuotas == 18) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas18();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas18();
 			} else if ($cantidadCuotas == 20) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas20();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas20();
 			} else if ($cantidadCuotas == 22) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas22();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas22();
 			} else if ($cantidadCuotas == 24) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas24();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas24();
 			} else if ($cantidadCuotas == 26) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas26();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas26();
 			} else if ($cantidadCuotas == 28) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas28();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas28();
 			} else if ($cantidadCuotas == 30) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas30();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas30();
 			} else if ($cantidadCuotas == 32) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas32();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas32();
 			} else if ($cantidadCuotas == 34) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas34();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas34();
 			} else if ($cantidadCuotas == 36) {
-				$cuota = (float)$montoCredito * (float)$configuration->getCerokmCuotas36();
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas36();
 			}
 			$credito->setTasa($configuration->getCerokmtasa());
 			$credito->setTea($configuration->getCerokmtea());
 
 		} else if ($y < $intervalo0 && $y >= $intervalo1) {
 			if ($cantidadCuotas == 2) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas2();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas2();
 			} else if ($cantidadCuotas == 4) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas4();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas4();
 			} else if ($cantidadCuotas == 6) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas6();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas6();
 			} else if ($cantidadCuotas == 8) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas8();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas8();
 			} else if ($cantidadCuotas == 10) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas10();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas10();
 			} else if ($cantidadCuotas == 12) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas12();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas12();
 			} else if ($cantidadCuotas == 14) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas14();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas14();
 			} else if ($cantidadCuotas == 16) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas16();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas16();
 			} else if ($cantidadCuotas == 18) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas18();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas18();
 			} else if ($cantidadCuotas == 20) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas20();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas20();
 			} else if ($cantidadCuotas == 22) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas22();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas22();
 			} else if ($cantidadCuotas == 24) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas24();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas24();
 			} else if ($cantidadCuotas == 26) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas26();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas26();
 			} else if ($cantidadCuotas == 28) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas28();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas28();
 			} else if ($cantidadCuotas == 30) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas30();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas30();
 			} else if ($cantidadCuotas == 32) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas32();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas32();
 			} else if ($cantidadCuotas == 34) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas34();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas34();
 			} else if ($cantidadCuotas == 36) {
-				$cuota = (float)$montoCredito * (float)$configuration->getUnoA5Cuotas36();
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas36();
 			}
 			$credito->setTasa($configuration->getUnoA5tasa());
 			$credito->setTea($configuration->getUnoA5tea());
 		} else if ($y < $intervalo1 && $y >= $intervalo2) {
 			if ($cantidadCuotas == 2) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas2();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas2();
 			} else if ($cantidadCuotas == 4) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas4();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas4();
 			} else if ($cantidadCuotas == 6) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas6();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas6();
 			} else if ($cantidadCuotas == 8) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas8();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas8();
 			} else if ($cantidadCuotas == 10) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas10();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas10();
 			} else if ($cantidadCuotas == 12) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas12();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas12();
 			} else if ($cantidadCuotas == 14) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas14();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas14();
 			} else if ($cantidadCuotas == 16) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas16();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas16();
 			} else if ($cantidadCuotas == 18) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas18();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas18();
 			} else if ($cantidadCuotas == 20) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas20();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas20();
 			} else if ($cantidadCuotas == 22) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas22();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas22();
 			} else if ($cantidadCuotas == 24) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas24();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas24();
 			} else if ($cantidadCuotas == 26) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas26();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas26();
 			} else if ($cantidadCuotas == 28) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas28();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas28();
 			} else if ($cantidadCuotas == 30) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas30();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas30();
 			} else if ($cantidadCuotas == 32) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas32();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas32();
 			} else if ($cantidadCuotas == 34) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas34();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas34();
 			} else if ($cantidadCuotas == 36) {
-				$cuota = (float)$montoCredito * (float)$configuration->getSeisA10Cuotas36();
+				$cuota = (float)$capital * (float)$configuration->getSeisA10Cuotas36();
 			}
 			$credito->setTasa($configuration->getSeisA10tasa());
 			$credito->setTea($configuration->getSeisA10tea());
 		} else if($y < $intervalo2 ) {
 			if ($cantidadCuotas == 2) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas2();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas2();
 			} else if ($cantidadCuotas == 4) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas4();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas4();
 			} else if ($cantidadCuotas == 6) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas6();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas6();
 			} else if ($cantidadCuotas == 8) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas8();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas8();
 			} else if ($cantidadCuotas == 10) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas10();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas10();
 			} else if ($cantidadCuotas == 12) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas12();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas12();
 			} else if ($cantidadCuotas == 14) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas14();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas14();
 			} else if ($cantidadCuotas == 16) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas16();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas16();
 			} else if ($cantidadCuotas == 18) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas18();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas18();
 			} else if ($cantidadCuotas == 20) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas20();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas20();
 			} else if ($cantidadCuotas == 22) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas22();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas22();
 			} else if ($cantidadCuotas == 24) {
-				$cuota = (float)$montoCredito * (float)$configuration->getOnceA15Cuotas24();
+				$cuota = (float)$capital * (float)$configuration->getOnceA15Cuotas24();
 			}
 			$credito->setTasa($configuration->getOnceA15tasa());
 			$credito->setTea($configuration->getOnceA15tea());
@@ -1827,6 +1970,40 @@ class DefaultController extends Controller
 		$em->persist($credito);
 		$em->flush();
 
+		$url = $this->generateUrl('verCredito', array('id' => $credito->getId()), true);
+		$repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
+		$configuration = $repository->findAll()[0];
+		
+		$message1 = \Swift_Message::newInstance()
+		->setSubject('Nuevo Crédito: '.$credito->getNombreSolicitante().' '.$credito->getApellidoSolicitante())
+		->setFrom('no-responder@alarfin.com.ar')
+		->setTo($configuration->getEmail1())
+		->setBody("<p>Para acceder al nuevo crédito, por favor, haga click en: ".$url."</p>", 'text/html');
+
+		
+		$this->get('mailer')->send($message1);
+		
+		
+		if ($configuration->getEmail2()) {
+			$message1 = \Swift_Message::newInstance()
+			->setSubject('Nuevo Crédito: '.$credito->getNombreSolicitante().' '.$credito->getApellidoSolicitante())
+			->setFrom('no-responder@alarfin.com.ar')
+			->setTo($configuration->getEmail2())
+			->setBody("<p>Para acceder al nuevo crédito, por favor, haga click en: ".$url."</p>", 'text/html');
+			
+			$this->get('mailer')->send($message1);
+		}
+		
+		if ($configuration->getEmail3()) {
+			$message1 = \Swift_Message::newInstance()
+			->setSubject('Nuevo Crédito: '.$credito->getNombreSolicitante().' '.$credito->getApellidoSolicitante())
+			->setFrom('no-responder@alarfin.com.ar')
+			->setTo($configuration->getEmail3())
+			->setBody("<p>Para acceder al nuevo crédito, por favor, haga click en: ".$url."</p>", 'text/html');
+
+			$this->get('mailer')->send($message1);
+		}
+		
 		return $this->redirect($this->generateUrl('creditRequestSuccess', array("message"=>"Se ha enviado la solicitud exitosamente")));
 
 	}
@@ -1844,7 +2021,6 @@ class DefaultController extends Controller
 	 
 	public function simularCuotasAction(Request $request) {
 
-		$logger = $this->get('logger');
 		 
 		$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
@@ -1853,12 +2029,13 @@ class DefaultController extends Controller
 		$yearId = $request->get('yearId');
 		$year = $em->getRepository('KellsFrontBundle:Year')->find($yearId);
 		$capital = (int)$request->get('capital');
+		if ($configuration->getImpuestos()) {
+			$capital = $capital + (int)$configuration->getImpuestos();
+		}
 		$y = (int)$year->getDescription();
 
-		$logger->info('Año '.$y);
-		$logger->info('Capital '.$capital);
-		$intervalo0 = 2015;
-		$intervalo1 = $intervalo0 - 6;
+		$intervalo0 = $configuration->getAnio0km();
+		$intervalo1 = $intervalo0 - 5;
 		$intervalo2 = $intervalo1 - 5;
 		$intervalo3 = $intervalo2 - 5;
 		$cuota2 = 0;
@@ -1902,10 +2079,7 @@ class DefaultController extends Controller
 				
 				
 		} else if ($y < $intervalo0 && $y >= $intervalo1) {
-			$logger->info('Intervalo: 2013-2008');
 			$cuota2 = $capital * (float)$configuration->getUnoA5Cuotas2();
-			$logger->info('Configuracion Cuota 1 a 5 '.$configuration->getUnoA5Cuotas2() );
-			$logger->info('Valor Cuota 2 '.$cuota2 );
 			$cuota4 = $capital * (float)$configuration->getUnoA5Cuotas4();
 			$cuota6 = $capital * (float)$configuration->getUnoA5Cuotas6();
 			$cuota8 = $capital * (float)$configuration->getUnoA5Cuotas8();
@@ -1957,27 +2131,26 @@ class DefaultController extends Controller
 			$cuota24 = $capital * (float)$configuration->getOnceA15Cuotas24();
 				
 		}
-		$logger->info('Valor Cuota 2 '.$cuota2 );
 		$output = array();
-		$output[] = array('key'=>'Cuota 2', 'value'=>$cuota2);
-		$output[] = array('key'=>'Cuota 4', 'value'=>$cuota4);
-		$output[] = array('key'=>'Cuota 6', 'value'=>$cuota6);
-		$output[] = array('key'=>'Cuota 8', 'value'=>$cuota8);
-		$output[] = array('key'=>'Cuota 10', 'value'=>$cuota10);
-		$output[] = array('key'=>'Cuota 12', 'value'=>$cuota12);
-		$output[] = array('key'=>'Cuota 14', 'value'=>$cuota14);
-		$output[] = array('key'=>'Cuota 16', 'value'=>$cuota16);
-		$output[] = array('key'=>'Cuota 18', 'value'=>$cuota18);
-		$output[] = array('key'=>'Cuota 20', 'value'=>$cuota20);
-		$output[] = array('key'=>'Cuota 22', 'value'=>$cuota22);
-		$output[] = array('key'=>'Cuota 24', 'value'=>$cuota24);
+		$output[] = array('key'=>'2 Cuotas', 'value'=>round($cuota2));
+		$output[] = array('key'=>'4 Cuotas', 'value'=>round($cuota4));
+		$output[] = array('key'=>'6 Cuotas', 'value'=>round($cuota6));
+		$output[] = array('key'=>'8 Cuotas', 'value'=>round($cuota8));
+		$output[] = array('key'=>'10 Cuotas', 'value'=>round($cuota10));
+		$output[] = array('key'=>'12 Cuotas', 'value'=>round($cuota12));
+		$output[] = array('key'=>'14 Cuotas', 'value'=>round($cuota14));
+		$output[] = array('key'=>'16 Cuotas', 'value'=>round($cuota16));
+		$output[] = array('key'=>'18 Cuotas', 'value'=>round($cuota18));
+		$output[] = array('key'=>'20 Cuotas', 'value'=>round($cuota20));
+		$output[] = array('key'=>'22 Cuotas', 'value'=>round($cuota22));
+		$output[] = array('key'=>'24 Cuotas', 'value'=>round($cuota24));
 		if ($y >= $intervalo2 ) {
-			$output[] = array('key'=>'Cuota 26', 'value'=>$cuota26);
-			$output[] = array('key'=>'Cuota 28', 'value'=>$cuota28);
-			$output[] = array('key'=>'Cuota 30', 'value'=>$cuota30);
-			$output[] = array('key'=>'Cuota 32', 'value'=>$cuota32);
-			$output[] = array('key'=>'Cuota 34', 'value'=>$cuota34);
-			$output[] = array('key'=>'Cuota 36', 'value'=>$cuota36);
+			$output[] = array('key'=>'26 Cuotas', 'value'=>round($cuota26));
+			$output[] = array('key'=>'28 Cuotas', 'value'=>round($cuota28));
+			$output[] = array('key'=>'30 Cuotas', 'value'=>round($cuota30));
+			$output[] = array('key'=>'32 Cuotas', 'value'=>round($cuota32));
+			$output[] = array('key'=>'34 Cuotas', 'value'=>round($cuota34));
+			$output[] = array('key'=>'36 Cuotas', 'value'=>round($cuota36));
 		}
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/json');
@@ -1993,14 +2166,16 @@ class DefaultController extends Controller
 
 		$cantidadCuotas = $request->get('cuotas');
 		$montoCredito = $request->get('monto');
+		if ($configuration->getImpuestos()) {
+			$montoCredito = (int)$montoCredito + (int)$configuration->getImpuestos();
+		}
 		$yearId = $request->get('yearId');
 		$repository = $em->getRepository('KellsFrontBundle:Year');
 		$year = $repository->find($yearId);
 
-		$intervalo0 = 2015;
+		$intervalo0 = $configuration->getAnio0km();
 
-		$intervalo0 = 2015;
-		$intervalo1 = $intervalo0 - 6;
+		$intervalo1 = $intervalo0 - 5;
 		$intervalo2 = $intervalo1 - 5;
 		$intervalo3 = $intervalo2 - 5;
 		$y = (int) $year->getDescription();
@@ -2147,7 +2322,7 @@ class DefaultController extends Controller
 			}
 		}
 		 
-		$output = $cuota;
+		$output = round($cuota);
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/json');
 		$response->setContent(json_encode($output));
@@ -2174,7 +2349,7 @@ class DefaultController extends Controller
 		}
 		$message = \Swift_Message::newInstance()
 		->setSubject('Alarfin recuperación contraseña')
-		->setFrom('no-reply@alarfin.com.ar')
+		->setFrom('no-responder@alarfin.com.ar')
 		->setTo($user->getMail())
 		->setBody('<p>Su contraseña es:'.$user->getPassword().'</p>', 'text/html'
 		);
@@ -2189,24 +2364,153 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$car = $em->getRepository('KellsFrontBundle:Car')->find($publicacionId);
 		$user = $car->getUser();
+		if (!$user) {
+			$user = $car->getLicensee();
+		}
 		$userThatMakeARequest = $this->getUser();
+		$name = "";
+		if ($userThatMakeARequest->getRoles()[0] == 'ROLE_LICENSEE') {
+			$name = $userThatMakeARequest->getFantasyName();
+		} else {
+			$name= $userThatMakeARequest->getFirstName();
+		}
+		
 		$message = \Swift_Message::newInstance()
 		->setSubject('Realizaron una consulta por la publicación '.$car->getTitle())
-		->setFrom('no-reply@alarfin.com.ar')
+		->setFrom('no-responder@alarfin.com.ar')
 		->setTo($user->getMail())
-		->setBody("<p>".$consulta."</p><p>Nombre: ".$userThatMakeARequest->getFirstName()."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p>", 'text/html');
+		->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p>", 'text/html');
 
 		$this->get('mailer')->send($message);
 
+		$repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
+		$configuration = $repository->findAll()[0];
+		
+		$message1 = \Swift_Message::newInstance()
+		->setSubject('Realizaron una consulta por la publicación '.$car->getTitle())
+		->setFrom('no-responder@alarfin.com.ar')
+		->setTo($configuration->getEmail1())
+		->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p>", 'text/html');
+
+		$this->get('mailer')->send($message1);
 		 // store a message for the very next request
    		$this->get('session')->getFlashBag()->add('notice', 'Su consulta fue enviada exitosamente!');
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
 
+		if ($configuration->getEmail2()) {
+			$message1 = \Swift_Message::newInstance()
+			->setSubject('Realizaron una consulta por la publicación '.$car->getTitle())
+			->setFrom('no-responder@alarfin.com.ar')
+			->setTo($configuration->getEmail2())
+			->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p>", 'text/html');
+
+		$this->get('mailer')->send($message1);
+		}
+		if ($configuration->getEmail3()) {
+			$message1 = \Swift_Message::newInstance()
+			->setSubject('Realizaron una consulta por la publicación '.$car->getTitle())
+			->setFrom('no-responder@alarfin.com.ar')
+			->setTo($configuration->getEmail3())
+			->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p>", 'text/html');
+
+		$this->get('mailer')->send($message1);
+		}
 		return $this->render('KellsFrontBundle:Default:ficha.html.twig', array( 'car' => $car , 'features' => $car->getFeatures(), 'form'=>$form->createView()));
 	}
 	
 	public function registerNowAction() {
 		return $this->render('KellsFrontBundle:Default:registrarmeAhora.html.twig');
 	}
+	
+ 	protected function corteImagen($ruta_imagen) {
+    	$miniatura_ancho_maximo = 520;
+		$miniatura_alto_maximo = 390;
+
+		$info_imagen = getimagesize($ruta_imagen);
+		$imagen_ancho = $info_imagen[0];
+		$imagen_alto = $info_imagen[1];
+		$imagen_tipo = $info_imagen['mime'];
+		
+		
+		$proporcion_imagen = $imagen_ancho / $imagen_alto;
+		$proporcion_miniatura = $miniatura_ancho_maximo / $miniatura_alto_maximo;
+		if ( $proporcion_imagen > $proporcion_miniatura ){
+			$miniatura_ancho = $miniatura_alto_maximo * $proporcion_imagen;
+			$miniatura_alto = $miniatura_alto_maximo;
+		} else if ( $proporcion_imagen < $proporcion_miniatura ){
+			$miniatura_ancho = $miniatura_ancho_maximo;
+			$miniatura_alto = $miniatura_ancho_maximo / $proporcion_imagen;
+		} else {
+			return;
+		}
+		
+		$x = ( $miniatura_ancho - $miniatura_ancho_maximo ) / 2;
+		$y = ( $miniatura_alto - $miniatura_alto_maximo ) / 2;
+		
+		switch ( $imagen_tipo ){
+			case "image/jpg":
+			case "image/jpeg":
+				$imagen = imagecreatefromjpeg( $ruta_imagen );
+				break;
+			case "image/png":
+				$imagen = imagecreatefrompng( $ruta_imagen );
+				break;
+			case "image/gif":
+				$imagen = imagecreatefromgif( $ruta_imagen );
+				break;
+		}
+		
+		$lienzo = imagecreatetruecolor( $miniatura_ancho_maximo, $miniatura_alto_maximo );
+		$lienzo_temporal = imagecreatetruecolor( $miniatura_ancho, $miniatura_alto );
+		
+		imagecopyresampled($lienzo_temporal, $imagen, 0, 0, 0, 0, $miniatura_ancho, $miniatura_alto, $imagen_ancho, $imagen_alto);
+		imagecopy($lienzo, $lienzo_temporal, 0,0, $x, $y, $miniatura_ancho_maximo, $miniatura_alto_maximo);
+		
+		imagejpeg($lienzo, "$ruta_imagen", 80);
+    }
+    
+    public function contactoEnviarAction(Request $request) {
+    	
+    	$body= '
+					<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+					<html>
+					<head>
+					<title>Untitled Document</title>
+					<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+					</head>
+					<body>
+						<table width="560" border="0" style="font-family:Arial, Tahoma, Verdana, Helvetica, sans-serif;font-size:12px;color:#000;">
+						  <tr>
+							<td width="210">Nombre y Apellido:</td>
+							<td width="350"><strong>'.$request->get("nombre").'</strong></td>
+						  </tr>
+						  <tr>
+							<td>E-mail:</td>
+							<td><strong>'.$request->get("email").'</strong></td>
+						  </tr>
+						  <tr>
+							<td>Teléfono:</td>
+							<td><strong>'.$request->get("telefono").'</strong></td>
+						  </tr>
+						  <tr>
+							<td>Consulta o comentario:</td>
+							<td><strong>'.$request->get("consulta").'</strong></td>
+						  </tr>
+						</table>
+					</body>
+					</html>			
+					';
+    	
+    	$message1 = \Swift_Message::newInstance()
+			->setSubject('Contacto desde la web')
+			->setFrom('info@alarfin.com.ar')
+			->setTo("alarfinsa@gmail.com")
+			->setBody($body, 'text/html');
+
+		$this->get('mailer')->send($message1);
+    	
+    	return $this->render('KellsFrontBundle:Default:contacto-gracias.html.twig');
+    }
 }
+

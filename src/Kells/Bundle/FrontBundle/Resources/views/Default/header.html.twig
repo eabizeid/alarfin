@@ -15,7 +15,7 @@
                 <span class="hidden-xs hidden-sm">Soy Usuario</span> <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ path('user_login_view') }}"><strong>Ingresar</strong></a></li>
+                    <li><a href="{{ path('user_login_view', {'tipo': 'usuarios'}) }}"><strong>Ingresar</strong></a></li>
                     <li><a href="{{ path('userRegistration') }}"><strong>Registrarme</strong></a></li>
                 </ul>
             </div>
@@ -25,8 +25,8 @@
                 <span class="hidden-xs hidden-sm">Soy Concesionaria</span> <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                     <li><a href="{{ path('user_login_view') }}"><strong>Ingresar</strong></a></li>
-                    <li><a href="{{ path('licenseeRegistration')}}">Registrarme</a></li>
+                     <li><a href="{{ path('user_login_view', {'tipo': 'concesionarias'}) }}"><strong>Ingresar</strong></a></li>
+                    <li><a href="{{ path('licenseeRegistration')}}"><strong>Registrarme</strong></a></li>
                 </ul>
             </div>
             {% endif %}

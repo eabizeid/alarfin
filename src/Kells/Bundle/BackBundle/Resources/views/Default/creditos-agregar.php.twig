@@ -1,0 +1,905 @@
+{% extends 'KellsBackBundle:Default:base2.php.twig' %}
+{% block body %}
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Agregar crédito</h1>
+                </div>
+            </div>            
+		  	<div class="row">
+				<form role="form" id="publishForm" method="post" action="{{ path('saveCredit')}}" enctype="multipart/form-data">
+				<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>El publicador no se encuentra registrado.</div>
+				<div  id="divMsg1" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>Debe completar todos los campos obligatorios</div>
+                       <div class="col-md-12">
+                        	<div class="well well-gris-claro">
+                                <div class="row">
+                                	<div class="col-sm-12">
+                                        <div class="alert alert-titulo" role="alert">
+                                            <h4 class="nomar text-uppercase"> usuario / concesionaria</h4>
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6">                                
+                                        <div class="form-group">
+                                            <label for="publicador-tipo">Tipo</label>
+                                            <select name="publicador-tipo" id="publicador-tipo" class="form-control input-lg" required tabindex="1" >
+                                            	<option> Seleccioná un tipo</option>
+                                                <option>Usuario</option>
+                                                <option>Concesionaria</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="publicador-nombre">Nombre</label>
+                                            <input type="text" name="publicador-nombre" id="publicador-nombre" class="form-control input-lg" required tabindex="2" >
+                                        </div>
+                                    </div>
+                                </div>
+	                   		</div> 
+                        </div>
+                         <div id="solicitante-1">                   
+                        <div class="col-md-12 topmar">
+                        	<div class="well well-gris-claro">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="alert alert-danger" role="alert">
+                                            <h4 class="nomar text-uppercase">Datos del solicitante 1</h4>
+                                        </div>
+                                    </div> 
+                                	<div class="col-sm-5"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-nombre">Nombre</label>
+                                          *
+                                          <input type="text" name="solicitante-nombre" id="solicitante-nombre" required class="form-control input-lg" tabindex="3" autofocus>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-apellido">Apellido</label>
+                                            *
+                                            <input type="text" name="solicitante-apellido" id="solicitante-apellido" required class="form-control input-lg" tabindex="4">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2"> 
+                                        <div class="form-group">
+                                            <label for="porcentaje">Porcentaje</label>
+                                          *
+                                          <input type="number" name="porcentaje" id="porcentaje" min="1" max="100" required class="form-control input-lg" tabindex="5" value="100">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                  <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-dni">DNI</label>
+                                            *
+                                            <input type="number" name="solicitante-dni" id="solicitante-dni" maxlength="8" required class="form-control" tabindex="5">
+                                        </div>
+                                  </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-nacimiento">Fecha de nacimiento</label>
+                                            *
+                                            <input type="date" name="solicitante-nacimiento" id="solicitante-nacimiento" required class="form-control" tabindex="6">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-estado-civil">Estado civil</label>
+                                            *
+                                            <select type="date" name="solicitante-estado-civil" id="solicitante-estado-civil" required class="form-control" tabindex="7">
+                                            	<option>&nbsp;</option>
+                                                <option>Soltero/a</option>
+                                                <option>Casado/a</option>
+                                                <option>Divorciado/a</option>
+                                                <option>Viudo/a</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-domicilio">Domicilio</label>
+                                            *
+                                            <input type="text" name="solicitante-domicilio" id="solicitante-domicilio" required class="form-control" tabindex="8">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-provincia">Provincia</label>
+                                            *
+                                            <select name="solicitante-provincia" id="solicitante-provincia" required class="form-control" tabindex="9">
+                                            	<option>&nbsp;</option>
+												{% for pcia in provinces %}
+                                                <option value="{{ pcia.id }}">{{ pcia.description }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                  <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-ciudad">Ciudad</label>
+                                            *
+                                            <select name="solicitante-ciudad" id="solicitante-ciudad" required class="form-control" tabindex="10">
+                                            	<option>&nbsp;</option>
+                                            </select>
+                                        </div>
+                                  </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-celular">Tel&eacute;fono celular</label>
+                                            *
+                                            <input type="tel" name="solicitante-celular" id="solicitante-celular" required class="form-control" tabindex="11">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-telefono">Tel&eacute;fono fijo</label>
+                                            <input type="tel" name="solicitante-telefono" id="solicitante-telefono" class="form-control" tabindex="12">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-email">Email</label>
+                                            <input type="email" name="solicitante-email" id="solicitante-email" class="form-control" tabindex="13">
+                                        </div>
+                                    </div>     
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-laboral">Actividad laboral</label>
+                                          *
+                                          <input type="text" name="solicitante-laboral" id="solicitante-laboral" required class="form-control" tabindex="14">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-telefono-trabajo">Tel&eacute;fono del trabajo</label>
+                                            <input type="tel" name="solicitante-telefono-trabajo" id="solicitante-telefono-trabajo" class="form-control" tabindex="15">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                  <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-fotocopia-dni">Fotocopia del DNI 1</label>
+                                            <input type="file" name="solicitante-fotocopia-dni" id="solicitante-fotocopia-dni" class="form-control" tabindex="16">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                          <label for="solicitante-fotocopia-dni2">Fotocopia del DNI 2</label>
+                                          <input type="file" name="solicitante-fotocopia-dni2" id="solicitante-fotocopia-dni2" class="form-control" tabindex="17">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                          <label for="solicitante-fotocopia-recibo">Fotocopia del recibo de sueldo</label>
+                                          <input type="file" name="solicitante-fotocopia-recibo" id="solicitante-fotocopia-recibo" class="form-control" tabindex="18">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                          <label for="solicitante-fotocopia-ingresos">Fotocopia de comprobante de ingresos</label>
+                                          <input type="file" name="solicitante-fotocopia-ingresos" id="solicitante-fotocopia-ingresos" class="form-control" tabindex="19">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-fotocopia-vehiculo">Título del vehículo</label>
+                                            <input type="file" name="solicitante-fotocopia-vehiculo" id="solicitante-fotocopia-vehiculo" class="form-control" tabindex="20">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-fotocopia-otra-1">Otra fotocopia</label>
+                                            <input type="file" name="solicitante-fotocopia-otra-1" id="solicitante-fotocopia-otra-1" class="form-control" tabindex="21">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                          <label for="solicitante-fotocopia-otra-2">Otra fotocopia</label>
+                                          <input type="file" name="solicitante-fotocopia-otra-2" id="solicitante-fotocopia-otra-2" class="form-control" tabindex="22">
+                                        </div>
+                                    </div> 
+                                     <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-fotocopia-servicio">Fotocopia de un servicio</label>
+                                            <input type="file" name="solicitante-fotocopia-servicio" id="solicitante-fotocopia-servicio" class="form-control" tabindex="23">
+                                        </div>
+                                    </div> 
+
+
+							<div id="conyuge-1"  style="display: none;" >
+                                   <div class="col-sm-12 topmar">
+                                   	<div class="alert alert-danger" role="alert">
+                                        <h4 class="nomar text-uppercase">Datos del c&oacute;nyuge 1</h4>
+                                    </div>
+                                   </div> 
+                                     
+								<div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="conyuge-nombre">Nombre</label>
+                                          *
+                                          <input type="text" name="conyuge-nombre" id="conyuge-nombre" class="form-control input-lg" tabindex="24" autofocus>
+                                        </div>
+                                </div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="conyuge-apellido">Apellido</label>
+                                            *
+                                            <input type="text" name="conyuge-apellido" id="conyuge-apellido" class="form-control input-lg" tabindex="25">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="conyuge-dni">DNI</label>
+                                            *
+                                            <input type="number" name="conyuge-dni" id="conyuge-dni" maxlength="8" class="form-control" autofocus tabindex="26">
+                                        </div>
+                                    </div>
+									<div class="col-sm-4"> 
+                                      <div class="form-group">
+                                            <label for="conyuge-estado-civil">Estado civil</label>
+                                            *
+                                            <select type="date" name="conyuge-estado-civil" id="conyuge-estado-civil" class="form-control" tabindex="27">
+                                            	<option>&nbsp;</option>
+                                                <option>Soltero/a</option>
+                                                <option>Casado/a</option>
+                                                <option>Divorciado/a</option>
+                                                <option>Viudo/a</option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+									<div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="conyuge-domicilio">Domicilio</label>
+                                          *
+                                          <input type="text" name="conyuge-domicilio" id="conyuge-domicilio"  class="form-control" tabindex="28">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                          <label for="conyuge-provincia">Provincia</label>
+                                          *
+                                          <select name="conyuge-provincia" id="conyuge-provincia"  class="form-control" tabindex="29">
+                                            	<option>&nbsp;</option>
+												{% for pcia in provinces %}
+                                                <option value="{{ pcia.id }}">{{ pcia.description }}</option>
+                                                {% endfor %}
+                                           </select>
+                                        </div>
+                                    </div>
+                                <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                          <label for="conyuge-ciudad">Ciudad</label>
+                                          *
+                                          <select name="conyuge-ciudad" id="conyuge-ciudad"  class="form-control" tabindex="30">
+                                            	<option>&nbsp;</option>
+                                            </select>
+                                        </div>
+                                </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="conyuge-celular">Tel&eacute;fono celular</label>
+                                            <input type="tel" name="conyuge-celular" id="conyuge-celular" class="form-control" tabindex="31">
+                                      </div>
+                                </div>
+                                <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="conyuge-telefono">Tel&eacute;fono fijo</label>
+                                            <input type="tel" name="conyuge-telefono" id="conyuge-telefono" class="form-control" tabindex="32">
+                                        </div>
+                                  </div>    
+                                  <div class="clearfix"></div>
+                                <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="conyuge-laboral">Actividad laboral</label>
+                                          *
+                                          <input type="text" name="conyuge-laboral" id="conyuge-laboral" class="form-control" tabindex="33">
+                                        </div>
+                                </div>
+                                <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="conyuge-telefono-trabajo">Tel&eacute;fono del trabajo</label>
+                                          <input type="tel" name="conyuge-telefono-trabajo" id="conyuge-telefono-trabajo" class="form-control" tabindex="34">
+                                        </div>
+                                </div>
+                                 <div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                          <label for="conyuge-fotocopia-dni">Fotocopia del DNI</label>
+                                          <input type="file" name="conyuge-fotocopia-dni" id="conyuge-fotocopia-dni" class="form-control" tabindex="35">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="conyuge-fotocopia-otra-1">Otra fotocopia</label>
+                                            <input type="file" name="conyuge-fotocopia-otra-1" id="conyuge-fotocopia-otra-1" class="form-control" tabindex="36">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                          <label for="conyuge-fotocopia-otra-2">Otra fotocopia</label>
+                                          <input type="file" name="conyuge-fotocopia-otra-2" id="conyuge-fotocopia-otra-2" class="form-control" tabindex="37">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="conyuge-fotocopia-otra-3">Otra fotocopia</label>
+                                            <input type="file" name="conyuge-fotocopia-otra-3" id="conyuge-fotocopia-otra-3" class="form-control" tabindex="38">
+                                        </div>
+                                    </div> 
+                                    </div>
+                                </div>
+	                   		</div> 
+                        </div>
+                        </div>
+                        <div class="col-md-12 topmar10">
+                        	<!-- button type="button" class="btn btn-form" tabindex="35"><i class="fa fa-plus-square fa-fw"></i> Agregar otro solicitante</button>
+                            &nbsp; <button type="button" class="btn btn-form" tabindex="35"><i class="fa fa-plus-square fa-fw"></i> Agregar garante</button -->
+                        </div>
+                        
+						<div id="garante-1">
+                        <div class="col-md-12 topmar">
+                        	<div class="well well-gris-claro">
+                              <div class="row">
+                              		<div class="col-sm-12">
+                                        <div class="alert alert-danger" role="alert">
+                                            <h4 class="nomar text-uppercase">Datos del garante 1</h4>
+                                        </div>
+                                    </div> 
+									<div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="garante-nombre">Nombre</label>
+                                          <input type="text" name="garante-nombre" id="garante-nombre" class="form-control input-lg" tabindex="40" autofocus>
+                                        </div>
+                                </div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="garante-apellido">Apellido</label>
+                                            
+                                            <input type="text" name="garante-nombre" id="garante-apellido" class="form-control input-lg" tabindex="41">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="garante-dni">DNI</label>
+                                            
+                                            <input type="number" name="garante-dni" id="garante-dni" maxlength="8"  class="form-control" autofocus tabindex="42">
+                                        </div>
+                                    </div>
+									<div class="col-sm-4"> 
+                                      <div class="form-group">
+                                            <label for="garante-estado-civil">Estado civil</label>
+                                            
+                                            <select type="date" name="garante-estado-civil" id="garante-estado-civil" class="form-control" tabindex="43">
+                                            	<option>&nbsp;</option>
+                                                <option>Soltero/a</option>
+                                                <option>Casado/a</option>
+                                                <option>Divorciado/a</option>
+                                                <option>Viudo/a</option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+									<div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="garante-domicilio">Domicilio</label>
+                                            <input type="text" name="garante-domicilio" id="garante-domicilio"  class="form-control" tabindex="44">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="garante-provincia">Provincia</label>
+                                            *
+                                            <select name="garante-provincia" id="garante-provincia" class="form-control" tabindex="45">
+                                            	<option></option>
+												{% for pcia in provinces %}
+                                                <option value="{{ pcia.id }}">{{ pcia.description }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                  <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="garante-ciudad">Ciudad</label>
+                                            <select name="garante-ciudad" id="garante-ciudad" class="form-control" tabindex="46">
+                                            	<option></option>
+                                            </select>
+                                        </div>
+                                </div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="garante-celular">Tel&eacute;fono celular</label>
+                                            <input type="tel" name="garante-celular" id="garante-celular" class="form-control" tabindex="47">
+                                      </div>
+                                </div>
+                                <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="garante-telefono">Tel&eacute;fono fijo</label>
+                                            <input type="tel" name="garante-telefono" id="garante-telefono" class="form-control" tabindex="48">
+                                        </div>
+                                </div>    
+                                  <div class="clearfix"></div>
+                                <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="garante-laboral">Actividad laboral</label>
+                                            <input type="text" name="garante-laboral" id="garante-laboral" class="form-control" tabindex="49">
+                                        </div>
+                                </div>
+                                      <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="garante-telefono-trabajo">Tel&eacute;fono del trabajo</label>
+                                            <input type="tel" name="garante-telefono-trabajo" id="garante-telefono-trabajo" class="form-control" tabindex="50">
+                                        </div>
+                                    </div>
+									<div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="garante-fotocopia-servicio">Fotocopia de un servicio</label>
+                                            <input type="file" name="garante-fotocopia-servicio" id="garante-fotocopia-servicio" class="form-control" tabindex="51">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="garante-fotocopia-dni">Fotocopia del DNI</label>
+                                            <input type="file" name="garante-fotocopia-dni" id="garante-fotocopia-dni" class="form-control" tabindex="52">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="garante-fotocopia-recibo">Fotocopia del recibo de sueldo</label>
+                                            <input type="file" name="garante-fotocopia-recibo" id="garante-fotocopia-recibo" class="form-control" tabindex="53">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="garante-fotocopia-ingresos">Fotocopia de comprobante de ingresos</label>
+                                          	<input type="file" name="garante-fotocopia-ingresos" id="garante-fotocopia-ingresos" class="form-control" tabindex="54">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="garante-fotocopia-otra-1">Otra fotocopia</label>
+                                            <input type="file" name="garante-fotocopia-otra-1" id="garante-fotocopia-otra-1" class="form-control" tabindex="55">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                          <label for="garante-fotocopia-otra-2">Otra fotocopia</label>
+                                          <input type="file" name="garante-fotocopia-otra-2" id="garante-fotocopia-otra-2" class="form-control" tabindex="56">
+                                        </div>
+                                    </div> 
+                              </div>
+	                   		</div> 
+                        </div>
+                        </div>
+						<div class="col-md-12 topmar10">
+                        	<!-- button type="button" class="btn btn-form" tabindex="57"><i class="fa fa-plus-square fa-fw"></i> Agregar otro garante</button -->
+                        </div>
+
+	                    <div class="col-md-12 topmar">
+                        	<div class="well well-gris-claro">
+                              <div class="row">
+                              		<div class="col-sm-12">
+                                        <div class="alert alert-danger" role="alert">
+                                            <h4 class="nomar text-uppercase">Unidad a adquirir</h4>
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-5">                                
+                                        <div class="form-group">
+                                            <label for="marca">Marca</label>
+                                            *
+                                            <select name="marca" id="marca" class="form-control input-lg" required tabindex="60">
+                                            	<option> &nbsp; </option>
+                                               <option> Seleccioná una marca </option>
+                                            	{% for trademark in trademarks %}
+                                                <option value="{{ trademark.id }}">{{ trademark.description }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5"> 
+                                      <div class="form-group">
+                                            <label for="modelo">Modelo</label>
+                                            *
+                                            <select name="modelo" id="modelo" class="form-control input-lg" required tabindex="61">
+                                            	<option>&nbsp;</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">                                
+                                        <div class="form-group">
+                                          <label for="ano">Año</label>
+                                          *
+                                          <select name="ano" id="ano" required class="form-control input-lg" tabindex="62">
+                                            	<option>&nbsp;</option>
+                                            {% for year in years %}
+                                                <option value="{{ year.id }}">{{ year.description }}</option>
+                                                {% endfor %}
+                                          </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3"> 
+                                        <div class="form-group">
+                                            <label for="valor">Valor</label>
+                                            *
+                                            <input type="text" name="valor" id="valor" required class="form-control" tabindex="63">
+                                        </div>
+                                	</div>
+                                    <div class="col-sm-3"> 
+                                        <div class="form-group">
+                                            <label for="tipo">Tipo</label>
+                                            *
+                                            <select name="tipo" id="tipo" required class="form-control" tabindex="64">
+                                            	<option>&nbsp;</option>
+                                                <option>Sedan</option>
+                                                <option>Sedan 2 puertas</option>
+                                                <option>Sedan 3 puertas</option>
+                                                <option>Sedan 4 puertas</option>
+                                                <option>Sedan 5 puertas</option>
+                                                <option>Rural</option>
+                                                <option>Rural 4 puertas</option>
+                                                <option>Rural 5 puertas</option>
+                                                <option>Familiar</option>
+                                                <option>Coupe</option>
+                                                <option>Microcoupe</option>
+                                                <option>Todo terreno</option>
+                                                <option>Pick up</option>
+                                                <option>Pick up cabina simple</option>
+                                                <option>Pick up cabina dobble</option>
+                                                <option>Autom&oacute;vil</option>
+                                                <option>Berlina</option>
+                                                <option>Chasis con cabina</option>
+                                                <option>Cami&oacute;n</option>
+                                                <option>Tractor de carretera</option>
+                                                <option>Semi remolque</option>
+                                                <option>Furgon</option>
+                                                <option>Furgoneta</option>
+                                                <option>Combi</option>
+                                                <option>&Oacute;mnibus</option>
+                                                <option>Minibus</option>
+                                            </select>
+                                        </div>
+                                	</div>
+                                    <div class="col-sm-3"> 
+                                        <div class="form-group">
+                                            <label for="dominio">Dominio</label>
+                                            <input type="text" name="dominio" id="dominio" class="form-control" tabindex="65">
+                                        </div>
+                                	</div>
+                                    <div class="col-sm-3">                                
+                                        <div class="form-group">
+                                          <label for="combustible">Combustible</label>
+                                          *
+                                          <select name="combustible" id="combustible" required class="form-control" tabindex="66">
+                                            	<option>&nbsp;</option>
+                                            {% for fuel in fuels %}
+                                                <option value="{{ fuel.id }}">{{ fuel.description }}</option>
+                                            {% endfor %}
+                                          </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="seguro">Seguro</label>
+                                            *
+                                            <input type="text" name="seguro" id="seguro" required class="form-control" tabindex="67">
+                                        </div>
+                                	</div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="tarjeta">D&eacute;bito en tarjeta</label>
+                                            <input type="text" name="tarjeta" id="tarjeta" class="form-control" tabindex="68">
+                                        </div>
+                                	</div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="tarjeta-numero">N&uacute;mero de tarjeta</label>
+                                            <input type="text" name="tarjeta-numero" id="tarjeta-numero" class="form-control" tabindex="69">
+                                        </div>
+                                	</div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="tarjeta-codigo">C&oacute;digo de seguridad</label>
+                                            <input type="text" name="tarjeta-codigo" id="tarjeta-codigo" class="form-control" tabindex="70">
+                                        </div>
+                                	</div>
+                                    <div class="col-sm-4"> 
+                                        <div class="form-group">
+                                            <label for="tarjeta-vencimiento">Vencimiento</label>
+                                            <input type="text" name="tarjeta-vencimiento" id="tarjeta-vencimiento" class="form-control" tabindex="71">
+                                        </div>
+                                	</div>
+                                    <div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="unidad-fotocopia-1">Fotocopia referente a la unidad</label>
+                                            <input type="file" name="unidad-fotocopia-1" id="unidad-fotocopia-1" class="form-control" tabindex="72">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                          <label for="unidad-fotocopia-2">Fotocopia referente a la unidad</label>
+                                          <input type="file" name="unidad-fotocopia-2" id="unidad-fotocopia-2" class="form-control" tabindex="73">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="unidad-fotocopia-3">Fotocopia referente a la unidad</label>
+                                            <input type="file" name="unidad-fotocopia-3" id="unidad-fotocopia-3" class="form-control" tabindex="74">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                          <label for="unidad-fotocopia-4">Fotocopia referente a la unidad</label>
+                                          <input type="file" name="unidad-fotocopia-4" id="unidad-fotocopia-4" class="form-control" tabindex="75">
+                                        </div>
+                                    </div> 
+                                </div>
+	                   		</div> 
+                        </div>                        
+                                        
+ 
+                        <div class="col-md-12 topmar">
+                        	<div class="well well-gris-claro">
+                              <div class="row">
+                              		<div class="col-sm-12">
+                                        <div class="alert alert-danger" role="alert">
+                                            <h4 class="nomar text-uppercase">Cr&eacute;dito prendario</h4>
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6">                                
+                                        <div class="form-group">
+                                            <label for="monto">Monto solicitado</label>
+                                          	*
+                                          	<input type="text" name="monto" id="monto" required class="form-control input-lg" tabindex="80">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3"> 
+                                      <div class="form-group">
+                                            <label for="cuotas">Cuotas</label>
+                                            *
+                                            <select name="cuotas" id="cuotas" class="form-control input-lg" required tabindex="81">
+												<option>&nbsp;</option>
+                                                <option>2</option>
+                                                <option>4</option>
+                                                <option>6</option>
+                                                <option>8</option>
+                                                <option>10</option>
+                                                <option>12</option>
+                                                <option>14</option>
+                                                <option>18</option>
+                                                <option>22</option>
+                                                <option>24</option>
+                                                <option>26</option>
+                                                <option>28</option>
+                                                <option>30</option>
+                                                <option>32</option>
+                                                <option>34</option>
+                                                <option>36</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                    	<h5 class="nomar"><strong>Valor de la cuota</strong></h5>
+                                        <h1 id="valorCuota" class="topmar10">-</h1>
+                                    </div>
+                                    <div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="gastos">Gastos de otorgamiento</label>
+                                            *
+                                            <input type="text" name="gastos" id="gastos" required class="form-control" tabindex="82">
+                                        </div>
+                                	</div>
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="vencimiento">Primer vencimiento</label>
+                                            *
+                                            <input type="date" name="vencimiento" id="vencimiento" required class="form-control" tabindex="83">
+                                        </div>
+                                	</div>
+                                    <div class="col-sm-12 nomar"><hr class="topmar10"></div>
+                                    <div class="col-sm-12">
+                                   	  	<label for="comentarios">Introduzca un comentario, consulta o indicaci&oacute;n que quiera hacernos llegar</label>
+                                    	<textarea name="comentarios" id="comentarios" class="form-control" rows="8" tabindex="90"></textarea>
+                                    </div>
+                                </div>
+	                   		</div> 
+                        </div>  
+                        
+                                               
+                      <div class="col-md-12 text-center toppad"> 
+                       	  <input type="button" class="btn btn-alarfin btn-lg" tabindex="100"onclick="javascript:validateForm();" value="SOLICITAR CR&Eacute;DITO"/>&nbsp;&nbsp; 
+                          <button type="button" class="btn btn-form" tabindex="101">Cancelar</button>
+                        </div>
+                    </form>
+                </div>           
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+        	$("#solicitante-estado-civil").change(function(){
+        		$("#conyuge-1").hide();
+        		if ('Casado/a' == $(this).val()) {
+        			$("#conyuge-1").show();	
+        		}
+        	})
+        	
+        	$("#cuotas").change(function(){
+        		var monto = $("#monto").val()
+        		var cuotas = $(this).val();
+        		var yearId = $("#ano").val();
+        		if ('' == $("#monto").val()) {
+        		} else {
+        			 url = Routing.generate('getValorCuotas', { 'monto': monto, 'cuotas': cuotas, 'yearId': yearId  });
+        			$.post(url, function(data){
+        						$("#valorCuota").empty();
+        						$("#valorCuota").append(data);
+        					}
+        				)
+        		}
+        	})
+        	
+        	$("#monto").change(function(){
+        		var monto = $(this).val()
+        		var cuotas = $("#cuotas").val();
+        		var yearId = $("#ano").val();
+        		if ("" == cuotas) {
+        				
+        		} else {
+        			 url = Routing.generate('getValorCuotas', { 'monto': monto, 'cuotas': cuotas, 'yearId': yearId  });
+        			$.post(url, function(data){
+        						$("#valorCuota").empty();
+        						$("#valorCuota").append(data);
+        					}
+        				)
+        		}
+        	})
+        	
+        	$('#marca').change( function(e) {
+ 					// get the value of the selection
+        			var id = $(this).val(),
+		            url = Routing.generate('route_to_retrieve_model', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#modelo');
+                			sub.empty();
+                			sub.append($("<option></option>")
+                			.attr("value","")
+                    		.text("Seleccioná un modelo"));
+                			$.each(data , function(id, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",description.id)
+                    				.text(description.description)); 
+                		    })
+ 						} )
+					})
+					
+        	$('#provincia').change( function(e) {
+ 					// get the value of the selection
+        			var id = $(this).val(),
+		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#ciudad');
+                			sub.empty();
+                			sub.append($("<option></option>")
+                			.attr("value","")
+                    		.text("Seleccioná una ciudad"));
+                			$.each(data , function(key, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",key)
+                    				.text(description.description)); 
+                		    })
+                		
+ 						} )
+					})
+				
+				$('#solicitante-provincia').change( function(e) {
+ 					// get the value of the selection
+        			var id = $(this).val(),
+		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#solicitante-ciudad');
+                			sub.empty();
+                			$.each(data , function(key, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",description.id)
+                    				.text(description.description)); 
+                		    })
+                		
+ 						} )
+					})
+					
+					$('#conyuge-provincia').change( function(e) {
+ 					// get the value of the selection
+        			var id = $(this).val(),
+		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#conyuge-ciudad');
+                			sub.empty();
+                			$.each(data , function(key, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",key)
+                    				.text(description.description)); 
+                		    })
+                		
+ 						} )
+					})
+					
+					$('#garante-provincia').change( function(e) {
+ 					// get the value of the selection
+        			var id = $(this).val(),
+		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
+		        	$.post(url, 
+                		function(data){
+                			 var sub = $('#garante-ciudad');
+                			sub.empty();
+                			$.each(data , function(key, description) { 
+                    			sub.append($("<option></option>")
+                    				.attr("value",key)
+                    				.text(description.description)); 
+                		    })
+                		
+ 						} )
+					})
+					
+			var validateForm = function() {
+        	 
+        	 
+        	 var solNombre = $("#solicitante-nombre").val();
+	 			var solApellido = $("#solicitante-apellido").val();
+	 			var solDni = $("#solicitante-dni").val();
+	 			var solNac = $("#solicitante-nacimiento").val();
+	 			var solEstadoCiv = $("#solicitante-estado-civil").val();
+	 			var solDom = $("#solicitante-domicilio").val();
+	 			var solPcia = $("#solicitante-provincia").val();
+	 			var solCiudad = $("#solicitante-ciudad").val();
+	 			var solCel = $("#solicitante-celular").val();
+	 			var solLab = $("#solicitante-laboral").val();
+	 			var marca = $("#marca").val();
+	 			var modelo = $("#modelo").val();
+	 			var ano = $("#ano").val();
+	 			var valor = $("#valor").val();
+	 			var tipo = $("#tipo").val();
+	 			var combus = $("#combustible").val();
+	 			var seguro = $("#seguro").val();
+	 			var monto = $("#monto").val();
+	 			var cuotas = $("#cuotas").val();
+	 			var gastos = $("#gastos").val();
+	 			var vencimiento = $("#vencimiento").val();
+	 			
+	 			if (!solNombre || !solApellido || !solDni || !solNac || !solEstadoCiv || !solDom 
+	 				|| !solPcia || !solCiudad || !solCel || !solLab || !marca || !modelo || !ano || !valor || !tipo || !combus
+	 				|| !seguro || !monto || !cuotas || !gastos || !vencimiento) {
+	 				$("#divMsg1").show();
+	        		$('html, body').animate({ scrollTop: $('#page-wrapper').offset().top }, 'slow');
+	        		return false;
+	 			} 
+	        	 var publicadornombre = $("#publicador-nombre").val();
+	    			var publicadortipo = $("#publicador-tipo").val();
+	    			url = Routing.generate('checkUserLicenseeExists', { 'publicador-nombre': publicadornombre, 'publicador-tipo': publicadortipo  });
+			        
+			        resultado = true;
+			        $.post(url, function(data){
+	                			if (data != "null") {
+	                				$("#divMsg").show();
+	        							$('html, body').animate({ scrollTop: $('#page-wrapper').offset().top }, 'slow');
+	        							resultado = false;
+	        							return false;
+	                			} else {
+	                				$("#publishForm").submit();
+	                			}
+	                		
+	 						} );
+	 						
+	 			
+        	 }
+					
+        </script>
+{% endblock %}

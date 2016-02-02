@@ -79,6 +79,17 @@ class Credito {
      * @ORM\Column(type="string", length=150, nullable=true)
      */
 	protected $telLaboralSolicitante;
+
+	/**
+     * @ORM\OneToOne(targetEntity="Fotocopias", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="fotocopiaDni2Solicitante_id", referencedColumnName="id")
+     **/
+	protected $fotocopiaDni2Solicitante;
+	/**
+     * @ORM\OneToOne(targetEntity="Fotocopias", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="fotocopiaVehiculo_id", referencedColumnName="id")
+     **/
+	protected $fotocopiaVehiculo;
 	
 	/**
      * @ORM\OneToOne(targetEntity="Fotocopias", cascade={"persist", "remove", "merge"})
@@ -242,6 +253,16 @@ class Credito {
 	protected $valorCuota;
 
 	/**
+     * @ORM\Column(type="string", length=150)
+     */
+	protected $gastos;
+	
+	/**
+     * @ORM\Column(type="string", length=150)
+     */
+	protected $primerVencimiento;
+	
+	/**
 	 * @ORM\Column(type="date")
      */
 	protected $date;
@@ -263,7 +284,126 @@ class Credito {
 	protected $tea;
 	
 	
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $nombreGarante;
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $apellidoGarante;
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $dniGarante;
+
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $estadoCivilGarante;
 	
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $domicilioGarante;
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $provinciaGarante;
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $ciudadGarante;
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $celularGarante;
+	/**
+     * @ORM\Column(type="string", length=150, nullable=true)
+     */
+	protected $fijoGarante;
+
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $actividadLaboralGarante;
+	/**
+     * @ORM\Column(type="string", length=150, nullable=true)
+     */
+	protected $telLaboralGarante;
+
+	
+	/**
+     * @ORM\OneToOne(targetEntity="Fotocopias", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="fotocopiaServicioGarante_id", referencedColumnName="id")
+     **/
+	protected $fotocopiaServicioGarante;
+
+	/**
+     * @ORM\OneToOne(targetEntity="Fotocopias", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="fotocopiaDniGarante_id", referencedColumnName="id")
+     **/
+	protected $fotocopiaDniGarante;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="Fotocopias", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="fotocopiaReciboGarante_id", referencedColumnName="id")
+     **/
+	protected $fotocopiaReciboGarante;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="Fotocopias", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="fotocopiaIngresosGarante_id", referencedColumnName="id")
+     **/
+	protected $fotocopiaIngresosGarante;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="Fotocopias", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="fotocopiaOtra1Garante_id", referencedColumnName="id")
+     **/
+	protected $fotocopiaOtra1Garante;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="Fotocopias", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="fotocopiaOtra2Garante_id", referencedColumnName="id")
+     **/
+	protected $fotocopiaOtra2Garante;
+	
+	
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $seguro;
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $tarjeta;
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $numeroTarjeta;
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $codigoTarjeta;
+	/**
+     * @ORM\Column(type="string", length=150)
+     *
+     */
+	protected $vencimientoTarjeta;
     /**
      * Constructor
      */
@@ -1200,6 +1340,54 @@ class Credito {
         return $this->fotocopiaDniSolicitante;
     }
 
+     /**
+     * Set fotocopiaDni2Solicitante
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaDni2Solicitante
+     * @return Credito
+     */
+    public function setFotocopiaDni2Solicitante(\Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaDni2Solicitante = null)
+    {
+        $this->fotocopiaDni2Solicitante = $fotocopiaDni2Solicitante;
+
+        return $this;
+    }
+
+    /**
+     * Get fotocopiaDni2Solicitante
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\Fotocopias 
+     */
+    public function getFotocopiaDni2Solicitante()
+    {
+        return $this->fotocopiaDni2Solicitante;
+    }
+    
+    
+    
+     /**
+     * Set fotocopiaVehiculo
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaVehiculo
+     * @return Credito
+     */
+    public function setFotocopiaVehiculo(\Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaVehiculo = null)
+    {
+        $this->fotocopiaVehiculo = $fotocopiaVehiculo;
+
+        return $this;
+    }
+
+    /**
+     * Get fotocopiaVehiculo
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\Fotocopias 
+     */
+    public function getFotocopiaVehiculo()
+    {
+        return $this->fotocopiaVehiculo;
+    }
+    
     /**
      * Set fotocopiaReciboSolicitante
      *
@@ -1491,5 +1679,581 @@ class Credito {
     public function getTea()
     {
         return $this->tea;
+    }
+
+    /**
+     * Set nombreGarante
+     *
+     * @param string $nombreGarante
+     *
+     * @return Credito
+     */
+    public function setNombreGarante($nombreGarante)
+    {
+        $this->nombreGarante = $nombreGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreGarante
+     *
+     * @return string
+     */
+    public function getNombreGarante()
+    {
+        return $this->nombreGarante;
+    }
+
+    /**
+     * Set apellidoGarante
+     *
+     * @param string $apellidoGarante
+     *
+     * @return Credito
+     */
+    public function setApellidoGarante($apellidoGarante)
+    {
+        $this->apellidoGarante = $apellidoGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get apellidoGarante
+     *
+     * @return string
+     */
+    public function getApellidoGarante()
+    {
+        return $this->apellidoGarante;
+    }
+
+    /**
+     * Set dniGarante
+     *
+     * @param string $dniGarante
+     *
+     * @return Credito
+     */
+    public function setDniGarante($dniGarante)
+    {
+        $this->dniGarante = $dniGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get dniGarante
+     *
+     * @return string
+     */
+    public function getDniGarante()
+    {
+        return $this->dniGarante;
+    }
+
+    /**
+     * Set estadoCivilGarante
+     *
+     * @param string $estadoCivilGarante
+     *
+     * @return Credito
+     */
+    public function setEstadoCivilGarante($estadoCivilGarante)
+    {
+        $this->estadoCivilGarante = $estadoCivilGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get estadoCivilGarante
+     *
+     * @return string
+     */
+    public function getEstadoCivilGarante()
+    {
+        return $this->estadoCivilGarante;
+    }
+
+    /**
+     * Set domicilioGarante
+     *
+     * @param string $domicilioGarante
+     *
+     * @return Credito
+     */
+    public function setDomicilioGarante($domicilioGarante)
+    {
+        $this->domicilioGarante = $domicilioGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get domicilioGarante
+     *
+     * @return string
+     */
+    public function getDomicilioGarante()
+    {
+        return $this->domicilioGarante;
+    }
+
+    /**
+     * Set provinciaGarante
+     *
+     * @param string $provinciaGarante
+     *
+     * @return Credito
+     */
+    public function setProvinciaGarante($provinciaGarante)
+    {
+        $this->provinciaGarante = $provinciaGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get provinciaGarante
+     *
+     * @return string
+     */
+    public function getProvinciaGarante()
+    {
+        return $this->provinciaGarante;
+    }
+
+    /**
+     * Set ciudadGarante
+     *
+     * @param string $ciudadGarante
+     *
+     * @return Credito
+     */
+    public function setCiudadGarante($ciudadGarante)
+    {
+        $this->ciudadGarante = $ciudadGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get ciudadGarante
+     *
+     * @return string
+     */
+    public function getCiudadGarante()
+    {
+        return $this->ciudadGarante;
+    }
+
+    /**
+     * Set celularGarante
+     *
+     * @param string $celularGarante
+     *
+     * @return Credito
+     */
+    public function setCelularGarante($celularGarante)
+    {
+        $this->celularGarante = $celularGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get celularGarante
+     *
+     * @return string
+     */
+    public function getCelularGarante()
+    {
+        return $this->celularGarante;
+    }
+
+    /**
+     * Set fijoGarante
+     *
+     * @param string $fijoGarante
+     *
+     * @return Credito
+     */
+    public function setFijoGarante($fijoGarante)
+    {
+        $this->fijoGarante = $fijoGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get fijoGarante
+     *
+     * @return string
+     */
+    public function getFijoGarante()
+    {
+        return $this->fijoGarante;
+    }
+
+    /**
+     * Set actividadLaboralGarante
+     *
+     * @param string $actividadLaboralGarante
+     *
+     * @return Credito
+     */
+    public function setActividadLaboralGarante($actividadLaboralGarante)
+    {
+        $this->actividadLaboralGarante = $actividadLaboralGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get actividadLaboralGarante
+     *
+     * @return string
+     */
+    public function getActividadLaboralGarante()
+    {
+        return $this->actividadLaboralGarante;
+    }
+
+    /**
+     * Set telLaboralGarante
+     *
+     * @param string $telLaboralGarante
+     *
+     * @return Credito
+     */
+    public function setTelLaboralGarante($telLaboralGarante)
+    {
+        $this->telLaboralGarante = $telLaboralGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get telLaboralGarante
+     *
+     * @return string
+     */
+    public function getTelLaboralGarante()
+    {
+        return $this->telLaboralGarante;
+    }
+
+    /**
+     * Set fotocopiaServicioGarante
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaServicioGarante
+     *
+     * @return Credito
+     */
+    public function setFotocopiaServicioGarante(\Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaServicioGarante = null)
+    {
+        $this->fotocopiaServicioGarante = $fotocopiaServicioGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get fotocopiaServicioGarante
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\Fotocopias
+     */
+    public function getFotocopiaServicioGarante()
+    {
+        return $this->fotocopiaServicioGarante;
+    }
+
+    /**
+     * Set fotocopiaDniGarante
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaDniGarante
+     *
+     * @return Credito
+     */
+    public function setFotocopiaDniGarante(\Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaDniGarante = null)
+    {
+        $this->fotocopiaDniGarante = $fotocopiaDniGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get fotocopiaDniGarante
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\Fotocopias
+     */
+    public function getFotocopiaDniGarante()
+    {
+        return $this->fotocopiaDniGarante;
+    }
+
+    /**
+     * Set fotocopiaReciboGarante
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaReciboGarante
+     *
+     * @return Credito
+     */
+    public function setFotocopiaReciboGarante(\Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaReciboGarante = null)
+    {
+        $this->fotocopiaReciboGarante = $fotocopiaReciboGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get fotocopiaReciboGarante
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\Fotocopias
+     */
+    public function getFotocopiaReciboGarante()
+    {
+        return $this->fotocopiaReciboGarante;
+    }
+
+    /**
+     * Set fotocopiaIngresosGarante
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaIngresosGarante
+     *
+     * @return Credito
+     */
+    public function setFotocopiaIngresosGarante(\Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaIngresosGarante = null)
+    {
+        $this->fotocopiaIngresosGarante = $fotocopiaIngresosGarante;
+
+        return $this;
+    }
+
+    /**
+     * Get fotocopiaIngresosGarante
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\Fotocopias
+     */
+    public function getFotocopiaIngresosGarante()
+    {
+        return $this->fotocopiaIngresosGarante;
+    }
+
+    /**
+     * Set fotocopiaOtra1Garante
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaOtra1Garante
+     *
+     * @return Credito
+     */
+    public function setFotocopiaOtra1Garante(\Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaOtra1Garante = null)
+    {
+        $this->fotocopiaOtra1Garante = $fotocopiaOtra1Garante;
+
+        return $this;
+    }
+
+    /**
+     * Get fotocopiaOtra1Garante
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\Fotocopias
+     */
+    public function getFotocopiaOtra1Garante()
+    {
+        return $this->fotocopiaOtra1Garante;
+    }
+
+    /**
+     * Set fotocopiaOtra2Garante
+     *
+     * @param \Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaOtra2Garante
+     *
+     * @return Credito
+     */
+    public function setFotocopiaOtra2Garante(\Kells\Bundle\FrontBundle\Entity\Fotocopias $fotocopiaOtra2Garante = null)
+    {
+        $this->fotocopiaOtra2Garante = $fotocopiaOtra2Garante;
+
+        return $this;
+    }
+
+    /**
+     * Get fotocopiaOtra2Garante
+     *
+     * @return \Kells\Bundle\FrontBundle\Entity\Fotocopias
+     */
+    public function getFotocopiaOtra2Garante()
+    {
+        return $this->fotocopiaOtra2Garante;
+    }
+
+    /**
+     * Set gastos
+     *
+     * @param string $gastos
+     *
+     * @return Credito
+     */
+    public function setGastos($gastos)
+    {
+        $this->gastos = $gastos;
+
+        return $this;
+    }
+
+    /**
+     * Get gastos
+     *
+     * @return string
+     */
+    public function getGastos()
+    {
+        return $this->gastos;
+    }
+
+    /**
+     * Set primerVencimiento
+     *
+     * @param string $primerVencimiento
+     *
+     * @return Credito
+     */
+    public function setPrimerVencimiento($primerVencimiento)
+    {
+        $this->primerVencimiento = $primerVencimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get primerVencimiento
+     *
+     * @return string
+     */
+    public function getPrimerVencimiento()
+    {
+        return $this->primerVencimiento;
+    }
+
+    /**
+     * Set seguro
+     *
+     * @param string $seguro
+     *
+     * @return Credito
+     */
+    public function setSeguro($seguro)
+    {
+        $this->seguro = $seguro;
+
+        return $this;
+    }
+
+    /**
+     * Get seguro
+     *
+     * @return string
+     */
+    public function getSeguro()
+    {
+        return $this->seguro;
+    }
+
+    /**
+     * Set tarjeta
+     *
+     * @param string $tarjeta
+     *
+     * @return Credito
+     */
+    public function setTarjeta($tarjeta)
+    {
+        $this->tarjeta = $tarjeta;
+
+        return $this;
+    }
+
+    /**
+     * Get tarjeta
+     *
+     * @return string
+     */
+    public function getTarjeta()
+    {
+        return $this->tarjeta;
+    }
+
+    /**
+     * Set numeroTarjeta
+     *
+     * @param string $numeroTarjeta
+     *
+     * @return Credito
+     */
+    public function setNumeroTarjeta($numeroTarjeta)
+    {
+        $this->numeroTarjeta = $numeroTarjeta;
+
+        return $this;
+    }
+
+    /**
+     * Get numeroTarjeta
+     *
+     * @return string
+     */
+    public function getNumeroTarjeta()
+    {
+        return $this->numeroTarjeta;
+    }
+
+    /**
+     * Set codigoTarjeta
+     *
+     * @param string $codigoTarjeta
+     *
+     * @return Credito
+     */
+    public function setCodigoTarjeta($codigoTarjeta)
+    {
+        $this->codigoTarjeta = $codigoTarjeta;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoTarjeta
+     *
+     * @return string
+     */
+    public function getCodigoTarjeta()
+    {
+        return $this->codigoTarjeta;
+    }
+
+    /**
+     * Set vencimientoTarjeta
+     *
+     * @param string $vencimientoTarjeta
+     *
+     * @return Credito
+     */
+    public function setVencimientoTarjeta($vencimientoTarjeta)
+    {
+        $this->vencimientoTarjeta = $vencimientoTarjeta;
+
+        return $this;
+    }
+
+    /**
+     * Get vencimientoTarjeta
+     *
+     * @return string
+     */
+    public function getVencimientoTarjeta()
+    {
+        return $this->vencimientoTarjeta;
     }
 }

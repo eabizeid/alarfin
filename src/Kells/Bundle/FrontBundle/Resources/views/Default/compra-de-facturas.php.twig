@@ -1,0 +1,50 @@
+ {% extends 'KellsFrontBundle:Default:base.html.twig' %}
+{% block body %}  
+{% set seccion = 'facturas' %}            
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 titulo">
+                	<h2>Productos y Servicios</h2>
+                    <h1>Compra de Facturas</h1>
+                </div>
+            </div>
+        </div>
+                <div class="productos-titulo-imagen">
+        	<img src="{{ asset('bundles/kellsfront/img/imagen-compra-de-facturas.jpg')}}" class="img-responsive" alt="Compra de Facturas" title="Compra de Facturas">
+            <div class="productos-titulo">
+            	<h3 class="nomar text-normal">Una l&iacute;nea de cr&eacute;dito para adelantar fondos convirtiendo en efectivo tus  facturas de clientes, pendientes de cobro, sin  tener que esperar los plazos de pago normales.</h3>
+	                    	<h4 class="text-normal">Se abona  la factura  en el momento en que se presenta, siempre que cuente con la documentaci&oacute;n necesaria para la operaci&oacute;n.</h4>
+            </div>
+        </div>
+        <div class="container"> 
+            <div class="row">
+				<div class="col-xs-12 col-md-10 col-md-offset-1">                
+                  	<div class="row topmar productos-caracteristicas botpad linea-punteada-gris-abajo">
+                    	<div class="col-xs-12 text-center botmar20">
+	                    	<h3 class="text-uppercase nomar text-bordo">Ventajas</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-5 col-md-offset-1">
+                            <ul>
+                            	<li>Convierta inmediatamente en dinero disponible las facturas de clientes sin tener que  realizar gestiones de cobro. </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-5">
+                            <ul>
+                            	<li>Agilidad en la atenci&oacute;n.</li>
+                            	<li>Absoluta confidencialidad.</li>
+                            </ul>
+                        </div>                        
+                    </div>
+                  	<div class="row topmar botpad linea-punteada-gris-abajo">
+                    	{{ include('KellsFrontBundle:Default:inc-productos-y-servicios-formulario.php.twig')}}
+                    </div>                    
+                    <div class="row topmar">
+                    	<div class="col-xs-12 text-center">
+	                    	<h3 class="text-uppercase nomar">Otros Productos y Servicios</h3>
+    	                	{{ include('KellsFrontBundle:Default:inc-productos-y-servicios.php.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}

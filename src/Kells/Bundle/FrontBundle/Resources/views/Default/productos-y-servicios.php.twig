@@ -1,0 +1,15 @@
+ {% extends 'KellsFrontBundle:Default:base.html.twig' %}
+{% block body %}  
+{% set seccion = 'productos' %}     
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 titulo">
+                    <h1>Productos y Servicios</h1>
+                </div>
+            </div>
+            <div class="row botmar productos">
+{{ include('KellsFrontBundle:Default:inc-productos-y-servicios.php.twig') }}
+			</div>
+        </div>
+{% endblock %}
+      

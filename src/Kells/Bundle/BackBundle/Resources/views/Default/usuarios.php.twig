@@ -36,7 +36,7 @@
                                                 <td>{{ user.telephone }}</td> 
                                                 <td nowrap>
                                                 	<a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" href="{{path('modifyUser', {'id': user.id})}}"><i class="fa fa-pencil fa-fw"></i></a>
-                                                    <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Publicaciones" href="{{ path('publicaciones_usuario', {'userId': user.id})}}"><i class="fa fa-car fa-fw"></i></a>
+                                                    <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Publicaciones" href="{{ path('publicaciones_usuario', {'userId': user.id, 'userType': 'U'})}}"><i class="fa fa-car fa-fw"></i></a>
                                                     <a  class="btn btn-primary btn-sm userRemove" data-toggle="tooltip" data-placement="top" title="Eliminar" href="{{ path('deleteUser', {'id': user.id})}}" ><i class="fa fa-trash fa-fw"></i></a>
                                                 </td>
                                             </tr>

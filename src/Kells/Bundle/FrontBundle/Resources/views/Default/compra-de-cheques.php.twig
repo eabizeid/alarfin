@@ -1,0 +1,54 @@
+{% extends 'KellsFrontBundle:Default:base.html.twig' %}
+{% block body %} 
+{% set seccion = 'cheques' %}
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 titulo">
+                	<h2>Productos y Servicios</h2>
+                    <h1>Compra de Cheques</h1>
+                </div>
+            </div>
+        </div>
+         <div class="productos-titulo-imagen">
+        	<img src="{{ asset('bundles/kellsfront/img/imagen-compra-de-cheques.jpg')}}" class="img-responsive" alt="Compra de Cheques" title="Compra de Cheques">
+            <div class="productos-titulo">
+            	<h3 class="nomar text-normal">Una l&iacute;nea de cr&eacute;dito para adelantar fondos convirtiendo en efectivo tus cheques de pago diferido y del d&iacute;a, sin  tener que esperar los plazos normales de clearing.</h3>
+	                    	<h4 class="text-normal">Se realizan operaciones de descuento de cheques de terceros, comunes y cheques no a la orden y se abona el cheque en el momento en que se presenta el valor.</h4>
+            </div>
+        </div>
+        <div class="container"> 
+            <div class="row">
+				<div class="col-xs-12 col-md-10 col-md-offset-1">                 
+                  	<div class="row topmar productos-caracteristicas botpad linea-punteada-gris-abajo">
+                    	<div class="col-xs-12 text-center botmar20">
+	                    	<h3 class="text-uppercase nomar text-bordo">Ventajas</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-5 col-md-offset-1">
+                            <ul>
+                            	<li>Ahorre las esperas del clearing.</li>
+                            	<li>Convierta inmediatamente en dinero disponible los cheques que est&aacute;n en fecha para la gesti&oacute;n de cobro. </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-5">
+                            <ul>
+                            	<li>Con un costo muy conveniente se adelanta el importe y se gestiona el cobro de los cheques por usted.</li>
+                            	<li>Agilidad en la atenci&oacute;n.</li>
+                            	<li>Absoluta confidencialidad. </li>
+                            </ul>
+                        </div>                        
+                    </div>
+                  	<div class="row topmar botpad linea-punteada-gris-abajo">
+                    	{{ include('KellsFrontBundle:Default:inc-productos-y-servicios-formulario.php.twig')}}
+                    </div>                    
+                    <div class="row topmar">
+                    	<div class="col-xs-12 text-center">
+	                    	<h3 class="text-uppercase nomar">Otros Productos y Servicios</h3>
+    	                	{{ include('KellsFrontBundle:Default:inc-productos-y-servicios.php.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

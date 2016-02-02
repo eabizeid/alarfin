@@ -143,4 +143,91 @@ removeFilter:
 registerNow:
     path:     /registerMe/
     defaults: { _controller: KellsFrontBundle:Default:registerNow }
+
+contacto:
+    path:     /contact/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:     'KellsFrontBundle:Default:contacto.php.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+        private: false
+
+empresa:
+    path:     /empresa/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:     'KellsFrontBundle:Default:la-empresa.php.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+        private: false
+
+productos-y-servicios:
+    path:     /productos-y-servicios/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:     'KellsFrontBundle:Default:productos-y-servicios.php.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+        private: false
+      
+preguntas-frecuentes:
+    path:     /preguntas-frecuentes/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:     'KellsFrontBundle:Default:preguntas-frecuentes.php.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+        private: false
+        
+links-de-interes:
+    path:     /links-de-interes/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:     'KellsFrontBundle:Default:links-de-interes.php.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+        private: false
+        
+prendarios-individuos:
+    path:     /productos-y-servicios-creditos-prendarios-individuos/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:     'KellsFrontBundle:Default:prendarios-individuos.php.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+        private: false
+
+prendarios-corporativos:
+    path:     /productos-y-servicios-creditos-prendarios-corporativos/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:     'KellsFrontBundle:Default:prendarios-corporativos.php.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+        private: false
+             
+compra-cheques:
+    path:     /productos-y-servicios-creditos-compra-de-cheques/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:     'KellsFrontBundle:Default:compra-de-cheques.php.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+        private: false
+compra-facturas:
+    path:     /productos-y-servicios-creditos-compra-de-facturas/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:     'KellsFrontBundle:Default:compra-de-facturas.php.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+        private: false
+        
+contacto-enviar:
+    path:     /contacto-gracias/
+    defaults: { _controller: KellsFrontBundle:Default:contactoEnviar }
     
+allCars:
+    path:     /allcars
+    defaults: { _controller: KellsFrontBundle:Default:allCars }

@@ -1,0 +1,51 @@
+<div class="row botmar productos">
+
+	{% if seccion != 'individuos' %}
+    <div class={% if seccion == "productos" %} "col-sm-3"{% else %} "col-sm-4" {% endif %}>
+        <div class="well">
+           <a href="{{path('prendarios-individuos')}}">
+                <img src="{{ asset('bundles/kellsfront/img/imagen-productos-y-servicios-creditos-prendarios-individuos.png')}}" width="104" height="104" alt="Cr&eacute;ditos Prendarios Individuos" title="Cr&eacute;ditos Prendarios Individuos">
+                <h2>Cr&eacute;ditos Prendarios Individuos</h2>
+                <img src="{{ asset('bundles/kellsfront/img/misc-flecha-abajo.png')}}" width="33" height="20" alt="Cr&eacute;ditos Prendarios Individuos" title="Cr&eacute;ditos Prendarios Individuos">
+            </a>
+        </div>
+    </div>
+    {% endif%}
+    
+    {% if seccion != 'corporativos' %}
+    <div class={% if seccion == "productos" %} "col-sm-3"{% else %} "col-sm-4" {% endif %}>
+        <div class="well">
+            <a href="{{path('prendarios-corporativos')}}">
+                <img src="{{ asset('bundles/kellsfront/img/imagen-productos-y-servicios-creditos-prendarios-corporativos.png')}}" width="104" height="104" alt="Cr&eacute;ditos Prendarios Corporativos" title="Cr&eacute;ditos Prendarios Corporativos">
+                <h2>Cr&eacute;ditos Prendarios Corporativos</h2>
+                <img src="{{ asset('bundles/kellsfront/img/misc-flecha-abajo.png')}}" width="33" height="20" alt="Cr&eacute;ditos Prendarios Corporativos" title="Cr&eacute;ditos Prendarios Corporativos">
+            </a>
+        </div>
+    </div>
+   {% endif%}
+    
+     {% if seccion != 'facturas' %}
+    <div class={% if seccion == "productos" %} "col-sm-3"{% else %} "col-sm-4" {% endif %}>
+        <div class="well">
+            <a href="{{path('compra-facturas')}}">
+                <img src="{{ asset('bundles/kellsfront/img/imagen-productos-y-servicios-compra-de-facturas.png')}}" width="104" height="104" alt="Compra de Facturas" title="Compra de Facturas">
+                <h2>Compra de Facturas</h2>
+                <img src="{{ asset('bundles/kellsfront/img/misc-flecha-abajo.png')}}" width="33" height="20" alt="Compra de Facturas" title="Compra de Facturas">
+            </a>
+        </div>
+    </div>
+    {% endif%}
+    
+    {% if seccion != 'cheques' %}
+    <div class={% if seccion == "productos" %} "col-sm-3"{% else %} "col-sm-4" {% endif %}>
+        <div class="well">
+            <a href="{{path('compra-cheques')}}">
+                <img src="{{ asset('bundles/kellsfront/img/imagen-productos-y-servicios-compra-de-cheques.png')}}" width="104" height="104" alt="Compra de Cheques" title="Compra de Cheques">
+                <h2>Compra de Cheques</h2>
+                <img src="{{ asset('bundles/kellsfront/img/misc-flecha-abajo.png')}}" width="33" height="20" alt="Compra de Cheques" title="Compra de Cheques">
+            </a>
+        </div>
+    </div>
+    {% endif%}
+    
+</div>

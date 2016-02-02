@@ -1,0 +1,33 @@
+ {% extends 'KellsFrontBundle:Default:base.html.twig' %}
+{% block body %}      
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 titulo">
+                    <h1>Links de Inter&eacute;s</h1>
+                </div>
+            </div>
+		  <div class="row topmar botpad text-center linea-punteada-gris-abajo">
+                <div class="col-sm-4 text-center topmar">
+                    <a href="http://www.bcra.gov.ar/" target="_blank"><img src="{{asset('bundles/kellsfront/img/imagen-deudores-banco-central.png')}}" width="141" height="141" alt="Consulta a la base de deudores del banco central">
+                    <h4 class="topmar10">Consulta a la base de deudores del banco central</h4></a>
+            </div>
+            <div class="col-sm-4 text-center topmar">
+                    <a href="http://www.arba.gov.ar/" target="_blank"><img src="{{asset('bundles/kellsfront/img/imagen-pago-de-patentes-arba.png')}}" width="141" height="141" alt="Arba, boleta de pago de patentes">
+                    <h4 class="topmar10">Arba, boleta de pago de patentes</h4></a>
+                </div>
+            <div class="col-sm-4 text-center topmar">
+                    <a href="http://www.dnrpa.gov.ar/portal_dnrpa/guia_tramites/informe_dominio.php" target="_blank"><img src="{{asset('bundles/kellsfront/img/imagen-vehiculos.png')}}" width="141" height="141" alt="Informe de dominio del Automotor">
+              <h4 class="topmar10">Informe de dominio del Automotor</h4></a>
+                </div>
+                <div class="clearfix"></div>
+            <div class="col-sm-4 col-sm-offset-2 text-center topmar">
+                    <a href="http://www.dnrpa.gov.ar/portal_dnrpa" target="_blank"><img src="{{asset('bundles/kellsfront/img/imagen-registro-automotor.png')}}" width="141" height="141" alt="Registro del Automotor">
+                    <h4 class="topmar10">Registro del Automotor</h4></a>
+                </div>
+                <div class="col-sm-4 text-center topmar">
+                    <a href="http://www.bna.com.ar/bp/bp_cotizaciones.asp" target="_blank"><img src="{{asset('bundles/kellsfront/img/imagen-dolar-banco-nacion.png')}}" width="141" height="141" alt="Cotizaci&oacute;n del d&oacute;lar Banco Naci&oacute;n">
+                    <h4 class="topmar10">Cotizaci&oacute;n del d&oacute;lar Banco Naci&oacute;n</h4></a>
+                </div>
+          </div>
+        </div>
+       {% endblock %} 

@@ -7,7 +7,9 @@
                 </div>
             </div>
             <div class="row">
-				<form role="form" method="post" action="{{path('admin_publish')}}">
+				<form id ="publishForm" role="form" method="post"  enctype="multipart/form-data"   action="{{path('admin_publish')}}">
+				<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>El publicador no se encuentra registrado.</div>
+				<div  id="ErrorMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>Descripción, Marca, Modelo, Provincia, Ciudad, Combustible, Kms, Color y Foto principal son obligatorios</div>
 						<input type="hidden" name="carId" value="{% if car %}{{ car.id}} {% endif %}" />
                         <div class="col-md-12">
                         	<div class="well well-gris-claro">
@@ -22,8 +24,8 @@
                                             <label for="publicador-tipo">Tipo</label>
                                             <select name="publicador-tipo" id="publicador-tipo" class="form-control input-lg" required>
                                             	<option> Seleccion&aacute; un tipo</option>
-                                                <option> Usuario </option>
-                                                <option> Concesionaria </option>
+                                                <option>Usuario</option>
+                                                <option>Concesionaria</option>
                                             </select>
                                         </div>
                                     </div>
@@ -81,24 +83,21 @@
                                     <div class="col-sm-8">                                
                                         <div class="form-group">
                                             <label for="titulo">T&iacute;tulo de la publicación</label>
-                                            <input type="text" class="form-control input-lg" id="titulo" required placeholder="Ej.: Volkswagen Golf Motor 2.0 2006 Azul 5 puertas" maxlength="60" {% if car and car.description %} value="{{ car.title }}" {% endif %}>
+                                            <input type="text" class="form-control input-lg" name="titulo" id="titulo" required placeholder="Ej.: Volkswagen Golf Motor 2.0 2006 Azul 5 puertas" maxlength="60" {% if car and car.description %} value="{{ car.title }}" {% endif %}>
                                             <span class="help-block">Hasta 60 caracteres</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">                                
                                         <div class="form-group">
                                             <label for="precio">Precio</label>
-                                            <input type="text" class="form-control input-lg" id="precio" required {% if car and car.price %} value="{{ car.price }}" {% endif %}>
+                                            <input type="text" name="precio" class="form-control input-lg" id="precio" required {% if car and car.price %} value="{{ car.price }}" {% endif %}>
                                             <span class="help-block">En Pesos Argentinos</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">                                
                                         <div class="form-group">
-                                            <label for="titulo">Descripción</label>
-                                            <textarea rows="5" class="form-control input-lg" id="descripcion" placeholder="Ej.: Tiene las cubiertas con pocos kil&oacute;metros y se hizo un cambio de correas recientemente.">{% if car and car.description %}
-                                            		{{car.description}}
-                                            	{% endif %}
-                                            </textarea>
+                                            <label for="descripcion">Descripción</label>
+                                            <textarea rows="5" class="form-control input-lg" name="descripcion" id="descripcion" placeholder="Ej.: Tiene las cubiertas con pocos kil&oacute;metros y se hizo un cambio de correas recientemente.">{% if car and car.description %}{car.description}}{% endif %}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -220,7 +219,7 @@
                                    <div class="col-sm-4">                                
                                         <div class="form-group">
 											<label for="COMBUS">Combustible</label>
-											<select name="COMBUS" id="COMBUS" required class="form-control">
+											<select name="COMBUS" id="COMBUS" required class="form-control" required>
 												<option value="">Elegir</option>
 												 {% for fuel in fuels %}
                                                 <option value="{{ fuel.id }}">{{ fuel.description }}</option>
@@ -380,7 +379,7 @@
 	                   		</div> 
                         </div>
 	                    <div class="col-md-12 toppad botpad text-center"> 
-                        	<input type="button" value="Cancelar" class="btn btn-default" onClick="location.href='publicaciones.php'"> &nbsp; <input type="submit" value="Publicar" class="btn btn-primary btn-lg">
+                        	<input type="button" value="Cancelar" class="btn btn-default" onClick="location.href='publicaciones.php'"> &nbsp; <input type="button" value="Publicar" class="btn btn-primary btn-lg"  onclick="javascript:validateForm();">
                         </div>
                     </form>
             </div>
@@ -391,7 +390,6 @@
         	 
         	 $(document).ready( function(){
         	 
-        	
         	 $('#marca').change( function(e) {
  					// get the value of the selection
         			var id = $(this).val(),
@@ -400,6 +398,9 @@
                 		function(data){
                 			 var sub = $('#modelo');
                 			sub.empty();
+                			sub.append($("<option></option>")
+                			.attr("value","")
+                    		.text("Seleccioná un modelo"));
                 			$.each(data , function(id, description) { 
                     			sub.append($("<option></option>")
                     				.attr("value",description.id)
@@ -417,6 +418,9 @@
                 		function(data){
                 			 var sub = $('#ciudad');
                 			sub.empty();
+                			sub.append($("<option></option>")
+                			.attr("value","")
+                    		.text("Seleccioná una ciudad"));
                 			$.each(data , function(key, description) { 
                     			sub.append($("<option></option>")
                     				.attr("value",key)
@@ -442,6 +446,9 @@
                 		function(data){
                 			 var sub = $('#modelo');
                 			sub.empty();
+                			sub.append($("<option></option>")
+                			.attr("value","")
+                    		.text("Seleccioná un modelo"));
                 			$.each(data , function(id, description) { 
                     			sub.append($("<option></option>")
                     				.attr("value",description.id)
@@ -461,6 +468,9 @@
                 		function(data){
                 			 var sub = $('#ciudad');
                 			sub.empty();
+                			sub.append($("<option></option>")
+                			.attr("value","")
+                    		.text("Seleccioná una ciudad"));
                 			$.each(data , function(key, description) { 
                     			sub.append($("<option></option>")
                     				.attr("value",key)
@@ -485,8 +495,41 @@
 	        	 	$("#TRANS").val("{{car.transmission.id}}")
 	        	 	{% endif %}
         	 	{% endif %}
+        	 })
+        	  var validateForm = function() {
         	 
-        	 })	
+        	 	var marca = $("#marca").val();
+    			var modelo = $("#modelo").val();
+	        	var provincia = $("#provincia").val();
+	        	var combus = $("#COMBUS").val();
+	        	var km = $("#KMTS").val();
+	        	var color = $("COLOREXT").val();
+	        	var city = $("#ciudad").val();
+	        	
+    			if (!$('#descripcion').val() || marca == "Seleccioná una marca" || modelo == "Seleccioná un modelo" || provincia == "Seleccioná una provincia" 
+    			|| (city == '') || ($("#fotoprincipal").val() == ''  ) 
+    			 || combus == "" || km == "" || color == "undefined") {
+        			$("#ErrorMsg").show();
+        			$('html, body').animate({ scrollTop: $('#ErrorMsg').offset().top}, 'slow');
+        			return false;
+    			}
+	        	 var publicadornombre = $("#publicador-nombre").val();
+	    			var publicadortipo = $("#publicador-tipo").val();
+	    			url = Routing.generate('checkUserLicenseeExists', { 'publicador-nombre': publicadornombre, 'publicador-tipo': publicadortipo  });
+			        
+			        resultado = true;
+			        $.post(url, function(data){
+	                			if (data != "null") {
+	                				$("#divMsg").show();
+	        							$('html, body').animate({ scrollTop: $('#page-wrapper').offset().top }, 'slow');
+	        							resultado = false;
+	        							return false;
+	                			} else {
+	                				$("#publishForm").submit();
+	                			}
+	                		
+	 						} );
+        	 }
  		</script>
  {% endblock %}
     

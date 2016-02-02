@@ -16,7 +16,9 @@
     <![endif]-->
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 	<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-    <script src="{{ asset('bundles/kellsfront/js/jquery-1.11.1.min.js') }} "></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+	<script src="{{ asset('bundles/kellsfront/js/jquery-1.11.1.min.js') }}"></script>     
+ 
 </head>
 <body>
 
@@ -26,5 +28,6 @@
 		</nav>
         {% block body %}{% endblock %}
         {{ include('KellsBackBundle:Default:footer.html.twig') }}
+         
 </body>
 </html>

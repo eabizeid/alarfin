@@ -25,6 +25,7 @@ class Province {
 	
 	/**
      * @ORM\OneToMany(targetEntity="City", mappedBy="province")
+     * @ORM\OrderBy({"description" = "ASC"})
      */
 	protected $cities;
 	

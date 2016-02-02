@@ -1,0 +1,78 @@
+{% extends 'KellsFrontBundle:Default:base.html.twig' %}
+{% block body %}
+{% set seccion = 'individuos' %}        
+ <div class="container">
+            <div class="row">
+                <div class="col-xs-12 titulo">
+                	<h2>Productos y Servicios</h2>
+                    <h1>Cr&eacute;ditos Prendarios Individuos</h1>
+                </div>
+            </div>
+            <div class="row">
+				<div class="col-xs-12 col-md-10 col-md-offset-1">
+                    <div class="row topmar botpad text-center linea-punteada-gris-abajo">
+                    	<div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+	                    	<h3 class="nomar text-normal"><strong>Alarfin</strong> te acerca  al  plan de financiaci&oacute;n m&aacute;s conveniente del mercado para la compra de veh&iacute;culos para uso particular.</h3>
+	                    	<h4 class="text-normal">Ahora podes comprar un Auto O Km. o usado, de la manera m&aacute;s simple, con m&iacute;nimos requisitos y con aprobaci&oacute;n inmediata.</h4>
+                        </div>
+                    </div>                 
+                  	<div class="row topmar productos-caracteristicas">
+                    	<div class="col-xs-12 text-center botmar20">
+	                    	<h3 class="text-uppercase nomar text-bordo">Caracter&iacute;sticas</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-5 col-md-offset-1">
+                            <ul>
+                            	<li>Moneda del pr&eacute;stamo: Pesos.</li>
+                            	<li>Tipo de Tasa: Fija.</li>
+                            	<li>Porcentajes de Financiaci&oacute;n:<br>
+                           	    <h6 class="glyphicon glyphicon-chevron-right text-bordo"></h6> Veh&iacute;culos 0 Km.: 60%<br>
+                           	    <h6 class="glyphicon glyphicon-chevron-right text-bordo"></h6> Veh&iacute;culos usados: 50% </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-5">
+                            <ul>
+                            	<li>Sin gastos de otorgamiento.</li>
+                            	<li>Sin gastos administrativos mensuales.</li>
+                            	<li>Seguro del Automotor: cobertura m&iacute;nima terceros completos con posibilidad de ampliaci&oacute;n por parte del cliente.</li>
+                            </ul>
+                        </div>                        
+                    </div>                  
+                    <div class="row topmar20 botpad linea-punteada-gris-abajo">
+                   	  <div class="col-md-10 col-md-offset-1">
+                        	<div class="well productos-caracteristicas nomar">
+                            <div class="row">
+                              <div class="col-xs-12 text-center botmar20">
+                        	  		<h3 class="nomar text-uppercase">Requisitos</h3>
+                              </div>
+                              </div>
+                              <div class="row">
+                              <div class="col-sm-6">
+                                  <ul>
+                                    <li>Mayor de 18 a&ntilde;os</li>
+                                    <li>Comprobante de ingresos</li>
+                                  </ul>
+                              </div>
+                              <div class="col-sm-6">
+                                  <ul>
+                                    <li>DNI</li>
+                                    <li>Copia de un servicio (luz, gas, tel&eacute;fono, cable)</li>
+                                  </ul>
+                              </div>
+                              </div>
+               	          </div>
+                      </div>
+                    </div>  
+                    <div class="row topmar botpad linea-punteada-gris-abajo">
+                    	{{ include('KellsFrontBundle:Default:inc-productos-y-servicios-formulario.php.twig')}}
+                    </div>                     
+                    <div class="row topmar">
+                    	<div class="col-xs-12 text-center">
+	                    	<h3 class="text-uppercase nomar">Otros Productos y Servicios</h3>
+    							{{ include('KellsFrontBundle:Default:inc-productos-y-servicios.php.twig') }}
+   
+                        </div>
+                    </div>
+   				 </div>
+            </div>
+ {% endblock %}     

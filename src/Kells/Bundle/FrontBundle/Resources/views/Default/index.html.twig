@@ -93,6 +93,15 @@
                                       			{% endfor %}
                                     			</div><!-- list group -->
                                   			{% endif  %}
+                                  			
+                                  			<div class="list-group">
+                                      			<div class="list-group-item list-group-title">Precio</div>
+                                      			
+                                      			<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'modelFilter' : modelFilter, 'fuelFilter': fuelFilter, 'directionFilter': directionFilter} )}}" 
+                                      				class="list-group-item"><span class="badge">Ir</span> <input type="text" id="minPrice" name="minPrice" size="2"/> - <input type="text" size="2" id="maxPrice" name="maxPrice" /> </a>
+                                    		</div><!-- list group -->
+                                    			
+                                    			
                                   			</div> 
                                 		</div> <!-- panel body -->
                               		</div><!-- panel filtros -->
@@ -101,7 +110,10 @@
 						<div class="col-sm-6 col-md-8 col-lg-9 toppad">
             				<div class="row resultados">
             					<div class="col-xs-12">
+            					
+            						{% if pattern %}
                          			<h3 class="nomar">B&uacute;squeda realizada: <strong><em>&quot;{{pattern}}&quot;</em></strong></h3>
+                         			{% endif %}
                          		</div>
                          		<div class="clearfix"></div>
 								{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
@@ -124,7 +136,7 @@
         <div id="destacado" class="carousel chico">
             <div class="carousel-inner">
                 <div class="item active">
-                    <a href="productos-y-servicios-creditos-prendarios-individuos.php">
+                    <a href="{{path('prendarios-individuos')}}">
                     	<img src="{{ asset('bundles/kellsfront/img/destacado-creditos-prendarios.jpg') }}" alt="Cr&eacute;ditos Prendarios" title="Cr&eacute;ditos Prendarios">
                     </a>
                     <div class="container active">
@@ -132,7 +144,7 @@
                         	<div class="carousel-interno">
                                 <h1>Créditos Prendarios</h1>
                                 <p>Ahora podes comprar un Auto O Km. o usado, de la manera más simple, con mínimos requisitos y aprobación inmediata.</p>
-                                <p><a href="productos-y-servicios-creditos-prendarios-individuos.php" class="btn btn-alarfin btn-lg">Más información</a></p>
+                                <p><a href="{{path('prendarios-individuos')}}" class="btn btn-alarfin btn-lg">Más información</a></p>
                             </div>
                         </div>
                     </div>
@@ -147,13 +159,13 @@
                     	<div class="well well-home-oscuro">
                         	<div class="row">
                     			<div class="hidden-xs hidden-sm col-sm-4">
-                           	    	<a href="la-empresa.php">
+                           	    	<a href="{{path('empresa')}}">
                            	    		<img src="{{ asset('bundles/kellsfront/img/imagen-home-la-empresa.jpg') }}" alt="La Empresa" title="La Empresa" class="img-responsive">
                            	    	</a>
                                 </div>
                               <div class="col-sm-12 col-md-8">
-                               	<h1><a href="la-empresa.php">La Empresa</a></h1>
-                                  <p><a href="la-empresa.php">Somos una organizaci&oacute;n  que trabaja mediante la  innovaci&oacute;n y la eficiencia,  para que puedas acceder a  mejores servicios financieros.</a></p>
+                               	<h1><a href="{{path('empresa')}}">La Empresa</a></h1>
+                                  <p><a href="{{path('empresa')}}">Somos una organizaci&oacute;n  que trabaja mediante la  innovaci&oacute;n y la eficiencia,  para que puedas acceder a  mejores servicios financieros.</a></p>
                                 </div>
                             </div>
                         </div>
@@ -162,11 +174,11 @@
  						<div class="well well-home-claro">
                         	<div class="row">
                               	<div class="col-sm-12 col-md-12 col-lg-7">
-                              		<h1><a href="productos-y-servicios.php">Productos y Servicios</a></h1>
-                                  	<p><a href="productos-y-servicios.php">Conocé nuestros productos y servicios financieros.</a></p>
+                              		<h1><a href="{{path('productos-y-servicios')}}">Productos y Servicios</a></h1>
+                                  	<p><a href="{{path('productos-y-servicios')}}">Conocé nuestros productos y servicios financieros.</a></p>
                                 </div>
                                 <div class="well-home-claro-auto hidden-xs hidden-sm">
-                           	    	<a href="productos-y-servicios.php">
+                           	    	<a href="{{path('productos-y-servicios')}}">
                            	    		<img src="{{ asset('bundles/kellsfront/img/imagen-auto.png') }}" alt="Productos y Servicios" title="Productos y Servicios" class="img-responsive">
                            	    	</a>
                                 </div>

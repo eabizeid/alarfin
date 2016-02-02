@@ -1,0 +1,131 @@
+{% extends 'KellsFrontBundle:Default:base.html.twig' %}
+{% block body %}
+<div class="contenido-gris linea-gris-abajo">
+	<div class="container">
+		<div class="row">          
+			{{ include('KellsFrontBundle:Default:buscador.html.twig') }}
+			{% if cars %}
+				{% if trademarksFilter %} 
+					<div class="row botmar">
+						<div class="col-sm-6 col-md-4 col-lg-3 toppad filtros">
+                        	<div class="panel-group" id="accordion">
+                            	<div class="panel panel-default">
+                              		<div class="panel-heading">
+                                  		<h4 class="panel-title text-uppercase">
+                                    		<a data-toggle="collapse" data-parent="#accordion" href="#filtros">
+                                      			Filtrar por <span class="caret"></span>
+                                    		</a>
+                                  		</h4>
+                                	</div><!-- panel heading -->
+                               
+                                	<div id="filtros" class="panel-collapse collapse in">
+                                  		<div class="panel-body">
+                                    		<div class="alert alert-dismissible" role="alert">
+                                        		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Eliminar filtro</span></button>
+                                        			Chevrolet
+                                    		</div> <!-- alert -->
+                                   			<div class="list-group">
+                                      			<div class="list-group-item list-group-title">Marca</div>
+                                      			{% for mark in marksKeysFilter %}
+                                      				<a href="#" class="list-group-item"><span class="badge">{{ trademarksFilter[mark]}}</span>{{mark}}</a>
+                                      			{% endfor %}
+                                    			</div><!--list group -->
+                                  			</div> <!-- panel body -->
+                                		</div> <!--filtros -->
+                              		</div><!-- panel default -->
+                            	</div> <!-- accordion -->
+                        	</div> <!-- filtros -->
+						<div class="col-sm-6 col-md-8 col-lg-9 toppad">
+            				<div class="row resultados">
+            					<div class="col-xs-12">
+                         			<h3 class="nomar">B&uacute;squeda realizada: <strong><em>&quot;{{pattern}}&quot;</em></strong></h3>
+                         		</div>
+                         		<div class="clearfix"></div>
+								{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
+							</div>
+					</div>
+				</div>
+            	{% else %}   
+				<div class="row botmar resultados">
+					{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
+				</div>
+				{% endif %}   
+			{% else %}
+				<div class="alert alert-danger role="alert">
+				<p  ALIGN=center>No se encontraron automóviles, por favor intente con otra búsqueda.</p>
+			{% endif %}
+		</div>
+	</div>
+</div>
+  <div class="container toppad botmar">        
+        <div id="destacado" class="carousel chico">
+            <div class="carousel-inner">
+                <div class="item active">
+                    <a href="productos-y-servicios-creditos-prendarios-individuos.php">
+                    	<img src="{{ asset('bundles/kellsfront/img/destacado-creditos-prendarios.jpg') }}" alt="Cr&eacute;ditos Prendarios" title="Cr&eacute;ditos Prendarios">
+                    </a>
+                    <div class="container active">
+                        <div class="carousel-caption col-xs-12 col-sm-7 col-md-5 col-lg-4">
+                        	<div class="carousel-interno">
+                                <h1>Créditos Prendarios</h1>
+                                <p>Ahora podes comprar un Auto O Km. o usado, de la manera más simple, con mínimos requisitos y aprobación inmediata.</p>
+                                <p><a href="productos-y-servicios-creditos-prendarios-individuos.php" class="btn btn-alarfin btn-lg">Más información</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        </div>
+        <div class="home-cajas">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                    	<div class="well well-home-oscuro">
+                        	<div class="row">
+                    			<div class="hidden-xs hidden-sm col-sm-4">
+                           	    	<a href="la-empresa.php">
+                           	    		<img src="{{ asset('bundles/kellsfront/img/imagen-home-la-empresa.jpg') }}" alt="La Empresa" title="La Empresa" class="img-responsive">
+                           	    	</a>
+                                </div>
+                              <div class="col-sm-12 col-md-8">
+                               	<h1><a href="la-empresa.php">La Empresa</a></h1>
+                                  <p><a href="la-empresa.php">Somos una organizaci&oacute;n  que trabaja mediante la  innovaci&oacute;n y la eficiencia,  para que puedas acceder a  mejores servicios financieros.</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-5">
+ 						<div class="well well-home-claro">
+                        	<div class="row">
+                              	<div class="col-sm-12 col-md-12 col-lg-7">
+                              		<h1><a href="productos-y-servicios.php">Productos y Servicios</a></h1>
+                                  	<p><a href="productos-y-servicios.php">Conocé nuestros productos y servicios financieros.</a></p>
+                                </div>
+                                <div class="well-home-claro-auto hidden-xs hidden-sm">
+                           	    	<a href="productos-y-servicios.php">
+                           	    		<img src="{{ asset('bundles/kellsfront/img/imagen-auto.png') }}" alt="Productos y Servicios" title="Productos y Servicios" class="img-responsive">
+                           	    	</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden-xs col-sm-4 col-md-3">
+                    	<div class="well well-home-transparente">
+                        	<div class="row">
+                              	<div class="col-sm-12">
+                               		<h1>Cont&aacute;ctenos</h1>
+                                    <dl class="dl-horizontal">
+                                    <dt><span class="glyphicon glyphicon-earphone"></span></dt>
+                                    <dd>02344 452656<br>02344 433656<br>02344 431656</dd>
+                                    <dt><span class="glyphicon glyphicon-envelope"></span></dt>
+                                    <dd><a href="mailto:info@alarfin.com.ar">info@alarfin.com.ar</a></dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ {% endblock %}

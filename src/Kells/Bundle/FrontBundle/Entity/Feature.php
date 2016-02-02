@@ -90,10 +90,10 @@ class Feature
     /**
      * Set id
      *
-     * @param \Sring $id
+     * @param string $id
      * @return Feature
      */
-    public function setId(\Sring $id)
+    public function setId($id)
     {
         $this->id = $id;
 

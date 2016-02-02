@@ -15,6 +15,12 @@ class AlarfinConfiguration {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
+    /**
+     * @ORM\Column(type="string", length=45)
+     */
+    protected $anio0km;
+    
 	/**
      * @ORM\Column(type="string", length=60)
      */
@@ -334,6 +340,11 @@ class AlarfinConfiguration {
      * @ORM\Column(type="string", length=60)
      */
     protected $onceA15Cuotas24;
+    
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $impuestos;
     
 
     /**
@@ -2115,5 +2126,29 @@ class AlarfinConfiguration {
     public function getOnceA15Cuotas24()
     {
         return $this->onceA15Cuotas24;
+    }
+    
+ 	public function setImpuestos($impuestos)
+    {
+        $this->impuestos = $impuestos;
+
+        return $this;
+    }
+    
+    public function getImpuestos()
+    {
+        return $this->impuestos;
+    }
+    
+    public function setAnio0km($anio0km)
+    {
+        $this->anio0km = $anio0km;
+
+        return $this;
+    }
+    
+    public function getAnio0km()
+    {
+        return $this->anio0km;
     }
 }

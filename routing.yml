@@ -1,0 +1,139 @@
+kells_front_homepage:
+    path:     /
+    defaults: { _controller: KellsFrontBundle:Default:index }
+
+details:
+    path:     /details/{carId}
+    defaults: { _controller: KellsFrontBundle:Default:details }
+    
+searchCar:
+    path:     /searchCar
+    defaults: { _controller: KellsFrontBundle:Default:searchCar }
+    
+userRegistration:
+    path:     /userRegistration
+    defaults: { _controller: KellsFrontBundle:Default:userRegistration }
+    
+licenseeRegistration:
+    path:     /licenseeRegistration
+    defaults: { _controller: KellsFrontBundle:Default:licenseeRegistration }
+    
+licensee_create:
+    path:     /licenseeRegistration/confirm
+    defaults: { _controller: KellsFrontBundle:Default:licenseeConfirm }
+    
+licensee_confirm:
+    path:     /licensee/register/confirm/{token}
+    defaults: { _controller: KellsFrontBundle:Default:licenseeRegisterConfirm }
+
+licensee_message_confirm:
+    path:     /licensee/register/message/
+    defaults: { _controller: KellsFrontBundle:Default:registerMessageConfirm }
+    
+user_create:
+    path:     /userRegistration/confirm
+    defaults: { _controller: KellsFrontBundle:Default:userConfirm }
+    
+user_confirm:
+    path:     /user/register/confirm/{token}
+    defaults: { _controller: KellsFrontBundle:Default:userRegisterConfirm }
+
+user_message_confirm:
+    path:     /user/register/message/
+    defaults: { _controller: KellsFrontBundle:Default:registerMessageConfirm }
+    
+user_login_view:
+    path:     /user/login/
+    defaults: { _controller: KellsFrontBundle:Default:userLogin }
+    
+login_check:
+    pattern: /user/login_check
+logout:
+    pattern: /user/logout
+    
+user_myPublications:
+    path:     /user/myPublications/
+    defaults: { _controller: KellsFrontBundle:Default:userMyPublications }
+    
+user_toPublish:
+    path:     /user/toPublish/
+    defaults: { _controller: KellsFrontBundle:Default:toPublish }
+
+user_toPublish_error:
+    path:     /user/toPublish/{message}
+    defaults: { _controller: KellsFrontBundle:Default:toPublish }
+    
+    
+route_to_retrieve_model:
+    pattern: /getModels/
+    defaults: {_controller: KellsFrontBundle:Default:getModels}
+    options:
+        expose: true
+        
+route_to_retrieve_city:
+    pattern: /getCities/
+    defaults: {_controller: KellsFrontBundle:Default:getCities}
+    options:
+        expose: true
+        
+publish:
+    path:     /publish/
+    defaults: { _controller: KellsFrontBundle:Default:publish  }
+    
+to_finalize:
+    path:     /finalize/
+    defaults: { _controller: KellsFrontBundle:Default:toFinalize  }
+    
+to_edit:
+    path:     /edit/
+    defaults: { _controller: KellsFrontBundle:Default:toEdit  }
+    
+republish:
+    path:     /republish/
+    defaults: { _controller: KellsFrontBundle:Default:republish  }
+    
+creditRequest:
+    path:     /creditRequest/
+    defaults: { _controller: KellsFrontBundle:Default:showCreditRequest }
+    
+creditRequestSuccess:
+    path:     /creditRequest/Success
+    defaults: { _controller: KellsFrontBundle:Default:showCreditRequestSuccess }
+    
+credit:
+    path:     /credit/
+    defaults: { _controller: KellsFrontBundle:Default:credit }
+    
+simulador:
+    path:     /simulador/
+    defaults: { _controller: KellsFrontBundle:Default:showSimulador }
+    
+simularCuotas:
+    pattern: /simularCuotas/
+    defaults: {_controller: KellsFrontBundle:Default:simularCuotas }
+    options:
+        expose: true
+
+getValorCuotas:
+    pattern: /valorCuotas/
+    defaults: {_controller: KellsFrontBundle:Default:getValorCuotas }
+    options:
+        expose: true
+        
+olvideContrasena:
+    path:     /recuperar-contrasena
+    defaults: { _controller: KellsFrontBundle:Default:recuperarUser }
+    
+recuperarUser:
+    path:     /recuperar-contrasena/message
+    defaults: { _controller: KellsFrontBundle:Default:recuperarUserContrasena }
+    
+consultar:
+    path:     /consultar
+    defaults: { _controller: KellsFrontBundle:Default:enviarConsulta }
+   
+filterResults:
+    path:     /filterResults/
+    defaults: { _controller: KellsFrontBundle:Default:filterResults }
+    
+remov

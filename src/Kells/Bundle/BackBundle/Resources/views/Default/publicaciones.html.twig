@@ -46,7 +46,8 @@
                                         <td>{{car.trademark.description}}</td>
                                         <td>{{car.model.description}}</td>
                                         <td>${{car.price}}</td>
-                                        <td nowrap><a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" href="{{path('editar-publicacion', {'carId': car.id})}}"><i class="fa fa-pencil fa-fw"></i></a>&nbsp;<button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Finalizar"><i class="fa fa-thumbs-o-down fa-fw"></i></button></td>
+                                        <td nowrap><a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" href="{{path('editar-publicacion', {'carId': car.id})}}"><i class="fa fa-pencil fa-fw"></i></a>&nbsp;
+                                        <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Finalizar" href="{{path('remove-publicacion', {'carId': car.id})}}"><i class="fa fa-thumbs-o-down fa-fw"></i></a></td>
                                     </tr>
                                    {% endif %}
                                    {% endfor %}
@@ -113,5 +114,6 @@
 			container: "body"
 		});
 	});
+	
 </script>
 {% endblock%}

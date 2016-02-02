@@ -11,7 +11,7 @@
 					<form action="{{ path('publish') }}" role="form" enctype="multipart/form-data" method="post" onsubmit="return validateForm();">
 					 	<input type="hidden" name="_target_path" value="{{ path('publish') }}" />
 					 	<input type="hidden" name="carId" value="{% if car %}{{ car.id}} {% endif %}" />
-						<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>Marca, Modelo, Provincia y Foto principal son obligatorios</div>
+						<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>Descripción, Marca, Modelo, Provincia, Combustible, Color, Kilómetros y Foto principal son obligatorios</div>
 	                    <div class="col-md-12"> 
                         	<h2>Marca y modelo</h2>
                         </div>
@@ -81,7 +81,11 @@
                                 	<div class="col-sm-4 col-lg-3">                                
                                         <div class="form-group">
                                             <label for="fotoprincipal">Foto principal</label>
-                                            <input type="file" name="fotoprincipal" id="fotoprincipal" class="form-control">
+                                             {% if car and car.mandatoryImage %}
+                                                     <img id="mandatoryImage" name="mandatoryImage" src="{{ asset(car.mandatoryImage.webPath) }}" width="800" height="600" class="img-responsive">
+                                                     {% endif %}
+                                            <input type="file" name="fotoprincipal" id="fotoprincipal" class="form-control"
+                                            	 {% if car and car.mandatoryImage %} value="{{ asset(car.mandatoryImage.webPath) }}" {% endif %} >
                                         </div>
                                     </div>
                                 </div>
@@ -100,37 +104,61 @@
                                           <div class="col-sm-6 col-lg-4">                                
                                                 <div class="form-group">
                                                     <label for="foto1">Foto 1</label>
-                                                    <input type="file" name="foto1" id="foto1" class="form-control">
+                                                     {% if car and car.image1 %}
+                                                     <img src="{{ asset(car.image1.webPath) }}" width="800" height="600" class="img-responsive">
+                                                    {% endif %}
+                                                    <input type="file" name="foto1" id="foto1" class="form-control"
+                                                     {% if car and car.image1 %} value="{{ car.image1.webPath }}" {% endif %} >
                                                 </div>
                                             </div>
                                           <div class="col-sm-6 col-lg-4"> 
                                                 <div class="form-group">
                                                     <label for="foto2">Foto 2</label>
-                                                    <input type="file" name="foto2" id="foto2" class="form-control">
+                                                     {% if car and car.image2 %}
+                                                     <img src="{{ asset(car.image2.webPath) }}" width="800" height="600" class="img-responsive">
+                                                    {% endif %}
+                                                    <input type="file" name="foto2" id="foto2" class="form-control"
+                                                     {% if car and car.image2 %} value="{{ car.image2.webPath }}" {% endif %} >
                                                 </div>
                                             </div>
                                           <div class="col-sm-6 col-lg-4"> 
                                                 <div class="form-group">
                                                     <label for="foto3">Foto 3</label>
-                                                    <input type="file" name="foto3" id="foto3" class="form-control">
+                                                     {% if car and car.image3 %}
+                                                     <img src="{{ asset(car.image3.webPath) }}" width="800" height="600" class="img-responsive">
+                                                    {% endif %}
+                                                    <input type="file" name="foto3" id="foto3" class="form-control"
+                                                     {% if car and car.image3 %} value="{{ car.image3.webPath }}" {% endif %} >
                                                 </div>
                                             </div>
                                           <div class="col-sm-6 col-lg-4"> 
                                                 <div class="form-group">
                                                     <label for="foto4">Foto 4</label>
-                                                    <input type="file" name="foto4" id="foto4" class="form-control">
+                                                     {% if car and car.image4 %}
+                                                     <img src="{{ asset(car.image4.webPath) }}" width="800" height="600" class="img-responsive">
+                                                    {% endif %}
+                                                    <input type="file" name="foto4" id="foto4" class="form-control"
+                                                     {% if car and car.image4 %} value="{{ car.image4.webPath }}" {% endif %} >
                                                 </div>
                                             </div>
                                           <div class="col-sm-6 col-lg-4"> 
                                                 <div class="form-group">
                                                     <label for="foto5">Foto 5</label>
-                                                    <input type="file" name="foto5" id="foto5" class="form-control">
+                                                     {% if car and car.image5 %}
+                                                     <img src="{{ asset(car.image5.webPath) }}" width="800" height="600" class="img-responsive">
+                                                    {% endif %}
+                                                    <input type="file" name="foto5" id="foto5" class="form-control"
+                                                     {% if car and car.image5 %} value="{{ car.image5.webPath }}" {% endif %} >
                                                 </div>
                                             </div>
                                           <div class="col-sm-6 col-lg-4"> 
                                                 <div class="form-group">
                                                     <label for="foto6">Foto 6</label>
-                                                    <input type="file" name="foto6" id="foto6" class="form-control">
+                                                     {% if car and car.image6 %}
+                                                     <img src="{{ asset(car.image6.webPath) }}" width="800" height="600" class="img-responsive">
+                                                    {% endif %}
+                                                    <input type="file" name="foto6" id="foto6" class="form-control"
+                                                     {% if car and car.image6 %} value="{{ car.image6.webPath }}" {% endif %} >
                                                 </div>
                                             </div>
                                     	</div>
@@ -353,6 +381,9 @@
                 		function(data){
                 			 var sub = $('#modelo');
                 			sub.empty();
+                			sub.append($("<option></option>")
+                			.attr("value","")
+                    		.text("Seleccioná un modelo"));
                 			$.each(data , function(id, description) { 
                     			sub.append($("<option></option>")
                     				.attr("value",description.id)
@@ -410,7 +441,7 @@
 	        	 	$("#ciudad").val("{{ car.city.id }}");
 	        	 	{% endif %}
 	        	 	
-	        	 	{% if car.fuel%}
+	        	 	{% if car.fuel %}
 	        	 	$("#COMBUS").val("{{car.fuel.id}}")
 	        	 	{% endif %}
 	        	 	{% if car.year %}
@@ -431,8 +462,13 @@
         	 	var marca = $("#marca").val();
     			var modelo = $("#modelo").val();
 	        	var provincia = $("#provincia").val();
+	        	var combus = $("#COMBUS").val();
+	        	var km = $("#KMTS").val();
+	        	var color = $("COLOREXT").val();
 	        	
-    			if (marca == "Seleccioná una marca" || modelo == "Seleccioná una marca" || provincia == "Seleccioná una provincia" || $("#fotoprincipal").val() == '') {
+    			if (!$('#descripcion').val() || marca == "Seleccioná una marca" || modelo == "Seleccioná una marca" || provincia == "Seleccioná una provincia" 
+    				|| ($("#fotoprincipal").val() == '' && $("#mandatoryImage").val() == 'undefined')
+    				 || combus == "Elegir" || km == "Elegir" || color == "Elegir" ) {
         			$("#divMsg").show();
         			$('html, body').animate({ scrollTop: $('#divMsg').offset().top }, 'slow');
         			return false;

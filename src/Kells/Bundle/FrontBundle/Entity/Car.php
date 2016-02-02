@@ -97,7 +97,7 @@ class Car {
 	
 
 	/**
-     * @ORM\ManyToMany(targetEntity="Feature")
+     * @ORM\ManyToMany(targetEntity="Feature", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="car_feature",
      *     joinColumns={@ORM\JoinColumn(name="car_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="feature_id", referencedColumnName="id")}
@@ -115,6 +115,42 @@ class Car {
      * @ORM\OneToMany(targetEntity="CarImage", mappedBy="car", cascade={"persist", "remove", "merge"})
      */
 	protected $images;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image1_id", referencedColumnName="id")
+     **/
+	protected $image1;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image2_id", referencedColumnName="id")
+     **/
+	protected $image2;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image3_id", referencedColumnName="id")
+     **/
+	protected $image3;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image4_id", referencedColumnName="id")
+     **/
+	protected $image4;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image5_id", referencedColumnName="id")
+     **/
+	protected $image5;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image6_id", referencedColumnName="id")
+     **/
+	protected $image6;
 	
 	
 	/**
@@ -330,6 +366,43 @@ class Car {
         return $this;
     }
 
+	public function setImage1($mandatoryImage)
+    {
+        $this->image1 = $mandatoryImage;
+
+        return $this;
+    }
+	public function setImage2($mandatoryImage)
+    {
+        $this->image2 = $mandatoryImage;
+
+        return $this;
+    }
+	public function setImage3($mandatoryImage)
+    {
+        $this->image3 = $mandatoryImage;
+
+        return $this;
+    }
+	public function setImage4($mandatoryImage)
+    {
+        $this->image4 = $mandatoryImage;
+
+        return $this;
+    }
+	public function setImage5($mandatoryImage)
+    {
+        $this->image5 = $mandatoryImage;
+
+        return $this;
+    }
+	public function setImage6($mandatoryImage)
+    {
+        $this->image6 = $mandatoryImage;
+
+        return $this;
+    }
+
     /**
      * Get mandatoryImage
      *
@@ -340,6 +413,34 @@ class Car {
         return $this->mandatoryImage;
     }
 
+    
+    public function getImage1()
+    {
+        return $this->image1;
+    }
+    
+    public function getImage2()
+    {
+        return $this->image2;
+    }
+    public function getImage3()
+    {
+        return $this->image3;
+    }
+    public function getImage4()
+    {
+        return $this->image4;
+    }
+    public function getImage5()
+    {
+        return $this->image5;
+    }
+    
+ 	public function getImage6()
+    {
+        return $this->image6;
+    }
+    
     /**
      * Add images
      *

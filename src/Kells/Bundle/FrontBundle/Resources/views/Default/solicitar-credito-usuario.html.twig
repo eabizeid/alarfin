@@ -136,14 +136,14 @@
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                   <div class="col-sm-6"> 
                                         <div class="form-group">
-                                            <label for="solicitante-fotocopia-servicio">Fotocopia de un servicio</label>
-                                            <input type="file" name="solicitante-fotocopia-servicio" id="solicitante-fotocopia-servicio" class="form-control" tabindex="14">
+                                            <label for="solicitante-fotocopia-dni">Fotocopia del DNI 1</label>
+                                            <input type="file" name="solicitante-fotocopia-dni" id="solicitante-fotocopia-dni" class="form-control" tabindex="14">
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
-                                          <label for="solicitante-fotocopia-dni">Fotocopia del DNI</label>
-                                          <input type="file" name="solicitante-fotocopia-dni" id="solicitante-fotocopia-dni" class="form-control" tabindex="15">
+                                          <label for="solicitante-fotocopia-dni2">Fotocopia del DNI 2</label>
+                                          <input type="file" name="solicitante-fotocopia-dni2" id="solicitante-fotocopia-dni2" class="form-control" tabindex="15">
                                         </div>
                                     </div> 
                                     <div class="col-sm-6"> 
@@ -160,6 +160,12 @@
                                     </div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
+                                            <label for="solicitante-fotocopia-vehiculo">Título del vehículo</label>
+                                            <input type="file" name="solicitante-fotocopia-vehiculo" id="solicitante-fotocopia-vehiculo" class="form-control" tabindex="18">
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
                                             <label for="solicitante-fotocopia-otra-1">Otra fotocopia</label>
                                             <input type="file" name="solicitante-fotocopia-otra-1" id="solicitante-fotocopia-otra-1" class="form-control" tabindex="18">
                                         </div>
@@ -168,6 +174,12 @@
                                         <div class="form-group">
                                           <label for="solicitante-fotocopia-otra-2">Otra fotocopia</label>
                                           <input type="file" name="solicitante-fotocopia-otra-2" id="solicitante-fotocopia-otra-2" class="form-control" tabindex="19">
+                                        </div>
+                                    </div> 
+                                     <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-fotocopia-servicio">Fotocopia de un servicio</label>
+                                            <input type="file" name="solicitante-fotocopia-servicio" id="solicitante-fotocopia-servicio" class="form-control" tabindex="14">
                                         </div>
                                     </div> 
 
@@ -319,29 +331,28 @@
 									<div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="garante-nombre">Nombre</label>
-                                          *
-                                          <input type="text" name="garante-nombre" id="garante-nombre" required class="form-control input-lg" tabindex="40" autofocus>
+                                          <input type="text" name="garante-nombre" id="garante-nombre" class="form-control input-lg" tabindex="40" autofocus>
                                         </div>
                                 </div>
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="garante-apellido">Apellido</label>
-                                            *
-                                            <input type="text" name="garante-nombre" id="garante-apellido" required class="form-control input-lg" tabindex="41">
+                                            
+                                            <input type="text" name="garante-nombre" id="garante-apellido" class="form-control input-lg" tabindex="41">
                                         </div>
                                     </div>
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-dni">DNI</label>
-                                            *
-                                            <input type="number" name="garante-dni" id="garante-dni" maxlength="8" required class="form-control" autofocus tabindex="42">
+                                            
+                                            <input type="number" name="garante-dni" id="garante-dni" maxlength="8"  class="form-control" autofocus tabindex="42">
                                         </div>
                                     </div>
 									<div class="col-sm-4"> 
                                       <div class="form-group">
                                             <label for="garante-estado-civil">Estado civil</label>
-                                            *
+                                            
                                             <select type="date" name="garante-estado-civil" id="garante-estado-civil" class="form-control" tabindex="43">
                                             	<option>&nbsp;</option>
                                                 <option>Soltero/a</option>
@@ -355,16 +366,15 @@
 									<div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-domicilio">Domicilio</label>
-                                            *
-                                            <input type="text" name="garante-domicilio" id="garante-domicilio" required class="form-control" tabindex="44">
+                                            <input type="text" name="garante-domicilio" id="garante-domicilio"  class="form-control" tabindex="44">
                                         </div>
                                     </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-provincia">Provincia</label>
                                             *
-                                            <select name="garante-provincia" id="garante-provincia" required class="form-control" tabindex="45">
-                                            	<option>&nbsp;</option>
+                                            <select name="garante-provincia" id="garante-provincia" class="form-control" tabindex="45">
+                                            	<option></option>
 												{% for pcia in provinces %}
                                                 <option value="{{ pcia.id }}">{{ pcia.description }}</option>
                                                 {% endfor %}
@@ -374,16 +384,14 @@
                                   <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-ciudad">Ciudad</label>
-                                            *
-                                            <select name="garante-ciudad" id="garante-ciudad" required class="form-control" tabindex="46">
-                                            	<option>&nbsp;</option>
+                                            <select name="garante-ciudad" id="garante-ciudad" class="form-control" tabindex="46">
+                                            	<option></option>
                                             </select>
                                         </div>
                                 </div>
                                     <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-celular">Tel&eacute;fono celular</label>
-                                            *
                                             <input type="tel" name="garante-celular" id="garante-celular" class="form-control" tabindex="47">
                                       </div>
                                 </div>
@@ -397,8 +405,7 @@
                                 <div class="col-sm-4"> 
                                         <div class="form-group">
                                             <label for="garante-laboral">Actividad laboral</label>
-                                            *
-                                            <input type="text" name="garante-laboral" id="garante-laboral" required class="form-control" tabindex="49">
+                                            <input type="text" name="garante-laboral" id="garante-laboral" class="form-control" tabindex="49">
                                         </div>
                                 </div>
                                       <div class="col-sm-4"> 

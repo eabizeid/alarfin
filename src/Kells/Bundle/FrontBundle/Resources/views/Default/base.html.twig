@@ -1,3 +1,4 @@
+{# defined works with variable names #}
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -8,7 +9,27 @@
         <meta name="robots" content="index, follow" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
-        <meta name="author" content="Kells - www.kells.com.ar" />
+        <meta http-equiv="cleartype" content="on"/>
+        {% if car is defined  %}
+        	{% if car %} 
+        	<meta property="og:title" content="{{car.title}}" />
+        	{% endif %}
+		{%else %}
+			<meta property="og:title" content="Alarfin" />
+		{% endif %}
+		<meta property="og:site_name" content="Alarfin"/>
+		<meta property="og:url" content="{{app.request.uri}}" />
+		 {% if car is defined %}
+		 {% if car %} 
+        	<meta property="og:description" content="{{car.description}}" />
+		{% endif %}
+		{% else %}
+			<meta property="og:description" content="" />
+		{% endif %}
+		<meta property="og:type" content="article" />
+		<meta property="article:author" content="https://www.facebook.com/pages/Alarfin/637917832974942?ref=hl" />
+		<meta property="article:publisher" content="https://www.facebook.com/pages/Alarfin/637917832974942?ref=hl" />
+        
         <link rel="shortcut icon" href="img/favicon.ico" />
         <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,500,700' rel='stylesheet' type='text/css'>
          <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -33,10 +54,13 @@
 		<script src="{{ asset('bundles/kellsfront/js/bootstrap.min.js') }}"></script>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
          <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+         <script src="{{ asset('bundles/kellsfront/js/jquery.blockUI.js') }}"></script>
         <script src="{{ asset('bundles/kellsfront/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
 		<script src="{{ asset('bundles/kellsfront/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
         <script>
             $(document).ready(function() {
+            $.blockUI.defaults.message = 'Cargando...';
+            $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
                 $('#tabla-publicados').dataTable({
 					"order": [[ 1, "desc" ]],
                     "aoColumnDefs" : [{
@@ -64,12 +88,14 @@
                 		function(data){
                 			 var sub = $('#modelo');
                 			sub.empty();
+                			sub.append($("<option></option>")
+                			.attr("value","")
+                    		.text("Seleccioná un modelo"));
                 			$.each(data , function(id, description) { 
                     			sub.append($("<option></option>")
                     				.attr("value",description.id)
                     				.text(description.description)); 
                 		    })
-                		
  						} )
 					})
 					
@@ -81,6 +107,9 @@
                 		function(data){
                 			 var sub = $('#ciudad');
                 			sub.empty();
+                			sub.append($("<option></option>")
+                			.attr("value","")
+                    		.text("Seleccioná una ciudad"));
                 			$.each(data , function(key, description) { 
                     			sub.append($("<option></option>")
                     				.attr("value",key)

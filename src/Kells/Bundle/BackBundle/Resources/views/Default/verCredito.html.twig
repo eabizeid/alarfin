@@ -129,19 +129,19 @@
                                         </div>
                                     </div> 
                                     <div class="col-sm-12 nomar"><hr class="topmar10"></div>
-                                  <div class="col-sm-6"> 
-                                        <div class="form-group">
-                                            <label for="solicitante-fotocopia-servicio">Fotocopia de un servicio</label><br>
-                                             {% if credito.fotocopiaServicioSolicitante  %}
-                                            <a href="{{asset(credito.fotocopiaServicioSolicitante.webPath)}}" target="_blank">Ver archivo</a>
-                                            {% endif %}
-                                        </div>
-                                    </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                           <label for="solicitante-fotocopia-dni">Fotocopia del DNI</label><br>
                                           {% if credito.fotocopiaDniSolicitante  %}
                                             <a href="{{asset(credito.fotocopiaDniSolicitante.webPath)}}" target="_blank">Ver archivo</a>
+                                            {% endif %}
+                                        </div>
+                                    </div> 
+                                    <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-fotocopia-dni2">Fotocopia del DNI 2</label><br>
+                                             {% if credito.fotocopiaDni2Solicitante  %}
+                                            <a href="{{asset(credito.fotocopiaDni2Solicitante.webPath)}}" target="_blank">Ver archivo</a>
                                             {% endif %}
                                         </div>
                                     </div> 
@@ -161,6 +161,14 @@
                                           {% endif %}
                                         </div>
                                     </div>
+                                     <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-fotocopia-vehiculo">Título del vehículo</label><br>
+                                             {% if credito.fotocopiaVehiculo  %}
+                                            <a href="{{asset(credito.fotocopiaVehiculo.webPath)}}" target="_blank">Ver archivo</a>
+                                            {% endif %}
+                                        </div>
+                                    </div> 
                                     <div class="col-sm-6"> 
                                         <div class="form-group">
                                             <label for="solicitante-fotocopia-otra-1">Otra fotocopia</label><br>
@@ -177,7 +185,14 @@
                                             {% endif %}
                                         </div>
                                     </div> 
-
+									<div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="solicitante-fotocopia-servicio">Fotocopia de un servicio</label><br>
+                                             {% if credito.fotocopiaServicioSolicitante  %}
+                                            <a href="{{asset(credito.fotocopiaServicioSolicitante.webPath)}}" target="_blank">Ver archivo</a>
+                                            {% endif %}
+                                        </div>
+                                    </div> 
                             {% if credito.estadoCivilSolicitante == 'Casado/a' %}
 							<div id="conyuge-1">
                                    <div class="col-sm-12 topmar">

@@ -35,7 +35,7 @@
                                     <tr>
                                         <td><img src="{% if car.mandatoryImage %}{{asset(car.mandatoryImage.webPath)}}{% endif %}"  class="img-responsive"></td>
                                         <td>{{car.publishedDate|date('d/m/Y')}}</td>
-                                        <td class="publicaciones-titulo"><a href="publicar.php">{{ car.title }}</a></td>
+                                        <td class="publicaciones-titulo"><a href="{{ path('details', {'carId': car.id }) }}">{{ car.title }}</a></td>
                                         <td>{{ car.trademark.description}}</td>
                                         <td>{{ car.model.description}}</td>
                                         <td>${{ car.price}}</td>

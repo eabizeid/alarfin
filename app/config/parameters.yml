@@ -1,0 +1,17 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 190.228.29.63
+    database_port: 3306
+    database_name: alarfin
+    database_user: alarfin
+    database_password: $al4rfin%
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: 0d0e9c39e7f64ef74cbc12b223c70e6e9be6aaae
+    debug_toolbar: false
+    debug_redirects: false
+    use_assetic_controller: true

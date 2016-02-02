@@ -1,0 +1,32 @@
+2015-01-26 10:14:11,910 INFO  [DefaultSoapUICore] initialized soapui-settings from [/home/edu/soapui-settings.xml]
+2015-01-26 10:14:13,482 INFO  [WorkspaceImpl] Loading workspace from [/home/edu/default-soapui-workspace.xml]
+2015-01-26 10:14:13,882 INFO  [WsdlProject] Loaded project from [file:/home/edu/development/workspace/despegar/soap-ui/Derby-soapui-project.xml]
+2015-01-26 10:14:14,291 INFO  [SoapUI] Used java version: 1.7.0_15
+2015-01-26 10:16:07,949 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 1882ms (562 bytes)
+2015-01-26 10:17:45,417 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 712ms (562 bytes)
+2015-01-26 10:19:20,872 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 737ms (558 bytes)
+2015-01-26 10:20:12,206 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 717ms (563 bytes)
+2015-01-26 10:21:04,345 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 977ms (0 bytes)
+2015-01-26 10:21:20,321 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 755ms (558 bytes)
+2015-01-26 10:21:34,558 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 787ms (558 bytes)
+2015-01-26 10:21:39,983 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 707ms (558 bytes)
+2015-01-26 10:21:51,349 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 937ms (558 bytes)
+2015-01-26 10:25:41,361 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 1407ms (1339 bytes)
+2015-01-26 10:26:04,573 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 1271ms (558 bytes)
+2015-01-26 10:27:35,686 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 3135ms (558 bytes)
+2015-01-26 10:28:10,195 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 1329ms (563 bytes)
+2015-01-26 10:30:22,092 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 1008ms (563 bytes)
+2015-01-26 10:30:26,359 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 994ms (563 bytes)
+2015-01-26 10:30:31,839 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 1866ms (563 bytes)
+2015-01-26 12:29:15,398 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 2631ms (205 bytes)
+2015-01-26 12:29:33,561 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 951ms (563 bytes)
+2015-01-26 12:31:35,035 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 1571ms (210 bytes)
+2015-01-26 14:26:52,289 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 1012ms (345 bytes)
+2015-01-26 14:28:08,350 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 732ms (368 bytes)
+2015-01-26 14:28:22,731 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 1197ms (367 bytes)
+2015-01-26 14:28:54,942 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 16268ms (14253 bytes)
+2015-01-26 14:29:17,855 INFO  [AbstractHttpRequestDesktopPanel] Got response for [DoorwaySoap11.Availability:MultiAvailabilityRequest] in 2103ms (28158 bytes)
+2015-01-28 08:14:34,609 INFO  [DefaultSoapUICore] Settings saved to [/home/edu/soapui-settings.xml]
+2015-01-28 08:14:34,928 WARN  [errorlog] Failed to delete temporary project file; /home/edu/development/workspace/despegar/soap-ui/project-temp-5098615125881346652.xml
+2015-01-28 08:14:34,957 INFO  [WsdlProject] Saved project [Derby] to [/home/edu/development/workspace/despegar/soap-ui/Derby-soapui-project.xml - 24008 bytes
+2015-01-28 08:14:35,043 INFO  [WorkspaceImpl] Saved workspace to [/home/edu/default-soapui-workspace.xml]

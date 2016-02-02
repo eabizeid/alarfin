@@ -1,0 +1,174 @@
+/* generales */
+html, body {font-family: 'Ubuntu', sans-serif;color:#77777b;}
+ul {list-style-type:none;padding:0;}
+
+/* links */
+a {color:#af1d35;}
+a:hover {color:#000;}
+
+/* menu */
+.navbar {min-height:30px;margin-bottom:0;border:none;background:#af1d35 url(../img/fondo-menu.gif) left bottom repeat-x;border-radius:0;}
+.navbar-default .navbar-nav > li > a {color:#fff;text-transform:uppercase;font-weight:700;font-size:14px;padding-top:15px;padding-bottom:15px;line-height:20px;}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {color:#fff;background-color:#861124;}
+.navbar-collapse-tel, .navbar-tel {color:#fff;text-transform:uppercase;font-weight:700;font-size:12px;padding:0px;line-height:30px;float:right;}
+.navbar-collapse-tel {font-size:12px;line-height:50px;padding:0 15px 0 0;}
+.navbar-collapse-tel a, .navbar-tel a {color:#fff;text-decoration:none;}
+.navbar-collapse-tel a:hover, .navbar-tel a:hover {color:#fff;text-decoration:underline;}
+.navbar-toggle {float:left;margin-left:15px;margin-right:0;}
+.navbar-default .navbar-toggle {border-color:#fff;}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {background-color:#861124;}
+.navbar-default .navbar-toggle .icon-bar {background-color:#fff;}
+.navbar-collapse ul {margin-top:0;margin-bottom:0;}
+
+/* header */
+header {-webkit-box-shadow:inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgba(0, 0, 0, .2);box-shadow:inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgba(0, 0, 0, .2);padding-bottom:10px;border-bottom:1px solid #e1e3e4;}
+.header-logo {padding:10px 0 0;text-align:center;}
+.header-botones {text-align:center;padding:0;}
+.btn-header {color:#af1d35;border:2px solid #af1d35;background:#fff url(../img/fondo-btn-header.png) 10px center no-repeat;text-transform:uppercase;font-size:15px;font-weight:500;padding:10px 10px 11px 55px;margin:10px 0 0;}
+.btn-header:hover, .btn-header:focus {color:#fff;text-decoration:none;background-color:#af1d35;background-position:-422px center;}
+.btn-header:active, .btn-header.active {background:#af1d35 url(../img/fondo-btn-header.png) -422px center no-repeat;}
+.btn-derecha {margin-left:0;}
+.btn-concesionaria {background-position:-206px center;}
+.btn-concesionaria:hover, .btn-concesionaria:focus {background-position:-638px center;}
+.btn-concesionaria:active, .btn-concesionaria.active {background:#af1d35 url(../img/fondo-btn-header.png) -638px center no-repeat;}
+
+/* estructura */
+#destacado {border-bottom:1px solid #a3a3a5;}
+#destacado .carousel-caption {background:url(../img/fondo-destacado.png);text-align:center;text-shadow:none;color:#5d5d5d;bottom:0;right:0;left:0;padding:0;font-size:18px;position:relative;}
+#destacado .carousel-caption h1 {color:#af1d35;text-transform:uppercase;font-weight:500;margin:0;letter-spacing:-1px;}
+#destacado .carousel-caption p {margin:10px 0 0;}
+#destacado .carousel-interno {padding:15px;background:none;}
+.home-cajas {background:#eaeaea;padding-bottom:15px;border-top:3px solid #c8c8c8;}
+.well-home-oscuro {padding:0 20px 10px;margin-bottom:0;background-color:#989898;border:none;color:#fff;border-radius:10px;margin-top:15px;}
+.well-home-oscuro h1 {font-size:20px;text-transform:uppercase;font-weight:700;}
+.well-home-oscuro a, .well-home-oscuro a:hover {color:#fff;text-decoration:none;display:block;}
+.well-home-claro {padding:20px 20px 10px;margin-bottom:0;background:#fff url(../img/fondo-productos-colores.gif) 20px 0 no-repeat;border:none;color:#77777b;border-radius:10px;margin-top:15px;}
+.well-home-claro h1 {font-size:25px;text-transform:uppercase;font-weight:700;color:#af1d35;}
+.well-home-claro-auto {position:absolute;right:-5px;top:-10px;}
+.well-home-claro a {display:block;}
+.well-home-claro a:hover {text-decoration:none;color:#af1d35;}
+.well-home-claro p a, .well-home-claro p a:hover {color:#77777b}
+.well-home-transparente {padding:0 18px 10px;margin-bottom:0;background-color:#eaeaea;border:2px solid #cbcbcc;color:#77777b;border-radius:10px;margin-top:15px;font-size:16px;}
+.well-home-transparente h1 {font-size:20px;text-transform:uppercase;font-weight:700;color:#af1d35;margin-bottom:0;}
+.well-home-transparente dl {margin-bottom:0;font-size:16px;}
+.well-home-transparente .dl-horizontal dt {margin-top:10px;font-size:20px;border-top:1px solid #b8b7b9;padding-top:10px;}
+.well-home-transparente .dl-horizontal dd {margin-top:5px;}
+.productos-titulo-imagen {border-bottom:1px dotted #999;}
+.productos-titulo-imagen img {border-bottom:1px solid #999;}
+.productos-titulo {padding:20px 15px 15px;text-align:center;color:#333;}
+.productos-titulo h3, .productos-titulo h4 {margin:0 0 10px;}
+.productos .well {margin:0;text-align:center;border-color:#adacae;background:#fff;padding:0;margin-top:20px;}
+.productos .well a {display:block;color:#77777b;border-radius: 4px;}
+.productos .well a:hover {background:#f0f0f0;text-decoration:none;color:#ad172b;}
+.productos .well img {margin:20px 0;}
+.productos .well h2 {margin:0;text-transform:uppercase;font-size:18px;padding:0 10px;}
+.productos-caracteristicas li {font-size:20px;padding-left:25px;background:url(../img/misc-visto.png) 0 10px no-repeat;margin-bottom:10px;}
+.productos-contacto .well, .contacto .well {border:none;background:#af1d35;color:#fff;margin:0;font-size:16px;}
+.contacto-mapa-direccion {background:#af1d35;color:#fff;font-size:16px;padding:15px;}
+.faq .panel-group {margin-bottom:30px;}
+.faq .panel {margin-top:30px !important;}
+.faq .panel-heading {padding:0;}
+.faq .panel-title a {display:block;padding:10px 15px;border-radius:4px;}
+.faq .panel-title a:hover {background:#af1d35;color:#fff;text-decoration:none;}
+.faq .panel-body {font-size:18px;}
+.faq ul {border-top:1px dotted #ccc;margin:30px 0;font-size:16px;}
+.faq li {border-bottom:1px dotted #ccc;padding:30px 20px 30px 50px;background:url(../img/misc-visto.png) 20px 37px no-repeat;}
+.faq strong {color:#666;}
+.empresa-historia {font-size:16px;}
+.empresa-historia img {width:150px;height:150px;}
+
+/* footer */
+footer {background:#ad172b;border-top:4px solid #921b2b;padding:20px 0;color:#e0bbbe;font-size:14px;}
+footer a {color:#e0bbbe;text-decoration:none;}
+footer a:hover {color:#fff;text-decoration:underline;}
+.footer-datos, .footer-redes, .footer-logo {text-align:center;}
+.footer-redes img {margin:8px 5px 0;}
+.footer-redes {padding-top:20px;}
+.footer-logo {padding-top:30px;}
+
+/* clases */
+.topmar {margin-top:30px;}
+.botmar {margin-bottom:30px;}
+.toppad {padding-top:30px;}
+.botpad {padding-bottom:30px;}
+.topmar10 {margin-top:10px;}
+.topmar20 {margin-top:20px;}
+.topmar30 {margin-top:30px;}
+.botmar20 {margin-bottom:20px;}
+.nomar {margin:0;}
+.text-blanco {color:#fff;}
+.text-gris {color:#77777b;}
+.text-bordo {color:#af1d35;}
+.text-normal {font-weight:normal;}
+.linea-punteada-gris-abajo {border-bottom:1px dotted #77777b;}
+.btn-alarfin {color:#fff;background-color:#aa1029;border-color:#850000;border-bottom:4px solid #850000;}
+.btn-alarfin:hover, .btn-alarfin:focus, .btn-alarfin:active, .btn-alarfin.active, .open > .dropdown-toggle.btn-alarfin {color:#fff;background-color:#850000;border-color:#4c0101;border-bottom:4px solid #4c0101;}
+.btn-form {color:#af1d35;background-color:#fff;border-color:#8f061d;padding:10px 20px;font-weight:700;text-transform:uppercase;}
+.btn-form:hover, .btn-form:focus, .btn-form:active, .btn-form.active, .open > .dropdown-toggle.btn-form {color:#fff;background-color:#8f061d;border-color:#fff;}
+.well { -webkit-box-shadow:none;box-shadow:none;}
+.titulo {text-align:center;padding-bottom:25px;padding-top:25px;border-bottom:10px solid #af1d35;}
+.titulo h1 {display:inline;padding:0 15px 20px;text-transform:uppercase;color:#242425;font-weight:700;letter-spacing:-1px;font-size:24px;line-height:30px;}
+.titulo h2 {font-size:18px;text-transform:uppercase;font-weight:700;color:#77777b;margin:0 0 10px;}
+.img-left {float:left;padding:10px 20px 10px 0;}
+.img-right {float:right;padding:10px 0 10px 20px;}
+
+/* media querys */
+@media (min-width: 440px) {
+.btn-derecha {margin-left:15px;}
+}
+
+@media (min-width: 768px) {
+.navbar-default .navbar-nav > li > a {font-size:11px;padding:0 15px;line-height:30px;}
+.navbar-collapse {padding-left:0;}
+header {padding-bottom:0;}
+.header-logo {padding:15px 0;text-align:left;}
+.header-botones {text-align:right;padding:0;}
+.btn-header {margin:22px 0 0;}
+#destacado .carousel-caption {text-align:left;bottom:10px;right:0;left:5%;position:absolute;}
+#destacado .carousel-interno {padding:20px 30px;background:url(../img/fondo-destacado-colores.gif) 0 20px no-repeat;}
+.home-cajas {padding:15px 0 30px;}
+.well-home-oscuro, .well-home-claro, .well-home-transparente {min-height:190px;}
+.well-home-transparente .dl-horizontal dt {width:20px;margin-top:15;padding-top:0;border-top:none;}
+.well-home-transparente .dl-horizontal dd {margin-left:30px;border-left:1px solid #b8b7b9;margin-top:15px;padding-left:10px;}
+.productos .well {margin-top:30px;}
+.productos .well h2 {min-height:70px;}
+.productos-titulo-imagen img {border:none;}
+.productos-titulo-imagen {position:relative;margin-top:30px;border:none;}
+.productos-titulo {position:absolute;left:4%;bottom:10px;width:92%;padding:0;background:url(../img/fondo-destacado.png);padding:15px 20px 5px;color:#5d5d5d;}
+.productos-titulo h3 {color:#af1d35;text-transform:uppercase;font-weight:bold;}
+.empresa-historia {padding-right:30px;}
+.empresa-mision {border-left:1px solid #eee;padding-left:30px;}
+.titulo {border-bottom:none;padding-bottom:34px;padding-top:25px;}
+.titulo h1 {border-bottom:10px solid #af1d35;font-size:35px;line-height:35px;}
+.titulo h2 {font-size:22px;margin:0 0 20px;}
+.contacto-mapa-direccion {position:absolute;top:20px;left:30px;background:#af1d35;color:#fff;font-size:16px;padding:15px;border-radius:4px;border:2px solid #891729;}
+.footer-redes, .footer-datos {text-align:left;}
+.footer-logo {text-align:right;}
+.footer-redes, .footer-logo {padding-top:0;}
+.footer-redes img {margin:8px 10px 0 0;}
+}
+
+@media (min-width: 992px) {
+.navbar-default .navbar-nav > li > a {padding:0 12px;}
+#destacado .carousel-caption {bottom:35px;}
+.well-home-claro-auto {position:absolute;left:100px;top:110px;width:200px}
+.well-home-oscuro, .well-home-claro, .well-home-transparente {min-height:210px;}
+.well-home-transparente dl {font-size:14px;}
+.productos .well h2 {min-height:60px;}
+.productos-titulo {left:15%;bottom:30px;width:70%;padding:0;padding:20px 20px 10px;}
+.empresa-historia img {width:220px;height:220px;}
+.empresa-historia {padding-right:50px;}
+.empresa-mision {padding-left:50px;}
+}
+
+@media (min-width: 1200px) {
+.navbar-default .navbar-nav > li > a {padding:0 15px;}
+.well-home-claro-auto {top:10px;width:249px;left:auto;right:-5px;}
+.well-home-oscuro, .well-home-claro, .well-home-transparente {min-height:175px;}
+.well-home-transparente dl {font-size:16px;}
+.well-home-transparente .dl-horizontal dt {width:20px;margin-top:10;border-top:none;padding-top:0;}
+.well-home-transparente .dl-horizontal dd {margin-left:40px;border-left:1px solid #b8b7b9;margin-top:10px;padding-left:20px;}
+.productos .well h2 {min-height:45px;}
+.productos-titulo {bottom:50px;}
+.contacto .well {min-height:570px;}
+}

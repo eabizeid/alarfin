@@ -94,7 +94,7 @@
                                     <div class="col-sm-4">                                
                                         <div class="form-group">
                                             <label for="precio">Precio</label>
-                                            <input type="text" name="precio" class="form-control input-lg" id="precio" required {% if car and car.price %} value="{{ car.price }}" {% endif %}>
+                                            <input type="text" name="precio" class="form-control input-lg" id="precio" {% if car and car.price %} value="{{ car.price }}" {% endif %}>
                                             <span class="help-block">En Pesos Argentinos</span>
                                         </div>
                                     </div>

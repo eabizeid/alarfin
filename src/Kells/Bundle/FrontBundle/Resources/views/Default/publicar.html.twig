@@ -11,7 +11,13 @@
 					<form action="{{ path('publish') }}" role="form" enctype="multipart/form-data" method="post" onsubmit="return validateForm();">
 					 	<input type="hidden" name="_target_path" value="{{ path('publish') }}" />
 					 	<input type="hidden" name="carId" value="{% if car %}{{ car.id}} {% endif %}" />
-						<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>Descripción, Marca, Modelo, Provincia, Combustible, Color, Kilómetros y Foto principal son obligatorios</div>
+						<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert">
+							<i class="fa fa-exclamation-circle fa-fw"></i>Descripción, Marca, Modelo, Provincia, Combustible, Color, Kilómetros y Foto principal son obligatorios
+						</div>
+						<div  id="divMsgPrecio" style="display:none;" class="alert alert-danger" role="alert">
+							<i class="fa fa-exclamation-circle fa-fw"></i>
+							Precio debe tener entre 5 y 6 caracteres
+						</div>
 	                    <div class="col-md-12"> 
                         	<h2>Marca y modelo</h2>
                         </div>
@@ -57,7 +63,7 @@
                                         <div class="form-group">
                                             <label for="precio">Precio</label>
                                             <input type="text" class="form-control input-lg" id="precio" name="precio" required {% if car and car.price %} value="{{ car.price }}" {% endif %} >
-                                            <span class="help-block">En Pesos Argentinos</span>
+                                            <span class="help-block">En Pesos Argentinos. Puede dejar el campo vacío, en ese caso se publicaraá "A Convenir"</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">                                
@@ -466,11 +472,23 @@
 	        	var km = $("#KMTS").val();
 	        	var color = $("COLOREXT").val();
 	        	
-    			if (!$('#descripcion').val() || marca == "Seleccioná una marca" || modelo == "Seleccioná una marca" || provincia == "Seleccioná una provincia" 
+    			if (!$('#descripcion').val() 
+    				|| marca == "Seleccioná una marca" 
+    				|| modelo == "Seleccioná una marca" 
+    				|| provincia == "Seleccioná una provincia" 
     				|| ($("#fotoprincipal").val() == '' && $("#mandatoryImage").val() == 'undefined')
-    				 || combus == "Elegir" || km == "Elegir" || color == "Elegir" ) {
+    				|| combus == "Elegir" 
+    				|| km == "Elegir" 
+    				|| color == "Elegir" 
+    				) {
         			$("#divMsg").show();
         			$('html, body').animate({ scrollTop: $('#divMsg').offset().top }, 'slow');
+        			return false;
+    			}
+    			var precio = $("precio").val(); 
+    			if (precio && (precio.length < 5 || precio.length > 6 )) {
+    				$("#divMsgPrecio").show();
+        			$('html, body').animate({ scrollTop: $('#divMsgPrecio').offset().top }, 'slow');
         			return false;
     			}
 			}

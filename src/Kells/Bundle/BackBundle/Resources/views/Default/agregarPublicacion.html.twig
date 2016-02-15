@@ -9,6 +9,10 @@
             <div class="row">
 				<form id ="publishForm" role="form" method="post"  enctype="multipart/form-data"   action="{{path('admin_publish')}}">
 				<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>El publicador no se encuentra registrado.</div>
+				<div  id="divMsgPrecio" style="display:none;" class="alert alert-danger" role="alert">
+					<i class="fa fa-exclamation-circle fa-fw"></i>
+					Precio debe tener entre 5 y 6 caracteres
+				</div>
 				<div  id="ErrorMsg" style="display:none;" class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>Descripción, Marca, Modelo, Provincia, Ciudad, Combustible, Kms, Color y Foto principal son obligatorios</div>
 						<input type="hidden" name="carId" value="{% if car %}{{ car.id}} {% endif %}" />
                         <div class="col-md-12">
@@ -513,6 +517,13 @@
         			$('html, body').animate({ scrollTop: $('#ErrorMsg').offset().top}, 'slow');
         			return false;
     			}
+    			var precio = $("precio").val(); 
+    			if (precio && (precio.length < 5 || precio.length > 6 )) {
+    				$("#divMsgPrecio").show();
+        			$('html, body').animate({ scrollTop: $('#divMsgPrecio').offset().top }, 'slow');
+        			return false;
+    			}
+    			
 	        	 var publicadornombre = $("#publicador-nombre").val();
 	    			var publicadortipo = $("#publicador-tipo").val();
 	    			url = Routing.generate('checkUserLicenseeExists', { 'publicador-nombre': publicadornombre, 'publicador-tipo': publicadortipo  });

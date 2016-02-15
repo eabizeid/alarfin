@@ -62,7 +62,7 @@
                                     <div class="col-sm-4">                                
                                         <div class="form-group">
                                             <label for="precio">Precio</label>
-                                            <input type="text" class="form-control input-lg" id="precio" name="precio" required {% if car and car.price %} value="{{ car.price }}" {% endif %} >
+                                            <input type="text" class="form-control input-lg" id="precio" name="precio" {% if car and car.price %} value="{{ car.price }}" {% endif %} >
                                             <span class="help-block">En Pesos Argentinos. Puede dejar el campo vacío, en ese caso se publicaraá "A Convenir"</span>
                                         </div>
                                     </div>

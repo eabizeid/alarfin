@@ -108,7 +108,7 @@
                             	</div>
                         	</div> <!-- accordion -->
 						<div class="col-sm-6 col-md-8 col-lg-9 toppad">
-            				<div class="row resultados" id="resultados">
+            				<div class="row resultados">
             					<div class="col-xs-12">
             					
             						{% if pattern %}
@@ -121,7 +121,7 @@
 					</div>
 				</div>
             	{% else %}   
-				<div class="row botmar resultados">
+				<div class="row botmar resultados"  id="resultados">
 					{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
 				</div>
 				{% endif %}   

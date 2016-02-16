@@ -118,15 +118,15 @@
                          		<div class="clearfix"></div>
 								{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
 						</div>
-						<div id="resultados-pagination">
-					        <a id="resultados-previous" href="#">&laquo; Anterior</a> 
-					        <a id="resultados-next" href="#">Siguiente &raquo;</a> 
-					    </div>
 					</div>
 				</div>
             	{% else %}   
 				<div class="row botmar resultados"  id="resultados">
 					{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
+				</div>
+				<div id="resultados-pagination">
+					        <a id="resultados-previous" href="#">&laquo; Anterior</a> 
+					        <a id="resultados-next" href="#">Siguiente &raquo;</a> 
 				</div>
 				{% endif %}   
 			{% else %}

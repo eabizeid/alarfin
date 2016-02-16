@@ -108,7 +108,7 @@
                             	</div>
                         	</div> <!-- accordion -->
 						<div class="col-sm-6 col-md-8 col-lg-9 toppad">
-            				<div class="row resultados">
+            				<div class="row resultados" id="resultados">
             					<div class="col-xs-12">
             					
             						{% if pattern %}
@@ -132,4 +132,9 @@
 		</div>
 	</div>
 </div>
+<script>  
+$(document).ready(function(){  
+    $("#resultados").jPaginate();                         
+});  
+</script>  
  {% endblock %}

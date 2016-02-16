@@ -2385,7 +2385,7 @@ class DefaultController extends Controller
 		->setSubject('Realizaron una consulta por la publicación '.$car->getTitle())
 		->setFrom('no-responder@alarfin.com.ar')
 		->setTo($user->getMail())
-		->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p><p>Publicación: ".$url"</p>", 'text/html');
+		->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p><p>Publicación: ".$url."</p>", 'text/html');
 
 		$this->get('mailer')->send($message);
 
@@ -2396,7 +2396,7 @@ class DefaultController extends Controller
 		->setSubject('Realizaron una consulta por la publicación '.$car->getTitle())
 		->setFrom('no-responder@alarfin.com.ar')
 		->setTo($configuration->getEmail1())
-		->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p><p>Publicación: ".$url"</p>", 'text/html');
+		->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p><p>Publicación: ".$url."</p>", 'text/html');
 
 		$this->get('mailer')->send($message1);
 		 // store a message for the very next request
@@ -2409,7 +2409,7 @@ class DefaultController extends Controller
 			->setSubject('Realizaron una consulta por la publicación '.$car->getTitle())
 			->setFrom('no-responder@alarfin.com.ar')
 			->setTo($configuration->getEmail2())
-			->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p><p>Publicación: ".$url"</p>", 'text/html');
+			->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p><p>Publicación: ".$url."</p>", 'text/html');
 
 		$this->get('mailer')->send($message1);
 		}

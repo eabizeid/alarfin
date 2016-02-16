@@ -58,7 +58,7 @@ class DefaultController extends Controller
 
 		
 		return $this->render('KellsFrontBundle:Default:publicaciones.html.twig', array( 'cars' => $cars, 'form' => $form->createView(),
-        	'trademarksFilter'=> array(), 'pattern' => "", 'filter'=>false, 'model'=>"" ));
+        	'trademarksFilter'=> array(), 'pattern' => "", 'filter'=>false, 'model'=>"", 'totalCars'=> sizeof($cars) ));
 	}
 
 	public function allCarsAction() {

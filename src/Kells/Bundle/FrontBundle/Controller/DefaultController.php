@@ -32,6 +32,10 @@ class DefaultController extends Controller
 		return $this->render('KellsFrontBundle:Default:index.html.twig');
 	}
 	
+	public function concesionariasAction() {
+			$concesionarias =  $repository->findBy( array('fantasyName' => 'DESC'));
+	}
+	
 	public function publicacionesAction() {
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));

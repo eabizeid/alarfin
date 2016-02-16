@@ -1,0 +1,17 @@
+{% extends 'KellsFrontBundle:Default:base.html.twig' %}
+{% block body %}
+<div class="contenido-gris linea-gris-abajo">
+	<div class="container">
+		<div class="row">          
+			{% if concesionarias %}
+				<div class="row botmar resultados">
+					{% for c in concesionarias %}
+						c.fantasyName      c.telephone
+					{% endfor %}
+					
+				</div>
+			{% endif %}   
+		</div>
+	</div>
+</div>
+ {% endblock %}

@@ -28,6 +28,11 @@ use Kells\Bundle\FrontBundle\Utils\Util;
 class DefaultController extends Controller
 {
 	public function indexAction() {
+		
+		return $this->render('KellsFrontBundle:Default:index.html.twig');
+	}
+	
+	public function publicacionesAction() {
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
 
@@ -45,7 +50,7 @@ class DefaultController extends Controller
 		}
 
 		
-		return $this->render('KellsFrontBundle:Default:index.html.twig', array( 'cars' => $cars, 'form' => $form->createView(),
+		return $this->render('KellsFrontBundle:Default:publicaciones.html.twig', array( 'cars' => $cars, 'form' => $form->createView(),
         	'trademarksFilter'=> array(), 'pattern' => "", 'filter'=>false, 'model'=>"" ));
 	}
 
@@ -99,7 +104,7 @@ class DefaultController extends Controller
 			
 		}
 		
-		return $this->render('KellsFrontBundle:Default:index.html.twig', array( 'cars' => $cars, 'form' => $form->createView(),"pattern" => "",'filter'=>true,
+		return $this->render('KellsFrontBundle:Default:publicaciones.html.twig', array( 'cars' => $cars, 'form' => $form->createView(),"pattern" => "",'filter'=>true,
 			'marksKeysFilter' => array_keys($trademarks), 'trademarksFilter'=> $trademarks, 'markFilter' => "", 
         	'modelKeysFilter' => array_keys($models), 'modelsFilter'=> $models, 'modelFilter'=>"",
 			'directionKeysFilter' => array_keys($directions), 'directionsFilter'=> $directions, 'directionFilter'=>"",
@@ -181,7 +186,7 @@ class DefaultController extends Controller
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
 		
-		return $this->render('KellsFrontBundle:Default:index.html.twig', array( 'cars' => $cars,
+		return $this->render('KellsFrontBundle:Default:publicaciones.html.twig', array( 'cars' => $cars,
         	'form' => $form->createView(), "pattern" => $pattern,'filter'=>true,
 			'marksKeysFilter' => array_keys($trademarks), 'trademarksFilter'=> $trademarks, 'markFilter' => "", 
         	'modelKeysFilter' => array_keys($models), 'modelsFilter'=> $models, 'modelFilter'=>"",
@@ -297,7 +302,7 @@ class DefaultController extends Controller
 		
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
-		return $this->render('KellsFrontBundle:Default:index.html.twig', array( 'cars' => $carsWithoutFilter,
+		return $this->render('KellsFrontBundle:Default:publicaciones.html.twig', array( 'cars' => $carsWithoutFilter,
         	'form' => $form->createView(),'pattern' => $pattern, 'filter' => true,
 			'marksKeysFilter' => array_keys($trademarks), 'trademarksFilter'=> $trademarks,  'markFilter' => $markFilter,  
 			'modelKeysFilter' => array_keys($models), 'modelsFilter'=> $models, 'modelFilter'=> $modelFilter,
@@ -453,7 +458,7 @@ class DefaultController extends Controller
 		
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'),));
-		return $this->render('KellsFrontBundle:Default:index.html.twig', array( 'cars' => $carsWithoutFilter,
+		return $this->render('KellsFrontBundle:Default:publicaciones.html.twig', array( 'cars' => $carsWithoutFilter,
         	'form' => $form->createView(),  'pattern' => $pattern,
         	'marksKeysFilter' => array_keys($trademarks), 'trademarksFilter'=> $trademarks, 'markFilter' => $markFilter, 
         	'modelsFilter' => $models,  'modelFilter' => $modelFilter,'modelKeysFilter' => array_keys($models),

@@ -118,6 +118,10 @@
                          		<div class="clearfix"></div>
 								{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
 						</div>
+						<div id="resultados-pagination">
+					        <a id="resultados-previous" href="#">&laquo; Anterior</a> 
+					        <a id="resultados-next" href="#">Siguiente &raquo;</a> 
+					    </div>
 					</div>
 				</div>
             	{% else %}   
@@ -134,7 +138,7 @@
 </div>
 <script>  
 $(document).ready(function(){  
-    $("#resultados").bootpag(total: {{totalCars}})                         
+    $("#resultados").paginate({itemsPerPage: 12});                        
 });  
 </script>  
  {% endblock %}

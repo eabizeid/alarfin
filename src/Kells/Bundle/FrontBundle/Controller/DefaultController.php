@@ -45,7 +45,7 @@ class DefaultController extends Controller
 
 		$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Car');
 
-		$cars =  $repository->findBy(array('status'=>"PUBLISHED"), array('publishedDate' => 'DESC'), 12);
+		$cars =  $repository->findBy(array('status'=>"PUBLISHED"), array('publishedDate' => 'DESC'));
 		$trademarks = array();
 		foreach ($cars as $car) {
 			$trademark = $car->getTrademark();

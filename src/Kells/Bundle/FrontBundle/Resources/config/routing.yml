@@ -6,7 +6,7 @@ publicaciones:
     path:     /publicaciones
     defaults: { _controller: KellsFrontBundle:Default:publicaciones }
     
-publicaciones:
+concesionarias:
     path:     /concesionarias
     defaults: { _controller: KellsFrontBundle:Default:concesionarias }
 

@@ -34,6 +34,7 @@ class DefaultController extends Controller
 	
 	public function concesionariasAction() {
 			$concesionarias =  $repository->findBy( array('fantasyName' => 'DESC'));
+			return $this->render('KellsFrontBundle:Default:concesionarias.html.twig', array( 'cars' => $concesionarias));
 	}
 	
 	public function publicacionesAction() {

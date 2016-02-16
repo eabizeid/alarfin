@@ -1,6 +1,9 @@
 kells_front_homepage:
     path:     /
     defaults: { _controller: KellsFrontBundle:Default:index }
+publicaciones:
+    path:     /publicaciones
+    defaults: { _controller: KellsFrontBundle:Default:publicaciones }
 
 details:
     path:     /details/{carId}

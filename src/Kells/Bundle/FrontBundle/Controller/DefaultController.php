@@ -2418,7 +2418,7 @@ class DefaultController extends Controller
 			->setSubject('Realizaron una consulta por la publicación '.$car->getTitle())
 			->setFrom('no-responder@alarfin.com.ar')
 			->setTo($configuration->getEmail3())
-			->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p><p>Publicación: ".$url"</p>", 'text/html');
+			->setBody("<p>".$consulta."</p><p>Nombre: ".$name."</p><p>E-mail: : ".$userThatMakeARequest->getMail()."</p><p>Publicación: ".$url."</p>", 'text/html');
 
 		$this->get('mailer')->send($message1);
 		}

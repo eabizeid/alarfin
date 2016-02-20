@@ -10,8 +10,11 @@
 		    <div class="resultado-caja-izquierda"><small>{%if car.year %} {{ car.year.description }} | {%endif%}{{ car.km }}km</small></div>
 		    <div class="resultado-caja-derecha">
 		    	<small>
+		    	{%if car.user %} 
+		    		<i class="fa fa-user"></i> Particular
+		    	{%else%}
 		    		<i class="fa fa-car"></i> Concesionaria
-		    		<!-- <i class="fa fa-user"></i> Particular -->
+		    	{%endif%}
 		    	</small>
 		    </div>
 		    <div class="resultado-caja-texto"><strong>{{ car.title }}</strong>.</div>

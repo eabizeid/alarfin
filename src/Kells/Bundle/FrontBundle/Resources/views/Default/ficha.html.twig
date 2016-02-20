@@ -6,8 +6,16 @@
 	        	<div class="row">   
                 	<div class="col-xs-12">
                     	<div class="row">   
-		                	<div class="col-md-6 col-md-push-6 toppad">
-                				 <h4 class="nomar text-negro">{%if car.year %} {{car.year.description}}  | {%endif%}{{car.km}} Km</h4>
+		                	<div class="col-md-6 col-md-push-6 toppad ficha">
+                          <div class="resultado-caja-izquierda">
+                				      <h4 class="nomar text-negro">{%if car.year %} {{car.year.description}}  | {%endif%}{{car.km}} Km</h4>
+                          </div>
+                          <div class="resultado-caja-derecha">
+                              <h4 class="nomar text-negro">
+                                  <!-- <i class="fa fa-car"></i> Concesionaria -->
+                                  <i class="fa fa-user"></i> Particular
+                              </h4>
+                          </div>
                                  <h2 class="text-negro"><strong>{{ car.title }}</strong></h2>
                                  <h4>{{car.description}}</h4>
                                  <h2><span class="label label-default">{%if car.price and car.price != 0 %}$ {{car.price}} {% else %} A Convenir {% endif %}</span></h2>
@@ -27,6 +35,7 @@
                             </div>
 		                	<div class="col-md-6 col-md-pull-6 toppad ficha-foto">
                 				<div class="well well-blanco">
+                            <div class="km"></div>
                                     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                       <ol class="carousel-indicators">
                                        <li data-target="#carousel-example-generic" data-slide-to="0" ></li>
@@ -57,36 +66,36 @@
                                       </ol> 
                                       <div class="carousel-inner">
                                       	<div class="item active">
-                                          <img src="{{ asset(car.mandatoryImage.webPath) }}">  
+                                          <img src="http://www.alarfin.com.ar{{ asset(car.mandatoryImage.webPath) }}">  
                                         </div>
                                         {% if car.image1 %}
                                       	 <div class="item">
-                                          <img src="{{asset(car.image1.webPath)}}"  >
+                                          <img src="http://www.alarfin.com.ar{{asset(car.image1.webPath)}}"  >
                                         </div>
                                         {% endif %}
                                        {% if car.image2 %}
                                          <div class="item">
-                                          <img src="{{asset(car.image2.webPath)}}"  >
+                                          <img src="http://www.alarfin.com.ar{{asset(car.image2.webPath)}}"  >
                                         </div>
                                         {% endif %}
                                        {% if car.image3 %}
                                          <div class="item">
-                                          <img src="{{asset(car.image3.webPath)}}"  >
+                                          <img src="http://www.alarfin.com.ar{{asset(car.image3.webPath)}}"  >
                                         </div>
                                         {% endif %}
                                        {% if car.image4 %}
                                          <div class="item">
-                                          <img src="{{asset(car.image4.webPath)}}"  >
+                                          <img src="http://www.alarfin.com.ar{{asset(car.image4.webPath)}}"  >
                                         </div>
                                         {% endif %}
                                        {% if car.image5 %}
                                          <div class="item">
-                                          <img src="{{asset(car.image5.webPath)}}"   >
+                                          <img src="http://www.alarfin.com.ar{{asset(car.image5.webPath)}}"   >
                                         </div>
                                         {% endif %}
                                        {% if car.image6 %}
                                        <div class="item">
-                                          <img src="{{asset(car.image6.webPath)}}"   >
+                                          <img src="http://www.alarfin.com.ar{{asset(car.image6.webPath)}}"   >
                                         </div>
                                         {% endif %}
                                        

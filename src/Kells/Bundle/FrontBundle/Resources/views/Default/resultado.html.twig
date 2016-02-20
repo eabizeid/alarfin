@@ -3,10 +3,17 @@
 	 <div class="col-sm-6 col-md-4 col-lg-3">
 		<a href="{{ path('details', {'carId': car.id }) }}" class="thumbnail">
 			<h5><strong>{%if car.price and car.price != 0 %}$ {{car.price}} {% else %} A Convenir {% endif %}</strong></h5>
-		    <img src="{{ asset(car.mandatoryImage.webPath) }}" alt="Chevrolet Agile 1.4 LS Spirit 5Ptas." class="img-responsive">
-		    <small>{%if car.year %} {{ car.year.description }} | {%endif%}{{ car.km }}km</small><br><strong>{{ car.title }}</strong>.<br />
-		    <input id="carDesc" type="hidden" value="{{car.description}}" />
-		    
+			<div class="km"></div>
+		    <img src="http://www.alarfin.com.ar{{ asset(car.mandatoryImage.webPath) }}" alt="{{ car.title }}" class="img-responsive">
+		    <div class="resultado-caja-izquierda"><small>{%if car.year %} {{ car.year.description }} | {%endif%}{{ car.km }}km</small></div>
+		    <div class="resultado-caja-derecha">
+		    	<small>
+		    		<i class="fa fa-car"></i> Concesionaria
+		    		<!-- <i class="fa fa-user"></i> Particular -->
+		    	</small>
+		    </div>
+		    <div class="resultado-caja-texto"><strong>{{ car.title }}</strong>.</div>
+		    <input id="carDesc" type="hidden" value="{{car.description}}" />	    
 		</a>                        
 	</div> 
 	{% endfor %}

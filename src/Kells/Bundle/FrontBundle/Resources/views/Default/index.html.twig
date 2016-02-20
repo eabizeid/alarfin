@@ -1,73 +1,120 @@
 {% extends 'KellsFrontBundle:Default:base.html.twig' %}
 {% block body %}
   <div class="container toppad botmar">        
-        <div id="destacado" class="carousel chico">
-            <div class="carousel-inner">
-                <div class="item active">
-                    <a href="{{path('prendarios-individuos')}}">
-                    	<img src="{{ asset('bundles/kellsfront/img/destacado-creditos-prendarios.jpg') }}" alt="Cr&eacute;ditos Prendarios" title="Cr&eacute;ditos Prendarios">
-                    </a>
-                    <div class="container active">
-                        <div class="carousel-caption col-xs-12 col-sm-7 col-md-5 col-lg-4">
-                        	<div class="carousel-interno">
-                                <h1>Créditos Prendarios</h1>
-                                <p>Ahora podes comprar un Auto O Km. o usado, de la manera más simple, con mínimos requisitos y aprobación inmediata.</p>
-                                <p><a href="{{path('prendarios-individuos')}}" class="btn btn-alarfin btn-lg">Más información</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>
-        </div>
-        <div class="home-cajas">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4">
-                    	<div class="well well-home-oscuro">
-                        	<div class="row">
-                    			<div class="hidden-xs hidden-sm col-sm-4">
-                           	    	<a href="{{path('empresa')}}">
-                           	    		<img src="{{ asset('bundles/kellsfront/img/imagen-home-la-empresa.jpg') }}" alt="La Empresa" title="La Empresa" class="img-responsive">
-                           	    	</a>
-                                </div>
-                              <div class="col-sm-12 col-md-8">
-                               	<h1><a href="{{path('empresa')}}">La Empresa</a></h1>
-                                  <p><a href="{{path('empresa')}}">Somos una organizaci&oacute;n  que trabaja mediante la  innovaci&oacute;n y la eficiencia,  para que puedas acceder a  mejores servicios financieros.</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 col-md-5">
- 						<div class="well well-home-claro">
-                        	<div class="row">
-                              	<div class="col-sm-12 col-md-12 col-lg-7">
-                              		<h1><a href="{{path('productos-y-servicios')}}">Productos y Servicios</a></h1>
-                                  	<p><a href="{{path('productos-y-servicios')}}">Conocé nuestros productos y servicios financieros.</a></p>
-                                </div>
-                                <div class="well-home-claro-auto hidden-xs hidden-sm">
-                           	    	<a href="{{path('productos-y-servicios')}}">
-                           	    		<img src="{{ asset('bundles/kellsfront/img/imagen-auto.png') }}" alt="Productos y Servicios" title="Productos y Servicios" class="img-responsive">
-                           	    	</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hidden-xs col-sm-4 col-md-3">
-                    	<div class="well well-home-transparente">
-                        	<div class="row">
-                              	<div class="col-sm-12">
-                               		<h1>Cont&aacute;ctenos</h1>
-                                    <dl class="dl-horizontal">
-                                    <dt><span class="glyphicon glyphicon-earphone"></span></dt>
-                                    <dd>02344 452656<br>02344 433656<br>02344 431656</dd>
-                                    <dt><span class="glyphicon glyphicon-envelope"></span></dt>
-                                    <dd><a href="mailto:info@alarfin.com.ar">info@alarfin.com.ar</a></dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div id="destacado" class="carousel slide chico" data-ride="carousel">
+          <ol class="carousel-indicators">
+              <li data-target="#destacado" data-slide-to="0" class="active"></li>
+              <li data-target="#destacado" data-slide-to="1"></li>
+              <li data-target="#destacado" data-slide-to="2"></li>
+              <li data-target="#destacado" data-slide-to="3"></li>
+          </ol>
+          <div class="carousel-inner">
+              <div class="item active">
+                  <a href="{{path('prendarios-individuos')}}">
+                  	<img src="{{ asset('bundles/kellsfront/img/destacado-creditos-prendarios.jpg') }}" alt="Cr&eacute;ditos Prendarios" title="Cr&eacute;ditos Prendarios">
+                  </a>
+                  <div class="container active">
+                      <div class="carousel-caption col-xs-12 col-sm-7 col-md-5 col-lg-4">
+                      	<div class="carousel-interno">
+                              <h1>Créditos Prendarios</h1>
+                              <p>Ahora podes comprar un Auto O Km. o usado, de la manera más simple, con mínimos requisitos y aprobación inmediata.</p>
+                              <p><a href="{{path('prendarios-individuos')}}" class="btn btn-alarfin btn-lg">Más información</a></p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="item">
+                    <img src="{{ asset('bundles/kellsfront/img/destacado-clasificados.jpg') }}" alt="Solicit&aacute; tu cr&eacute;dito online!" title="Solicit&aacute; tu cr&eacute;dito online!">
+                  <div class="container">
+                      <div class="carousel-caption col-xs-12 col-sm-8 col-md-5 col-lg-4">
+                        <div class="carousel-interno">
+                              <h1>Plataforma de Clasificados</h1>
+                              <p class="carousel-interno-texto-link"><a href="{{ path('licenseeRegistration')}}"><strong><i class="fa fa-car"></i> Concesionarias</strong><br>Subi tus autos y encontr&aacute; nuevos.</a></p>
+                              <p class="carousel-interno-texto-link"><a href="{{ path('userRegistration') }}"><strong><i class="fa fa-user"></i> Particulares</strong><br> Public&aacute; tu auto y vendelo. Compr&aacute; el nuevo en las concesionarias de la zona.</a></p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="item">
+                  <a href="{{path('creditRequest')}}">
+                    <img src="{{ asset('bundles/kellsfront/img/destacado-credito-online.jpg') }}" alt="Solicit&aacute; tu cr&eacute;dito online!" title="Solicit&aacute; tu cr&eacute;dito online!">
+                  </a>
+                  <div class="container">
+                      <div class="carousel-caption col-xs-12 col-sm-7 col-md-5 col-lg-4">
+                        <div class="carousel-interno">
+                              <h1>Solicit&aacute; tu cr&eacute;dito online!</h1>
+                              <p>Te financiamos hasta el 50% de la compra de tu nuevo auto. Complet&aacute; el formulario de m&iacute;nimos requisitos.</p>
+                              <p><a href="{{path('creditRequest')}}" class="btn btn-alarfin btn-lg">Solicitar ahora</a></p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="item">
+                  <a href="{{path('simulador')}}">
+                    <img src="{{ asset('bundles/kellsfront/img/destacado-simulador.jpg') }}" alt="Simulador de cr&eacute;ditos" title="Simulador de cr&eacute;ditos">
+                  </a>
+                  <div class="container">
+                      <div class="carousel-caption col-xs-12 col-sm-7 col-md-5 col-lg-4">
+                        <div class="carousel-interno">
+                              <h1>Simulador de cr&eacute;ditos</h1>
+                              <p>¿Quer&eacute;s conocer cu&aacute;l ser&iacute;a el valor de tus cuotas? Calcul&aacute; de forma inmediata tu plan de pago, est&eacute;s donde est&eacute;s.</p>
+                              <p><a href="{{path('simulador')}}" class="btn btn-alarfin btn-lg">Calcular cuotas</a></p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="home-cajas">
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-4">
+                	<div class="well well-home-oscuro">
+                    	<div class="row">
+                			   <div class="hidden-xs hidden-sm col-sm-4">
+                       	    	<a href="{{path('empresa')}}">
+                       	    		<img src="{{ asset('bundles/kellsfront/img/imagen-home-la-empresa.jpg') }}" alt="La Empresa" title="La Empresa" class="img-responsive">
+                       	    	</a>
+                          </div>
+                          <div class="col-sm-12 col-md-8">
+                           	  <h1><a href="{{path('empresa')}}">La Empresa</a></h1>
+                              <p><a href="{{path('empresa')}}">Somos una organizaci&oacute;n  que trabaja mediante la  innovaci&oacute;n y la eficiencia,  para que puedas acceder a  mejores servicios financieros.</a></p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-4 col-md-5">
+       						<div class="well well-home-claro">
+                      <div class="row">
+                        	<div class="col-sm-12 col-md-12 col-lg-7">
+                        		<h1><a href="{{path('productos-y-servicios')}}">Productos y Servicios</a></h1>
+                            	<p><a href="{{path('productos-y-servicios')}}">Conocé nuestros productos y servicios financieros.</a></p>
+                          </div>
+                          <div class="well-home-claro-auto hidden-xs hidden-sm">
+                     	    	<a href="{{path('productos-y-servicios')}}">
+                     	    		<img src="{{ asset('bundles/kellsfront/img/imagen-auto.png') }}" alt="Productos y Servicios" title="Productos y Servicios" class="img-responsive">
+                     	    	</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="hidden-xs col-sm-4 col-md-3">
+                	<div class="well well-home-transparente">
+                    	<div class="row">
+                        	<div class="col-sm-12">
+                              <h1>Cont&aacute;ctenos</h1>
+                              <dl class="dl-horizontal">
+                              <dt><span class="glyphicon glyphicon-earphone"></span></dt>
+                              <dd>02344 452656<br>02344 433656<br>02344 431656</dd>
+                              <dt><span class="glyphicon glyphicon-envelope"></span></dt>
+                              <dd><a href="mailto:info@alarfin.com.ar">info@alarfin.com.ar</a></dd>
+                              </dl>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
  {% endblock %}

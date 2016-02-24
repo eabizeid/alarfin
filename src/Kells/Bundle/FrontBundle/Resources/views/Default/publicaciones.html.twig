@@ -124,6 +124,10 @@
 				<div class="row botmar resultados"  id="resultados">
 					{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
 				</div>
+				
+      <!-- navigation holder -->
+      <div class="holder">
+      </div>
 				<div id="resultados-pagination">
 					        <a id="resultados-previous" href="#">&laquo; Anterior</a> 
 					        <a id="resultados-next" href="#">Siguiente &raquo;</a> 
@@ -138,6 +142,10 @@
 </div>
 <script>  
 $(document).ready(function(){  
+ /* initiate plugin */
+    $("div.holder").jPages({
+      containerID: "resultados"
+    });
     $("#resultados").paginate({itemsPerPage: 12});                        
 });  
 </script>  

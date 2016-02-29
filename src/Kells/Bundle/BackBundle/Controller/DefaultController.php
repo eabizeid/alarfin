@@ -408,7 +408,6 @@ class DefaultController extends Controller
     	$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('KellsFrontBundle:Trademark');
 		$trademarks = $repository->findAll();
-		$repository = $em->getRepository('KellsFrontBundle:Province');
 		$provinces = $repository->findAll();
 		$repository = $em->getRepository('KellsFrontBundle:Fuel');
 		$fuels = $repository->findAll();
@@ -418,7 +417,7 @@ class DefaultController extends Controller
 		$directions = $repository->findAll();
 		$repository = $em->getRepository('KellsFrontBundle:Transmission');
 		$transmissions = $repository->findAll();
-        return $this->render('KellsBackBundle:Default:agregarPublicacion.html.twig', array('trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
+        return $this->render('KellsBackBundle:Default:agregarPublicacion.html.twig', array('trademarks'=> $trademarks, 'fuels'=>$fuels, 'years'=>$years, 
         	'directions'=>$directions, 'transmissions'=>$transmissions, 'car' => null));
     }
     
@@ -435,8 +434,6 @@ class DefaultController extends Controller
 
    		$modelId = $request->get('modelo');
    		$trademarkId = $request->get('marca');
-   		$provinceId = $request->get('provincia');
-   		$cityId = $request->get('ciudad');
    		$fuelId = $request->get('COMBUS');
    		$doorQty = $request->get('DOOR');
    		$yearId = $request->get('YEAR');
@@ -550,16 +547,6 @@ class DefaultController extends Controller
 		$repository = $em->getRepository('KellsFrontBundle:Model');
 		$model = $repository->find($modelId);
    		$car->setModel($model);
-		
-   		$repository = $em->getRepository('KellsFrontBundle:Province');
-		$province = $repository->find($provinceId);
-		$car->setProvince($province);
-		
-		$repository = $em->getRepository('KellsFrontBundle:City');
-		$city = $repository->find($cityId);
-		$car->setCity($city);
-		
-		
 		
 		$repository = $em->getRepository('KellsFrontBundle:Direction');
 		$direction = $repository->find($directionId);
@@ -1109,8 +1096,6 @@ class DefaultController extends Controller
    		$car = $em->getRepository('KellsFrontBundle:Car')->find($carId);
 		$repository = $em->getRepository('KellsFrontBundle:Trademark');
 		$trademarks = $repository->findAll();
-		$repository = $em->getRepository('KellsFrontBundle:Province');
-		$provinces = $repository->findAll();
 		$repository = $em->getRepository('KellsFrontBundle:Fuel');
 		$fuels = $repository->findAll();
 		$repository = $em->getRepository('KellsFrontBundle:Year');
@@ -1119,7 +1104,7 @@ class DefaultController extends Controller
 		$directions = $repository->findAll();
 		$repository = $em->getRepository('KellsFrontBundle:Transmission');
 		$transmissions = $repository->findAll();
-        return $this->render('KellsBackBundle:Default:publicaciones-editar.html.twig', array('trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
+        return $this->render('KellsBackBundle:Default:publicaciones-editar.html.twig', array('trademarks'=> $trademarks, 'fuels'=>$fuels, 'years'=>$years, 
         	'directions'=>$directions, 'transmissions'=>$transmissions, 'car' => $car));
     }
     

@@ -12,7 +12,7 @@
 					 	<input type="hidden" name="_target_path" value="{{ path('publish') }}" />
 					 	<input type="hidden" name="carId" value="{% if car %}{{ car.id}} {% endif %}" />
 						<div  id="divMsg" style="display:none;" class="alert alert-danger" role="alert">
-							<i class="fa fa-exclamation-circle fa-fw"></i>Descripción, Marca, Modelo, Provincia, Combustible, Color, Kilómetros y Foto principal son obligatorios
+							<i class="fa fa-exclamation-circle fa-fw"></i>Descripción, Marca, Modelo, Combustible, Color, Kilómetros y Foto principal son obligatorios
 						</div>
 						<div  id="divMsgPrecio" style="display:none;" class="alert alert-danger" role="alert">
 							<i class="fa fa-exclamation-circle fa-fw"></i>
@@ -172,33 +172,7 @@
                                 </div>
 	                   		</div> 
                         </div>
-	                    <div class="col-md-12"> 
-                        	<h2>Ubicaci&oacute;n</h2>
-                        </div>
-                        <div class="col-md-12">
-                        	<div class="well well-gris-claro">
-                                <div class="row">
-                                    <div class="col-sm-6">                                
-                                        <div class="form-group">
-                                            <label for="provincia">Provincia</label>
-                                            <select name="provincia" id="provincia" class="form-control" required>
-                                            	<option> Seleccioná una provincia </option>
-                                                {% for pcia in provinces %}
-                                                <option value="{{ pcia.id }}">{{ pcia.description }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6"> 
-                                        <div class="form-group">
-                                            <label for="ciudad">Ciudad</label>
-                                            <select id="ciudad" name="ciudad" class="form-control" required>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-	                   		</div> 
-                        </div>
+                        
 	                    <div class="col-md-12"> 
                         	<h2>Caracter&iacute;sticas principales</h2>
                         </div>
@@ -427,26 +401,6 @@
 	        	 	
 	        	 	$("#modelo").val("{{ car.model.id}}");
 	        	 	
-	        	 	$("#provincia").val("{{car.province.id}}")
-	        	 	
-	        	 	
-	        	 	var id = "{{car.province.id}}";
-		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
-		        	$.post(url, 
-                		function(data){
-                			 var sub = $('#ciudad');
-                			sub.empty();
-                			$.each(data , function(key, description) { 
-                    			sub.append($("<option></option>")
-                    				.attr("value",key)
-                    				.text(description.description)); 
-                		    })
-                		
- 						} )
-					{% if car.city %}
-	        	 	$("#ciudad").val("{{ car.city.id }}");
-	        	 	{% endif %}
-	        	 	
 	        	 	{% if car.fuel %}
 	        	 	$("#COMBUS").val("{{car.fuel.id}}")
 	        	 	{% endif %}
@@ -467,7 +421,6 @@
         	 
         	 	var marca = $("#marca").val();
     			var modelo = $("#modelo").val();
-	        	var provincia = $("#provincia").val();
 	        	var combus = $("#COMBUS").val();
 	        	var km = $("#KMTS").val();
 	        	var color = $("COLOREXT").val();
@@ -475,7 +428,6 @@
     			if (!$('#descripcion').val() 
     				|| marca == "Seleccioná una marca" 
     				|| modelo == "Seleccioná una marca" 
-    				|| provincia == "Seleccioná una provincia" 
     				|| ($("#fotoprincipal").val() == '' && $("#mandatoryImage").val() == 'undefined')
     				|| combus == "Elegir" 
     				|| km == "Elegir" 

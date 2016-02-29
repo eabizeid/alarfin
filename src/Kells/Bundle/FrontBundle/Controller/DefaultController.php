@@ -659,8 +659,6 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('KellsFrontBundle:Trademark');
 		$trademarks = $repository->findAll();
-		$repository = $em->getRepository('KellsFrontBundle:Province');
-		$provinces = $repository->findAll();
 		$repository = $em->getRepository('KellsFrontBundle:Fuel');
 		$fuels = $repository->findAll();
 		$repository = $em->getRepository('KellsFrontBundle:Year');
@@ -674,7 +672,7 @@ class DefaultController extends Controller
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'), ));
 		return $this->render(
-        'KellsFrontBundle:Default:publicar.html.twig', array("message" => $message, "form"=>$form->createView(), 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
+        'KellsFrontBundle:Default:publicar.html.twig', array("message" => $message, "form"=>$form->createView(), 'trademarks'=> $trademarks, 'fuels'=>$fuels, 'years'=>$years, 
         	'directions'=>$directions, 'transmissions'=>$transmissions, 'car' => null));
 
 	}
@@ -688,12 +686,10 @@ class DefaultController extends Controller
 		$description = $request->get('descripcion');
 		$price = $request->get('precio');
 
-		$errorMsg = "Marca, Modelo y Provincia son obligatorios";
+		$errorMsg = "Marca  Modelo son obligatoyrios";
 		$trademarkId = $request->get('marca');
 		$modelId = $request->get('modelo');
 		 
-		$provinceId = $request->get('provincia');
-		$cityId = $request->get('ciudad');
 		$fuelId = $request->get('COMBUS');
 		$doorQty = $request->get('DOOR');
 		$yearId = $request->get('YEAR');
@@ -793,16 +789,6 @@ class DefaultController extends Controller
 		$repository = $em->getRepository('KellsFrontBundle:Model');
 		$model = $repository->find($modelId);
 		$car->setModel($model);
-
-		$repository = $em->getRepository('KellsFrontBundle:Province');
-		$province = $repository->find($provinceId);
-		$car->setProvince($province);
-
-		$repository = $em->getRepository('KellsFrontBundle:City');
-		$city = $repository->find($cityId);
-		$car->setCity($city);
-
-
 
 		$repository = $em->getRepository('KellsFrontBundle:Direction');
 		$direction = $repository->find($directionId);
@@ -1463,8 +1449,6 @@ class DefaultController extends Controller
 		$car = $repository->find($id);
 		$repository = $em->getRepository('KellsFrontBundle:Trademark');
 		$trademarks = $repository->findAll();
-		$repository = $em->getRepository('KellsFrontBundle:Province');
-		$provinces = $repository->findAll();
 		$repository = $em->getRepository('KellsFrontBundle:Fuel');
 		$fuels = $repository->findAll();
 		$repository = $em->getRepository('KellsFrontBundle:Year');
@@ -1478,7 +1462,7 @@ class DefaultController extends Controller
 		$searchForm = new Search();
 		$form = $this->createForm(new SearchType(), $searchForm, array('action' => $this->generateUrl('searchCar'), ));
 		return $this->render(
-        'KellsFrontBundle:Default:publicar.html.twig', array("form"=>$form->createView(), 'trademarks'=> $trademarks, 'provinces'=>$provinces, 'fuels'=>$fuels, 'years'=>$years, 
+        'KellsFrontBundle:Default:publicar.html.twig', array("form"=>$form->createView(), 'trademarks'=> $trademarks, 'fuels'=>$fuels, 'years'=>$years, 
         	'directions'=>$directions, 'transmissions'=>$transmissions, 'car'=>$car));
 
 	}

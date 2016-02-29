@@ -84,19 +84,6 @@ class Car {
 	protected $transmission;
 	
 	/**
-     * @ORM\ManyToOne(targetEntity="Province")
-     * @ORM\JoinColumn(name="province_id", referencedColumnName="id")
-     **/
-	protected $province;
-		
-	/**
-     * @ORM\ManyToOne(targetEntity="City")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     **/
-	protected $city;	
-	
-
-	/**
      * @ORM\ManyToMany(targetEntity="Feature", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="car_feature",
      *     joinColumns={@ORM\JoinColumn(name="car_id", referencedColumnName="id")},

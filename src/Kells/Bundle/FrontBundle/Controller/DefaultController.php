@@ -5,7 +5,7 @@ namespace Kells\Bundle\FrontBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\SecurityContext;Model
 
 use Kells\Bundle\FrontBundle\Form\Type\SearchType;
 use Kells\Bundle\FrontBundle\Form\Model\Search;
@@ -22,6 +22,7 @@ use Kells\Bundle\FrontBundle\Entity\CarImage;
 use Kells\Bundle\FrontBundle\Entity\Fotocopias;
 use Kells\Bundle\FrontBundle\Entity\FotocopiasConyuge;
 use Kells\Bundle\FrontBundle\Entity\Credito;
+use Kells\Bundle\FrontBundle\Entity\Model;
 
 use Kells\Bundle\FrontBundle\Utils\Util;
 
@@ -689,6 +690,7 @@ class DefaultController extends Controller
 		$errorMsg = "Marca  Modelo son obligatoyrios";
 		$trademarkId = $request->get('marca');
 		$modelId = $request->get('modelo');
+		$modeloNuevo = $request->get('modeloNuevo');
 		 
 		$fuelId = $request->get('COMBUS');
 		$doorQty = $request->get('DOOR');
@@ -787,6 +789,13 @@ class DefaultController extends Controller
 		$car->setTrademark($trademark);
 
 		$repository = $em->getRepository('KellsFrontBundle:Model');
+		if (!$modelId && $modeloNuevo ) {
+			$model = new Model();
+			$model->setDescription($modeloNuevo)
+			$model->setTrademark($trademark)
+			$em->persist($model);
+			$modelId = $model->getId();
+		}  
 		$model = $repository->find($modelId);
 		$car->setModel($model);
 

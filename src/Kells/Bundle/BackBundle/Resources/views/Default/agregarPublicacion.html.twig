@@ -71,6 +71,13 @@
                                             </select>
                                         </div>
                                     </div>
+                                     <div class="col-sm-6"> 
+                                        <div class="form-group">
+                                            <label for="modeloNuevo">Nuevo modelo</label>
+                                            <input type="text" class="form-control input-lg" id="modeloNuevo" name="modeloNuevo"  maxlength="60">
+                                            <span class="help-block">Si no existe el modelo puede ingresar uno nuevo</span>
+                                        </div>
+                                    </div>
                                 </div>
 	                   		</div> 
                         </div>
@@ -435,8 +442,11 @@
 	        	var color = $("COLOREXT").val();
 	        	var city = $("#ciudad").val();
 	        	
-    			if (!$('#descripcion').val() || marca == "Seleccioná una marca" || modelo == "Seleccioná un modelo" || ($("#fotoprincipal").val() == ''  ) 
-    			 || combus == "" || km == "" || color == "undefined") {
+    			if (!$('#descripcion').val() 
+    			    || marca == "Seleccioná una marca" 
+    				|| (modelo == "Seleccioná un modelo" && ($("#modeloNuevo").val() == '') 
+    				|| ($("#fotoprincipal").val() == ''  ) 
+    			 	|| combus == "" || km == "" || color == "undefined") {
         			$("#ErrorMsg").show();
         			$('html, body').animate({ scrollTop: $('#ErrorMsg').offset().top}, 'slow');
         			return false;

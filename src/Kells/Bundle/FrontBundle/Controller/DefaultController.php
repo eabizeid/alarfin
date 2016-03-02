@@ -794,6 +794,7 @@ class DefaultController extends Controller
 			$model->setDescription($modeloNuevo);
 			$model->setTrademark($trademark);
 			$em->persist($model);
+			$em->flush();
 			$modelId = $model->getId();
 		}  
 		$model = $repository->find($modelId);

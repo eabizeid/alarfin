@@ -36,7 +36,7 @@ class Model {
 	
 	
  	public function __construct() {
-        $this->versions = new ArrayCollection();
+        
     }
 	
 	public function setId( $id ) {

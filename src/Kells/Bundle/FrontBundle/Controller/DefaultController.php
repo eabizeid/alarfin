@@ -791,8 +791,8 @@ class DefaultController extends Controller
 		$repository = $em->getRepository('KellsFrontBundle:Model');
 		if (!$modelId && $modeloNuevo ) {
 			$model = new Model();
-			$model->setDescription($modeloNuevo)
-			$model->setTrademark($trademark)
+			$model->setDescription($modeloNuevo);
+			$model->setTrademark($trademark);
 			$em->persist($model);
 			$modelId = $model->getId();
 		}  

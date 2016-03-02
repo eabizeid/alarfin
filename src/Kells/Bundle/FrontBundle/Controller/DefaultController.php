@@ -5,7 +5,7 @@ namespace Kells\Bundle\FrontBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\SecurityContext;Model
+use Symfony\Component\Security\Core\SecurityContext;
 
 use Kells\Bundle\FrontBundle\Form\Type\SearchType;
 use Kells\Bundle\FrontBundle\Form\Model\Search;

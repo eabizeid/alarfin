@@ -545,12 +545,13 @@ class DefaultController extends Controller
    		$car->setTrademark($trademark);
 		
    		
-   		$repository = $em->getRepository('KellsFrontBundle:Model');
+   	$repository = $em->getRepository('KellsFrontBundle:Model');
 		if (!$modelId && $modeloNuevo ) {
 			$model = new Model();
 			$model->setDescription($modeloNuevo);
 			$model->setTrademark($trademark);
 			$em->persist($model);
+			$em->flush();
 			$modelId = $model->getId();
 		}  
 		$model = $repository->find($modelId);

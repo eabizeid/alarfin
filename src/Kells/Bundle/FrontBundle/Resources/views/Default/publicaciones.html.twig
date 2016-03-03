@@ -145,7 +145,7 @@ $(document).ready(function(){
     });
     
     $("#minPrice").keyUp(function(){
-    	{{ app.request.attributes.set("minPriceFilter", $("#minPrice"),val()) }}
+    	{{ app.request.attributes.set("minPriceFilter", $("#minPrice").val()) }}
     })
 });  
 </script>  

@@ -4,9 +4,8 @@
 	<div class="container">
 		<div class="row">     
 		{% for diff in diferencias %}   
-		<p>{{diff}}</p>
-					{% endfor%}  
-			Diferencia: {{diff}}
+			<p>{{diff}}</p>
+		{% endfor%}  
 				<div class="row botmar resultados"  id="resultados">
 					{% for car in cars %}
 					<p>{{car.title}}</p>

@@ -211,8 +211,8 @@ class DefaultController extends Controller
 		$modelFilter = $request->get('modelFilter');
 		$fuelFilter = $request->get("fuelFilter");
 		$directionFilter = $request->get("directionFilter");
-		$minPriceFilter = $request->get("minPriceFilter");
-		$maxPriceFilter = $request->get("maxPriceFilter");
+		$minPriceFilter = $request->get("minPrice");
+		$maxPriceFilter = $request->get("maxPrice");
 		
 		
 		$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Car');

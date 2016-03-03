@@ -211,6 +211,8 @@ class DefaultController extends Controller
 		$modelFilter = $request->get('modelFilter');
 		$fuelFilter = $request->get("fuelFilter");
 		$directionFilter = $request->get("directionFilter");
+		$minPriceFilter = $request->get("minPriceFilter");
+		$maxPriceFilter = $request->get("maxPriceFilter");
 		
 		
 		$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Car');
@@ -239,12 +241,20 @@ class DefaultController extends Controller
 			$queryBuilder ->andwhere('lower(f.description) LIKE lower(:fuel)');
 		if ($directionFilter) 
 			$queryBuilder ->andwhere('d.description LIKE lower(:direction)');
+		if ($minPriceFilter)
+			$queryBuilder ->andwhere('c.price >=(:minPrice)');
+		if ($maxPriceFilter)
+			$queryBuilder ->andwhere('c.price <=(:maxPrice)');	
 		
 		$queryBuilder->andwhere('c.status = \'PUBLISHED\'');
 		if ($fuelFilter)
 			$queryBuilder->setParameter('fuel', $this->getParameter($fuelFilter, "%"));
 		if ($directionFilter)
 			$queryBuilder->setParameter('direction', $this->getParameter($directionFilter, "%"));
+		if ($minPriceFilter)
+			$queryBuilder->setParameter('minPrice', $this->getParameter($minPriceFilter));
+		if ($maxPriceFilter)
+			$queryBuilder->setParameter('maxPrice', $this->getParameter($maxPriceFilter));
 		$query = $queryBuilder->getQuery();
 
 		$cars = array();

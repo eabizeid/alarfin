@@ -27,14 +27,14 @@
                                   		<div class="panel-body">
                                   		 	{% if markFilter %}
                                     		<div class="alert alert-dismissible" role="alert">
-                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'markShouldBeFilter' : false, 'modelFilter' : modelFilter, 'fuelFilter': fuelFilter, 'directionFilter': directionFilter} )}}" 
+                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'markShouldBeFilter' : false, 'modelFilter' : modelFilter, 'fuelFilter': fuelFilter, 'directionFilter': directionFilter, 'minPrice': minPriceFilter, 'maxPrice': maxPriceFilter} )}}" 
                                         		type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Eliminar filtro</span></a>
                                         			{{markFilter}}
                                     		</div> <!-- alert -->
                                     		{% endif %}
                                     		{% if modelFilter %}
                                     		<div class="alert alert-dismissible" role="alert">
-                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'modelShouldBeFilter' : false, 'markFilter' : markFilter, 'fuelFilter': fuelFilter, 'directionFilter': directionFilter} )}}" 
+                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'modelShouldBeFilter' : false, 'markFilter' : markFilter, 'fuelFilter': fuelFilter, 'directionFilter': directionFilter, 'minPrice': minPriceFilter, 'maxPrice': maxPriceFilter} )}}" 
                                         		type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Eliminar filtro</span></a>
                                         			{{modelFilter}}
                                     		</div> <!-- alert -->
@@ -42,7 +42,7 @@
 
 											{% if fuelFilter %}
                                     		<div class="alert alert-dismissible" role="alert">
-                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'fuelShouldBeFilter' : false, 'markFilter' : markFilter, 'modelFilter' : modelFilter, 'directionFilter': directionFilter} )}}" 
+                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'fuelShouldBeFilter' : false, 'markFilter' : markFilter, 'modelFilter' : modelFilter, 'directionFilter': directionFilter, 'minPrice': minPriceFilter, 'maxPrice': maxPriceFilter} )}}" 
                                         		type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Eliminar filtro</span></a>
                                         			{{fuelFilter}}
                                     		</div> <!-- alert -->
@@ -50,7 +50,7 @@
                                     		
                                     		{% if directionFilter %}
                                     		<div class="alert alert-dismissible" role="alert">
-                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'directionShouldBeFilter' : false, 'markFilter' : markFilter, 'modelFilter' : modelFilter,'fuelFilter': fuelFilter} )}}" 
+                                        		<a href="{{path('removeFilter', {'pattern' : pattern, 'directionShouldBeFilter' : false, 'markFilter' : markFilter, 'modelFilter' : modelFilter,'fuelFilter': fuelFilter, 'minPrice': minPriceFilter, 'maxPrice': maxPriceFilter} )}}" 
                                         		type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Eliminar filtro</span></a>
                                         			{{directionFilter}}
                                     		</div> <!-- alert -->
@@ -62,7 +62,7 @@
                                    			<div class="list-group">
                                       			<div class="list-group-item list-group-title">Marca</div>
                                       			{% for mark in marksKeysFilter %}
-                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : mark, 'directionFilter': directionFilter, 'modelFilter' :modelFilter, 'fuelFilter': fuelFilter } )}}" class="list-group-item"><span class="badge">{{ trademarksFilter[mark]}}</span>{{mark}}</a>
+                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : mark, 'directionFilter': directionFilter, 'modelFilter' :modelFilter, 'fuelFilter': fuelFilter, 'minPrice': minPriceFilter, 'maxPrice': maxPriceFilter } )}}" class="list-group-item"><span class="badge">{{ trademarksFilter[mark]}}</span>{{mark}}</a>
                                       			{% endfor %}
                                   			</div> <!-- list group -->
                                   			{% endif  %}
@@ -71,7 +71,7 @@
                                   			<div class="list-group">
                                       			<div class="list-group-item list-group-title">Modelo</div>
                                       			{% for model in modelKeysFilter %}
-                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'directionFilter': directionFilter,'modelFilter' : model, 'fuelFilter': fuelFilter} )}}" class="list-group-item"><span class="badge">{{ modelsFilter[model]}}</span>{{model}}</a>
+                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'directionFilter': directionFilter,'modelFilter' : model, 'fuelFilter': fuelFilter, 'minPrice': minPriceFilter, 'maxPrice': maxPriceFilter} )}}" class="list-group-item"><span class="badge">{{ modelsFilter[model]}}</span>{{model}}</a>
                                       			{% endfor %}
                                     			</div><!-- Filtro marca -->
                                   			{% endif  %}
@@ -79,7 +79,7 @@
                                   			<div class="list-group">
                                       			<div class="list-group-item list-group-title">Combustible</div>
                                       			{% for fuel in fuelKeysFilter %}
-                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'modelFilter' : modelFilter,  'directionFilter': directionFilter, 'fuelFilter': fuel} )}}" class="list-group-item"><span class="badge">{{ fuelsFilter[fuel]}}</span>{{fuel}}</a>
+                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'modelFilter' : modelFilter,  'directionFilter': directionFilter, 'fuelFilter': fuel, 'minPrice': minPriceFilter, 'maxPrice': maxPriceFilter} )}}" class="list-group-item"><span class="badge">{{ fuelsFilter[fuel]}}</span>{{fuel}}</a>
                                       			{% endfor %}
                                     			</div><!-- list group -->
                                   			{% endif  %}
@@ -88,7 +88,7 @@
                                   			<div class="list-group">
                                       			<div class="list-group-item list-group-title">Dirección</div>
                                       			{% for direction in directionKeysFilter %}
-                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'modelFilter' : modelFilter, 'fuelFilter': fuelFilter, 'directionFilter': direction} )}}" 
+                                      				<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'modelFilter' : modelFilter, 'fuelFilter': fuelFilter, 'directionFilter': direction, 'minPrice': minPriceFilter, 'maxPrice': maxPriceFilter} )}}" 
                                       				class="list-group-item"><span class="badge">{{ directionsFilter[direction]}}</span>{{direction}}</a>
                                       			{% endfor %}
                                     			</div><!-- list group -->
@@ -97,7 +97,7 @@
                                   			<div class="list-group">
                                       			<div class="list-group-item list-group-title">Precio</div>
                                       			
-                                      			<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'modelFilter' : modelFilter, 'fuelFilter': fuelFilter, 'directionFilter': directionFilter} )}}" 
+                                      			<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'modelFilter' : modelFilter, 'fuelFilter': fuelFilter, 'directionFilter': directionFilter, 'minPrice': minPrice, 'maxPrice': maxPrice} )}}" 
                                       				class="list-group-item"><span class="badge">Ir</span> <input type="text" id="minPrice" name="minPrice" size="2"/> - <input type="text" size="2" id="maxPrice" name="maxPrice" /> </a>
                                     		</div><!-- list group -->
                                     			

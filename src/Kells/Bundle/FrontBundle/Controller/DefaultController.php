@@ -2537,7 +2537,7 @@ class DefaultController extends Controller
 		$carsFinalized= array();
 		foreach ($cars as $car) {
 			$now = new \DateTime();
-			$diff = now->diff($car->getPublishedDate());
+			$diff = $now->diff($car->getPublishedDate());
 			if ($days >= 90) {
 				$userType;
 				$userId;

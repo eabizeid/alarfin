@@ -2535,6 +2535,7 @@ class DefaultController extends Controller
 	    $repository = $em->getRepository('KellsFrontBundle:Car');
 		$cars =  $repository->findBy(array('status'=>"PUBLISHED"), array('publishedDate' => 'DESC'));
 		$carsFinalized= array();
+		$diferencias = array();
 		foreach ($cars as $car) {
 			$now = new \DateTime();
 			$diff = $now->diff($car->getPublishedDate());
@@ -2542,6 +2543,7 @@ class DefaultController extends Controller
 				$userType;
 				$userId;
 				$carsFinalized[] =  $car;
+				$diferencias[] = $diff;
 				if ($car->getUser()) {
 					$userType = "U";
 					$userId = $car->getUser()->getId();
@@ -2585,7 +2587,7 @@ class DefaultController extends Controller
 				
 			}
 		}
-			return $this->render('KellsFrontBundle:Default:overcomePublications.html.twig', array('cars'=>$carsFinalized));
+			return $this->render('KellsFrontBundle:Default:overcomePublications.html.twig', array('cars'=>$carsFinalized), "diferencias"=>$diferencias);
     
     }
 }

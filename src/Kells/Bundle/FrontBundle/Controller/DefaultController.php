@@ -2587,7 +2587,7 @@ class DefaultController extends Controller
 				
 			}
 		}
-			return $this->render('KellsFrontBundle:Default:overcomePublications.html.twig', array('cars'=>$carsFinalized), "diferencias"=>$diferencias);
+			return $this->render('KellsFrontBundle:Default:overcomePublications.html.twig', array('cars'=>$carsFinalized, 'diferencias'=>$diferencias));
     
     }
 }

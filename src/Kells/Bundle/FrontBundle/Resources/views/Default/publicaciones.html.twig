@@ -96,9 +96,9 @@
                                   			
                                   			<div class="list-group">
                                       			<div class="list-group-item list-group-title">Precio</div>
-                                      			
+                                      			<input type="text" id="minPrice" name="minPrice" size="2"/> - <input type="text" size="2" id="maxPrice" name="maxPrice" />
                                       			<a href="{{path('filterResults', {'pattern' : pattern, 'markFilter' : markFilter, 'modelFilter' : modelFilter, 'fuelFilter': fuelFilter, 'directionFilter': directionFilter} )}}" 
-                                      				class="list-group-item"><span class="badge">Ir</span> <input type="text" id="minPrice" name="minPrice" size="2"/> - <input type="text" size="2" id="maxPrice" name="maxPrice" /> </a>
+                                      				class="list-group-item"><span class="badge">Ir</span></a>
                                     		</div><!-- list group -->
                                     			
                                     			
@@ -144,7 +144,7 @@ $(document).ready(function(){
        perPage : 12
     });
     
-    $("#minPrice").keyUp(function(){
+    $("#minPrice").keyup(function(){
     	{{ app.request.attributes.set("minPriceFilter", '$("#minPrice").val()') }}
     })
 });  

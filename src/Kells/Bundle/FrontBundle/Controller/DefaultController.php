@@ -2538,7 +2538,7 @@ class DefaultController extends Controller
 		$diferencias = array();
 		foreach ($cars as $car) {
 			$now = new \DateTime();
-			$diff = $now->diff($car->getPublishedDate());
+			$diff = $now->diff($car->getPublishedDate())->days;
 				$diferencias[] = $diff;
 			if ($diff >= 90) {
 				$userType;

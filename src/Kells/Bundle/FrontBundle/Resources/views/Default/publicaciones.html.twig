@@ -148,7 +148,7 @@ $(document).ready(function(){
     
     $("#href").on("click", function(){
 		 var href = $(this).attr('href');
-		 href=href + "&minPrice="+$("#minPrice")+ "&maxPrice="+$("#maxPrice")
+		 href=href + "&minPrice="+$("#minPrice").val()+ "&maxPrice="+$("#maxPrice").val();
 		 $(this).attr('href', href);
     })
 });  

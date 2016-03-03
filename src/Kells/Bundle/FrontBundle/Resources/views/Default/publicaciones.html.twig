@@ -146,8 +146,8 @@ $(document).ready(function(){
        perPage : 12
     });
     
-    $("#priceFilter").on("click", function(){
-		 var href = $("#href").attr('href');
+    $("#href").on("click", function(){
+		 var href = $(this").attr('href');
 		 alert(href);
     })
 });  

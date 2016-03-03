@@ -2,11 +2,14 @@
 {% block body %}
 <div class="contenido-gris linea-gris-abajo">
 	<div class="container">
-		<div class="row">     
+		<div class="row">    
+		
+				<div class="row botmar resultados"  id="resultados">
+				<p>Diferencias</p> 
 		{% for diff in diferencias %}   
 			<p>{{diff}}</p>
 		{% endfor%}  
-				<div class="row botmar resultados"  id="resultados">
+				<p>finalizados</p>
 					{% for car in cars %}
 					<p>{{car.title}}</p>
 					{% endfor%}

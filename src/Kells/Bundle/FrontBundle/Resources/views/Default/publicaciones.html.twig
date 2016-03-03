@@ -145,6 +145,11 @@ $(document).ready(function(){
       containerID: "resultados",
        perPage : 12
     });
+    
+    $("#minPrice").keyup(function(){
+    	
+    	{% set minPrice =  $("#minPrice").val() %}
+    })
 });  
 </script>  
  {% endblock %}

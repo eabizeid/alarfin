@@ -2530,7 +2530,7 @@ class DefaultController extends Controller
     	return $this->render('KellsFrontBundle:Default:contacto-gracias.html.twig');
     }
     
-    public function overcomePublicationAction() {
+    public function overcomePublicationsAction() {
     	$em = $this->getDoctrine()->getManager();
 	    $repository = $em->getRepository('KellsFrontBundle:Car');
 		$cars =  $repository->findBy(array('status'=>"PUBLISHED"), array('publishedDate' => 'DESC'));

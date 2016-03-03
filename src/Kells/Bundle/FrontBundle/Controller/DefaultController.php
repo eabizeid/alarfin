@@ -116,7 +116,7 @@ class DefaultController extends Controller
 			'marksKeysFilter' => array_keys($trademarks), 'trademarksFilter'=> $trademarks, 'markFilter' => "", 
         	'modelKeysFilter' => array_keys($models), 'modelsFilter'=> $models, 'modelFilter'=>"",
 			'directionKeysFilter' => array_keys($directions), 'directionsFilter'=> $directions, 'directionFilter'=>"",
-		    'fuelKeysFilter' => array_keys($fuels), 'fuelsFilter'=> $fuels, 'fuelFilter'=>"",));
+		    'fuelKeysFilter' => array_keys($fuels), 'fuelsFilter'=> $fuels, 'fuelFilter'=>"", 'minPriceFilter'=>"", "maxPriceFilter"=""));
 	}
 	
 	public function detailsAction( $carId ) {
@@ -199,7 +199,7 @@ class DefaultController extends Controller
 			'marksKeysFilter' => array_keys($trademarks), 'trademarksFilter'=> $trademarks, 'markFilter' => "", 
         	'modelKeysFilter' => array_keys($models), 'modelsFilter'=> $models, 'modelFilter'=>"",
 			'directionKeysFilter' => array_keys($directions), 'directionsFilter'=> $directions, 'directionFilter'=>"",
-		    'fuelKeysFilter' => array_keys($fuels), 'fuelsFilter'=> $fuels, 'fuelFilter'=>"",
+		    'fuelKeysFilter' => array_keys($fuels), 'fuelsFilter'=> $fuels, 'fuelFilter'=>"",'minPriceFilter'=>"", "maxPriceFilter"=""
 		));
 	}
 
@@ -326,7 +326,7 @@ class DefaultController extends Controller
 			'modelKeysFilter' => array_keys($models), 'modelsFilter'=> $models, 'modelFilter'=> $modelFilter,
 			'fuelKeysFilter' => array_keys($fuels), 'fuelsFilter'=> $fuels, 'fuelFilter'=>$fuelFilter, 
 			'directionKeysFilter' => array_keys($directions), 'directionsFilter'=> $directions, 'directionFilter'=>$directionFilter, 
-		));
+		'minPriceFilter'=>$minPriceFilter, "maxPriceFilter"=$maxPriceFilter));
 	}
 	
 	

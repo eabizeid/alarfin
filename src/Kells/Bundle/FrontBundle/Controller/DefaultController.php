@@ -2529,5 +2529,64 @@ class DefaultController extends Controller
     	
     	return $this->render('KellsFrontBundle:Default:contacto-gracias.html.twig');
     }
+    
+    public function overcomePublicationAction() {
+    	$em = $this->getDoctrine()->getManager();
+	    $repository = $em->getRepository('KellsFrontBundle:Car');
+		$cars =  $repository->findBy(array('status'=>"PUBLISHED"), array('publishedDate' => 'DESC'));
+		$carsFinalized= array();
+		foreach ($cars as $car) {
+			$now = new \DateTime();
+			$diff = now->diff($car->getPublishedDate())->days;
+			if ($days >= 90) {
+				$userType;
+				$userId;
+				$cars[] =  $car;
+				if ($car->getUser()) {
+					$userType = "U";
+					$userId = $car->getUser()->getId();
+				} else {
+					$userType = "L";
+					$userId = $car->getLicensee()->getId();
+				}
+				$url = $this->generateUrl('publicaciones_usuario', array('userId' =>$userId, 'userType' => $userType), true);
+				$body= '
+					<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+					<html>
+					<head>
+					<title>Untitled Document</title>
+					<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+					</head>
+					<body>
+						<p>La publicación: '.$car->getTitle().' ha vencido.</p>
+						<p>Puede republicar desde la sección Mis Publicaciones Finalizadas: '.$url.' </p>
+					</body>
+					</html>			
+					';
+				//$car->setStatus("FINALIZED");
+				//if ($car->getUser()) {
+					//$message1 = \Swift_Message::newInstance()
+						//->setSubject('Contacto desde la web')
+						//->setFrom('no-responder@alarfin.com.ar')
+						//->setTo($car->getUser()->getMail())
+						//->setBody($body, 'text/html');
+
+					//$this->get('mailer')->send($message1);
+				//} elseif ($car->getLicensee()){
+					//$message1 = \Swift_Message::newInstance()
+						//->setSubject('Contacto desde la web')
+						//->setFrom('no-responder@alarfin.com.ar')
+						//->setTo($car->getLicensee()->getMail())
+						//->setBody($body, 'text/html');
+
+					//$this->get('mailer')->send($message1);
+				//}
+				//$em->flush();
+				
+			}
+		}
+			return $this->render('KellsFrontBundle:Default:overcomePublications.html.twig');
+    
+    }
 }
 

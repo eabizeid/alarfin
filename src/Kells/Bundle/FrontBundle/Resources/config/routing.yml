@@ -239,3 +239,8 @@ contacto-enviar:
 allCars:
     path:     /allcars
     defaults: { _controller: KellsFrontBundle:Default:allCars }
+    
+    
+allCars:
+    path:     /overcomePublications
+    defaults: { _controller: KellsFrontBundle:Default:overcomePublications }

@@ -240,6 +240,12 @@ class DefaultController extends Controller
 	    $configuration->setCerokmCuotas34($request->get('cerokmCuotas34'));
 	
 	    $configuration->setCerokmCuotas36($request->get('cerokmCuotas36'));
+	    $configuration->setCerokmCuotas38($request->get('cerokmCuotas38'));
+	    $configuration->setCerokmCuotas40($request->get('cerokmCuotas40'));
+	    $configuration->setCerokmCuotas42($request->get('cerokmCuotas42'));
+	    $configuration->setCerokmCuotas44($request->get('cerokmCuotas44'));
+	    $configuration->setCerokmCuotas46($request->get('cerokmCuotas46'));
+	    $configuration->setCerokmCuotas48($request->get('cerokmCuotas48'));   
 	
 	    $configuration->setUnoA5Cuotas2($request->get('unoA5Cuotas2'));
 	    $configuration->setUnoA5Cuotas4($request->get('unoA5Cuotas4'));
@@ -261,6 +267,13 @@ class DefaultController extends Controller
 	    $configuration->setUnoA5Cuotas32($request->get('unoA5Cuotas32'));
 	    $configuration->setUnoA5Cuotas34($request->get('unoA5Cuotas34'));
 	    $configuration->setUnoA5Cuotas36($request->get('unoA5Cuotas36'));
+	    $configuration->setUnoA5Cuotas38($request->get('unoA5Cuotas38'));
+	    $configuration->setUnoA5Cuotas40($request->get('unoA5Cuotas40'));
+	    $configuration->setUnoA5Cuotas42($request->get('unoA5Cuotas42'));
+	    $configuration->setUnoA5Cuotas44($request->get('unoA5Cuotas44'));
+	    $configuration->setUnoA5Cuotas46($request->get('unoA5Cuotas46'));
+	    $configuration->setUnoA5Cuotas48($request->get('unoA5Cuotas48'));
+	    
 	    $configuration->setSeisA10Cuotas2($request->get('seisA10Cuotas2'));
 	    $configuration->setSeisA10Cuotas4($request->get('seisA10Cuotas4'));
 	    $configuration->setSeisA10Cuotas6($request->get('seisA10Cuotas6'));
@@ -1674,7 +1687,20 @@ class DefaultController extends Controller
 				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas34();
 			} else if ($cantidadCuotas == 36) {
 				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas36();
+			} else if ($cantidadCuotas == 38) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas38();
+			} else if ($cantidadCuotas == 40) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas40();
+			} else if ($cantidadCuotas == 42) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas42();
+			}else if ($cantidadCuotas == 44) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas44();
+			}else if ($cantidadCuotas == 46) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas46();
+			} else if ($cantidadCuotas == 48) {
+				$cuota = (float)$capital * (float)$configuration->getCerokmCuotas48();
 			}
+			
 			$credito->setTasa($configuration->getCerokmtasa());
 			$credito->setTea($configuration->getCerokmtea());
 
@@ -1715,6 +1741,18 @@ class DefaultController extends Controller
 				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas34();
 			} else if ($cantidadCuotas == 36) {
 				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas36();
+			} else if ($cantidadCuotas == 38) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas38();
+			} else if ($cantidadCuotas == 40) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas40();
+			} else if ($cantidadCuotas == 42) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas42();
+			} else if ($cantidadCuotas == 44) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas44();
+			} else if ($cantidadCuotas == 46) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas46();
+			} else if ($cantidadCuotas == 48) {
+				$cuota = (float)$capital * (float)$configuration->getUnoA5Cuotas48();
 			}
 			$credito->setTasa($configuration->getUnoA5tasa());
 			$credito->setTea($configuration->getUnoA5tea());

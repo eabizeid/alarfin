@@ -2092,7 +2092,12 @@ class DefaultController extends Controller
 			$cuota32 = $capital * (float)$configuration->getCerokmCuotas32();
 			$cuota34 = $capital * (float)$configuration->getCerokmCuotas34();
 			$cuota36 = $capital * (float)$configuration->getCerokmCuotas36();
-				
+			$cuota38 = $capital * (float)$configuration->getCerokmCuotas38();
+			$cuota40 = $capital * (float)$configuration->getCerokmCuotas40();
+			$cuota42 = $capital * (float)$configuration->getCerokmCuotas42();
+			$cuota44 = $capital * (float)$configuration->getCerokmCuotas44();
+			$cuota46 = $capital * (float)$configuration->getCerokmCuotas46();
+			$cuota48 = $capital * (float)$configuration->getCerokmCuotas48();	
 				
 		} else if ($y < $intervalo0 && $y >= $intervalo1) {
 			$cuota2 = $capital * (float)$configuration->getUnoA5Cuotas2();
@@ -2113,6 +2118,12 @@ class DefaultController extends Controller
 			$cuota32 = $capital * (float)$configuration->getUnoA5Cuotas32();
 			$cuota34 = $capital * (float)$configuration->getUnoA5Cuotas34();
 			$cuota36 = $capital * (float)$configuration->getUnoA5Cuotas36();
+			$cuota38 = $capital * (float)$configuration->getUnoA5Cuotas38();
+			$cuota40 = $capital * (float)$configuration->getUnoA5Cuotas40();
+			$cuota42 = $capital * (float)$configuration->getUnoA5Cuotas42();
+			$cuota44 = $capital * (float)$configuration->getUnoA5Cuotas44();
+			$cuota46 = $capital * (float)$configuration->getUnoA5Cuotas46();
+			$cuota48 = $capital * (float)$configuration->getUnoA5Cuotas48();
 		} else if ($y < $intervalo1 && $y >= $intervalo2) {
 			$cuota2 = $capital * (float)$configuration->getSeisA10Cuotas2();
 			$cuota4 = $capital * (float)$configuration->getSeisA10Cuotas4();
@@ -2167,6 +2178,12 @@ class DefaultController extends Controller
 			$output[] = array('key'=>'32 Cuotas', 'value'=>round($cuota32));
 			$output[] = array('key'=>'34 Cuotas', 'value'=>round($cuota34));
 			$output[] = array('key'=>'36 Cuotas', 'value'=>round($cuota36));
+			$output[] = array('key'=>'38 Cuotas', 'value'=>round($cuota38));
+			$output[] = array('key'=>'40 Cuotas', 'value'=>round($cuota40));
+			$output[] = array('key'=>'42 Cuotas', 'value'=>round($cuota42));
+			$output[] = array('key'=>'44 Cuotas', 'value'=>round($cuota44));
+			$output[] = array('key'=>'46 Cuotas', 'value'=>round($cuota46));
+			$output[] = array('key'=>'48 Cuotas', 'value'=>round($cuota48));
 		}
 		$response = new Response();
 		$response->headers->set('Content-Type', 'application/json');
@@ -2233,6 +2250,18 @@ class DefaultController extends Controller
 				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas34();
 			} else if ($cantidadCuotas == 36) {
 				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas36();
+			} else if ($cantidadCuotas == 38) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas38();
+			} else if ($cantidadCuotas == 40) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas40();
+			} else if ($cantidadCuotas == 42) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas42();
+			} else if ($cantidadCuotas == 44) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas44();
+			} else if ($cantidadCuotas == 46) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas46();
+			} else if ($cantidadCuotas == 48) {
+				$cuota = (int)$montoCredito * (float)$configuration->getCerokmCuotas48();
 			}
 		} else if ($y < $intervalo0 && $y >= $intervalo1) {
 			if ($cantidadCuotas == 2) {
@@ -2271,6 +2300,18 @@ class DefaultController extends Controller
 				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas34();
 			} else if ($cantidadCuotas == 36) {
 				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas36();
+			} else if ($cantidadCuotas == 38) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas38();
+			} else if ($cantidadCuotas == 40) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas40();
+			} else if ($cantidadCuotas == 42) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas42();
+			} else if ($cantidadCuotas == 44) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas44();
+			} else if ($cantidadCuotas == 46) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas46();
+			} else if ($cantidadCuotas == 48) {
+				$cuota = (int)$montoCredito * (float)$configuration->getUnoA5Cuotas48();
 			}
 		} else if ($y < $intervalo1 && $y >= $intervalo2) {
 			if ($cantidadCuotas == 2) {

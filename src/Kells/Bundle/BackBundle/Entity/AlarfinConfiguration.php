@@ -1119,7 +1119,7 @@ public function setCerokmCuotas48($cerokmCuotas48)
     {
         return $this->cerokmCuotas44;
     }
- public function getCerokmCuotas48()
+ public function getCerokmCuotas46()
     {
         return $this->cerokmCuotas46;
     }

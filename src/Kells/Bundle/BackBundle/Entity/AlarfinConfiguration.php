@@ -1062,13 +1062,6 @@ class AlarfinConfiguration {
 
         return $this;
     }
-    
-public function setCerokmCuotas36($cerokmCuotas36)
-    {
-        $this->cerokmCuotas36 = $cerokmCuotas36;
-
-        return $this;
-    }
 public function setCerokmCuotas38($cerokmCuotas38)
     {
         $this->cerokmCuotas38 = $cerokmCuotas38;

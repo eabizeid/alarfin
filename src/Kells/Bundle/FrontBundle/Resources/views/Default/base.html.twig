@@ -63,7 +63,9 @@
 		<script src="{{ asset('bundles/kellsfront/js/jquery.fancybox.js') }}"></script>
         <script>
             $(document).ready(function() {
-				$(".fancybox").fancybox();
+				$(".fancybox").fancybox(
+					'modal' : true
+				);
             $.blockUI.defaults.message = 'Cargando...';
             $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
                 $('#tabla-publicados').dataTable({

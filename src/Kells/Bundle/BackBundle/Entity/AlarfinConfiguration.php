@@ -1533,12 +1533,6 @@ public function setCerokmCuotas48($cerokmCuotas48)
         return $this;
     }
     
-  public function setUnoA5Cuotas36($unoA5Cuotas36)
-    {
-        $this->unoA5Cuotas36 = $unoA5Cuotas36;
-
-        return $this;
-    }
   public function setUnoA5Cuotas38($unoA5Cuotas38)
     {
         $this->unoA5Cuotas38 = $unoA5Cuotas38;
@@ -1585,7 +1579,7 @@ public function setCerokmCuotas48($cerokmCuotas48)
     }
  public function getUnoA5Cuotas40()
     {
-        return $this->unoA5Cuotas42;
+        return $this->unoA5Cuotas40;
     }
  public function getUnoA5Cuotas42()
     {

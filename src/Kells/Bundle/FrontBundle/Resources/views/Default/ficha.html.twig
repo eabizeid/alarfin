@@ -12,17 +12,15 @@
                 				      <h4 class="nomar text-negro">{%if car.year %} {{car.year.description}}  | {%endif%}{{car.km}} Km</h4>
                           </div>
                           <div class="resultado-caja-derecha">
-                             <h4>
-		    						{%if car.user %} 
-		    							<i class="fa fa-user"></i> Particular
-		    						{%else%}
-		    							<i class="fa fa-car"></i> Concesionaria
-		    						{%endif%}
-		    				</h4>
+      		    						{%if car.user %} 
+      		    							<span class="ficha-publicacion-particular"><i class="fa fa-fw fa-user"></i> Particular</span>
+      		    						{%else%}
+      		    							<span class="ficha-publicacion-concesionaria"><i class="fa fa-fw fa-car"></i> Concesionaria</span>
+      		    						{%endif%}
                           </div>
-                                 <h2 class="text-negro"><strong>{{ car.title }}</strong></h2>
-                                 <h4>{{car.description}}</h4>
-                                 <h2><span class="label label-default">{%if car.price and car.price != 0 %}$ {{car.price}} {% else %} A Convenir {% endif %}</span></h2>
+                         <h2 class="text-negro"><strong>{{ car.title }}</strong></h2>
+                         <h4>{{car.description}}</h4>
+                         <h2><span class="label label-default">{%if car.price and car.price != 0 %}$ {{car.price}} {% else %} A Convenir {% endif %}</span></h2>
                                  {% for flashMessage in app.session.flashbag.get('notice') %}
     								<div  id="divSuccess" class="alert alert-success" role="alert"><i class="fa fa-exclamation-circle fa-fw"></i>
        							 {{ flashMessage }}

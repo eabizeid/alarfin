@@ -127,8 +127,8 @@ header {-webkit-box-shadow:inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgb
 .publicar .tab-content {padding:20px;background:#fff;border:1px solid #ddd;border-top:none;border-radius:4px;border-top-left-radius:0;border-top-right-radius:0;text-align:left;}
 .simulador table.table th, .simulador table.table td {text-align:center;font-size:20px;}
 .simulador .alert-success {font-size:20px;text-align:center;}
-.resultado-caja-izquierda {float:left;width:50%;border-bottom:1px solid #ddd;padding-bottom:5px;margin-bottom:5px;}
-.resultado-caja-derecha {float:right;width:50%;text-align:right;border-bottom:1px solid #ddd;padding-bottom:5px;margin-bottom:5px;}
+.resultado-caja-izquierda {float:left;width:50%;margin-bottom:10px;}
+.resultado-caja-derecha {float:right;width:50%;text-align:right;margin-bottom:10px;}
 .ficha .resultado-caja-izquierda, .ficha .resultado-caja-derecha {border-bottom:none;}
 .resultado-caja-texto {font-size:14px;line-height:16px;}
 
@@ -263,8 +263,13 @@ header {padding-bottom:0;}
 }
 
 @media print {
-    header, footer, .simulador .btn, .simulador a, .simulador h2, hr, .col-sm-12.text-center {display:none;}
-	.simulador, .simulador .alert-success, .simulador table.table td, .simulador table.table th {font-size:12px !important;}
+    header, footer, .simulador .btn, .simulador a, .simulador h2, hr, .col-sm-12.text-center, .titulo {display:none;}
+	.simulador, .simulador .alert-success, .simulador table.table td, .simulador table.table th {font-size:11px !important;}
+	.simulador .alert-success {font-size:14px !important;}
+	.alert, .alert-success {padding:5px !important;margin-bottom:10px !important;font-size:12px !important;}
+	.col-sm-6 {width:50% !important;float:left;}
+	.topmar {margin-top:15px !important;}
+	.titulo h1 {border-bottom:none !important;font-size:20px !important;line-height:20px !important;padding-bottom:5px !important;}
 }
 
 
@@ -292,3 +297,10 @@ header {padding-bottom:0;}
 .holder a.jp-disabled, a.jp-disabled:hover {color:#bbb;border:1px solid #bbb;}
 .holder a.jp-current, a.jp-current:hover,.holder a.jp-disabled, a.jp-disabled:hover {cursor:default;background:none;}
 .holder span { margin: 0 5px; }
+
+
+/* resaltado de particular */
+.resultado-publicacion-particular {border:1px solid #af1d35;border-right:2px solid #af1d35;border-bottom:2px solid #af1d35;padding:5px;color:#af1d35;text-transform:uppercase;font-size:10px;}
+.resultado-publicacion-concesionaria {border:1px solid #333;border-right:2px solid #333;border-bottom:2px solid #333;padding:5px;color:#333;text-transform:uppercase;font-size:10px;}
+.ficha-publicacion-particular {border:1px solid #af1d35;border-right:2px solid #af1d35;border-bottom:2px solid #af1d35;padding:5px 10px;color:#af1d35;background:#fff;text-transform:uppercase;font-size:12px;}
+.ficha-publicacion-concesionaria {border:1px solid #333;border-right:2px solid #333;border-bottom:2px solid #333;padding:5px 10px;color:#333;text-transform:uppercase;font-size:12px;}

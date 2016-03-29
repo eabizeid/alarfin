@@ -148,6 +148,31 @@ class AlarfinConfiguration {
      * @ORM\Column(type="string", length=60)
      */
     protected $cerokmCuotas36;
+    
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas38;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas40;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas42;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas44;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas46;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $cerokmCuotas48;
 	/**
      * @ORM\Column(type="string", length=60)
      */
@@ -220,6 +245,30 @@ class AlarfinConfiguration {
      * @ORM\Column(type="string", length=60)
      */
     protected $unoA5Cuotas36;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas38;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas40;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas42;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas44;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas46;
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    protected $unoA5Cuotas48;
 	/**
      * @ORM\Column(type="string", length=60)
      */
@@ -1013,6 +1062,43 @@ class AlarfinConfiguration {
 
         return $this;
     }
+    
+public function setCerokmCuotas36($cerokmCuotas36)
+    {
+        $this->cerokmCuotas36 = $cerokmCuotas36;
+
+        return $this;
+    }
+public function setCerokmCuotas38($cerokmCuotas38)
+    {
+        $this->cerokmCuotas38 = $cerokmCuotas38;
+
+        return $this;
+    }
+public function setCerokmCuotas40($cerokmCuotas40)
+    {
+        $this->cerokmCuotas40 = $cerokmCuotas40;
+
+        return $this;
+    }
+public function setCerokmCuotas42($cerokmCuotas42)
+    {
+        $this->cerokmCuotas42 = $cerokmCuotas42;
+
+        return $this;
+    }
+public function setCerokmCuotas44($cerokmCuotas44)
+    {
+        $this->cerokmCuotas44 = $cerokmCuotas44;
+
+        return $this;
+    }
+public function setCerokmCuotas48($cerokmCuotas48)
+    {
+        $this->cerokmCuotas48 = $cerokmCuotas48;
+
+        return $this;
+    }
 
     /**
      * Get cerokmCuotas36
@@ -1023,6 +1109,32 @@ class AlarfinConfiguration {
     {
         return $this->cerokmCuotas36;
     }
+    
+ 	public function getCerokmCuotas38()
+    {
+        return $this->cerokmCuotas38;
+    }
+ 	public function getCerokmCuotas40()
+    {
+        return $this->cerokmCuotas40;
+    }
+ public function getCerokmCuotas42()
+    {
+        return $this->cerokmCuotas42;
+    }
+ public function getCerokmCuotas44()
+    {
+        return $this->cerokmCuotas44;
+    }
+ public function getCerokmCuotas48()
+    {
+        return $this->cerokmCuotas46;
+    }
+ public function getCerokmCuotas48()
+    {
+        return $this->cerokmCuotas48;
+    }
+    
 
     /**
      * Set unoA5Cuotas2
@@ -1427,6 +1539,43 @@ class AlarfinConfiguration {
 
         return $this;
     }
+    
+  public function setUnoA5Cuotas36($unoA5Cuotas36)
+    {
+        $this->unoA5Cuotas36 = $unoA5Cuotas36;
+
+        return $this;
+    }
+  public function setUnoA5Cuotas38($unoA5Cuotas38)
+    {
+        $this->unoA5Cuotas38 = $unoA5Cuotas38;
+
+        return $this;
+    }
+  public function setUnoA5Cuotas40($unoA5Cuotas40)
+    {
+        $this->unoA5Cuotas40 = $unoA5Cuotas40;
+
+        return $this;
+    }
+  public function setUnoA5Cuotas42($unoA5Cuotas42)
+    {
+        $this->unoA5Cuotas42 = $unoA5Cuotas42;
+
+        return $this;
+    }
+  public function setUnoA5Cuotas44($unoA5Cuotas44)
+    {
+        $this->unoA5Cuotas44 = $unoA5Cuotas44;
+
+        return $this;
+    }
+  public function setUnoA5Cuotas48($unoA5Cuotas48)
+    {
+        $this->unoA5Cuotas48 = $unoA5Cuotas48;
+
+        return $this;
+    }
 
     /**
      * Get unoA5Cuotas36
@@ -1436,6 +1585,30 @@ class AlarfinConfiguration {
     public function getUnoA5Cuotas36()
     {
         return $this->unoA5Cuotas36;
+    }
+ public function getUnoA5Cuotas38()
+    {
+        return $this->unoA5Cuotas38;
+    }
+ public function getUnoA5Cuotas40()
+    {
+        return $this->unoA5Cuotas42;
+    }
+ public function getUnoA5Cuotas42()
+    {
+        return $this->unoA5Cuotas42;
+    }
+ public function getUnoA5Cuotas44()
+    {
+        return $this->unoA5Cuotas44;
+    }
+ public function getUnoA5Cuotas46()
+    {
+        return $this->unoA5Cuotas46;
+    }
+ public function getUnoA5Cuotas48()
+    {
+        return $this->unoA5Cuotas48;
     }
 
     /**

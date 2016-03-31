@@ -25,7 +25,6 @@ use Kells\Bundle\FrontBundle\Entity\Credito;
 use Kells\Bundle\FrontBundle\Entity\Model;
 
 use Kells\Bundle\FrontBundle\Utils\Util;
-use Doctrine\ORM\EntityRepository;
 
 class DefaultController extends Controller
 {
@@ -560,8 +559,9 @@ class DefaultController extends Controller
 	/* ******************** Licensee Registration ***********************************************  */
 
 	public function licenseeRegistrationAction() {
+		$em = $this->getDoctrine()->getManager();
 		$registration = new Registration();
-		$form = $this->createForm(new RegistrationType(), $registration, array('action' => $this->generateUrl('licensee_create'),));
+		$form = $this->createForm(new RegistrationType($em), $registration, array('action' => $this->generateUrl('licensee_create'),));
 		 
 		return $this->render('KellsFrontBundle:Default:licenseeRegistration.html.twig', array('form' => $form->createView()));
 	}

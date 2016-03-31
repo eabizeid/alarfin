@@ -7,9 +7,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class RegistrationType extends AbstractType
 {
+	private $em;
+	
+  	public function __construct(EntityManager $entityManager) {
+        $this->em = $entityManager;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('licensee', new LicenseeType());
+        $builder->add('licensee', new LicenseeType($em));
         $builder->add(
             'terms',
             'checkbox',

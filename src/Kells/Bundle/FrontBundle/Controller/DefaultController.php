@@ -25,6 +25,7 @@ use Kells\Bundle\FrontBundle\Entity\Credito;
 use Kells\Bundle\FrontBundle\Entity\Model;
 
 use Kells\Bundle\FrontBundle\Utils\Util;
+use Doctrine\ORM\EntityRepository;
 
 class DefaultController extends Controller
 {

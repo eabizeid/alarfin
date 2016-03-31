@@ -42,7 +42,7 @@ class LicenseeType extends AbstractType {
     $table2Objects    = $table2Repository->findBy(array('province'=>1));
 
     foreach ($table2Objects as $table2Obj) {
-        $choices[$table2Obj->getId()] = $table2Obj->getNumero() . ' - ' . $table2Obj->getName();
+        $choices[$table2Obj->getId()] = $table2Obj->getDescription() ;
     }
 
     return $choices;

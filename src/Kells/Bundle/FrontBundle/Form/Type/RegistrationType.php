@@ -13,6 +13,7 @@ class RegistrationType extends AbstractType
   	public function __construct(EntityManager $entityManager) {
         $this->em = $entityManager;
     }
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('licensee', new LicenseeType($em));

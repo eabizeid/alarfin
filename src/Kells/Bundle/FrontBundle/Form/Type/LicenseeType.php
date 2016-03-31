@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManager;
 
 class LicenseeType extends AbstractType {
 	
-	private $em;
+	protected $em;
 	
   	public function __construct(EntityManager $entityManager) {
         $this->em = $entityManager;
@@ -38,7 +38,7 @@ class LicenseeType extends AbstractType {
 
 	protected function buildChoices() {
     $choices          = [];
-    $table2Repository = $this->getDoctrine()->getRepository('KellsFrontBundle:City');
+    $table2Repository = $this->$em->getRepository('KellsFrontBundle:City');
     $table2Objects    = $table2Repository->findBy(array('province'=>1));
 
     foreach ($table2Objects as $table2Obj) {

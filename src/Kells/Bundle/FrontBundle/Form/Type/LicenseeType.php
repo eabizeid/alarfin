@@ -5,9 +5,17 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Doctrine\ORM\EntityRepository;
+
 
 class LicenseeType extends AbstractType {
 	
+	private $em;
+	
+  	public function __construct(EntityManager $entityManager) {
+        $this->em = $entityManager;
+    }
+    
 	public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('cuit', 'text');
         $builder->add('socialReason', 'text');

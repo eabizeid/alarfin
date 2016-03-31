@@ -38,7 +38,7 @@ class LicenseeType extends AbstractType {
 
 	protected function buildChoices() {
     $choices          = [];
-    $table2Repository = $this->$em->getRepository('KellsFrontBundle:City');
+    $table2Repository = $this->em->getRepository('KellsFrontBundle:City');
     $table2Objects    = $table2Repository->findBy(array('province'=>1));
 
     foreach ($table2Objects as $table2Obj) {

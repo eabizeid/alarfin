@@ -66,6 +66,13 @@ class Licensee implements UserInterface {
      * @ORM\Column(type="string", length=255)
      */
     protected $token;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="cities")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     **/
+    protected $city;
+    
 	
 	public function getId() {
 		return $this->id;

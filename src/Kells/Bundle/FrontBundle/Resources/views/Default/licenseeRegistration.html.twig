@@ -52,6 +52,12 @@
 			    					{{ form_widget(form.licensee.telephone, { 'attr': {'class': 'form-control' }}) }}
 			                    </div>
 			                </div>
+			                 <div class="col-sm-6">
+			                    <div class="form-group">
+			                    	{{ form_label(form.licensee.city, 'Ciudad' ) }}
+			    					{{ form_widget(form.licensee.city, { 'attr': {'class': 'form-control' }}) }}
+			                    </div>
+			                </div>
 			                {% for passwordField in form.licensee.password %}
 			     			<div class="col-sm-6">
 			                    <div class="form-group">

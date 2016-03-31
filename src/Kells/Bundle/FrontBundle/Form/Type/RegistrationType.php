@@ -2,6 +2,7 @@
 // src/Kells/LicenseeBundle/Form/Type/RegistrationType.php
 namespace Kells\Bundle\FrontBundle\Form\Type;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 

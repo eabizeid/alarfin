@@ -23,7 +23,7 @@ class LicenseeType extends AbstractType {
         $builder->add('fantasyName', 'text');
         $builder->add('telephone', 'text');
         $builder->add('mail', 'email');
-        $builder->add('city', ChoiceType::class, array(
+        $builder->add('city', 'choice', array(
 		    'choices'  => $this->buildChoices()
 		));
         $builder->add('password', 'repeated', array(

@@ -23,7 +23,7 @@ deleteUser:
     path:     /admin/user/delete/{id}
     defaults: { _controller: KellsBackBundle:Default:deleteUser }
 
-concesionarias:
+concesionariasAdmin:
     path:     /admin/concesionarias
     defaults: { _controller: KellsBackBundle:Default:concesionarias }
 

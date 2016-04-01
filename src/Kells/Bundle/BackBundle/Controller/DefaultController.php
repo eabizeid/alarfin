@@ -129,7 +129,7 @@ class DefaultController extends Controller
     		$em->persist($user);
     	}
     	$em->flush();
-    	return $this->redirect($this->generateUrl('concesionarias'));
+    	return $this->redirect($this->generateUrl('concesionariasAdmin'));
     }
     
 	public function modifyLicenseeAction( $id )
@@ -151,7 +151,7 @@ class DefaultController extends Controller
     	
     	$em->remove($alarfin);
     	$em->flush();
-    	return $this->redirect($this->generateUrl('concesionarias'));
+    	return $this->redirect($this->generateUrl('concesionariasAdmin'));
     }
     
     public function adminLoginAction()

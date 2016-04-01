@@ -13,7 +13,7 @@
 			{% for c in concesionarias %}
 				<div class="col-sm-6 col-md-4">
 					<div class="thumbnail">
-						{%if c.city && not city == c.city.description%}
+						{%if c.city and not city == c.city.description%}
 						{% set city = c.city.description %}
 						<h2>{{c.city.description}}</h2>
 						{% endif %}

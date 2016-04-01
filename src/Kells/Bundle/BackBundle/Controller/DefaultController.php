@@ -96,8 +96,9 @@ class DefaultController extends Controller
     
 	public function addLicenseeAction()
     {
-    	
-    	return $this->render('KellsBackBundle:Default:licensee-agregar.html.twig');
+    	$repository = $em->getRepository('KellsFrontBundle:City');
+    	$cities = $repository->findBy(array('province'=>1);
+    	return $this->render('KellsBackBundle:Default:licensee-agregar.html.twig',array("cities"=>$cities));
     }
     
 	public function saveLicenseeAction(Request $request)
@@ -110,6 +111,9 @@ class DefaultController extends Controller
     		$user = new Licensee();
     	}
     	
+    	$repository = $em->getRepository('KellsFrontBundle:City');
+    	$city = $em->find($request->get("city"));
+    	$user->setCity($city);
     	$user->setSocialReason($request->get('razonSocial'));
     	$user->setFantasyName($request->get('fantasia'));
     	$user->setCuit($request->get('cuit'));
@@ -133,9 +137,10 @@ class DefaultController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$repository = $em->getRepository('KellsFrontBundle:Licensee');
     	$user = $repository->find($id);
+    	$repository = $em->getRepository('KellsFrontBundle:City');
+    	$cities = $repository->findBy(array('province'=>1);
     	
-    	
-    	return $this->render('KellsBackBundle:Default:concesionarias-editar.html.twig', array("user"=>$user));
+    	return $this->render('KellsBackBundle:Default:concesionarias-editar.html.twig', array("user"=>$user, "cities"=>$cities));
     }
 
     public function deleteLicenseeAction( $id )

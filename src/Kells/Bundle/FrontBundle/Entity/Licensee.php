@@ -291,4 +291,18 @@ class Licensee implements UserInterface {
 	public function getName() {
     	return $this->getSocialReason();
     }
+    
+/**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+    
+	public function setCity($city) {
+    	return $this->city = $city;
+    }
 }

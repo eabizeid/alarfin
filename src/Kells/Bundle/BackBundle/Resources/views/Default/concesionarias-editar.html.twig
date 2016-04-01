@@ -23,6 +23,17 @@
                                     <input name="fantasia" type="text" required class="form-control" id="fantasia" tabindex="2" value="{{user.fantasyName}}">
                                 </div>
                             </div>
+                              <div class="col-sm-6"> 
+                                <div class="form-group">
+                                    <label for="ciudad">Localidad</label>
+                                    <select name="localidad" type="text" required class="form-control" id="localidad" tabindex="3" >
+                                    <option>&nbsp;</option>
+									{% for city in cities %}
+                                    	<option value="{{ city.id }}">{{ city.description }}</option>
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-sm-6"> 
                                 <div class="form-group">
                                     <label for="cuit">Cuit</label>

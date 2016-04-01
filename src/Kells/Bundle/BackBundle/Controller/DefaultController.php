@@ -112,7 +112,7 @@ class DefaultController extends Controller
     	}
     	
     	$repository = $em->getRepository('KellsFrontBundle:City');
-    	$city = $em->find($request->get("city"));
+    	$city = $repository->find($request->get("city"));
     	$user->setCity($city);
     	$user->setSocialReason($request->get('razonSocial'));
     	$user->setFantasyName($request->get('fantasia'));

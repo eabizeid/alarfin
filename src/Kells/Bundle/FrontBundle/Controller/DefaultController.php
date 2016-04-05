@@ -36,7 +36,7 @@ class DefaultController extends Controller
 		$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Car');
 
 		$cars =  $repository->findBy(array('status'=>"PUBLISHED"), array('publishedDate' => 'DESC'), 8);
-		return $this->render('KellsFrontBundle:Default:index.html.twig', array( 'cars' => $cars));
+		return $this->render('KellsFrontBundle:Default:index.html.twig', array('form' => $form->createView(), 'cars' => $cars));
 	}
 	
 	public function concesionariasAction() {

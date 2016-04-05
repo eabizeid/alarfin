@@ -76,7 +76,14 @@
 			</div>
 			{% endfor %}
 			<div>
-			Clasificados {{ form_widget(form.pattern, { 'attr': {'id' : 'buscador', 'tabindex': '1', 'name': 'pattern' }} ) }}
+			Clasificados 
+				<form action="{{ path('searchCar') }}" method="post">
+                <div class="row">
+                   
+                     	{{ form_widget(form.pattern, { 'attr': {'class': 'form-control input-lg', 'id' : 'buscador', 'tabindex': '1', 'placeholder': 'Ingresá la marca y/o el modelo', 'name': 'pattern' }} ) }}     
+                    	{{ form_row(form.Buscar) }}
+                </div>
+            </form>
 			</div> 	<a href="{{path('publicaciones')}}">Ver mas autos</a>
 			{% if cars %}
 			<div class="row botmar">

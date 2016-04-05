@@ -75,7 +75,9 @@
 				<p  ALIGN=center>{{flashMessage}}</p>
 			</div>
 			{% endfor %}
-			{{ include('KellsFrontBundle:Default:buscador.html.twig') }}
+			<div>
+			{{ form_widget(form.pattern, { 'attr': {'class': 'form-control input-lg', 'id' : 'buscador', 'tabindex': '1', 'placeholder': 'Ingresá la marca y/o el modelo', 'name': 'pattern' }} ) }}
+			</div>
 			{% if cars %}
 			<div class="row botmar">
 				<div class="row botmar resultados"  id="resultados">

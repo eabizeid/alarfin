@@ -76,14 +76,13 @@
 			</div>
 			{% endfor %}
 			<div>
-			{{ form_widget(form.pattern, { 'attr': {'class': 'form-control input-lg', 'id' : 'buscador', 'tabindex': '1', 'placeholder': 'Ingresá la marca y/o el modelo', 'name': 'pattern' }} ) }}
-			</div>
+			Clasificados {{ form_widget(form.pattern, { 'attr': {'id' : 'buscador', 'tabindex': '1', 'name': 'pattern' }} ) }}
+			</div> 	<a href="{{path('publicaciones')}}">Ver mas autos</a>
 			{% if cars %}
 			<div class="row botmar">
 				<div class="row botmar resultados"  id="resultados">
 					{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
 				</div>
-				<a href="{{path('publicaciones')}}">Ver más </a>
       			<!-- navigation holder -->
       			<div class="holder"></div>
       	 </div>

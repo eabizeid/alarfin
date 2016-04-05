@@ -66,6 +66,38 @@
           </div>
       </div>
   </div>
+  
+  <div class="contenido-gris linea-gris-abajo">
+	<div class="container">
+		<div class="row">          
+			 {% for flashMessage in app.session.flashbag.get('notice') %}
+			<div class="alert alert-success role="alert">
+				<p  ALIGN=center>{{flashMessage}}</p>
+			</div>
+			{% endfor %}
+			{{ include('KellsFrontBundle:Default:buscador.html.twig') }}
+			{% if cars %}
+			<div class="row botmar">
+				<div class="col-sm-8 col-md-8 col-lg-9 toppad">
+            		<div class="row resultados">
+            			<div class="clearfix"></div>
+								{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
+						</div>
+					</div>
+				</div>
+				<div class="row botmar resultados"  id="resultados">
+					{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
+				</div>
+				
+      			<!-- navigation holder -->
+      			<div class="holder"></div>
+			{% else %}
+				<div class="alert alert-danger role="alert">
+				<p  ALIGN=center>No se encontraron automóviles, por favor intente con otra búsqueda.</p></div>
+			{% endif %}
+		</div>
+	</div>
+  
   <div class="home-cajas">
       <div class="container">
           <div class="row">

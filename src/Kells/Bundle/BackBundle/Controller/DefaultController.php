@@ -120,6 +120,7 @@ class DefaultController extends Controller
     	$user->setCuit($request->get('cuit'));
     	$user->setMail($request->get('email'));
     	$user->setTelephone($request->get('telefono'));
+    	$user->setTelephone($request->get('contactName'));
     	$user->setToken("");
     	$user->setStatus(1);
     	if ($request->get('contrasena')) {

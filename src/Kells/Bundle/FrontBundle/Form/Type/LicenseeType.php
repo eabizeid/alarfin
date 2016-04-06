@@ -21,6 +21,7 @@ class LicenseeType extends AbstractType {
         $builder->add('cuit', 'text');
         $builder->add('socialReason', 'text');
         $builder->add('fantasyName', 'text');
+        $builder->add('contactName', 'text');
         $builder->add('telephone', 'text');
         $builder->add('mail', 'email');
         $builder->add('city', 'choice', array(

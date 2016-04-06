@@ -42,6 +42,12 @@ class Licensee implements UserInterface {
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
      */
+	protected $contactName;
+	
+	/**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     */
 	protected $telephone;
 	
 	/**
@@ -305,5 +311,14 @@ class Licensee implements UserInterface {
     
 	public function setCity($city) {
     	return $this->city = $city;
+    }
+
+ 	public function getContactName()
+    {
+        return $this->contactName;
+    }
+    
+	public function setContactName($contactName) {
+    	return $this->contactName = $contactName;
     }
 }

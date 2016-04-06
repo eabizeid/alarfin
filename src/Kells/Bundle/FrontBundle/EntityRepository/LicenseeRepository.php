@@ -8,7 +8,7 @@ class LicenseeRepository extends EntityRepository {
  public function findAll() {
 	
       return $this->createQueryBuilder('l')
-        ->leftJoin('l.city','c')
+        ->join('l.city','c')
         ->addOrderBy('c.description', 'ASC')
         ->getQuery() 
         ->getResult();

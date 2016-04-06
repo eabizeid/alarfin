@@ -96,6 +96,7 @@ class DefaultController extends Controller
     
 	public function addLicenseeAction()
     {
+    	$em = $this->getDoctrine()->getManager();
     	$repository = $em->getRepository('KellsFrontBundle:City');
     	$cities = $repository->findBy(array('province'=>1));
     	return $this->render('KellsBackBundle:Default:licensee-agregar.html.twig', array("cities"=> $cities));

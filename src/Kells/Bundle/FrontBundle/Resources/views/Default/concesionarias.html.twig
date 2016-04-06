@@ -13,7 +13,7 @@
 			{% for c in concesionarias %}
 			{%if c.city and not (city == c.city.description) %}
 					{% set city = c.city.description %}
-				<div class="col-sm-12 col-md-8">
+				<div class="col-sm-12 col-md-12">
 					<h2>{{c.city.description}}</h2>
 				</div>	
 			{% endif %}

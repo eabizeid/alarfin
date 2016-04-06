@@ -11,12 +11,12 @@
 		<div class="row botmar resultados agencias">
 			{% set city = "" %}
 			{% for c in concesionarias %}
-				<div class="col-sm-6 col-md-4">
-					{%if c.city and not city == c.city.description%}
+			{%if c.city and not city == c.city.description%}
 					{% set city = c.city.description %}
 					<br />
 					<h2>{{c.city.description}}</h2>
 					{% endif %}
+				<div class="col-sm-6 col-md-4">
 					<div class="thumbnail">
 						<h2>{{c.fantasyName}}</h2>
 						<a href="tel:{{c.telephone}}"><i class="fa fa-phone fa-fw"></i> {{c.telephone}}</a>

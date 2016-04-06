@@ -3,7 +3,7 @@ namespace Kells\Bundle\FrontBundle\EntityRepository;
 
 use Doctrine\ORM\EntityRepository;
 
-class CityRepository extends EntityRepository {
+class LicenseeRepository extends EntityRepository {
 	
  public function findAll()
     {

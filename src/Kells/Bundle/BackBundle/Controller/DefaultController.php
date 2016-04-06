@@ -98,7 +98,7 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$repository = $em->getRepository('KellsFrontBundle:City');
-    	$cities = $repository->findBy(array('province'=>1));
+    	$cities = $repository->findBy(array('province'=>1), array('description'=>'ASC'));
     	return $this->render('KellsBackBundle:Default:licensee-agregar.html.twig', array("cities"=> $cities));
     }
     
@@ -139,7 +139,7 @@ class DefaultController extends Controller
     	$repository = $em->getRepository('KellsFrontBundle:Licensee');
     	$user = $repository->find($id);
     	$repository = $em->getRepository('KellsFrontBundle:City');
-    	$cities = $repository->findBy(array('province'=>1));
+    	$cities = $repository->findBy(array('province'=>1), array('description'=>'ASC'));
     	
     	return $this->render('KellsBackBundle:Default:concesionarias-editar.html.twig', array("user"=>$user, "cities"=>$cities));
     }

@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity
  * @UniqueEntity(fields={"mail"}, message="Este mail ya se encuentra registrado"),
+ * @ORM\Entity(repositoryClass="Kells\Bundle\FrontBundle\EntityRepository\LicenseeRepository")
  * @ORM\Table(name="licensees") 
  */
 class Licensee implements UserInterface {

@@ -13,10 +13,11 @@
 			{% for c in concesionarias %}
 			{%if c.city and not (city == c.city.description) %}
 					{% set city = c.city.description %}
-					<br />
+				<div class="col-sm-12 col-md-8">
 					<h2>{{c.city.description}}</h2>
+				</div>	
 			{% endif %}
-				<div class="col-sm-6 col-md-4">
+				<div class="col-sm- col-md-4">
 					<div class="thumbnail">
 						<h2>{{c.fantasyName}}</h2>
 						<a href="tel:{{c.telephone}}"><i class="fa fa-phone fa-fw"></i> {{c.telephone}}</a>

@@ -41,7 +41,7 @@ class DefaultController extends Controller
 	
 	public function concesionariasAction() {
 		$repository = $this->getDoctrine()->getRepository('KellsFrontBundle:Licensee');
-		$concesionarias =  $repository->findBy(array(), array('city' => 'ASC', 'description'=> 'ASC'));
+		$concesionarias =  $repository->findBy(array(), array('city' => 'ASC', 'fantasyName'=> 'ASC'));
 		
 		return $this->render('KellsFrontBundle:Default:concesionarias.html.twig', array( 'concesionarias' => $concesionarias));
 	}

@@ -5,16 +5,13 @@ use Doctrine\ORM\EntityRepository;
 
 class LicenseeRepository extends EntityRepository {
 	
- public function findAll()
-    {
+ public function findAll() {
 	
-    $em = $this->getEntityManager();
-
-    $query = $em->createQuery('
-        SELECT *
-        FROM KellsFrontBundle:Licensee l
-        ORDER BY l.fantasyName ASC, l.city.description  ASC
-    ');
-    return $query->getResult();
-    }
+      return $this->createQueryBuilder('l')
+        ->leftJoin('l.city','c')
+        ->orderBy('c.description', 'asc')
+        ->orderBy('l.fantasyName', 'asc')
+        ->getQuery() 
+        ->getResult();
+ }
 }

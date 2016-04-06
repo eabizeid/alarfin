@@ -15,6 +15,5 @@ class CityRepository extends EntityRepository {
         FROM KellsFrontBundle:Licensee l
         ORDER BY l.fantasyName ASC, l.city.description  ASC
     ');
-    	SC'));
     }
 }

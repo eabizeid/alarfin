@@ -12,7 +12,6 @@ class LicenseeRepository extends EntityRepository {
         ->from('Licensee', 'l')
         ->join('l.City', 'c')
         ->addOrderBy('c.description', 'ASC')
-        ->addOrderBy('l.fantasyName', 'ASC')
         ->getQuery() 
         ->getResult();
  }

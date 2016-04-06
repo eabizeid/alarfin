@@ -1,6 +1,6 @@
 {% extends 'KellsFrontBundle:Default:base.html.twig' %}
 {% block body %}
-  <div class="container toppad botmar">        
+  <div class="container toppad">        
       <div id="destacado" class="carousel slide chico" data-ride="carousel">
           <ol class="carousel-indicators">
               <li data-target="#destacado" data-slide-to="0" class="active"></li>
@@ -65,46 +65,56 @@
               </div>
           </div>
       </div>
-  </div>
   
-  <div class="contenido-gris linea-gris-abajo">
-	<div class="container">
-		<div class="row">          
-			 {% for flashMessage in app.session.flashbag.get('notice') %}
-			<div class="alert alert-success role="alert">
-				<p  ALIGN=center>{{flashMessage}}</p>
-			</div>
+
+		<div class="row home-clasificados">          
+			{% for flashMessage in app.session.flashbag.get('notice') %}
+  			<div class="col-xs-12 alert alert-success" role="alert">
+  				<p  ALIGN=center>{{flashMessage}}</p>
+  			</div>
 			{% endfor %}
-			<div>
-			Clasificados 
-				<form action="{{ path('searchCar') }}" method="post">
-                <div class="row">
-                   
-                     	{{ form_widget(form.pattern, { 'attr': {'class': 'form-control input-lg', 'id' : 'buscador', 'tabindex': '1', 'placeholder': 'Ingresá la marca y/o el modelo', 'name': 'pattern' }} ) }}     
-                    	{{ form_row(form.Buscar) }}
-                </div>
-            </form>
-			</div> 	<a href="{{path('publicaciones')}}">Ver mas autos</a>
-			{% if cars %}
-			<div class="row botmar">
-				<div class="row botmar resultados"  id="resultados">
-					{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
-				</div>
-      			<!-- navigation holder -->
-      			<div class="holder"></div>
-      	 </div>
-			{% else %}
-				<div class="alert alert-danger role="alert">
-				<p  ALIGN=center>No se encontraron automóviles, por favor intente con otra búsqueda.</p></div>
-			{% endif %}
+			<div class="col-xs-12 col-sm-4 col-lg-3">
+        <div class="home-clasificados-titulo">
+			     Clasificados 
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-5 col-lg-7">
+				<form action="{{ path('searchCar') }}" method="post" class="form-inline home-clasificados-input">  
+         	{{ form_widget(form.pattern, { 'attr': {'class': 'form-control input-lg', 'id' : 'buscador', 'tabindex': '1', 'placeholder': 'Ingresá la marca y/o el modelo', 'name': 'pattern' }} ) }}
+          <button type="submit" class="btn btn-gr-os-bl btn-lg"><i class="fa fa-search hidden-xs"></i><span class="visible-xs text-uppercase">Buscar auto</span></button>
+        </form>
+			</div> 	
+      <div class="col-xs-12 col-sm-3 col-lg-2 home-clasificados-boton hidden-xs">
+        <a href="{{path('publicaciones')}}" class="btn btn-gr-cl-gr-os text-uppercase btn-lg btn-block">Ver m&aacute;s autos</a>
+      </div>
+    </div>
+
+		{% if cars %}
+		<div class="row">
+			<div class="botmar resultados"  id="resultados">
+				{{ include('KellsFrontBundle:Default:resultado.html.twig', { 'cars': cars }) }}
+			</div>
+    	<!-- navigation holder -->
+    	<div class="holder"></div>
+    </div>
+		{% else %}
+			<div class="col-xs-12 alert alert-danger" role="alert">
+			  <p  ALIGN=center>No se encontraron automóviles, por favor intente con otra búsqueda.</p>
+      </div>
+		{% endif %}
+      <div class="row visible-xs">
+        <div class="col-xs-12 home-clasificados-boton">
+          <a href="{{path('publicaciones')}}" class="btn btn-gr-cl-gr-os text-uppercase btn-lg btn-block">Ver m&aacute;s autos</a>
+        </div>
+      </div>
 		</div>
-	</div>
-	</div>
+
+
   
   <div class="home-cajas">
       <div class="container">
           <div class="row">
-              <div class="col-sm-4">
+              <div class="col-xs-12 col-sm-4">
                 	<div class="well well-home-oscuro">
                     	<div class="row">
                 			   <div class="hidden-xs hidden-sm col-sm-4">
@@ -119,7 +129,7 @@
                       </div>
                   </div>
               </div>
-              <div class="col-sm-4 col-md-5">
+              <div class="col-xs-12 col-sm-4">
        						<div class="well well-home-claro">
                       <div class="row">
                         	<div class="col-sm-12 col-md-12 col-lg-7">
@@ -134,17 +144,17 @@
                       </div>
                   </div>
               </div>
-              <div class="hidden-xs col-sm-4 col-md-3">
+              <div class="col-xs-12 col-sm-4">
                 	<div class="well well-home-transparente">
                     	<div class="row">
-                        	<div class="col-sm-12">
-                              <h1>Cont&aacute;ctenos</h1>
-                              <dl class="dl-horizontal">
-                              <dt><span class="glyphicon glyphicon-earphone"></span></dt>
-                              <dd>02344 452656<br>02344 433656<br>02344 431656</dd>
-                              <dt><span class="glyphicon glyphicon-envelope"></span></dt>
-                              <dd><a href="mailto:info@alarfin.com.ar">info@alarfin.com.ar</a></dd>
-                              </dl>
+                          <div class="col-sm-12 col-md-8">
+                              <h1><a href="{{path('concesionarias')}}">Concesionarias</a></h1>
+                              <p><a href="{{path('concesionarias')}}">Nos encontramos en m&aacute;s de 25 localidades de la provincia de Buenos Aires. Encontr&aacute; aqu&iacute; tu concesionaria m&aacute;s cercana.</a></p>
+                          </div>
+                          <div class="hidden-xs hidden-sm col-sm-4">
+                              <a href="{{path('concesionarias')}}">
+                                <img src="{{ asset('bundles/kellsfront/img/imagen-home-concesionarias.jpg') }}" alt="Concesionarias" title="Concesionarias" class="img-responsive">
+                              </a>
                           </div>
                       </div>
                   </div>

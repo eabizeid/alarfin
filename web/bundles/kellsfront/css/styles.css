@@ -50,19 +50,20 @@ header {-webkit-box-shadow:inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgb
 #destacado .carousel-indicators {bottom:-30px;}
 #destacado .carousel-indicators li {border: 1px solid #af1d35;}
 #destacado .carousel-indicators .active {background-color:#af1d35;}
-.home-cajas {background:#eaeaea;padding-bottom:15px;border-top:3px solid #c8c8c8;}
-.well-home-oscuro {padding:0 20px 10px;margin-bottom:0;background-color:#989898;border:none;color:#fff;border-radius:10px;margin-top:15px;}
+.home-cajas {padding-bottom:30px;}
+.well-home-oscuro {padding:0 20px 10px;margin-bottom:0;background-color:#989898;border:none;color:#fff;border-radius:10px;}
 .well-home-oscuro h1 {font-size:20px;text-transform:uppercase;font-weight:700;}
 .well-home-oscuro a, .well-home-oscuro a:hover {color:#fff;text-decoration:none;display:block;}
-.well-home-claro {padding:20px 20px 10px;margin-bottom:0;background:#fff url(../img/fondo-productos-colores.gif) 20px 0 no-repeat;border:none;color:#77777b;border-radius:10px;margin-top:15px;}
-.well-home-claro h1 {font-size:25px;text-transform:uppercase;font-weight:700;color:#af1d35;}
+.well-home-claro {padding:20px 20px 10px;margin-bottom:0;background:#fff url(../img/fondo-productos-colores.gif) 20px 0 no-repeat;border:none;color:#77777b;border-radius:10px;margin-top:30px;border:1px solid #ad172b;}
+.well-home-claro h1 {font-size:20px;text-transform:uppercase;font-weight:700;color:#af1d35;}
 .well-home-claro-auto {position:absolute;right:-5px;top:-10px;}
 .well-home-claro a {display:block;}
 .well-home-claro a:hover {text-decoration:none;color:#af1d35;}
 .well-home-claro p a, .well-home-claro p a:hover {color:#77777b}
-.well-home-transparente {padding:0 18px 10px;margin-bottom:0;background-color:#eaeaea;border:2px solid #cbcbcc;color:#77777b;border-radius:10px;margin-top:15px;font-size:16px;}
-.well-home-transparente h1 {font-size:20px;text-transform:uppercase;font-weight:700;color:#af1d35;margin-bottom:0;}
-.well-home-transparente dl {margin-bottom:0;font-size:16px;}
+.well-home-transparente {padding:0 18px 10px;margin-bottom:0;background-color:#d6d6d6;border:none;color:#535357;border-radius:10px;font-size:14px;margin-top:30px;}
+.well-home-transparente h1 {font-size:20px;text-transform:uppercase;font-weight:700;color:#535357;}
+.well-home-transparente a, .well-home-transparente a:hover {color:#535357;text-decoration:none;display:block;}
+.well-home-transparente dl {margin-bottom:0;font-size:14px;}
 .well-home-transparente .dl-horizontal dt {margin-top:10px;font-size:20px;border-top:1px solid #b8b7b9;padding-top:10px;}
 .well-home-transparente .dl-horizontal dd {margin-top:5px;}
 .productos .well {margin:0;text-align:center;border-color:#adacae;background:#fff;padding:0;margin-top:20px;}
@@ -178,6 +179,10 @@ footer a:hover {color:#fff;text-decoration:underline;}
 .titulo {text-align:center;padding-bottom:25px;padding-top:25px;border-bottom:10px solid #af1d35;}
 .titulo h1 {display:inline;padding:0 15px 20px;text-transform:uppercase;color:#242425;font-weight:700;letter-spacing:-1px;font-size:24px;line-height:30px;}
 .titulo h2 {font-size:18px;text-transform:uppercase;font-weight:700;color:#77777b;margin:0 0 10px;}
+.btn-gr-os-bl {color:#fff;background-color:#777;border:none;}
+.btn-gr-os-bl:hover, .btn-gr-os-bl:focus, .btn-gr-os-bl:active, .btn-gr-os-bl.active {color:#fff;background-color:#333;border:none;}
+.btn-gr-cl-gr-os {color:#777;background-color:#d6d6d7;border:none;}
+.btn-gr-cl-gr-os:hover, .btn-gr-cl-gr-os:focus, .btn-gr-cl-gr-os:active, .btn-gr-cl-gr-os.active {color:#333;background-color:#bbb;border:none;}
 
 /* media querys */
 @media (min-width: 440px) {
@@ -206,8 +211,10 @@ header {padding-bottom:0;}
 #destacado .carousel-indicators li {border: 1px solid #fff;}
 #destacado .carousel-indicators .active {background-color:#fff;}
 #destacado .carousel-caption p.carousel-interno-texto-link a, #destacado .carousel-caption p.carousel-interno-texto-link a:hover {padding:5px 10px;background:#fff;}
-.home-cajas {padding:15px 0 30px;}
+.home-cajas {padding:30px 0;}
+.well-home-claro {margin-top:0;}
 .well-home-oscuro, .well-home-claro, .well-home-transparente {min-height:190px;}
+.well-home-transparente {margin-top:0;}
 .well-home-transparente .dl-horizontal dt {width:20px;margin-top:15;padding-top:0;border-top:none;}
 .well-home-transparente .dl-horizontal dd {margin-left:30px;border-left:1px solid #b8b7b9;margin-top:15px;padding-left:10px;}
 .productos .well {margin-top:30px;}
@@ -236,9 +243,11 @@ header {padding-bottom:0;}
 #destacado.chico .carousel-caption {font-size:15px;}
 #destacado .carousel-caption h1 {font-size:30px;}
 #destacado .carousel-indicators {width:60%;margin-left:-30%;text-align:center;}
-.well-home-claro-auto {position:absolute;left:100px;top:110px;width:200px}
+.well-home-claro-auto {position:absolute;left:120px;top:90px;width:160px}
 .well-home-oscuro, .well-home-claro, .well-home-transparente {min-height:210px;}
 .well-home-transparente dl {font-size:14px;}
+.well-home-oscuro h1, .well-home-transparente h1 {font-size:17px;}
+.well-home-transparente {text-align:right;}
 .productos .well h2 {min-height:60px;}
 .well-buscador h3 {font-size:24px;line-height:24px;}
 .resultados .thumbnail {min-height:315px;max-height:315px;}
@@ -247,11 +256,12 @@ header {padding-bottom:0;}
 @media (min-width: 1200px) {
 .navbar-default .navbar-nav > li > a {padding:0 15px;}
 .nav-titulo {padding:15px;font-size:18px;}
-.well-home-claro-auto {top:10px;width:249px;left:auto;right:-5px;}
+.well-home-claro-auto {top:15px;width:210px;left:auto;right:-5px;}
 .well-home-oscuro, .well-home-claro, .well-home-transparente {min-height:175px;}
 .well-home-transparente dl {font-size:16px;}
 .well-home-transparente .dl-horizontal dt {width:20px;margin-top:10;border-top:none;padding-top:0;}
 .well-home-transparente .dl-horizontal dd {margin-left:40px;border-left:1px solid #b8b7b9;margin-top:10px;padding-left:20px;}
+.well-home-oscuro h1, .well-home-transparente h1 {font-size:20px;}
 .productos .well h2 {min-height:45px;}
 .contacto .well {min-height:570px;}
 .well-buscador h3 {font-size:24px;line-height:24px;background:url(../img/misc-flechas.png) right center no-repeat;}
@@ -300,7 +310,33 @@ header {padding-bottom:0;}
 
 
 /* resaltado de particular */
-.resultado-publicacion-particular {border:1px solid #af1d35;border-right:2px solid #af1d35;border-bottom:2px solid #af1d35;padding:5px;color:#af1d35;text-transform:uppercase;font-size:10px;}
-.resultado-publicacion-concesionaria {border:1px solid #333;border-right:2px solid #333;border-bottom:2px solid #333;padding:5px;color:#333;text-transform:uppercase;font-size:10px;}
-.ficha-publicacion-particular {border:1px solid #af1d35;border-right:2px solid #af1d35;border-bottom:2px solid #af1d35;padding:5px 10px;color:#af1d35;background:#fff;text-transform:uppercase;font-size:12px;}
-.ficha-publicacion-concesionaria {border:1px solid #333;border-right:2px solid #333;border-bottom:2px solid #333;padding:5px 10px;color:#333;text-transform:uppercase;font-size:12px;}
+.resultado-publicacion-particular {padding:5px 0;color:#af1d35;text-transform:uppercase;font-size:10px;}
+.resultado-publicacion-concesionaria {padding:5px 0;color:#333;text-transform:uppercase;font-size:10px;}
+.ficha-publicacion-particular {padding:5px 0;color:#af1d35;text-transform:uppercase;font-size:12px;}
+.ficha-publicacion-concesionaria {padding:5px 0;color:#333;text-transform:uppercase;font-size:12px;}
+
+/* home clasificados */
+.home-clasificados {margin-top:40px;}
+.home-clasificados-titulo {height:47px;line-height:47px;color:#444;font-weight:bold;font-size:24px;background:url(../img/fondo-titulo-home-clasificados.gif) 0 0 no-repeat;padding-left:20px;margin-bottom:15px;}
+.home-clasificados-input {text-align:center;}
+.home-clasificados-input .form-control {border-color:#777;}
+.home-clasificados-input .btn-gr-os-bl {margin-top:5px;}
+.home-clasificados-boton {margin-bottom:30px;}
+
+@media (min-width: 768px) {
+.home-clasificados {margin-top:30px;}
+.home-clasificados-titulo {margin-bottom:0;font-size:28px;}
+.home-clasificados-input {text-align:right;}
+.home-clasificados-input .btn-gr-os-bl {margin-top:0;}
+.home-clasificados-input .form-control {margin-right:8px;width:210px;}
+.home-clasificados-boton {padding:2px 15px 0 10px;margin-bottom:0;}
+}
+
+@media (min-width: 992px) {
+.home-clasificados-titulo {font-size:35px;}
+.home-clasificados-input .form-control {width:310px;}
+}
+
+@media (min-width: 1200px) {
+.home-clasificados-input .form-control {width:500px;}
+}

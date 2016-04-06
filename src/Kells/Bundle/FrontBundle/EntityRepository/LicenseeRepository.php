@@ -9,8 +9,8 @@ class LicenseeRepository extends EntityRepository {
 	
       return $this->createQueryBuilder('l')
         ->leftJoin('l.city','c')
-        ->orderBy('c.description', 'asc')
-        ->orderBy('l.fantasyName', 'asc')
+        ->addOrderBy('c.description', 'ASC')
+        ->addOrderBy('l.fantasyName', 'ASC')
         ->getQuery() 
         ->getResult();
  }

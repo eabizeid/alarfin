@@ -536,25 +536,33 @@ class DefaultController extends Controller
    		
  		if ($mandatoryImageFile) {
 			$car->setMandatoryImage($mandatoryImage);
+			$car->setMandatoryImageOriginal($mandatoryImage);
 		}
 		if ($imageFile1){
 			$car->setImage1($image1);
+			$car->setImage1Original($image1);
 		}
 		if ($imageFile2) {
 			$car->setImage2($image2);
+			$car->setImage2Original($image2);
 		}
 		if ($imageFile3) {
 			$car->setImage3($image3);
+			$car->setImage3Original($image3);
 		}
 		if ($imageFile4) {
 			$car->setImage4($image4);
+			$car->setImage4Original($image4);
 		}
 		if ($imageFile5) {
 			$car->setImage5($image5);
+			$car->setImage5Original($image5);
 		}
 		if ($imageFile6) {
 			$car->setImage6($image6);
+			$car->setImage6Original($image6);
 		}
+   		
 
 		$repository = $em->getRepository('KellsFrontBundle:Fuel');
 		$fuel = $repository->find($fuelId);

@@ -70,48 +70,76 @@
                                       </ol> 
                                       <div class="carousel-inner">
                                       	<div class="item active">
-                                      		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.mandatoryImage.webPath) }}">
-                                          		<img src="http://www.alarfin.com.ar{{ asset(car.mandatoryImage.webPath) }}">
+                                      	{% if car.mandatoryImageOriginal %}
+                                      		<a class="fancybox" rel="group" href="http://45.58.39.148{{ asset(car.mandatoryImageOriginal.webPath) }}">
+                                      	{% else %}
+                                      		<a class="fancybox" rel="group" href="http://45.58.39.148{{ asset(car.mandatoryImage.webPath) }}">
+                                      	{% endif %}	
+                                          		<img src="http://45.58.39.148{{ asset(car.mandatoryImage.webPath) }}">
                                           	</a>  
                                         </div>
                                         {% if car.image1 %}
                                       	 <div class="item">
-                                      	 	<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image1.webPath) }}">
+                                      	 	{% if car.image1Original %}
+                                      	 		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image1Original.webPath) }}">
+                                      	 	{% else %}
+                                      	 		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image1.webPath) }}">
+                                      	 	{% endif%}	
                                           		<img src="http://www.alarfin.com.ar{{asset(car.image1.webPath)}}"  >
                                           	</a>  
                                         </div>
                                         {% endif %}
                                        {% if car.image2 %}
                                          <div class="item">
-                                         	<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image2.webPath) }}">
+                                         	{% if car.image2Original %}
+                                      	 		<a class="facybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image2Original.webPath) }}">
+                                      	 	{% else %}
+                                      	 		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image2.webPath) }}">
+                                      	 	{% endif%}	
                                           		<img src="http://www.alarfin.com.ar{{asset(car.image2.webPath)}}"  >
                                           	</a>  
                                         </div>
                                         {% endif %}
                                        {% if car.image3 %}
                                          <div class="item">
-                                         	<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image3.webPath) }}">
+                                         	{% if car.image3Original %}
+                                      	 		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image3Original.webPath) }}">
+                                      	 	{% else %}
+                                      	 		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image3.webPath) }}">
+                                      	 	{% endif%}	
                                           		<img src="http://www.alarfin.com.ar{{asset(car.image3.webPath)}}"  >
                                           	</a>  
                                         </div>
                                         {% endif %}
                                        {% if car.image4 %}
                                          <div class="item">
-                                         	<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image4.webPath) }}">
-                                          		<img src="http://www.alarfin.com.ar{{asset(car.image4.webPath)}}"  >
+											{% if car.image4Original %}
+                                      	 		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image4Original.webPath) }}">
+                                      	 	{% else %}
+                                      	 		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image4.webPath) }}">
+                                      	 	{% endif%}	                                          		
+                                      	 	<img src="http://www.alarfin.com.ar{{asset(car.image4.webPath)}}"  >
                                           	</a>  
                                         </div>
                                         {% endif %}
                                        {% if car.image5 %}
                                          <div class="item">
-                                         	<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image5.webPath) }}">
+                                         	{% if car.image5Original %}
+                                      	 		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image5Original.webPath) }}">
+                                      	 	{% else %}
+                                      	 		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image5.webPath) }}">
+                                      	 	{% endif%}	
                                           		<img src="http://www.alarfin.com.ar{{asset(car.image5.webPath)}}"   >
                                           	</a>  
                                         </div>
                                         {% endif %}
                                        {% if car.image6 %}
                                        <div class="item">
-                                       		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image6.webPath) }}">
+                                       		{% if car.image6Original %}
+                                      	 		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image6Original.webPath) }}">
+                                      	 	{% else %}
+                                      	 		<a class="fancybox" rel="group" href="http://www.alarfin.com.ar{{ asset(car.image6.webPath) }}">
+                                      	 	{% endif%}	
                                           		<img src="http://www.alarfin.com.ar{{asset(car.image6.webPath)}}"   >
                                           	</a>
                                         </div>

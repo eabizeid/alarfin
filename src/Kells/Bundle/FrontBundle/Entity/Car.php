@@ -133,11 +133,48 @@ class Car {
      **/
 	protected $image5;
 	
+	
 	/**
      * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
-     * @ORM\JoinColumn(name="image6_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="mandatoryImageOriginal_id", referencedColumnName="id")
      **/
-	protected $image6;
+	protected $mandatoryImageOriginal;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image1Original_id", referencedColumnName="id")
+     **/
+	protected $image1Original;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image2Original_id", referencedColumnName="id")
+     **/
+	protected $image2Original;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image3Original_id", referencedColumnName="id")
+     **/
+	protected $image3Original;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image4Original_id", referencedColumnName="id")
+     **/
+	protected $image4Original;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image5Original_id", referencedColumnName="id")
+     **/
+	protected $image5Original;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="image6Original_id", referencedColumnName="id")
+     **/
+	protected $image6Original;
 	
 	
 	/**
@@ -427,6 +464,98 @@ class Car {
     {
         return $this->image6;
     }
+    
+    
+    
+    
+    
+    
+    public function setMandatoryImageOriginal($mandatoryImage)
+    {
+        $this->mandatoryImageOriginal = $mandatoryImage;
+
+        return $this;
+    }
+
+	public function setImage1Original($mandatoryImage)
+    {
+        $this->image1Original = $mandatoryImage;
+
+        return $this;
+    }
+	public function setImage2Original($mandatoryImage)
+    {
+        $this->image2Original = $mandatoryImage;
+
+        return $this;
+    }
+	public function setImage3Original($mandatoryImage)
+    {
+        $this->image3Original = $mandatoryImage;
+
+        return $this;
+    }
+	public function setImage4Original($mandatoryImage)
+    {
+        $this->image4Original = $mandatoryImage;
+
+        return $this;
+    }
+	public function setImage5Original($mandatoryImage)
+    {
+        $this->image5Original = $mandatoryImage;
+
+        return $this;
+    }
+	public function setImage6Original($mandatoryImage)
+    {
+        $this->image6Original = $mandatoryImage;
+
+        return $this;
+    }
+
+    /**
+     * Get mandatoryImage
+     *
+     * @return string 
+     */
+    public function getMandatoryImageOriginal()
+    {
+        return $this->mandatoryImageOriginal;
+    }
+
+    
+    public function getImage1Original()
+    {
+        return $this->image1Original;
+    }
+    
+    public function getImage2Original()
+    {
+        return $this->image2Original;
+    }
+    public function getImage3Original()
+    {
+        return $this->image3Original;
+    }
+    public function getImage4Original()
+    {
+        return $this->image4Orignal;
+    }
+    public function getImage5Original()
+    {
+        return $this->image5Original;
+    }
+    
+ 	public function getImage6Original()
+    {
+        return $this->image6Original;
+    }
+    
+    
+    
+    
+    
     
     /**
      * Add images

@@ -1086,6 +1086,12 @@ public function setCerokmCuotas44($cerokmCuotas44)
 
         return $this;
     }
+	public function setCerokmCuotas46($cerokmCuotas46)
+    {
+        $this->cerokmCuotas46 = $cerokmCuotas46;
+
+        return $this;
+    }
 public function setCerokmCuotas48($cerokmCuotas48)
     {
         $this->cerokmCuotas48 = $cerokmCuotas48;

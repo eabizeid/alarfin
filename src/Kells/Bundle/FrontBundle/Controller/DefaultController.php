@@ -2192,6 +2192,9 @@ class DefaultController extends Controller
 			$output[] = array('key'=>'32 Cuotas', 'value'=>round($cuota32));
 			$output[] = array('key'=>'34 Cuotas', 'value'=>round($cuota34));
 			$output[] = array('key'=>'36 Cuotas', 'value'=>round($cuota36));
+			
+		}
+		if ($y >= $intervalo1 ) {
 			$output[] = array('key'=>'38 Cuotas', 'value'=>round($cuota38));
 			$output[] = array('key'=>'40 Cuotas', 'value'=>round($cuota40));
 			$output[] = array('key'=>'42 Cuotas', 'value'=>round($cuota42));

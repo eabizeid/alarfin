@@ -284,8 +284,9 @@ header {padding-bottom:0;}
 
 
 /* agencias */
-.agencias h2 {font-size:16px;font-weight:bold;margin:-20px -20px 20px;padding:20px;border-bottom:1px dashed #adacae;background:#f0f0f0;border-top-left-radius:4px;border-top-right-radius:4px;}
-.agencias .thumbnail {min-height:auto !important;max-height:auto !important;font-size:16px;}
+.agencias h2 {font-size:16px;font-weight:bold;margin:-10px -10px 10px;padding:10px;border-bottom:1px dashed #adacae;background:#f0f0f0;border-top-left-radius:4px;border-top-right-radius:4px;}
+.agencias .thumbnail {min-height:auto !important;max-height:auto !important;font-size:16px;margin-top:15px;padding:10px;}
+.agencias-locacion {color:#444;font-weight:bold;font-size:20px;line-height:22px;background:url(../img/fondo-titulo-home-clasificados.gif) 0 0 no-repeat;padding-left:24px;margin-top:35px;}
 
 @media (min-width: 768px) {
 .agencias-titulo h1 {font-size:28px;line-height:28px;}

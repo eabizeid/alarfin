@@ -95,7 +95,7 @@ editar-alarfin:
     path:     /admin/alarfin/editar/{id}
     defaults: { _controller: KellsBackBundle:Default:editarAlarfin }
     
-publicaciones:
+publicacionesAdmin:
     path:     /admin/publicaciones
     defaults: { _controller: KellsBackBundle:Default:publicaciones }
     

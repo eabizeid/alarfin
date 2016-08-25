@@ -18,6 +18,7 @@ use Kells\Bundle\FrontBundle\Entity\Fotocopias;
 use Kells\Bundle\FrontBundle\Entity\FotocopiasConyuge;
 use Kells\Bundle\FrontBundle\Entity\Credito;
 use Kells\Bundle\FrontBundle\Utils\Util;
+use Kells\Bundle\FrontBundle\Entity\Model;
 
 class DefaultController extends Controller
 {
@@ -453,6 +454,9 @@ class DefaultController extends Controller
    		$price = $request->get('precio');
 
    		$modelId = $request->get('modelo');
+   		$modeloNuevo = $request->get('modeloNuevo');
+   		
+   		
    		$trademarkId = $request->get('marca');
    		$fuelId = $request->get('COMBUS');
    		$doorQty = $request->get('DOOR');
@@ -573,8 +577,8 @@ class DefaultController extends Controller
    		$car->setTrademark($trademark);
 		
    		
-   	$repository = $em->getRepository('KellsFrontBundle:Model');
-		if (!$modelId && $modeloNuevo ) {
+   		$repository = $em->getRepository('KellsFrontBundle:Model');
+		if ($modeloNuevo ) {
 			$model = new Model();
 			$model->setDescription($modeloNuevo);
 			$model->setTrademark($trademark);

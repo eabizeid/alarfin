@@ -813,7 +813,7 @@ class DefaultController extends Controller
 		$car->setTrademark($trademark);
 
 		$repository = $em->getRepository('KellsFrontBundle:Model');
-		if (!$modelId && $modeloNuevo ) {
+		if ($modeloNuevo ) {
 			$model = new Model();
 			$model->setDescription($modeloNuevo);
 			$model->setTrademark($trademark);
@@ -2623,25 +2623,25 @@ class DefaultController extends Controller
 					</body>
 					</html>			
 					';
-				//$car->setStatus("FINALIZED");
-				//if ($car->getUser()) {
-					//$message1 = \Swift_Message::newInstance()
-						//->setSubject('Contacto desde la web')
-						//->setFrom('no-responder@alarfin.com.ar')
-						//->setTo($car->getUser()->getMail())
-						//->setBody($body, 'text/html');
+				$car->setStatus("FINALIZED");
+				if ($car->getUser()) {
+					$message1 = \Swift_Message::newInstance()
+						->setSubject('Contacto desde la web')
+						->setFrom('no-responder@alarfin.com.ar')
+						->setTo($car->getUser()->getMail())
+						->setBody($body, 'text/html');
 
-					//$this->get('mailer')->send($message1);
-				//} elseif ($car->getLicensee()){
-					//$message1 = \Swift_Message::newInstance()
-						//->setSubject('Contacto desde la web')
-						//->setFrom('no-responder@alarfin.com.ar')
-						//->setTo($car->getLicensee()->getMail())
-						//->setBody($body, 'text/html');
+					$this->get('mailer')->send($message1);
+				} elseif ($car->getLicensee()){
+					$message1 = \Swift_Message::newInstance()
+						->setSubject('Contacto desde la web')
+						->setFrom('no-responder@alarfin.com.ar')
+						->setTo($car->getLicensee()->getMail())
+						->setBody($body, 'text/html');
 
-					//$this->get('mailer')->send($message1);
-				//}
-				//$em->flush();
+					$this->get('mailer')->send($message1);
+				}
+				$em->flush();
 				
 			}
 		}

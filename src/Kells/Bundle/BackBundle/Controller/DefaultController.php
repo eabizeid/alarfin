@@ -122,13 +122,24 @@ class DefaultController extends Controller
     	$user->setMail($request->get('email'));
     	$user->setTelephone($request->get('telefono'));
     	$user->setContactName($request->get('contactName'));
+        $user->setAddress($request->get('address'));
+        $user->setWeb($request->get('web'));
+        $user->setFacebook($request->get('facebook'));
     	$user->setToken("");
     	$user->setStatus(1);
+
     	if ($request->get('contrasena')) {
     		$user->setPassword($request->get('contrasena'));
     	}
-    	
-    	if (!$request->get('id')) {
+        $files = $request->files;
+        $mandatoryImageFile = $files->get('fotoprincipal');
+        if ($mandatoryImageFile) {
+            $mandatoryImage =  $this->createImage($mandatoryImageFile);
+            $user->setImage($mandatoryImage);
+        }
+
+
+        if (!$request->get('id')) {
     		$em->persist($user);
     	}
     	$em->flush();

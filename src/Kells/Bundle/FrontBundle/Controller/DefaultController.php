@@ -578,7 +578,7 @@ class DefaultController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$form = $this->createForm(new RegistrationType(), new Registration());
+		$form = $this->createForm(new RegistrationType($em), new Registration());
 
 		$form->handleRequest($request);
 
@@ -586,8 +586,19 @@ class DefaultController extends Controller
 			$registration = $form->getData();
 
 			$licensee = $registration->getLicensee();
+
+            $image = $registration->getImage();
+            $imageFile = $this->createImage($image);
+
+			$repo = $em->getRepository('KellsFrontBundle:City');
+			$city = $repo->find($licensee->getCityId());
+			$licensee->setCity($city); 
 			$licensee->setStatus(false);
 			$licensee->setToken(Util::getToken());
+			if ($imageFile) {
+			    $licensee->setImage($imageFile);
+            }
+
 			$em->persist($licensee);
 			$em->flush();
 
@@ -2049,6 +2060,163 @@ class DefaultController extends Controller
         'KellsFrontBundle:Default:simulador.html.twig', array("form"=>$form->createView(), "years"=>$years));
 	}
 	 
+	public function simularCuotasIndexAction(Request $request) {
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('KellsBackBundle:AlarfinConfiguration');
+		$configuration = $repository->findAll()[0];
+
+		$y = $request->get('anio');
+		$capital = (int)$request->get('capital');
+		if ($configuration->getImpuestos()) {
+			$capital = $capital + (int)$configuration->getImpuestos();
+		}
+
+		$intervalo0 = $configuration->getAnio0km();
+		$intervalo1 = $intervalo0 - 5;
+		$intervalo2 = $intervalo1 - 5;
+		$intervalo3 = $intervalo2 - 5;
+		$cuota2 = 0;
+		$cuota4= 0;
+		$cuota6= 0;
+		$cuota8= 0;
+		$cuota10= 0;
+		$cuota12= 0;
+		$cuota14 = 0;
+		$cuota16 = 0;
+		$cuota18 = 0;
+		$cuota20 = 0;
+		$cuota22 = 0;
+		$cuota24 = 0;
+		$cuota26 = 0;
+		$cuota28 = 0;
+		$cuota30 = 0;
+		$cuota32 = 0;
+		$cuota34 = 0;
+		$cuota36 = 0;
+
+		if ($y == $intervalo0) {
+			$cuota2 = $capital * (float)$configuration->getCerokmCuotas2();
+			$cuota4 = $capital * (float)$configuration->getCerokmCuotas4();
+			$cuota6 = $capital * (float)$configuration->getCerokmCuotas6();
+			$cuota8 = $capital * (float)$configuration->getCerokmCuotas8();
+			$cuota10 = $capital * (float)$configuration->getCerokmCuotas10();
+			$cuota12 = $capital * (float)$configuration->getCerokmCuotas12();
+			$cuota14 = $capital * (float)$configuration->getCerokmCuotas14();
+			$cuota16 = $capital * (float)$configuration->getCerokmCuotas16();
+			$cuota18 = $capital * (float)$configuration->getCerokmCuotas18();
+			$cuota20 = $capital * (float)$configuration->getCerokmCuotas20();
+			$cuota22 = $capital * (float)$configuration->getCerokmCuotas22();
+			$cuota24 = $capital * (float)$configuration->getCerokmCuotas24();
+			$cuota26 = $capital * (float)$configuration->getCerokmCuotas26();
+			$cuota28 = $capital * (float)$configuration->getCerokmCuotas28();
+			$cuota30 = $capital * (float)$configuration->getCerokmCuotas30();
+			$cuota32 = $capital * (float)$configuration->getCerokmCuotas32();
+			$cuota34 = $capital * (float)$configuration->getCerokmCuotas34();
+			$cuota36 = $capital * (float)$configuration->getCerokmCuotas36();
+			$cuota38 = $capital * (float)$configuration->getCerokmCuotas38();
+			$cuota40 = $capital * (float)$configuration->getCerokmCuotas40();
+			$cuota42 = $capital * (float)$configuration->getCerokmCuotas42();
+			$cuota44 = $capital * (float)$configuration->getCerokmCuotas44();
+			$cuota46 = $capital * (float)$configuration->getCerokmCuotas46();
+			$cuota48 = $capital * (float)$configuration->getCerokmCuotas48();	
+				
+		} else if ($y < $intervalo0 && $y >= $intervalo1) {
+			$cuota2 = $capital * (float)$configuration->getUnoA5Cuotas2();
+			$cuota4 = $capital * (float)$configuration->getUnoA5Cuotas4();
+			$cuota6 = $capital * (float)$configuration->getUnoA5Cuotas6();
+			$cuota8 = $capital * (float)$configuration->getUnoA5Cuotas8();
+			$cuota10 = $capital * (float)$configuration->getUnoA5Cuotas10();
+			$cuota12 = $capital * (float)$configuration->getUnoA5Cuotas12();
+			$cuota14 = $capital * (float)$configuration->getUnoA5Cuotas14();
+			$cuota16 = $capital * (float)$configuration->getUnoA5Cuotas16();
+			$cuota18 = $capital * (float)$configuration->getUnoA5Cuotas18();
+			$cuota20 = $capital * (float)$configuration->getUnoA5Cuotas20();
+			$cuota22 = $capital * (float)$configuration->getUnoA5Cuotas22();
+			$cuota24 = $capital * (float)$configuration->getUnoA5Cuotas24();
+			$cuota26 = $capital * (float)$configuration->getUnoA5Cuotas26();
+			$cuota28 = $capital * (float)$configuration->getUnoA5Cuotas28();
+			$cuota30 = $capital * (float)$configuration->getUnoA5Cuotas30();
+			$cuota32 = $capital * (float)$configuration->getUnoA5Cuotas32();
+			$cuota34 = $capital * (float)$configuration->getUnoA5Cuotas34();
+			$cuota36 = $capital * (float)$configuration->getUnoA5Cuotas36();
+			$cuota38 = $capital * (float)$configuration->getUnoA5Cuotas38();
+			$cuota40 = $capital * (float)$configuration->getUnoA5Cuotas40();
+			$cuota42 = $capital * (float)$configuration->getUnoA5Cuotas42();
+			$cuota44 = $capital * (float)$configuration->getUnoA5Cuotas44();
+			$cuota46 = $capital * (float)$configuration->getUnoA5Cuotas46();
+			$cuota48 = $capital * (float)$configuration->getUnoA5Cuotas48();
+		} else if ($y < $intervalo1 && $y >= $intervalo2) {
+			$cuota2 = $capital * (float)$configuration->getSeisA10Cuotas2();
+			$cuota4 = $capital * (float)$configuration->getSeisA10Cuotas4();
+			$cuota6 = $capital * (float)$configuration->getSeisA10Cuotas6();
+			$cuota8 = $capital * (float)$configuration->getSeisA10Cuotas8();
+			$cuota10 = $capital * (float)$configuration->getSeisA10Cuotas10();
+			$cuota12 = $capital * (float)$configuration->getSeisA10Cuotas12();
+			$cuota14 = $capital * (float)$configuration->getSeisA10Cuotas14();
+			$cuota16 = $capital * (float)$configuration->getSeisA10Cuotas16();
+			$cuota18 = $capital * (float)$configuration->getSeisA10Cuotas18();
+			$cuota20 = $capital * (float)$configuration->getSeisA10Cuotas20();
+			$cuota22 = $capital * (float)$configuration->getSeisA10Cuotas22();
+			$cuota24 = $capital * (float)$configuration->getSeisA10Cuotas24();
+			$cuota26 = $capital * (float)$configuration->getSeisA10Cuotas26();
+			$cuota28 = $capital * (float)$configuration->getSeisA10Cuotas28();
+			$cuota30 = $capital * (float)$configuration->getSeisA10Cuotas30();
+			$cuota32 = $capital * (float)$configuration->getSeisA10Cuotas32();
+			$cuota34 = $capital * (float)$configuration->getSeisA10Cuotas34();
+			$cuota36 = $capital * (float)$configuration->getSeisA10Cuotas36();
+		} else if ($y < $intervalo2 ) {
+			$cuota2 = $capital * (float)$configuration->getOnceA15Cuotas2();
+			$cuota4 = $capital * (float)$configuration->getOnceA15Cuotas4();
+			$cuota6 = $capital * (float)$configuration->getOnceA15Cuotas6();
+			$cuota8 = $capital * (float)$configuration->getOnceA15Cuotas8();
+			$cuota10 = $capital * (float)$configuration->getOnceA15Cuotas10();
+			$cuota12 = $capital * (float)$configuration->getOnceA15Cuotas12();
+			$cuota14 = $capital * (float)$configuration->getOnceA15Cuotas14();
+			$cuota16 = $capital * (float)$configuration->getOnceA15Cuotas16();
+			$cuota18 = $capital * (float)$configuration->getOnceA15Cuotas18();
+			$cuota20 = $capital * (float)$configuration->getOnceA15Cuotas20();
+			$cuota22 = $capital * (float)$configuration->getOnceA15Cuotas22();
+			$cuota24 = $capital * (float)$configuration->getOnceA15Cuotas24();
+				
+		}
+		$output = array();
+		$output[] = array('key'=>'2 Cuotas', 'value'=>round($cuota2));
+		$output[] = array('key'=>'4 Cuotas', 'value'=>round($cuota4));
+		$output[] = array('key'=>'6 Cuotas', 'value'=>round($cuota6));
+		$output[] = array('key'=>'8 Cuotas', 'value'=>round($cuota8));
+		$output[] = array('key'=>'10 Cuotas', 'value'=>round($cuota10));
+		$output[] = array('key'=>'12 Cuotas', 'value'=>round($cuota12));
+		$output[] = array('key'=>'14 Cuotas', 'value'=>round($cuota14));
+		$output[] = array('key'=>'16 Cuotas', 'value'=>round($cuota16));
+		$output[] = array('key'=>'18 Cuotas', 'value'=>round($cuota18));
+		$output[] = array('key'=>'20 Cuotas', 'value'=>round($cuota20));
+		$output[] = array('key'=>'22 Cuotas', 'value'=>round($cuota22));
+		$output[] = array('key'=>'24 Cuotas', 'value'=>round($cuota24));
+		if ($y >= $intervalo2 ) {
+			$output[] = array('key'=>'26 Cuotas', 'value'=>round($cuota26));
+			$output[] = array('key'=>'28 Cuotas', 'value'=>round($cuota28));
+			$output[] = array('key'=>'30 Cuotas', 'value'=>round($cuota30));
+			$output[] = array('key'=>'32 Cuotas', 'value'=>round($cuota32));
+			$output[] = array('key'=>'34 Cuotas', 'value'=>round($cuota34));
+			$output[] = array('key'=>'36 Cuotas', 'value'=>round($cuota36));
+			
+		}
+		if ($y >= $intervalo1 ) {
+			$output[] = array('key'=>'38 Cuotas', 'value'=>round($cuota38));
+			$output[] = array('key'=>'40 Cuotas', 'value'=>round($cuota40));
+			$output[] = array('key'=>'42 Cuotas', 'value'=>round($cuota42));
+			$output[] = array('key'=>'44 Cuotas', 'value'=>round($cuota44));
+			$output[] = array('key'=>'46 Cuotas', 'value'=>round($cuota46));
+			$output[] = array('key'=>'48 Cuotas', 'value'=>round($cuota48));
+		}
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/json');
+		$response->setContent(json_encode($output));
+		return $response;
+		
+	}
+	
+	
 	public function simularCuotasAction(Request $request) {
 
 		 
@@ -2207,7 +2375,8 @@ class DefaultController extends Controller
 		$response->setContent(json_encode($output));
 		return $response;
 	}
-	 
+
+	
 	public function getValorCuotasAction(Request $request) {
 		//calculo valor cuota
 		$em = $this->getDoctrine()->getManager();
@@ -2648,5 +2817,31 @@ class DefaultController extends Controller
 			return $this->render('KellsFrontBundle:Default:overcomePublications.html.twig', array('cars'=>$carsFinalized, 'diferencias'=>$diferencias));
     
     }
+    
+	public function enviarSolicitudAction(request $request) {
+
+		$anio = $request->get('anio');
+		$capital = $request->get('capital');
+		$auto = $request->get('auto');
+		$telefono = $request->get('telefono');
+		$nombre = $request->get('nombre');
+		$dni = $request->get('dni');
+		
+		
+		$message = \Swift_Message::newInstance()
+		->setSubject('Contacto por solicitud de credito')
+		->setFrom('no-responder@alarfin.com.ar')
+		->setTo("alarfinsa@gmail.com")
+		->setBody("<p>Nombre: ".$nombre."</p><p>Capital: ".$capital."</p><p>Auto: ".$auto."</p>"."</p><p>Año: ".$anio."</p>"."</p><p>Teléfono: ".$telefono."</p>"."</p><p>Dni: ".$dni."</p>", 'text/html');
+
+		$this->get('mailer')->send($message);
+
+		
+		$output = "";
+		$response = new Response();
+		$response->headers->set('Content-Type', 'application/json');
+		$response->setContent(json_encode($output));
+		return $response;
+	}
 }
 

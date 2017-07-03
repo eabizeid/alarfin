@@ -38,7 +38,13 @@
 			    					{{ form_widget(form.licensee.cuit, { 'attr': {'class': 'form-control' }}) }}
 			                        <span class="help-block">(Sin guiones, solo números)</span>
 			                    </div>
-			                </div>     
+			                </div>
+							<div class="col-sm-6">
+								<div class="form-group">
+                                    {{ form_label(form.licensee.contactName, 'Nombre de contacto' ) }}
+                                    {{ form_widget(form.licensee.contactName, { 'attr': {'class': 'form-control' }}) }}
+								</div>
+							</div>
 			                <div class="clearfix"></div>
 			                <div class="col-sm-6">
 			                    <div class="form-group">
@@ -52,18 +58,43 @@
 			    					{{ form_widget(form.licensee.telephone, { 'attr': {'class': 'form-control' }}) }}
 			                    </div>
 			                </div>
+							<div class="clearfix"></div>
+							<div class="col-sm-6">
+								<div class="form-group">
+                                    {{ form_label(form.licensee.address, 'Dirección' ) }}
+                                    {{ form_widget(form.licensee.address, { 'attr': {'class': 'form-control' }}) }}
+								</div>
+							</div>
+
+							<div class="col-sm-6">
+								<div class="form-group">
+                                    {{ form_label(form.licensee.cityId, 'Ciudad' ) }}
+                                    {{ form_widget(form.licensee.cityId, { 'attr': {'class': 'form-control' }}) }}
+								</div>
+							</div>
+
+							<div class="col-sm-6">
+								<div class="form-group">
+                                    {{ form_label(form.licensee.web, 'Web' ) }}
+                                    {{ form_widget(form.licensee.web, { 'attr': {'class': 'form-control' }}) }}
+								</div>
+							</div>
+
+
 			                <div class="col-sm-6">
 			                    <div class="form-group">
-			                    	{{ form_label(form.licensee.contactName, 'Nombre de contacto' ) }}
-			    					{{ form_widget(form.licensee.contactName, { 'attr': {'class': 'form-control' }}) }}
+			                    	{{ form_label(form.licensee.facebook, 'Facebook' ) }}
+			    					{{ form_widget(form.licensee.facebook, { 'attr': {'class': 'form-control' }}) }}
 			                    </div>
 			                </div>
-			                 <div class="col-sm-6">
-			                    <div class="form-group">
-			                    	{{ form_label(form.licensee.city, 'Ciudad' ) }}
-			    					{{ form_widget(form.licensee.city, { 'attr': {'class': 'form-control' }}) }}
-			                    </div>
-			                </div>
+							<div class="clearfix"></div>
+							<div class="col-sm-6">
+								<div class="form-group">
+                                    {{ form_label(form.image, 'Imagen' ) }}
+                                    {{ form_widget(form.image, { 'attr': {'class': 'form-control' }}) }}
+								</div>
+							</div>
+							<div class="clearfix"></div>
 			                {% for passwordField in form.licensee.password %}
 			     			<div class="col-sm-6">
 			                    <div class="form-group">

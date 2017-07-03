@@ -13,7 +13,7 @@ class Registration
      * @Assert\Valid()
      */
     protected $licensee;
-    
+    protected $image;
 
     /**
      * @Assert\NotBlank()
@@ -41,4 +41,22 @@ class Registration
     {
         $this->termsAccepted = (Boolean) $termsAccepted;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+
 }

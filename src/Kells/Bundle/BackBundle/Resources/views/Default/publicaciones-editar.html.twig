@@ -212,24 +212,6 @@
                                             <h4 class="nomar text-uppercase">Ubicaci&oacute;n</h4>
                                         </div>
                                     </div> 
-                                    <div class="col-sm-6">                                
-                                        <div class="form-group">
-                                            <label for="provincia">Provincia</label>
-                                            <select name="provincia" id="provincia" class="form-control" required>
-                                            	<option> Seleccion&aacute; una provincia </option>
-                                                {% for pcia in provinces %}
-                                                <option value="{{ pcia.id }}">{{ pcia.description }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6"> 
-                                        <div class="form-group">
-                                            <label for="ciud">Ciudad</label>
-                                            <select name="ciudad" id="ciudad" class="form-control" required>
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
 	                   		</div> 
                         </div>
@@ -415,22 +397,6 @@
   <script type="text/javascript" >
         	 
         	 $(document).ready( function(){
-        	 $('#provincia').change( function(e) {
- 					// get the value of the selection
-        			var id = $(this).val(),
-		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
-		        	$.post(url, 
-                		function(data){
-                			 var sub = $('#ciudad');
-                			sub.empty();
-                			$.each(data , function(key, description) { 
-                    			sub.append($("<option></option>")
-                    				.attr("value",key)
-                    				.text(description.description)); 
-                		    })
-                		
- 						} )
-					})
         	
         	 $('#marca').change( function(e) {
  					// get the value of the selection
@@ -484,25 +450,7 @@
  						} )
 	        	 	
 	        	 	
-	        	 	$("#provincia").val("{{car.province.id}}")
-	        	 	
-	        	 	
-	        	 	var id = "{{car.province.id}}";
-		            url = Routing.generate('route_to_retrieve_city', { 'id': id  });
-		        	$.post(url, 
-                		function(data){
-                			 var sub = $('#ciudad');
-                			sub.empty();
-                			$.each(data , function(key, description) { 
-                    			sub.append($("<option></option>")
-                    				.attr("value",key)
-                    				.text(description.description)); 
-                		    })
-                		    {% if car.city %}
-	        	 	$("#ciudad").val("{{car.city.id}}");
-	        	 	{% endif %}
-                		
- 						} )
+	        
 					
 	        	 	
 	        	 	{% if car.fuel%}
@@ -525,14 +473,12 @@
         	 
         	 	var marca = $("#marca").val();
     			var modelo = $("#modelo").val();
-	        	var provincia = $("#provincia").val();
-	        	var city = $("#ciudad").val();
 	        	var combus = $("#COMBUS").val();
 	        	var km = $("#KMTS").val();
 	        	var color = $("COLOREXT").val();
 	        	
-    			if (!$('#descripcion').val() || marca == "Seleccioná una marca" || modelo == "Seleccioná una marca" || provincia == "Seleccioná una provincia"
-    			|| (city == '') || ($("#fotoprincipal").val() == '' && $("#mandatoryImage").val() == 'undefined' )
+    			if (!$('#descripcion').val() || marca == "Seleccioná una marca" || modelo == "Seleccioná una marca"
+    			|| ($("#fotoprincipal").val() == '' && $("#mandatoryImage").val() == 'undefined' )
     			 || combus == "" || km == "" || color == 'undefined') {
         			$("#divMsg1").show();
         			$('html, body').animate({ scrollTop: $('#divMsg1').offset().top }, 'slow');

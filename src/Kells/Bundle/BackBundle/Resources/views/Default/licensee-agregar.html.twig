@@ -7,7 +7,7 @@
                 </div>
             </div>
 		  	<div class="row">       
-                <form role="form" method="post" action="{{path('saveLicensee')}}">
+                <form role="form" method="post" enctype="multipart/form-data" action="{{path('saveLicensee')}}">
                 <div class="col-md-12">
                     <div class="well well-gris-claro">
                         <div class="row">
@@ -59,6 +59,35 @@
                                     <input name="telefono" type="tel" required class="form-control" id="telefono" tabindex="5" >
                                 </div>
                             </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="address">Dirección</label>
+                                    <input name="address" type="text"  class="form-control" id="address" tabindex="5" >
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="web">Web</label>
+                                    <input name="web" type="text"  class="form-control" id="web" tabindex="5" >
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="facebook">Facebook</label>
+                                    <input name="facebook" type="text"  class="form-control" id="facebook" tabindex="5" >
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="fotoprincipal">Foto</label>
+                                    <input type="file" name="fotoprincipal" id="fotoprincipal" class="form-control" >
+                                </div>
+                            </div>
+
+
                             <div class="col-sm-6"> 
                                 <div class="form-group">
                                   <label for="contrasena">Contrase&ntilde;a</label>

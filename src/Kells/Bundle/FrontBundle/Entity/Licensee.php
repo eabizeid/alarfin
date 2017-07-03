@@ -73,6 +73,22 @@ class Licensee implements UserInterface {
      * @ORM\Column(type="string", length=255)
      */
     protected $token;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $address;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $web;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $facebook;
+
     
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="cities")
@@ -80,6 +96,7 @@ class Licensee implements UserInterface {
      **/
     protected $city;
     
+    protected $cityId;
 	
 	public function getId() {
 		return $this->id;
@@ -183,7 +200,29 @@ class Licensee implements UserInterface {
      * @ORM\OneToMany(targetEntity="Car", mappedBy="licensee", cascade="remove")
      **/
     protected $cars;
-    
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="ImageFile", cascade={"persist", "remove", "merge"})
+     * @ORM\JoinColumn(name="mandatoryImage_id", referencedColumnName="id")
+     **/
+    protected $image;
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
     
      /**
      * Add roles
@@ -312,6 +351,15 @@ class Licensee implements UserInterface {
 	public function setCity($city) {
     	return $this->city = $city;
     }
+    
+ public function getCityId()
+    {
+        return $this->cityId;
+    }
+    
+	public function setCityId($cityId) {
+    	return $this->cityId = $cityId;
+    }
 
  	public function getContactName()
     {
@@ -321,4 +369,54 @@ class Licensee implements UserInterface {
 	public function setContactName($contactName) {
     	return $this->contactName = $contactName;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWeb()
+    {
+        return $this->web;
+    }
+
+    /**
+     * @param mixed $web
+     */
+    public function setWeb($web)
+    {
+        $this->web = $web;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * @param mixed $facebook
+     */
+    public function setFacebook($facebook)
+    {
+        $this->facebook = $facebook;
+    }
+
+
 }

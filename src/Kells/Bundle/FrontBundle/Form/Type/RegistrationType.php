@@ -17,6 +17,7 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('licensee', new LicenseeType($this->em));
+        $builder->add('image', 'file');
         $builder->add(
             'terms',
             'checkbox',

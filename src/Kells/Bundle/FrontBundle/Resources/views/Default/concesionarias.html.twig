@@ -22,8 +22,25 @@
 				<div class="col-xs-12 col-sm-6 col-md-4">
 					<div class="thumbnail">
 						<h2>{{c.fantasyName}}</h2>
+                	{%if c.image   %}
+						<img src="{{asset(c.image.webPath)}}" class="img-responsive">
+                    {% else %}
+						<img src="{{asset('bundles/kellsfront/img/foto-concesionaria-default.jpg')}}" class="img-responsive">
+                    {% endif %}
 						<div>{{c.contactName}}</div>
-						<div><a href="tel:{{c.telephone}}"><i class="fa fa-phone fa-fw"></i> {{c.telephone}}</a></div>
+						<div><i class="fa fa-phone fa-fw"></i> <a href="tel:{{c.telephone}}">{{c.telephone}}</a></div>
+                {%if c.address   %}
+						<div><i class="fa fa-home fa-fw"></i> {{c.address}}</div>
+                {% endif %}
+                {%if c.facebook %}
+						<div><i class="fa fa-facebook fa-fw"></i> <a href="{{c.facebook}}" target="_blank">{{c.facebook}}</a></div>
+                {% endif %}
+                {%if c.web %}
+						<div><i class="fa fa-globe fa-fw"></i> <a href="{{c.web}}" target="_blank">{{c.web}}</a></div>
+                {% endif %}
+				{%if c.mail %}
+						<div><i class="fa fa-envelope fa-fw"></i> <a href="mailto:{{c.mail}}">{{c.mail}}</a></div>
+                {% endif %}
 					</div>
 				</div>
 			{% endfor %}

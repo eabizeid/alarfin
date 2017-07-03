@@ -1,67 +1,119 @@
 {% extends 'KellsFrontBundle:Default:base.html.twig' %}
 {% block body %}
-  <div class="container toppad">        
-      <div id="destacado" class="carousel slide chico" data-ride="carousel">
+  <div class="container toppad destacado"> 
+      <div class="destacado-interno">
+          <div class="destacado-form">
+              <div class="row">
+                  <div class="col-xs-12">
+                      <h2>Simul&aacute; tu cr&eacute;dito</h2>
+                  </div>
+              </div>
+              <form action="javascript:simularCuotas()" role="form" method="post"  class="form-horizontal">
+                  <div class="form-group">
+                      <label for="auto" class="col-sm-3 control-label">Auto</label>
+                      <div class="col-sm-9">
+                          <input required type="text" class="form-control" name="auto"id="auto" placeholder="Marca y modelo" tabindex="1">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="anio" class="col-sm-3 control-label">A&ntilde;o</label>
+                      <div class="col-sm-9">
+                          <select class="form-control" name="anio" id="anio" tabindex="2" required>
+                              <option>2017</option>
+                              <option>2016</option>
+                              <option>2015</option>
+                              <option>2014</option>
+                              <option>2013</option>
+                              <option>2012</option>
+                              <option>2011</option>
+                              <option>2010</option>
+                              <option>2009</option>
+                              <option>2008</option>
+                              <option>2007</option>
+                              <option>2006</option>
+                              <option>2005</option>
+                              <option>2004</option>
+                              <option>2003</option>
+                              <option>2002</option>
+                              <option>2001</option>
+                              <option>2000</option>
+                              <option>1999</option>
+                              <option>1998</option>
+                              <option>1997</option>
+                              <option>1996</option>
+                              <option>1995</option>
+                              <option>1994</option>
+                              <option>1993</option>
+                              <option>1992</option>
+                              <option>1991</option>
+                              <option>1990</option>
+                          </select>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="capital" class="col-sm-3 control-label">Capital</label>
+                      <div class="col-sm-9">
+                          <input required type="text" class="form-control" name="capital" id="capital" placeholder="Capital que necesita" tabindex="3"  onkeypress="return isNumber(event)">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="nombre" class="col-sm-3 control-label">Nombre</label>
+                      <div class="col-sm-9">
+                          <input required type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre y apellido" tabindex="4">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="telefono" class="col-sm-3 control-label">Tel&eacute;fono</label>
+                      <div class="col-sm-9">
+                          <input required type="text" class="form-control" name="telefono" id="telefono" placeholder="Código de área + teléfono" tabindex="5" onkeypress="return isNumber(event)">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="DNI" class="col-sm-3 control-label">DNI</label>
+                      <div class="col-sm-9">
+                          <input required type="text" class="form-control" name="dni" id="DNI" placeholder="Documento" tabindex="6"  onkeypress="return isNumber(event)">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-sm-offset-3 col-sm-9">
+                          <button type="submit"  href="javascript:simularCuotas();" class="btn btn-lg btn-gr-ro" tabindex="7" ><i class="fa fa-chevron-circle-right"></i> Simular</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>       
+      <div id="destacado" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
               <li data-target="#destacado" data-slide-to="0" class="active"></li>
               <li data-target="#destacado" data-slide-to="1"></li>
-              <li data-target="#destacado" data-slide-to="2"></li>
-              <li data-target="#destacado" data-slide-to="3"></li>
           </ol>
           <div class="carousel-inner">
               <div class="item active">
-                  <a href="{{path('prendarios-individuos')}}">
-                  	<img src="{{ asset('bundles/kellsfront/img/destacado-creditos-prendarios.jpg') }}" alt="Cr&eacute;ditos Prendarios" title="Cr&eacute;ditos Prendarios">
+                  <a href="#" style="background:url({{ asset('bundles/kellsfront/img/fondo-destacado-1.jpg') }}) left top no-repeat;background-size:cover;">
+                    <div class="container">
+                        <div class="carousel-caption col-xs-12 col-sm-5">
+                        	<div class="carousel-interno">
+                                <h2>Simul&aacute; y solicit&aacute; tu cr&eacute;dito!</h2>
+                                <p><strong>Completando los datos, calcul&aacute;s vos mismo las cuotas de tu pr&eacute;stamo.</strong><br>Te financiamos hasta el 50% de tu nuevo auto, hasta en 48 meses.</p>
+                                <p><span class="btn btn-alarfin btn-lg">Solicitar ahora</span></p>
+                            </div>
+                        </div>
+                    </div>
                   </a>
-                  <div class="container active">
-                      <div class="carousel-caption col-xs-12 col-sm-7 col-md-5 col-lg-4">
-                      	<div class="carousel-interno">
-                              <h1>Créditos Prendarios</h1>
-                              <p>Ahora podes comprar un Auto O Km. o usado, de la manera más simple, con mínimos requisitos y aprobación inmediata.</p>
-                              <p><a href="{{path('prendarios-individuos')}}" class="btn btn-alarfin btn-lg">Más información</a></p>
-                          </div>
-                      </div>
-                  </div>
               </div>
               <div class="item">
-                    <img src="{{ asset('bundles/kellsfront/img/destacado-clasificados.jpg') }}" alt="Solicit&aacute; tu cr&eacute;dito online!" title="Solicit&aacute; tu cr&eacute;dito online!">
-                  <div class="container">
-                      <div class="carousel-caption col-xs-12 col-sm-8 col-md-5 col-lg-4">
-                        <div class="carousel-interno">
-                              <h1>Plataforma de Clasificados</h1>
-                              <p class="carousel-interno-texto-link"><a href="{{ path('licenseeRegistration')}}"><strong><i class="fa fa-car"></i> Concesionarias</strong><br>Subi tus autos y encontr&aacute; nuevos.</a></p>
-                              <p class="carousel-interno-texto-link"><a href="{{ path('userRegistration') }}"><strong><i class="fa fa-user"></i> Particulares</strong><br> Public&aacute; tu auto y vendelo. Compr&aacute; el nuevo en las concesionarias de la zona.</a></p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="item">
-                  <a href="{{path('creditRequest')}}">
-                    <img src="{{ asset('bundles/kellsfront/img/destacado-credito-online.jpg') }}" alt="Solicit&aacute; tu cr&eacute;dito online!" title="Solicit&aacute; tu cr&eacute;dito online!">
+                  <a href="#" data-toggle="modal" data-target="#modalVideo" style="background:url({{ asset('bundles/kellsfront/img/fondo-destacado-2.jpg') }}) left top no-repeat;background-size:cover;">
+                    <div class="container">
+                        <div class="carousel-caption col-xs-12 col-sm-5">
+                          <div class="carousel-interno">
+                                <h2>Vend&eacute; y compr&aacute; m&aacute;s f&aacute;cil!</h2>
+                                <p><strong>Difundimos tu aviso de venta y financiamos la compra al interesado.</strong></p>
+                                <p><span class="btn btn-alarfin btn-lg">Mir&aacute; nuestro spot</span></p>
+                            </div>
+                        </div>
+                    </div>
                   </a>
-                  <div class="container">
-                      <div class="carousel-caption col-xs-12 col-sm-7 col-md-5 col-lg-4">
-                        <div class="carousel-interno">
-                              <h1>Solicit&aacute; tu cr&eacute;dito online!</h1>
-                              <p>Te financiamos hasta el 50% de la compra de tu nuevo auto. Complet&aacute; el formulario de m&iacute;nimos requisitos.</p>
-                              <p><a href="{{path('creditRequest')}}" class="btn btn-alarfin btn-lg">Solicitar ahora</a></p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="item">
-                  <a href="{{path('simulador')}}">
-                    <img src="{{ asset('bundles/kellsfront/img/destacado-simulador.jpg') }}" alt="Simulador de cr&eacute;ditos" title="Simulador de cr&eacute;ditos">
-                  </a>
-                  <div class="container">
-                      <div class="carousel-caption col-xs-12 col-sm-7 col-md-5 col-lg-4">
-                        <div class="carousel-interno">
-                              <h1>Simulador de cr&eacute;ditos</h1>
-                              <p>¿Quer&eacute;s conocer cu&aacute;l ser&iacute;a el valor de tus cuotas? Calcul&aacute; de forma inmediata tu plan de pago, est&eacute;s donde est&eacute;s.</p>
-                              <p><a href="{{path('simulador')}}" class="btn btn-alarfin btn-lg">Calcular cuotas</a></p>
-                          </div>
-                      </div>
-                  </div>
               </div>
           </div>
       </div>
@@ -162,4 +214,199 @@
           </div>
       </div>
   </div>
+<div style="display:none;" id="dialog-confirm" title="Simular">
+  				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Por favor ingrese el capital y el año del automóvil a financiar</p>
+			</div>
+			<div style="display:none;" id="dialog-negativo" title="Simular">
+  				<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>El capital a financiar debe ser un número mayor a 0.</p>
+</div>
+<!-- modal simular -->
+  <div class="modal fade" id="modalSimular" tabindex="-1" role="dialog" aria-labelledby="Simular">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="Simular">Simulador de cr&eacute;dito</h4>
+        </div>
+        <div class="modal-body simulador simulador-modal">
+          <div class="row">
+            <div class="col-xs-12">
+              <ul class="simulador-modal-datos">
+                <li class="row">
+                  <div class="col-xs-5 col-sm-3">
+                    Auto
+                  </div>
+                  <div class="col-xs-7 col-sm-9 text-right">
+                    <strong id="autoLabel"></strong>
+                  </div>
+                </li>
+                <li class="row">
+                  <div class="col-xs-5 col-sm-3">
+                    A&ntilde;o
+                  </div>
+                  <div class="col-xs-7 col-sm-9 text-right">
+                    <strong id="anioLabel"></strong>
+                  </div>
+                </li>
+                <li class="row">
+                  <div class="col-xs-5 col-sm-3">
+                    Capital
+                  </div>
+                  <div class="col-xs-7 col-sm-9 text-right">
+                    <strong id="capitalLabel"></strong>
+                  </div>
+                </li>
+                <li class="row">
+                  <div class="col-xs-5 col-sm-3">
+                    Nombre
+                  </div>
+                  <div class="col-xs-7 col-sm-9 text-right">
+                    <strong id="nombreLabel"></strong>
+                  </div>
+                </li>
+                <li class="row">
+                  <div class="col-xs-5 col-sm-3">
+                    Tel&eacute;fono
+                  </div>
+                  <div class="col-xs-7 col-sm-9 text-right">
+                    <strong id="telefonoLabel"></strong>
+                  </div>
+                </li>
+                <li class="row">
+                  <div class="col-xs-5 col-sm-3">
+                    DNI
+                  </div>
+                  <div class="col-xs-7 col-sm-9 text-right">
+                    <strong id="dniLabel"></strong>
+                  </div> 
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div id="divSuccess" class="alert alert-success divSuccess" role="alert" style=""><i class="fa fa-exclamation-circle fa-fw"></i> Costos finales con impuestos incluidos.<br> La cuota no incluye seguro</div>
+             <div id="divSuccess1" class="alert alert-success divSuccess1" role="alert" style=""><i class="fa fa-exclamation-circle fa-fw"></i> Tu crédito fue solicitado correctamente! Pronto nos comunicaremos con vos. Gracias!</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <table id="cuotasTable" class="table table-striped table-condensed topmar20">
+              	<thead>
+              		<tr>
+              			<th width="50%">Cantidad de cuotas</th>
+              			<th width="50%">Monto de la cuota</th>
+              		</tr>
+              	</thead>
+              	<tbody></tbody>
+              	</table>
+            </div>
+          </div>
+          <div class="row">
+            <div id="enviarButton" class="col-xs-12 text-center">
+              <button type="button" onclick="javascript:enviarSolicitud()" class="btn btn-lg btn-ro-bl"><i class="fa fa-chevron-circle-right"></i> Solicitar ahora!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- modal simular -->
+
+<!-- modal video -->
+  <div class="modal fade" id="modalVideo" tabindex="-1" role="dialog" aria-labelledby="Video">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="Video">Vend&eacute; y compr&aacute; m&aacute;s f&aacute;cil!</h4>
+        </div>
+        <div class="modal-body">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/RnJ9d1wljLk?rel=0&amp;controls=0" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- modal video -->
+
+  <script type="text/javascript">
+  	function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+	}
+  	
+  	var enviarSolicitud= function(){
+  				var capital = $('#capital').val();
+        		var anio = $('#anio').val();
+        		var auto = $("#auto").val();
+	        	var dni	 = $("#DNI").val();
+	        	var telefono = $("#telefono").val();
+	        	var nombre = $("#nombre").val();
+	
+				url = Routing.generate('enviarSolicitud', { 'capital': capital, 'anio': anio, 'auto': auto, 'dni': dni,'telefono': telefono, 'nombre': nombre  });
+	        	$.post(url, function(data) {
+	        		var $table = $('#cuotasTable').hide();
+	        		$('#divSuccess').hide();
+	        		$('#divSuccess1').show();
+	        		$("#enviarButton").hide()
+	        	})       	
+        
+  	}
+  	
+  	var simularCuotas = function() {
+  				$table = $('#cuotasTable').show()
+  				$("#enviarButton").show()
+  				$("#modalSimular").modal()
+  				$('#divSuccess1').hide();
+        		$('#cuotasTable').empty();
+        		var capital = $('#capital').val();
+        		var anio = $('#anio').val();
+        		
+			        url = Routing.generate('simularCuotasIndex', { 'capital': capital, 'anio': anio  });
+	        		$.post(url,
+	        			function(data){
+	        				$("#autoLabel").text($("#auto").val()) 
+	        				$("#capitalLabel").text(capital)
+	        				$("#anioLabel").text(anio)
+	        				$("#dniLabel").text($("#DNI").val())
+	        				$("#telefonoLabel").text($("#telefono").val())
+	        				$("#nombreLabel").text($("#nombre").val())
+	        				var $table = $('<table id="cuotasTable" class="table table-striped table-condensed topmar">')
+	        				.append($('<thead><tr><th width="50%">Cantidad de cuotas</th><th width="50%">Monto de la cuota</th></thead> <tbody>'));
+	        					$.each(data , function(key, value) {
+	        						$table.append ($('<tr>').append(
+		            					$('<td>').text(value.key),
+		            					$('<td>').text('$ ' + value.value)
+			        				)).appendTo('#cuotasTable');
+		            					
+	        					}); 
+	        				
+	        				$('.divSuccess').show();
+	        			}
+	        		
+	        		);
+	        	
+        	}
+    $(document).ready(function(){
+    	
+        $('.modal').each(function(){
+                var src = $(this).find('iframe').attr('src');
+
+            $(this).on('click', function(){
+
+                $(this).find('iframe').attr('src', '');
+                $(this).find('iframe').attr('src', src);
+
+            });
+        });
+        
+        
+    });
+  </script>
  {% endblock %}

@@ -7,7 +7,7 @@
                 </div>
             </div>
 		  	<div class="row">       
-                <form role="form" method="post" action="{{path('saveLicensee')}}">
+                <form role="form" method="post" enctype="multipart/form-data" action="{{path('saveLicensee')}}">
                 <div class="col-md-12">
                     <div class="well well-gris-claro">
                         <div class="row">
@@ -58,6 +58,43 @@
                                     <input name="contactName" type="text" required class="form-control" id="contactName" tabindex="5" value="{{user.contactName}}">
                                 </div>
                             </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="address">Dirección</label>
+                                    <input name="address" type="text"  class="form-control" id="address" tabindex="5" value="{{user.address}}">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="web">Web</label>
+                                    <input name="web" type="text"  class="form-control" id="web" tabindex="5" value="{{user.web}}">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="facebook">Facebook</label>
+                                    <input name="facebook" type="text"  class="form-control" id="facebook" tabindex="5" value="{{user.facebook}}">
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="fotoprincipal">Foto</label>
+                                    {% if user and user.image %}
+                                        <img id="image" name="image" src="{{ asset(user.image.webPath) }}" width="800" height="600" class="img-responsive">
+                                    {% else %}
+                                        <img id="image" name="image" src="{{ asset('bundles/kellsfront/img/foto-concesionaria-default.jpg') }}" width="800" height="600" class="img-responsive">
+                                    {% endif %}
+                                    <input type="file" name="fotoprincipal" id="fotoprincipal" class="form-control" >
+                                </div>
+                            </div>
+
+
                             <div class="col-sm-6"> 
                                 <div class="form-group">
                                   <label for="contrasena">Contrase&ntilde;a</label>

@@ -122,6 +122,18 @@ simularCuotas:
     options:
         expose: true
 
+simularCuotasIndex:
+    pattern: /simularCuotasIndex/
+    defaults: {_controller: KellsFrontBundle:Default:simularCuotasIndex }
+    options:
+        expose: true
+        
+enviarSolicitud:
+    pattern: /enviarSolicitud/
+    defaults: {_controller: KellsFrontBundle:Default:enviarSolicitud }
+    options:
+        expose: true
+        
 getValorCuotas:
     pattern: /valorCuotas/
     defaults: {_controller: KellsFrontBundle:Default:getValorCuotas }
@@ -202,6 +214,15 @@ prendarios-individuos:
     defaults:
         _controller: FrameworkBundle:Template:template
         template:     'KellsFrontBundle:Default:prendarios-individuos.php.twig'
+        maxAge: 86400
+        sharedMaxAge: 86400
+        private: false
+
+informacion:
+    path:     /informacion/
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:     'KellsFrontBundle:Default:informacion.php.twig'
         maxAge: 86400
         sharedMaxAge: 86400
         private: false
